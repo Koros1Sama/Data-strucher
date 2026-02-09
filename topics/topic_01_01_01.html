@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What is PL/SQL | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_01/index.html">الوحدة 1</a> ›
+        <span>ما هو PL/SQL؟</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>What is PL/SQL?</h1>
+          <p class="topic-title-ar">ما هي لغة PL/SQL؟</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              لغة
+              <span class="term" data-ar="لغة إجرائية ممتدة لـ SQL"
+                >PL/SQL</span
+              >
+              هي اختصار لـ
+              <strong>Procedural Language extension to SQL</strong>. وهي لغة
+              أنشأتها Oracle لتضيف قدرات البرمجة الإجرائية (مثل الشروط والحلقات)
+              إلى لغة SQL القياسية.
+            </p>
+            <div class="highlight-box">
+              <p>
+                <strong>لماذا نحتاجها؟</strong> لغة SQL وحدها لغة غير إجرائية
+                (تطلب البيانات ولا تحدد كيف نحصل عليها). PL/SQL تسمح لك بكتابة
+                منطق برمجي كامل للتعامل مع البيانات.
+              </p>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>⚡ المميزات الرئيسية | Key Features</h2>
+            <ul class="styled-list">
+              <li>
+                <strong>تكامل قوي مع SQL:</strong> يمكنك كتابة جمل SQL مباشرة
+                داخل كود PL/SQL.
+              </li>
+              <li>
+                <strong>أداء عالي:</strong> ترسل كتلة الكود كاملة إلى الخادم
+                لتنفيذها مرة واحدة، مما يقلل حركة الشبكة (Network Traffic).
+              </li>
+              <li>
+                <strong>الإنتاجية:</strong> توفر أدوات قوية للتعامل مع الأخطاء
+                (Exceptions).
+              </li>
+              <li>
+                <strong>قابلية النقل:</strong> تعمل على أي نظام تشغيل يدعم
+                Oracle Database.
+              </li>
+            </ul>
+          </section>
+
+          <section class="content-section">
+            <h2>🏗️ البنية | Architecture</h2>
+            <p>
+              يعمل محرك PL/SQL داخل خادم قاعدة البيانات (Database Server) أو
+              أحياناً في أداة التطوير.
+            </p>
+            <pre><code class="language-sql">-- مثال بسيط جدًا
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('Hello, PL/SQL!');
+END;</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>PL/SQL = SQL + Procedural Features (IF, LOOP, etc.)</li>
+                <li>تزيد من كفاءة التطبيقات بتقليل الاتصال بالخادم.</li>
+                <li>هي اللغة القياسية لتطوير تطبيقات قواعد بيانات Oracle.</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="../modules/module_01/index.html" class="nav-prev"
+            >← الوحدة 1</a
+          >
+          <a href="topic_01_01_02.html" class="nav-next"
+            >هيكل الكتلة (Block Structure) →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

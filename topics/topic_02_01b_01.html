@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      INDEX BY Tables (Associative Arrays) | Data Structures Study Guide
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>INDEX BY Tables</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>INDEX BY Tables (Associative Arrays)</h1>
+          <p class="topic-title-ar">جداول INDEX BY (المصفوفات الترابطية)</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              جداول INDEX BY (أو المصفوفات الترابطية) هي نوع من أنواع المجموعات
+              (Collections) في PL/SQL. تعمل مثل Hash Tables في لغات البرمجة
+              الأخرى، حيث يتم الوصول للعناصر عبر مفتاح (Key) وليس عبر ترتيب رقمي
+              متسلسل فقط.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>المفهوم | Concept</h3>
+            <p>
+              تعرف أيضاً بـ <strong>Associative Arrays</strong>. وهي عبارة عن
+              مجموعات من أزواج (Key-Value). لا يتم تخزينها في قاعدة البيانات، بل
+              تستخدم فقط داخل كود PL/SQL.
+            </p>
+
+            <h3>الخصائص | Characteristics</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>المفتاح (Index):</strong> يمكن أن يكون رقماً (INTEGER)
+                أو نصاً (STRING).
+              </li>
+              <li>
+                <strong>الحجم:</strong> ديناميكي، لا يوجد حد أقصى محدد مسبقاً.
+              </li>
+              <li>
+                <strong>الترتيب:</strong> العناصر رتبة بناءً على قيمة المفتاح،
+                وليس ترتيب الإدخال.
+              </li>
+            </ul>
+
+            <h3>Syntax</h3>
+            <pre><code class="language-sql">TYPE type_name IS TABLE OF element_type
+    INDEX BY [PLS_INTEGER | BINARY_INTEGER | VARCHAR2(size)];
+
+-- Declaration
+collection_name type_name;</code></pre>
+
+            <h3>مثال | Example</h3>
+            <pre><code class="language-sql">DECLARE
+    TYPE SalaryList IS TABLE OF NUMBER INDEX BY VARCHAR2(20);
+    emp_salaries SalaryList;
+BEGIN
+    emp_salaries('John') := 5000;
+    emp_salaries('Sara') := 6500;
+    
+    DBMS_OUTPUT.PUT_LINE('Sara Salary: ' || emp_salaries('Sara'));
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_01_02.html" class="nav-prev"
+            >← The %ROWTYPE Attribute</a
+          >
+          <a href="topic_02_01b_02.html" class="nav-next">Nested Tables →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating Stored Procedures | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>Creating Stored Procedures</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Creating Stored Procedures</h1>
+          <p class="topic-title-ar">إنشاء الإجراءات المخزنة</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              الإجراء المخزن (Stored Procedure) هو كتلة PL/SQL مسماة يتم تخزينها
+              في قاعدة البيانات ويمكن استدعاؤها متى دعت الحاجة. تستخدم لتنفيذ
+              مهمة محددة ويمكن أن تقبل مدخلات وتعيد مخرجات.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>المفهوم | Concept</h3>
+            <p>
+              الإجراء المخزن (Stored Procedure) هو كتلة PL/SQL مسماة يتم تخزينها
+              في قاعدة البيانات ويمكن استدعاؤها متى دعت الحاجة. يساعد في تعزيز
+              إعادة استخدام الكود (Reusability) وسهولة الصيانة.
+            </p>
+
+            <h3>الصيغة العامة | Syntax</h3>
+            <pre><code class="language-sql">CREATE [OR REPLACE] PROCEDURE procedure_name
+    [(parameter_name [IN | OUT | IN OUT] type, ...)]
+IS | AS
+[EXCEPTION
+    exception_handlers]
+END [procedure_name];</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_04_04.html" class="nav-prev"
+            >← Cursors with Parameters</a
+          >
+          <a href="topic_02_05_02.html" class="nav-next">Parameter Modes →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

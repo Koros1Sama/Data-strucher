@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heap Files | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_04/index.html">الوحدة 4</a> ›
+        <span>Heap Files</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Unordered Files (Heap Files)</h1>
+          <p class="topic-title-ar">الملفات غير المرتبة (ملفات الكومة)</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              ملفات الكومة (Heap Files) هي أبسط وأكثر أنواع تنظيم الملفات
+              شيوعاً. يتم وضع السجلات في الملف بترتيب وصولها (Insertion Order).
+              السجلات الجديدة تضاف دائماً إلى نهاية الملف.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>الخصائص | Characteristics</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>الترتيب:</strong> يتم وضع السجلات في الملف بترتيب وصولها
+                (Insertion Order).
+              </li>
+              <li>
+                <strong>الإدراج (Insertion):</strong> فعال جداً وسريع، حيث تضاف
+                السجلات الجديدة دائماً في نهاية الملف (أو في آخر كتلة).
+              </li>
+              <li>
+                <strong>البحث (Searching):</strong> بطيء، يتطلب بحثاً خطياً
+                (Linear Search) لقراءة كل الكتل حتى يتم العثور على السجل
+                المطلوب.
+              </li>
+            </ul>
+
+            <h3>الحذف | Deletion Techniques</h3>
+            <p>
+              عند حذف سجل، لا يتم إزاحة السجلات الأخرى (لأن ذلك مكلف). بدلاً من
+              ذلك:
+            </p>
+            <ul class="styled-list">
+              <li>يتم وضع علامة حذف (Deletion Marker) على السجل.</li>
+              <li>يتم إعادة كتابة الكتلة مع العلامة.</li>
+              <li>
+                يتم تجاهل السجلات المحذوفة أثناء القراءة، وتتم إعادة استخدام
+                مساحتها لاحقاً.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_04_04_04.html" class="nav-prev">← Record Placement</a>
+          <a href="topic_04_05_02.html" class="nav-next">Sorted Files →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

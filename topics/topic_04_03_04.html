@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reverse Key Index | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_04/index.html">الوحدة 4</a> ›
+        <span>Reverse Key Index</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Reverse Key Index</h1>
+          <p class="topic-title-ar">الفهرس ذو المفتاح المعكوس</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              هو نوع خاص من فهارس B-Tree مصمم لحل مشكلة التنافس (Contention) على
+              الكتل الساخنة (Hot Blocks) عند استخدام مفاتيح متسلسلة (Sequences).
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>المشكلة (The Problem)</h3>
+            <p>
+              عند استخدام رقم تسلسلي (Sequence) كمفتاح أساسي (1001, 1002,
+              1003...)، يتم إضافة السجلات الجديدة دائماً إلى نفس الجانب الأيمن
+              من الشجرة ونفس الكتلة، مما يسبب اختناقاً في الأداء في الأنظمة
+              متعددة المستخدمين (RAC).
+            </p>
+
+            <h3>الحل (The Solution)</h3>
+            <p>
+              يقوم هذا الفهرس بعكس بتات أو أرقام المفتاح قبل تخزينه في الفهرس،
+              مما يوزع القيم الجديدة عشوائياً عبر جميع كتل الشجرة بدلاً من
+              تجميعها في مكان واحد.
+            </p>
+            <ul class="styled-list">
+              <li>1001 ← 1001</li>
+              <li>1002 ← 2001</li>
+              <li>1003 ← 3001</li>
+            </ul>
+
+            <h3>العيوب</h3>
+            <p>
+              لا يمكن استخدام هذا الفهرس في عمليات البحث بالنطاق (Range Scan)،
+              مثل <code>WHERE ID > 1000</code>، لأن الترتيب المنطقي للبيانات قد
+              ضاع.
+            </p>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_04_03_03.html" class="nav-prev"
+            >← Function-Based Index</a
+          >
+          <a href="../../modules/module_05/index.html" class="nav-next"
+            >Next Module: Transactions →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

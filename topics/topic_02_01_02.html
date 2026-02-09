@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collections | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>المجموعات (Collections)</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Collections</h1>
+          <p class="topic-title-ar">المجموعات (المصفوفات والقوائم)</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📚 ما هي المجموعات؟</h2>
+            <p>
+              هي متغيرات مركبة يمكنها تخزين
+              <span class="term" data-ar="قيم متعددة من نفس النوع"
+                >Multiple Values of Same Type</span
+              >. وهي تشبه المصفوفات (Arrays) في لغات البرمجة الأخرى (Java, C++).
+            </p>
+            <div class="highlight-box">
+              <p><strong>تذكر:</strong></p>
+              <ul>
+                <li>
+                  <strong>Record:</strong> يخزن صفاً واحداً بأنواع بيانات
+                  مختلفة.
+                </li>
+                <li>
+                  <strong>Collection:</strong> تخزن صفوفاً متعددة (أو قيماً
+                  متعددة) من نفس النوع.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>🗂️ الأنواع الثلاثة للمجموعات</h2>
+
+            <div class="types-grid">
+              <div class="type-card">
+                <h3>1. Associative Arrays</h3>
+                <p>(INDEX BY Tables)</p>
+                <ul>
+                  <li>تشبه Hash Map أو Dictionary.</li>
+                  <li>المفتاح (Key) يمكن أن يكون رقماً أو نصاً.</li>
+                  <li>لا حجم محدد لها.</li>
+                  <li>تستخدم في PL/SQL فقط (لا تُخزّن في DB).</li>
+                </ul>
+              </div>
+              <div class="type-card">
+                <h3>2. Nested Tables</h3>
+                <p>الجداول المتداخلة</p>
+                <ul>
+                  <li>تشبه المصفوفات الديناميكية (Dynamic Arrays).</li>
+                  <li>يمكن تخزينها كعمود في جدول قاعدة البيانات.</li>
+                  <li>حجمها غير محدود.</li>
+                </ul>
+              </div>
+              <div class="type-card">
+                <h3>3. VARRAYs</h3>
+                <p>المصفوفات متغيرة الحجم</p>
+                <ul>
+                  <li>مصفوفة ذات حجم أقصى ثابت (Fixed Max Size).</li>
+                  <li>تحافظ على ترتيب العناصر.</li>
+                  <li>
+                    تستخدم عندما تعرف الحد الأقصى للعناصر (مثلاً: أيام الأسبوع).
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>💻 مثال: Associative Array (INDEX BY Table)</h2>
+            <p>هذا النوع هو الأكثر استخداماً لأنه بسيط ومرن.</p>
+
+            <pre><code class="language-sql">DECLARE
+    -- تعريف نوع المصفوفة (مصفوفة أرقام وفهرسها رقم)
+    TYPE t_numbers IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+    
+    -- إنشاء متغير من هذا النوع
+    v_list t_numbers;
+BEGIN
+    -- تعبئة المصفوفة
+    v_list(1) := 100;
+    v_list(2) := 200;
+    v_list(10) := 1000; -- الفهرس لا يشترط أن يكون متسلسلاً
+    
+    -- القراءة
+    DBMS_OUTPUT.PUT_LINE('Value at 10: ' || v_list(10));
+    
+    -- دوال مفيدة
+    DBMS_OUTPUT.PUT_LINE('Count: ' || v_list.COUNT); -- عدد العناصر
+    DBMS_OUTPUT.PUT_LINE('First Index: ' || v_list.FIRST);
+    DBMS_OUTPUT.PUT_LINE('Last Index: ' || v_list.LAST);
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_01_01.html" class="nav-prev">← السجلات (Records)</a>
+          <a href="topic_02_02_01.html" class="nav-next">جمل IF الشرطية →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

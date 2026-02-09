@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating Stored Functions | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>Creating Stored Functions</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Creating Stored Functions</h1>
+          <p class="topic-title-ar">إنشاء الدوال المخزنة</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              الدالة المخزنة (Stored Function) تشبه الإجراء المخزن، لكن الفرق
+              الرئيسي أنها <strong>يجب أن تعيد قيمة</strong> (RETURN value).
+              تستخدم غالباً لحساب القيم ويمكن استخدامها داخل جمل SQL.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>المفهوم | Concept</h3>
+            <p>
+              الدالة المخزنة (Stored Function) تشبه الإجراء المخزن ولكنها
+              <strong>يجب</strong> أن ترجع قيمة (Return Value). تستخدم غالباً
+              لإجراء العمليات الحسابية أو استرجاع قيمة مفردة.
+            </p>
+
+            <h3>الصيغة العامة | Syntax</h3>
+            <pre><code class="language-sql">CREATE [OR REPLACE] FUNCTION function_name
+    [(parameter_name [IN] type, ...)]
+RETURN return_type
+IS | AS
+    executable_statements
+    RETURN expression;
+[EXCEPTION
+    exception_handlers]
+END [function_name];</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_05_02.html" class="nav-prev">← Parameter Modes</a>
+          <a href="topic_02_05_04.html" class="nav-next"
+            >Procedures vs Functions →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

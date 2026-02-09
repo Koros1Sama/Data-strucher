@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trigger Execution Order | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_03/index.html">الوحدة 3</a> ›
+        <span>Trigger Execution Order</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Trigger Execution Order</h1>
+          <p class="topic-title-ar">تسلسل تنفيذ المشغلات</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              عندما يتم تعريف عدة أنواع من المشغلات على نفس الجدول، من المهم
+              جداً فهم الترتيب الذي يقوم Oracle بتنفيذها به عند حدوث عملية DML،
+              لضمان سلامة المنطق البرمجي.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>تسلسل التنفيذ الصحيح (Execution Sequence)</h3>
+            <ol class="styled-list number-list">
+              <li>
+                <strong>BEFORE Statement Trigger:</strong> ينفذ أولاً، مرة واحدة
+                فقط قبل بدء العملية بالكامل.
+              </li>
+              <li>
+                <strong>Loop for each row (تكرار لكل صف):</strong>
+                <ul>
+                  <li>
+                    <strong>BEFORE Row Trigger:</strong> ينفذ قبل تعديل الصف
+                    الحالي.
+                  </li>
+                  <li>
+                    <strong>DML Operation:</strong> تنفيذ العملية الفعلية
+                    (إضافة/تعديل/حذف) والتحقق من القيود (Constraints).
+                  </li>
+                  <li>
+                    <strong>AFTER Row Trigger:</strong> ينفذ بعد اكتمال تعديل
+                    الصف الحالي.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>AFTER Statement Trigger:</strong> ينفذ أخيراً، مرة واحدة
+                فقط بعد الانتهاء من جميع الصفوف.
+              </li>
+            </ol>
+
+            <h3>مثال للتوضيح</h3>
+            <p>لو قمنا بتحديث 5 موظفين بجملة UPDATE واحدة:</p>
+            <ul class="styled-list">
+              <li>BEFORE Statement يعمل مرة واحدة.</li>
+              <li>BEFORE Row يعمل 5 مرات.</li>
+              <li>AFTER Row يعمل 5 مرات.</li>
+              <li>AFTER Statement يعمل مرة واحدة.</li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_03_02_03.html" class="nav-prev"
+            >← INSTEAD OF Triggers</a
+          >
+          <a href="../ch_03_03/topic_03_03_01.html" class="nav-next"
+            >Managing Triggers →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

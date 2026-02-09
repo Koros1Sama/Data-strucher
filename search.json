@@ -1,0 +1,564 @@
+[
+  {
+    "title": "What is PL/SQL",
+    "url": "modules/module_01/topic_01_01_01.html",
+    "module": "Introduction to PL/SQL",
+    "content": "ما هو PL/SQL",
+    "type": "topic"
+  },
+  {
+    "title": "PL/SQL Block Structure",
+    "url": "modules/module_01/topic_01_01_02.html",
+    "module": "Introduction to PL/SQL",
+    "content": "هيكل كتلة PL/SQL",
+    "type": "topic"
+  },
+  {
+    "title": "Block Types: Anonymous, Procedure, Function",
+    "url": "modules/module_01/topic_01_01_03.html",
+    "module": "Introduction to PL/SQL",
+    "content": "أنواع الكتل: مجهولة، إجراء، دالة",
+    "type": "topic"
+  },
+  {
+    "title": "Declaring Variables",
+    "url": "modules/module_01/topic_01_02_01.html",
+    "module": "Introduction to PL/SQL",
+    "content": "تعريف المتغيرات",
+    "type": "topic"
+  },
+  {
+    "title": "Scalar Data Types",
+    "url": "modules/module_01/topic_01_02_02.html",
+    "module": "Introduction to PL/SQL",
+    "content": "أنواع البيانات العددية",
+    "type": "topic"
+  },
+  {
+    "title": "The %TYPE Attribute",
+    "url": "modules/module_01/topic_01_02_03.html",
+    "module": "Introduction to PL/SQL",
+    "content": "خاصية %TYPE",
+    "type": "topic"
+  },
+  {
+    "title": "Bind and Substitution Variables",
+    "url": "modules/module_01/topic_01_02_04.html",
+    "module": "Introduction to PL/SQL",
+    "content": "متغيرات الربط والاستبدال",
+    "type": "topic"
+  },
+  {
+    "title": "Creating PL/SQL Records",
+    "url": "modules/module_02/topic_02_01_01.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "إنشاء سجلات PL/SQL",
+    "type": "topic"
+  },
+  {
+    "title": "The %ROWTYPE Attribute",
+    "url": "modules/module_02/topic_02_01_02.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "خاصية %ROWTYPE",
+    "type": "topic"
+  },
+  {
+    "title": "SELECT Statements in PL/SQL",
+    "url": "modules/module_02/topic_02_02_01.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "جمل SELECT في PL/SQL",
+    "type": "topic"
+  },
+  {
+    "title": "DML Operations: INSERT, UPDATE, DELETE",
+    "url": "modules/module_02/topic_02_02_02.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "عمليات DML: إدراج، تحديث، حذف",
+    "type": "topic"
+  },
+  {
+    "title": "Implicit Cursor Attributes",
+    "url": "modules/module_02/topic_02_02_03.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "خصائص المؤشر الضمني",
+    "type": "topic"
+  },
+  {
+    "title": "IF Statements",
+    "url": "modules/module_02/topic_02_03_01.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "جمل IF الشرطية",
+    "type": "topic"
+  },
+  {
+    "title": "CASE Expressions and Statements",
+    "url": "modules/module_02/topic_02_03_02.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "تعبيرات وجمل CASE",
+    "type": "topic"
+  },
+  {
+    "title": "Loop Types: Basic, WHILE, FOR",
+    "url": "modules/module_02/topic_02_03_03.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "أنواع الحلقات: أساسية، WHILE، FOR",
+    "type": "topic"
+  },
+  {
+    "title": "Nested Loops and Labels",
+    "url": "modules/module_02/topic_02_03_04.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "الحلقات المتداخلة والتسميات",
+    "type": "topic"
+  },
+  {
+    "title": "Cursor Fundamentals",
+    "url": "modules/module_02/topic_02_04_01.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "أساسيات المؤشرات",
+    "type": "topic"
+  },
+  {
+    "title": "Controlling Cursors: DECLARE, OPEN, FETCH, CLOSE",
+    "url": "modules/module_02/topic_02_04_02.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "التحكم بالمؤشرات: تعريف، فتح، جلب، إغلاق",
+    "type": "topic"
+  },
+  {
+    "title": "Cursor FOR Loops",
+    "url": "modules/module_02/topic_02_04_03.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "حلقات FOR للمؤشرات",
+    "type": "topic"
+  },
+  {
+    "title": "Cursors with Parameters",
+    "url": "modules/module_02/topic_02_04_04.html",
+    "module": "Composite Data Types and Control Structures",
+    "content": "المؤشرات مع المعاملات",
+    "type": "topic"
+  },
+  {
+    "title": "Types of Triggers",
+    "url": "modules/module_03/topic_03_01_01.html",
+    "module": "Database Triggers",
+    "content": "أنواع المشغلات",
+    "type": "topic"
+  },
+  {
+    "title": "DML Triggers: Statement vs Row",
+    "url": "modules/module_03/topic_03_01_02.html",
+    "module": "Database Triggers",
+    "content": "مشغلات DML: مستوى الجملة مقابل الصف",
+    "type": "topic"
+  },
+  {
+    "title": "Trigger Timing: BEFORE, AFTER, INSTEAD OF",
+    "url": "modules/module_03/topic_03_01_03.html",
+    "module": "Database Triggers",
+    "content": "توقيت المشغل: قبل، بعد، بدلاً من",
+    "type": "topic"
+  },
+  {
+    "title": "Statement Triggers",
+    "url": "modules/module_03/topic_03_02_01.html",
+    "module": "Database Triggers",
+    "content": "مشغلات مستوى الجملة",
+    "type": "topic"
+  },
+  {
+    "title": "Row Triggers with OLD and NEW",
+    "url": "modules/module_03/topic_03_02_02.html",
+    "module": "Database Triggers",
+    "content": "مشغلات الصف مع OLD و NEW",
+    "type": "topic"
+  },
+  {
+    "title": "Conditional Predicates",
+    "url": "modules/module_03/topic_03_02_03.html",
+    "module": "Database Triggers",
+    "content": "المسندات الشرطية",
+    "type": "topic"
+  },
+  {
+    "title": "INSTEAD OF Triggers for Views",
+    "url": "modules/module_03/topic_03_02_04.html",
+    "module": "Database Triggers",
+    "content": "مشغلات INSTEAD OF للعروض",
+    "type": "topic"
+  },
+  {
+    "title": "Enable, Disable, and Drop Triggers",
+    "url": "modules/module_03/topic_03_03_01.html",
+    "module": "Database Triggers",
+    "content": "تفعيل وتعطيل وحذف المشغلات",
+    "type": "topic"
+  },
+  {
+    "title": "Trigger Firing Sequence",
+    "url": "modules/module_03/topic_03_03_02.html",
+    "module": "Database Triggers",
+    "content": "تسلسل تنفيذ المشغلات",
+    "type": "topic"
+  },
+  {
+    "title": "Indexes as Access Paths",
+    "url": "modules/module_04/topic_04_01_01.html",
+    "module": "Indexing and Physical Database Design",
+    "content": "الفهارس كمسارات وصول",
+    "type": "topic"
+  },
+  {
+    "title": "Dense vs Sparse Indexes",
+    "url": "modules/module_04/topic_04_01_02.html",
+    "module": "Indexing and Physical Database Design",
+    "content": "الفهارس الكثيفة مقابل المتفرقة",
+    "type": "topic"
+  },
+  {
+    "title": "Primary Index",
+    "url": "modules/module_04/topic_04_02_01.html",
+    "module": "Indexing and Physical Database Design",
+    "content": "الفهرس الأساسي",
+    "type": "topic"
+  },
+  {
+    "title": "Clustering Index",
+    "url": "modules/module_04/topic_04_02_02.html",
+    "module": "Indexing and Physical Database Design",
+    "content": "فهرس التجميع",
+    "type": "topic"
+  },
+  {
+    "title": "Secondary Index",
+    "url": "modules/module_04/topic_04_02_03.html",
+    "module": "Indexing and Physical Database Design",
+    "content": "الفهرس الثانوي",
+    "type": "topic"
+  },
+  {
+    "title": "Multi-Level Index Structure",
+    "url": "modules/module_04/topic_04_03_01.html",
+    "module": "Indexing and Physical Database Design",
+    "content": "هيكل الفهرس متعدد المستويات",
+    "type": "topic"
+  },
+  {
+    "title": "B-Tree Structure",
+    "url": "modules/module_04/topic_04_03_02.html",
+    "module": "Indexing and Physical Database Design",
+    "content": "هيكل شجرة B",
+    "type": "topic"
+  },
+  {
+    "title": "B+-Tree: Insertion and Deletion",
+    "url": "modules/module_04/topic_04_03_03.html",
+    "module": "Indexing and Physical Database Design",
+    "content": "شجرة B+: الإدراج والحذف",
+    "type": "topic"
+  },
+  {
+    "title": "Hash, Bitmap, and Function-Based Indexes",
+    "url": "modules/module_04/topic_04_03_04.html",
+    "module": "Indexing and Physical Database Design",
+    "content": "فهارس التجزئة والنقطية والقائمة على الدوال",
+    "type": "topic"
+  },
+  {
+    "title": "What is a Transaction",
+    "url": "modules/module_05/topic_05_01_01.html",
+    "module": "Transaction Processing",
+    "content": "ما هي المعاملة",
+    "type": "topic"
+  },
+  {
+    "title": "Single-User vs Multi-User DBMS",
+    "url": "modules/module_05/topic_05_01_02.html",
+    "module": "Transaction Processing",
+    "content": "نظام قواعد بيانات المستخدم الواحد مقابل المتعدد",
+    "type": "topic"
+  },
+  {
+    "title": "Read and Write Operations",
+    "url": "modules/module_05/topic_05_01_03.html",
+    "module": "Transaction Processing",
+    "content": "عمليات القراءة والكتابة",
+    "type": "topic"
+  },
+  {
+    "title": "The Lost Update Problem",
+    "url": "modules/module_05/topic_05_02_01.html",
+    "module": "Transaction Processing",
+    "content": "مشكلة التحديث المفقود",
+    "type": "topic"
+  },
+  {
+    "title": "The Temporary Update Problem",
+    "url": "modules/module_05/topic_05_02_02.html",
+    "module": "Transaction Processing",
+    "content": "مشكلة التحديث المؤقت",
+    "type": "topic"
+  },
+  {
+    "title": "The Incorrect Summary Problem",
+    "url": "modules/module_05/topic_05_02_03.html",
+    "module": "Transaction Processing",
+    "content": "مشكلة الملخص غير الصحيح",
+    "type": "topic"
+  },
+  {
+    "title": "The Unrepeatable Read Problem",
+    "url": "modules/module_05/topic_05_02_04.html",
+    "module": "Transaction Processing",
+    "content": "مشكلة القراءة غير القابلة للتكرار",
+    "type": "topic"
+  },
+  {
+    "title": "Transaction States",
+    "url": "modules/module_05/topic_05_03_01.html",
+    "module": "Transaction Processing",
+    "content": "حالات المعاملة",
+    "type": "topic"
+  },
+  {
+    "title": "The System Log",
+    "url": "modules/module_05/topic_05_03_02.html",
+    "module": "Transaction Processing",
+    "content": "سجل النظام",
+    "type": "topic"
+  },
+  {
+    "title": "Commit Point and Recovery",
+    "url": "modules/module_05/topic_05_03_03.html",
+    "module": "Transaction Processing",
+    "content": "نقطة الالتزام والاسترداد",
+    "type": "topic"
+  },
+  {
+    "title": "Atomicity",
+    "url": "modules/module_05/topic_05_04_01.html",
+    "module": "Transaction Processing",
+    "content": "الذرية",
+    "type": "topic"
+  },
+  {
+    "title": "Consistency",
+    "url": "modules/module_05/topic_05_04_02.html",
+    "module": "Transaction Processing",
+    "content": "الاتساق",
+    "type": "topic"
+  },
+  {
+    "title": "Isolation and Isolation Levels",
+    "url": "modules/module_05/topic_05_04_03.html",
+    "module": "Transaction Processing",
+    "content": "العزل ومستويات العزل",
+    "type": "topic"
+  },
+  {
+    "title": "Durability",
+    "url": "modules/module_05/topic_05_04_04.html",
+    "module": "Transaction Processing",
+    "content": "الديمومة",
+    "type": "topic"
+  },
+  {
+    "title": "PL/SQL",
+    "url": "glossary/index.html#pl/sql",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Block",
+    "url": "glossary/index.html#block",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Variable",
+    "url": "glossary/index.html#variable",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "%TYPE",
+    "url": "glossary/index.html#%type",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "%ROWTYPE",
+    "url": "glossary/index.html#%rowtype",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Record",
+    "url": "glossary/index.html#record",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Cursor",
+    "url": "glossary/index.html#cursor",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Implicit Cursor",
+    "url": "glossary/index.html#implicit-cursor",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Explicit Cursor",
+    "url": "glossary/index.html#explicit-cursor",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Trigger",
+    "url": "glossary/index.html#trigger",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Statement Trigger",
+    "url": "glossary/index.html#statement-trigger",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Row Trigger",
+    "url": "glossary/index.html#row-trigger",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": ":OLD",
+    "url": "glossary/index.html#:old",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": ":NEW",
+    "url": "glossary/index.html#:new",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Index",
+    "url": "glossary/index.html#index",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Dense Index",
+    "url": "glossary/index.html#dense-index",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Sparse Index",
+    "url": "glossary/index.html#sparse-index",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Primary Index",
+    "url": "glossary/index.html#primary-index",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Clustering Index",
+    "url": "glossary/index.html#clustering-index",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Secondary Index",
+    "url": "glossary/index.html#secondary-index",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "B-Tree",
+    "url": "glossary/index.html#b-tree",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "B+-Tree",
+    "url": "glossary/index.html#b+-tree",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Transaction",
+    "url": "glossary/index.html#transaction",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "ACID Properties",
+    "url": "glossary/index.html#acid-properties",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Atomicity",
+    "url": "glossary/index.html#atomicity",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Consistency",
+    "url": "glossary/index.html#consistency",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Isolation",
+    "url": "glossary/index.html#isolation",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Durability",
+    "url": "glossary/index.html#durability",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Commit",
+    "url": "glossary/index.html#commit",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Rollback",
+    "url": "glossary/index.html#rollback",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Lost Update Problem",
+    "url": "glossary/index.html#lost-update-problem",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "Dirty Read",
+    "url": "glossary/index.html#dirty-read",
+    "content": "",
+    "type": "term"
+  },
+  {
+    "title": "System Log",
+    "url": "glossary/index.html#system-log",
+    "content": "",
+    "type": "term"
+  }
+]

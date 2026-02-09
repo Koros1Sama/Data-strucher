@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conflict Serializability | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_05/index.html">الوحدة 5</a> ›
+        <span>Conflict Serializability</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Conflict Serializability</h1>
+          <p class="topic-title-ar">قابلية التسلسل القائمة على التعارض</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              لتحديد ما إذا كان جدول معين "قابلاً للتسلسل" (Serializable)،
+              نستخدم مفهوم "التعارض" (Conflict). إذا تمكنا من تحويل الجدول إلى
+              جدول تسلسلي (Serial) عن طريق تبديل العمليات غير المتعارضة، فهو
+              Conflict Serializable.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>ما هي العمليات المتعارضة؟ (Conflicting Operations)</h3>
+            <p>تتعارض عمليتان إذا:</p>
+            <ol class="styled-list number-list">
+              <li>تنتميان لمعاملتين مختلفتين (T1 و T2).</li>
+              <li>تصلان إلى نفس عنصر البيانات (Item X).</li>
+              <li>واحدة منهما على الأقل هي عملية كتابة (Write).</li>
+            </ol>
+            <p><strong>أمثلة:</strong></p>
+            <ul class="styled-list">
+              <li>
+                Read(X) في T1 و Write(X) في T2 ← <strong>تعارض</strong> (R-W).
+              </li>
+              <li>
+                Write(X) في T1 و Write(X) في T2 ← <strong>تعارض</strong> (W-W).
+              </li>
+              <li>
+                Read(X) في T1 و Read(X) في T2 ←
+                <strong>لا يوجد تعارض</strong> (R-R).
+              </li>
+            </ul>
+
+            <h3>اختبار القابلية (Precedence Graph)</h3>
+            <p>يمكننا استخدام "رسم الأسبقية" (Precedence Graph).</p>
+            <ul class="styled-list">
+              <li>كل معاملة تمثل عقدة (Node).</li>
+              <li>
+                نرسم سهماً من T1 إلى T2 إذا كانت هناك عملية في T1 تتعارض وتسبق
+                عملية في T2.
+              </li>
+              <li>
+                <strong>النتيجة:</strong> إذا كان الرسم يحتوي على دورة (Cycle)،
+                فالجدول <strong>غير قابل للتسلسل</strong>. إذا لم توجد دورة، فهو
+                قابل للتسلسل.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_05_02_02.html" class="nav-prev"
+            >← Schedules & Serializability</a
+          >
+          <a href="topic_05_02_04.html" class="nav-next">Recoverability →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

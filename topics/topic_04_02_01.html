@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>B-Tree Structure | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_04/index.html">الوحدة 4</a> ›
+        <span>B-Tree Structure</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Dynamic Multilevel Indexes: B-Trees</h1>
+          <p class="topic-title-ar">
+            الفهارس متعددة المستويات الديناميكية: أشجار B-Trees
+          </p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              تعتبر أشجار B-Trees (Balanced Trees) الحل الأمثل لمشاكل الفهارس
+              متعددة المستويات التقليدية، حيث تحل مشكلة تكلفة الإضافة والحذف
+              بالحفاظ على توازن الشجرة دائماً.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>المشاكل في الأشجار التقليدية</h3>
+            <p>
+              في الفهارس متعددة المستويات الثابتة (Static)، تتطلب عمليات الإضافة
+              والحذف إعادة تنظيم واسعة للملفات للحفاظ على الترتيب، مما يجعلها
+              غير فعالة للبيانات المتغيرة بكثرة.
+            </p>
+
+            <h3>خصائص B-Tree</h3>
+            <ul class="styled-list">
+              <li>كل عقدة (Node) في الشجرة تقابل كتلة قرص (Disk Block).</li>
+              <li>يتم الاحتفاظ بالعقد ممتلئة بنسبة تتراوح بين 50% و 100%.</li>
+              <li>
+                <strong>البيانات والمؤشرات:</strong> تحتوي كل عقدة (سواء كانت
+                جذر، داخلية، أو ورقة) على مفاتيح البحث ومؤشرات لسجلات البيانات
+                (Record Pointers).
+              </li>
+              <li>
+                جميع الأوراق (Leaf Nodes) تكون في نفس المستوى، مما يضمن توازن
+                الشجرة.
+              </li>
+            </ul>
+
+            <h3>مزايا B-Tree</h3>
+            <ul class="styled-list">
+              <li>
+                تضمن أن البحث دائماً يستغرق وقتاً لوغاريتمياً Logarithmic Time.
+              </li>
+              <li>
+                عمليات الإضافة والحذف لا تتطلب إعادة بناء الشجرة بالكامل، بل
+                تعديلات موضعية (Split/Merge).
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="../ch_04_01/topic_04_01_03.html" class="nav-prev"
+            >← Secondary Indexes</a
+          >
+          <a href="topic_04_02_02.html" class="nav-next">B+ Tree Structure →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

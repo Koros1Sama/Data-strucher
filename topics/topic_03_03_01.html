@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Managing Triggers | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_03/index.html">الوحدة 3</a> ›
+        <span>Managing Triggers</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>Managing Triggers: ENABLE, DISABLE, DROP</h1>
+          <p class="topic-title-ar">إدارة المشغلات: تفعيل، تعطيل، حذف</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              بصفتك مديراً لقاعدة البيانات، قد تحتاج أحياناً إلى إيقاف عمل
+              المشغل مؤقتاً (لتحميل بيانات ضخمة مثلاً) دون حذفه، أو حذفه
+              نهائياً. توفر SQL أوامر محددة لهذه المهام.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>1. التعطيل والتفعيل (Disabling and Enabling)</h3>
+            <p>عند تعطيل المشغل، يبقى تعريفه في قاعدة البيانات لكنه لا ينفذ.</p>
+            <pre><code class="language-sql">-- لتعطيل مشغل معين
+ALTER TRIGGER trigger_name DISABLE;
+
+-- لتفعيل مشغل معين
+ALTER TRIGGER trigger_name ENABLE;
+
+-- لتعطيل جميع المشغلات المرتبطة بجدول
+ALTER TABLE table_name DISABLE ALL TRIGGERS;</code></pre>
+
+            <h3>2. إعادة التجميع (Recompiling)</h3>
+            <p>
+              إذا حدثت تغييرات في الجدول أو الكائنات التي يعتمد عليها المشغل، قد
+              يصبح بوضع "INVALID". نستخدم الأمر التالي لإعادة تجميعه والتحقق من
+              الأخطاء:
+            </p>
+            <pre><code class="language-sql">ALTER TRIGGER trigger_name COMPILE;</code></pre>
+
+            <h3>3. الحذف (Dropping)</h3>
+            <p>لإزالة المشغل نهائياً من قاعدة البيانات.</p>
+            <pre><code class="language-sql">DROP TRIGGER trigger_name;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="../ch_03_02/topic_03_02_04.html" class="nav-prev"
+            >← Trigger Execution Order</a
+          >
+          <a href="topic_03_03_02.html" class="nav-next"
+            >Triggers vs. Stored Procedures →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

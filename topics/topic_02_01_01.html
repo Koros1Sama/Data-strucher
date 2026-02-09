@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PL/SQL Records | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>سجلات PL/SQL</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>PL/SQL Records</h1>
+          <p class="topic-title-ar">السجلات (Records)</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📦 ما هو السجل (Record)؟</h2>
+            <p>
+              السجل هو
+              <span class="term" data-ar="نوع بيانات مركب"
+                >Composite Data Type</span
+              >
+              يسمح لك بتخزين عدة قيم مختلفة الأنواع في متغير واحد. فكر فيه كأنه
+              "صف" (Row) كامل في جدول، يحتوي على اسم، رقم، تاريخ، إلخ.
+            </p>
+            <div class="highlight-box">
+              <p>
+                <strong>تشبيه:</strong> المتغير العادي (Scalar) مثل الصندوق الذي
+                يحمل غرضاً واحداً. السجل (Record) مثل الحقيبة التي تحتوي على عدة
+                جيوب، وكل جيب يحمل غرضاً مختلفاً.
+              </p>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>🛠️ طرق تعريف السجلات</h2>
+            <p>هناك طريقتان رئيسيتان:</p>
+
+            <h3>1. باستخدام %ROWTYPE (الأسهل)</h3>
+            <p>لإنشاء سجل يطابق تماماً هيكل صف في جدول قاعدة البيانات.</p>
+            <pre><code class="language-sql">v_emp_rec employees%ROWTYPE;</code></pre>
+
+            <h3>2. تعريف نوع سجل مخصص (User-Defined Record)</h3>
+            <p>عندما تريد سجلاً بحقول محددة فقط (وليس كل أعمدة الجدول).</p>
+            <pre><code class="language-sql">TYPE t_emp_info IS RECORD (
+    first_name  VARCHAR2(20),
+    salary      NUMBER,
+    dept_id     NUMBER
+);
+v_my_rec t_emp_info; -- إنشاء متغير من النوع الذي عرفناه</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>💻 كيفية الاستخدام</h2>
+            <p>
+              للوصول إلى حقل داخل السجل، نستخدم النقطة
+              <code>.</code> (Record.Field).
+            </p>
+
+            <pre><code class="language-sql">DECLARE
+    v_emp employees%ROWTYPE;
+BEGIN
+    -- جلب صف كامل وتخزينه في السجل
+    SELECT * INTO v_emp 
+    FROM employees 
+    WHERE employee_id = 100;
+    
+    -- الوصول للحقول
+    DBMS_OUTPUT.PUT_LINE('Name: ' || v_emp.last_name);
+    DBMS_OUTPUT.PUT_LINE('Salary: ' || v_emp.salary);
+    
+    -- تعديل قيمة في السجل (في الذاكرة فقط)
+    v_emp.salary := v_emp.salary + 1000;
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="../modules/module_01/index.html" class="nav-prev"
+            >← الوحدة 1</a
+          >
+          <a href="topic_02_01_02.html" class="nav-next"
+            >المجموعات (Collections) →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PL/SQL Block Structure | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_01/index.html">الوحدة 1</a> ›
+        <span>هيكل الكتلة</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>PL/SQL Block Structure</h1>
+          <p class="topic-title-ar">هيكل كتلة PL/SQL</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>🧱 الأقسام الإختيارية والإجبارية</h2>
+            <p>
+              تتكون أي كتلة
+              <span class="term" data-ar="وحدة الكود الأساسية">Block</span> في
+              PL/SQL من ثلاثة أقسام رئيسية. قسم واحد فقط إجباري، والاثنان
+              الآخران اختياريان.
+            </p>
+
+            <div class="structure-diagram">
+              <div class="block-section optional">
+                <h3>1. قسم التعريف (Declarative) - [اختياري]</h3>
+                <p>
+                  يبدأ بكلمة <code>DECLARE</code>. هنا تعرّف المتغيرات، الثوابت،
+                  والمؤشرات.
+                </p>
+              </div>
+              <div class="block-section mandatory">
+                <h3>2. قسم التنفيذ (Executable) - [إجباري]</h3>
+                <p>
+                  يبدأ بكلمة <code>BEGIN</code> وينتهي بـ <code>END</code>. هنا
+                  تكتب الأوامر والشروط.
+                </p>
+              </div>
+              <div class="block-section optional">
+                <h3>3. معالجة الاستثناءات (Exception) - [اختياري]</h3>
+                <p>
+                  يبدأ بكلمة <code>EXCEPTION</code>. لمعالجة الأخطاء التي قد
+                  تحدث أثناء التنفيذ.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>💻 مثال عملي | Code Example</h2>
+            <pre><code class="language-sql">DECLARE
+    -- قسم التعريف (اختياري)
+    v_message VARCHAR2(50) := 'Hello, World!';
+BEGIN
+    -- قسم التنفيذ (إجباري)
+    DBMS_OUTPUT.PUT_LINE(v_message);
+EXCEPTION
+    -- قسم الأخطاء (اختياري)
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('حدث خطأ ما!');
+END;
+/</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 ملاحظات هامة</h2>
+            <ul class="styled-list">
+              <li>
+                يجب أن ينتهي الكود بفاصلة منقوطة <code>;</code> بعد كلمة
+                <code>END</code>.
+              </li>
+              <li>
+                كلمة <code>DECLARE</code> لا تكتب إذا لم يكن لديك متغيرات
+                لتعريفها.
+              </li>
+              <li>
+                القسم الوحيد الذي لا يمكن الاستغناء عنه هو ما بين
+                <code>BEGIN</code> و <code>END</code>.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_01_01_01.html" class="nav-prev">← ما هو PL/SQL؟</a>
+          <a href="topic_01_01_03.html" class="nav-next"
+            >أنواع الكتل (Block Types) →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

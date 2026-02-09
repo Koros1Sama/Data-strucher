@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loop Types: Basic, WHILE, FOR | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>Loop Types</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>Loop Types: Basic, WHILE, FOR</h1>
+          <p class="topic-title-ar">أنواع الحلقات: أساسية، WHILE، FOR</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              تسمح الحلقات (Loops) بتكرار تنفيذ جملة أو مجموعة من الجمل عدة
+              مرات. يوفر PL/SQL ثلاثة أنواع من الحلقات: Basic Loop، WHILE Loop،
+              و FOR Loop.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>1. الحلقة الأساسية (Basic Loop)</h3>
+            <p>
+              تبدأ بكلمة <code>LOOP</code> وتنتهي بـ <code>END LOOP</code>. يتم
+              الخروج منها عادة باستخدام <code>EXIT WHEN</code>.
+            </p>
+            <pre><code class="language-sql">LOOP
+  -- Statements
+  EXIT WHEN condition;
+END LOOP;</code></pre>
+
+            <h3>2. حلقة WHILE (WHILE Loop)</h3>
+            <p>
+              تستمر في التكرار طالما أن الشرط صحيح (TRUE). يتم فحص الشرط في
+              بداية كل دورة.
+            </p>
+            <pre><code class="language-sql">WHILE condition LOOP
+  statement1;
+  statement2;
+END LOOP;</code></pre>
+
+            <h3>3. حلقة FOR (FOR Loop)</h3>
+            <p>
+              تستخدم عندما يكون عدد التكرارات معروفاً مسبقاً. العداد (Counter)
+              يتم تعريفه تلقائياً.
+            </p>
+            <pre><code class="language-sql">FOR counter IN [REVERSE] lower..upper LOOP 
+  statement1;
+  statement2;
+END LOOP;</code></pre>
+            <p><em>مثال:</em></p>
+            <pre><code class="language-sql">FOR i IN 1..3 LOOP
+  INSERT INTO locations(...) VALUES(..., i, ...);
+END LOOP;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_03_02.html" class="nav-prev">← CASE Expressions</a>
+          <a href="topic_02_03_04.html" class="nav-next">Nested Loops →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

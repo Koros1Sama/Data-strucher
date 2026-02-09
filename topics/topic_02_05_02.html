@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Parameter Modes: IN, OUT, IN OUT | Data Structures Study Guide
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>Parameter Modes</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Parameter Modes: IN, OUT, IN OUT</h1>
+          <p class="topic-title-ar">أنماط المعاملات: IN, OUT, IN OUT</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              تحدد أنماط المعاملات (Parameter Modes) كيفية انتقال البيانات من
+              وإلى البرامج الفرعية (Subprograms).
+            </p>
+            <ul class="styled-list">
+              <li>
+                <strong>IN</strong>: (الافتراضي) يمرر قيمة إلى البرنامج الفرعي.
+                للقراءة فقط داخله.
+              </li>
+              <li>
+                <strong>OUT</strong>: يعيد قيمة إلى البيئة المستدعية. يجب
+                التعيين له داخل البرنامج.
+              </li>
+              <li>
+                <strong>IN OUT</strong>: يمرر قيمة أولية ويمكن تحديثها وإعادتها.
+              </li>
+            </ul>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>أنماط الباراميترات | Parameter Modes</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>IN (الافتراضي):</strong>
+                <ul>
+                  <li>تمرير قيمة للإجراء (Pass-by-value).</li>
+                  <li>لا يمكن تغيير قيمته داخل الإجراء (Read-only).</li>
+                  <li>يمكن أن يكون ثابتاً (Literal) أو متغيراً.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>OUT:</strong>
+                <ul>
+                  <li>إرجاع قيمة من الإجراء (Return value).</li>
+                  <li>يتم تجاهل قيمته عند الاستدعاء.</li>
+                  <li>يجب إسناد قيمة له داخل الإجراء قبل الانتهاء.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>IN OUT:</strong>
+                <ul>
+                  <li>
+                    تمرير قيمة أولية للإجراء، ويقوم الإجراء بتعديلها وإعادتها.
+                  </li>
+                  <li>يجمع بين خصائص IN و OUT.</li>
+                </ul>
+              </li>
+            </ul>
+
+            <h3>مثال | Example</h3>
+            <pre><code class="language-sql">CREATE PROCEDURE query_emp
+    (p_id IN employees.employee_id%TYPE,
+     p_name OUT employees.last_name%TYPE,
+     p_sal OUT employees.salary%TYPE)
+IS
+BEGIN
+    SELECT last_name, salary INTO p_name, p_sal
+    FROM employees
+    WHERE employee_id = p_id;
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_05_01.html" class="nav-prev"
+            >← Creating Stored Procedures</a
+          >
+          <a href="topic_02_05_03.html" class="nav-next"
+            >Creating Stored Functions →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

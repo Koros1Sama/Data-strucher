@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VARRAY | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>VARRAY</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>VARRAY</h1>
+          <p class="topic-title-ar">المصفوفات المتغيرة الحجم</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              مصفوفات VARRAY (Variable-Size Arrays) هي مصفوفات لها حجم أقصى ثابت
+              (Fixed Upper Bound). يتم تخزينها وترتيبها وتتميز بأنها تحافظ على
+              ترتيب العناصر.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>المفهوم | Concept</h3>
+            <p>
+              الـ <strong>Variable-Size Array</strong> هي مصفوفة ذات حجم أقصى
+              ثابت (Bounded). يجب تحديد الحجم الأقصى عند التعريف.
+            </p>
+
+            <h3>الخصائص | Characteristics</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>الحجم:</strong> ثابت الحد الأقصى، ولكن يمكن أن تحتوي على
+                عدد عناصر أقل من الحد.
+              </li>
+              <li>
+                <strong>الكثافة (Dense):</strong> لا يمكن حذف عناصر من الوسط،
+                فهي دائماً متسلسلة وممتلئة.
+              </li>
+              <li>
+                <strong>التخزين:</strong> عند استخدامها كعمود في جدول، يتم
+                تخزينها في نفس مساحة الجدول (Inline) إذا كانت صغيرة، مما يجعلها
+                أسرع في القراءة.
+              </li>
+            </ul>
+
+            <h3>Syntax</h3>
+            <pre><code class="language-sql">TYPE type_name IS VARRAY(max_size) OF element_type;
+
+-- Declaration
+my_array type_name;</code></pre>
+
+            <h3>مثال | Example</h3>
+            <pre><code class="language-sql">DECLARE
+    TYPE Grades IS VARRAY(5) OF INTEGER;
+    student_grades Grades := Grades(90, 85, 88);
+BEGIN
+    -- Can add up to 2 more elements only
+    student_grades.EXTEND;
+    student_grades(4) := 95;
+    
+    FOR i IN 1..student_grades.COUNT LOOP
+        DBMS_OUTPUT.PUT_LINE('Grade ' || i || ': ' || student_grades(i));
+    END LOOP;
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_01b_02.html" class="nav-prev">← Nested Tables</a>
+          <a href="topic_02_02_01.html" class="nav-next"
+            >SELECT Statements in PL/SQL →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

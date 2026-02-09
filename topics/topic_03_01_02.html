@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Trigger Types: Statement vs. Row | Data Structures Study Guide
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_03/index.html">الوحدة 3</a> ›
+        <span>Trigger Types</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Trigger Types: Statement vs. Row</h1>
+          <p class="topic-title-ar">أنواع المشغلات: مستوى الجملة ومستوى الصف</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              يمكن تصنيف مشغلات DML إلى نوعين رئيسيين بناءً على عدد مرات تنفيذها
+              عند حدوث الحدث: مشغلات مستوى الجملة (Statement Level) ومشغلات
+              مستوى الصف (Row Level).
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>1. مشغلات مستوى الجملة (Statement Triggers)</h3>
+            <ul class="styled-list">
+              <li>
+                يتم تنفيذها <strong>مرة واحدة فقط</strong> لكل جملة DML، بغض
+                النظر عن عدد الصفوف المتأثرة.
+              </li>
+              <li>
+                هذا هو النوع الافتراضي إذا لم يتم تحديد
+                <code>FOR EACH ROW</code>.
+              </li>
+              <li>
+                تنفذ حتى لو لم تتأثر أي صفوف بالجملة (مثلاً، حذف شرط لا يطابق أي
+                سجل).
+              </li>
+              <li>
+                تستخدم عادةً لأغراض التدقيق (Auditing) غير المرتبط بالبيانات
+                نفسها (مثل وقت التنفيذ).
+              </li>
+            </ul>
+
+            <h3>2. مشغلات مستوى الصف (Row Triggers)</h3>
+            <ul class="styled-list">
+              <li>
+                يتم تنفيذها <strong>مرة واحدة لكل صف</strong> يتأثر بجملة DML.
+              </li>
+              <li>يتم تحديدها باستخدام العبارة <code>FOR EACH ROW</code>.</li>
+              <li>إذا لم تتأثر أي صفوف، فلن يتم تنفيذ المشغل أبداً.</li>
+              <li>
+                تستخدم للتحقق من صحة البيانات أو تعديلها لكل سجل على حدة، وتسمح
+                باستخدام <code>:OLD</code> و <code>:NEW</code>.
+              </li>
+            </ul>
+
+            <h3>جدول المقارنة | Comparison Table</h3>
+            <div class="table-container">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>الخاصية</th>
+                    <th>Statement Trigger</th>
+                    <th>Row Trigger</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>التكرار execution</td>
+                    <td>مرة واحدة للجملة</td>
+                    <td>مرة واحدة لكل صف متأثر</td>
+                  </tr>
+                  <tr>
+                    <td>التعريف</td>
+                    <td>الافتراضي</td>
+                    <td>FOR EACH ROW</td>
+                  </tr>
+                  <tr>
+                    <td>الوصول للبيانات</td>
+                    <td>لا يمكن استخدام :OLD/:NEW</td>
+                    <td>يمكن استخدام :OLD/:NEW</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_03_01_01.html" class="nav-prev"
+            >← Introduction to Triggers</a
+          >
+          <a href="topic_03_01_03.html" class="nav-next"
+            >OLD and NEW Qualifiers →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

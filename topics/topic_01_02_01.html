@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Declaring Variables | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_01/index.html">الوحدة 1</a> ›
+        <span>تعريف المتغيرات</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>Declaring Variables</h1>
+          <p class="topic-title-ar">تعريف المتغيرات في PL/SQL</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📦 مقدمة عن المتغيرات</h2>
+            <p>
+              المتغير
+              <span class="term" data-ar="موقع في الذاكرة لتخزين قيمة"
+                >Variable</span
+              >
+              هو اسم يُعطى لموقع في الذاكرة لتخزين قيمة يمكن تغييرها أثناء تنفيذ
+              البرنامج. يتم تعريف المتغيرات في قسم <code>DECLARE</code>.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 صيغة التعريف | Syntax</h2>
+            <pre><code class="language-sql">identifier [CONSTANT] datatype [NOT NULL] [:= | DEFAULT initial_value];</code></pre>
+
+            <ul class="styled-list">
+              <li>
+                <strong>identifier:</strong> اسم المتغير (مثل
+                <code>v_salary</code>).
+              </li>
+              <li>
+                <strong>CONSTANT:</strong> (اختياري) يمنع تغيير قيمة المتغير بعد
+                تعريفه.
+              </li>
+              <li>
+                <strong>datatype:</strong> نوع البيانات (مثل
+                <code>NUMBER</code>, <code>VARCHAR2</code>, <code>DATE</code>).
+              </li>
+              <li>
+                <strong>NOT NULL:</strong> (اختياري) يمنع المتغير من أن يكون
+                فارغاً (يجب إعطاؤه قيمة ابتدائية).
+              </li>
+              <li>
+                <strong>:=</strong> أو <strong>DEFAULT</strong>: لإعطاء قيمة
+                ابتدائية.
+              </li>
+            </ul>
+          </section>
+
+          <section class="content-section">
+            <h2>💡 أمثلة | Examples</h2>
+            <pre><code class="language-sql">DECLARE
+    v_name      VARCHAR2(50) := 'Ahmed';     -- متغير نصي مع قيمة ابتدائية
+    v_age       NUMBER(3);                   -- متغير رقمي بدون قيمة (NULL)
+    c_pi        CONSTANT NUMBER := 3.14;     -- ثابت (لا يمكن تغييره)
+    v_hire_date DATE DEFAULT SYSDATE;        -- تاريخ اليوم كقيمة افتراضية
+    v_is_valid  BOOLEAN NOT NULL := TRUE;    -- منطقي لا يقبل NULL
+BEGIN
+    v_age := 25;  -- إسناد قيمة في قسم التنفيذ
+    -- c_pi := 3; -- هذا السطر يسبب خطأ لأن c_pi ثابت
+END;</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>⚠️ قواعد التسمية | Naming Rules</h2>
+            <div class="highlight-box">
+              <ul>
+                <li>يجب أن يبدأ بحرف.</li>
+                <li>يمكن أن يحتوي على أرقام ورموز خاصة ($ _ #).</li>
+                <li>أقصى طول 30 حرفاً.</li>
+                <li>غير حساس لحالة الأحرف (Not Case Sensitive).</li>
+                <li>
+                  يُفضل استخدام بادئة (Prefix) مثل <code>v_</code> للمتغيرات و
+                  <code>c_</code> للثوابت.
+                </li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_01_01_03.html" class="nav-prev">← أنواع الكتل</a>
+          <a href="topic_01_02_02.html" class="nav-next"
+            >أنواع البيانات العددية (Scalar Types) →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

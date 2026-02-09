@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cursors with Parameters | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>Cursors with Parameters</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Cursors with Parameters</h1>
+          <p class="topic-title-ar">المؤشرات مع المعاملات</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              يمكننا جعل المؤشر أكثر مرونة وقابلية لإعادة الاستخدام عن طريق
+              تمرير معاملات (Parameters) إليه. يسمح هذا بفتخ نفس المؤشر عدة مرات
+              بقيم مختلفة لجلب نتائج مختلفة.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>التعريف (Syntax)</h3>
+            <pre><code class="language-sql">CURSOR cursor_name (parameter_name datatype, ...) IS
+  SELECT columns 
+  FROM table_name
+  WHERE column = parameter_name;</code></pre>
+
+            <h3>الفتح (OPEN with Parameters)</h3>
+            <p>نقوم بتمرير القيم للمعاملات عند فتح المؤشر.</p>
+            <pre><code class="language-sql">OPEN cursor_name(value1, ...);</code></pre>
+
+            <h3>مثال عملي | Practical Example</h3>
+            <pre><code class="language-sql">DECLARE
+  CURSOR emp_cursor (dept_no NUMBER) IS
+    SELECT employee_id, last_name FROM employees
+    WHERE department_id = dept_no;
+  
+  v_emp_rec emp_cursor%ROWTYPE;
+BEGIN
+  -- Open cursor for Department 10
+  OPEN emp_cursor(10);
+  LOOP
+    FETCH emp_cursor INTO v_emp_rec;
+    EXIT WHEN emp_cursor%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE('Dept 10: ' || v_emp_rec.last_name);
+  END LOOP;
+  CLOSE emp_cursor;
+
+  -- Reuse same cursor for Department 20
+  OPEN emp_cursor(20);
+  LOOP
+    FETCH emp_cursor INTO v_emp_rec;
+    EXIT WHEN emp_cursor%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE('Dept 20: ' || v_emp_rec.last_name);
+  END LOOP;
+  CLOSE emp_cursor;
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_04_03.html" class="nav-prev">← Cursor FOR Loops</a>
+          <a href="../ch_02_05/topic_02_05_01.html" class="nav-next"
+            >Creating Procedures →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

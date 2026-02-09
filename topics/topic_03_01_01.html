@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Triggers | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_03/index.html">الوحدة 3</a> ›
+        <span>المشغلات (Triggers)</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Triggers</h1>
+          <p class="topic-title-ar">المشغلات (Triggers)</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>🔫 ما هو المشغل (Trigger)؟</h2>
+            <p>
+              هو كتلة PL/SQL تُنفذ
+              <span class="term" data-ar="تلقائياً عند حدوث حدث معين"
+                >Automatically</span
+              >
+              في قاعدة البيانات. لا يمكن استدعاؤه يدوياً مثل Procedure، بل
+              "ينطلق" (Fires) عند حدوث شيء مثل INSERT أو UPDATE أو DELETE.
+            </p>
+            <div class="highlight-box">
+              <p>
+                <strong>استخدامات شائعة:</strong> التدقيق الأمني، إنشاء سجلات
+                مراقبة (Auditing)، التحقق من صحة البيانات المعقدة، النسخ
+                الاحتياطي التلقائي.
+              </p>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>⚙️ أنواع المشغلات</h2>
+
+            <h3>1. حسب مستوى التنفيذ (Timing Level)</h3>
+            <ul>
+              <li>
+                <strong>Statement Trigger:</strong> ينطلق مرة واحدة للجملة ككل
+                (حتى لو أثرت على 1000 صف). هذا هو الافتراضي.
+              </li>
+              <li>
+                <strong>Row Trigger:</strong> ينطلق مرة واحدة لكل صف يتأثر
+                (نستخدم <code>FOR EACH ROW</code>).
+              </li>
+            </ul>
+
+            <h3>2. حسب وقت التنفيذ (Timing Point)</h3>
+            <ul>
+              <li>
+                <strong>BEFORE:</strong> قبل تنفيذ العملية (ممتاز للتحقق من
+                البيانات).
+              </li>
+              <li>
+                <strong>AFTER:</strong> بعد تنفيذ العملية (ممتاز للتسجيل والـ
+                Auditing).
+              </li>
+              <li>
+                <strong>INSTEAD OF:</strong> بدلاً من العملية (يستخدم مع الـ
+                Views فقط).
+              </li>
+            </ul>
+          </section>
+
+          <section class="content-section">
+            <h2>💻 مثال: Row Trigger (تدقيق الرواتب)</h2>
+            <p>هذا المثال يمنع تقليل راتب الموظف.</p>
+
+            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER check_salary
+BEFORE UPDATE OF salary ON employees
+FOR EACH ROW
+BEGIN
+    -- :OLD تشير للقيمة القديمة، :NEW تشير للقيمة الجديدة
+    IF :NEW.salary < :OLD.salary THEN
+        RAISE_APPLICATION_ERROR(-20001, 'لا يُسمح بتخفيض الراتب!');
+    END IF;
+END;
+/</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>🔑 المتغيرات الخاصة :OLD و :NEW</h2>
+            <p>تتوفر فقط في Row Triggers وتستخدم للوصول لقيم الأعمدة:</p>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>العملية</th>
+                  <th>:OLD</th>
+                  <th>:NEW</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>INSERT</strong></td>
+                  <td>NULL</td>
+                  <td>القيمة المدخلة</td>
+                </tr>
+                <tr>
+                  <td><strong>UPDATE</strong></td>
+                  <td>القيمة قبل التعديل</td>
+                  <td>القيمة بعد التعديل</td>
+                </tr>
+                <tr>
+                  <td><strong>DELETE</strong></td>
+                  <td>القيمة قبل الحذف</td>
+                  <td>NULL</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="../modules/module_02/index.html" class="nav-prev"
+            >← الوحدة 2</a
+          >
+          <a href="../modules/module_04/index.html" class="nav-next"
+            >الوحدة 4: الفهرسة (Indexing) →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

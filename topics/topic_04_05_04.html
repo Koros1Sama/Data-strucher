@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAID Technology | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_04/index.html">الوحدة 4</a> ›
+        <span>RAID Technology</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>RAID Technology</h1>
+          <p class="topic-title-ar">تقنية RAID</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              RAID (Redundant Array of Independent Disks) هي تقنية تستخدم
+              أقراصاً متعددة لزيادة الموثوقية (Reliability) عبر التكرار، أو
+              زيادة الأداء (Performance) عبر التوازي (Parallelism).
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>مستويات RAID | RAID Levels</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>RAID 0 (Data Striping):</strong>
+                <ul>
+                  <li>توزيع البيانات عبر عدة أقراص لتحسين الأداء (السرعة).</li>
+                  <li>
+                    <strong>لا يوفر تكراراً (Redundancy):</strong> فشل قرص واحد
+                    يؤدي لضياع البيانات كاملة.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>RAID 1 (Mirroring):</strong>
+                <ul>
+                  <li>نسخ البيانات بالكامل على قرصين أو أكثر.</li>
+                  <li>
+                    <strong>يوفر موثوقية عالية (Reliability):</strong> إذا تعطل
+                    قرص، يعمل الآخر.
+                  </li>
+                  <li>الأغلى تكلفة (يتطلب ضعف المساحة التخزينية).</li>
+                </ul>
+              </li>
+              <li>
+                <strong
+                  >RAID 5 (Block-Level Striping with Distributed
+                  Parity):</strong
+                >
+                <ul>
+                  <li>
+                    يوزع البيانات ومعلومات التصحيح (Parity) عبر جميع الأقراص.
+                  </li>
+                  <li>يوفر توازناً جيداً بين الأداء والموثوقية والتكلفة.</li>
+                  <li>يمكنه تحمل تعطل قرص واحد فقط.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>RAID 10 (1+0):</strong>
+                <ul>
+                  <li>
+                    مزيج من RAID 1 و RAID 0. يجمع بين السرعة والموثوقية ولكنه
+                    مكلف جداً.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_04_05_03.html" class="nav-prev"
+            >← Hashing Techniques</a
+          >
+          <a href="../modules/module_05/index.html" class="nav-next"
+            >الوحدة 5: Transaction Processing →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

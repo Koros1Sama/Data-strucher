@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INSTEAD OF Triggers | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_03/index.html">الوحدة 3</a> ›
+        <span>INSTEAD OF Triggers</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>INSTEAD OF Triggers</h1>
+          <p class="topic-title-ar">مشغلات "بدلاً من"</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              مشغلات <strong>INSTEAD OF</strong> هي نوع خاص من المشغلات يستخدم
+              حصرياً مع <strong>Views</strong> (طرق العرض). فهي تسمح لك بتنفيذ
+              عمليات DML (إضافة، تعديل، حذف) على Views التي تكون عادةً غير قابلة
+              للتعديل مباشرة (Non-updatable Views)، مثل تلك التي تحتوي على Join
+              أو Group By.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>آلية العمل (Mechanism)</h3>
+            <p>
+              بدلاً من تنفيذ جملة DML الأصلية على الـ View (والتي ستفشل)، يقوم
+              النظام بتشغيل كود المشغل. داخل هذا الكود، يقوم المبرمج بكتابة
+              الأوامر الصحيحة لتعديل الجداول الأساسية (Base Tables) التي بنيت
+              عليها الـ View.
+            </p>
+
+            <h3>مثال (تعديل view مبنية على جدولين)</h3>
+            <p>
+              لنفترض أن لدينا View تعرض بيانات الموظف والقسم معاً. عند محاولة
+              الإضافة فيها، يجب توزيع البيانات على جدولين.
+            </p>
+            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER new_emp_dept
+INSTEAD OF INSERT ON emp_details_view
+FOR EACH ROW
+BEGIN
+  -- 1. إضافة القسم الجديد (إذا لزم الأمر)
+  INSERT INTO departments (department_id, department_name)
+  VALUES (:NEW.department_id, :NEW.department_name);
+
+  -- 2. إضافة الموظف الجديد
+  INSERT INTO employees (employee_id, last_name, department_id)
+  VALUES (:NEW.employee_id, :NEW.last_name, :NEW.department_id);
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_03_02_02.html" class="nav-prev"
+            >← Conditional Predicates</a
+          >
+          <a href="topic_03_02_04.html" class="nav-next"
+            >Trigger Execution Order →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deadlocks | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_05/index.html">الوحدة 5</a> ›
+        <span>Deadlocks</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Deadlocks in Concurrent Systems</h1>
+          <p class="topic-title-ar">المأزق (Deadlock) في الأنظمة المتزامنة</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              يحدث المأزق (Deadlock) عندما تنتظر معاملتان (أو أكثر) كل منهما
+              الأخرى لتحرير قفل، مما يؤدي إلى توقف دائم وعدم قدرة أي منهما على
+              الاستمرار.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>سيناريو المأزق (Example)</h3>
+            <p>
+              1. T1 تمتلك قفلاً على X وتنتظر قفلاً على Y.<br />
+              2. T2 تمتلك قفلاً على Y وتنتظر قفلاً على X.<br />
+              النتيجة: كلاهما ينتظر الآخر بلا نهاية.
+            </p>
+
+            <h3>التعامل مع المأزق (Handling Methods)</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>الوقاية (Prevention):</strong>
+                <p>
+                  تصميم البروتوكول بحيث يستحيل حدوث Deadlock (مثلاً Conservative
+                  2PL، أو ترتيب الوصول للموارد). مكلفة وتقلل التزامن.
+                </p>
+              </li>
+              <li>
+                <strong>الكشف والاسترداد (Detection & Recovery):</strong>
+                <p>
+                  يسمح النظام بحدوث Deadlock، لكنه يقوم بفحص دوري (Wait-for
+                  Graph). إذا وجد دورة (Cycle)، يختار معاملة "ضحية" (Victim)
+                  ويقوم بإلغائها (Abort) لكسر الحلقة.
+                </p>
+              </li>
+              <li>
+                <strong>المهلة (Timeouts):</strong>
+                <p>
+                  إذا انتظرت المعاملة قفلاً لفترة طويلة، تفترض حدوث deadlock
+                  وتقوم بإلغاء نفسها.
+                </p>
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_05_03_02.html" class="nav-prev"
+            >← Two-Phase Locking (2PL)</a
+          >
+          <a href="../ch_05_04/topic_05_04_01.html" class="nav-next"
+            >Recovery Concepts →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

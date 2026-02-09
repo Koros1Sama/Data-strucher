@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OLD and NEW Qualifiers | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_03/index.html">الوحدة 3</a> ›
+        <span>OLD and NEW Qualifiers</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>OLD and NEW Qualifiers</h1>
+          <p class="topic-title-ar">المحددات OLD و NEW</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              في مشغلات مستوى الصف (Row Triggers)، يمكنك الوصول إلى قيم الأعمدة
+              للصف الحالي قبل التعديل وبعده باستخدام المحددات
+              <code>:OLD</code> و <code>:NEW</code>.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>المفاهيم الأساسية | Key Concepts</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>:OLD</strong> - تشير إلى القيمة القديمة للعمود (قبل
+                تنفيذ الأمر). تكون NULL في حالة الإضافة (INSERT).
+              </li>
+              <li>
+                <strong>:NEW</strong> - تشير إلى القيمة الجديدة للعمود (التي
+                سيتم حفظها). تكون NULL في حالة الحذف (DELETE).
+              </li>
+            </ul>
+
+            <h3>توفر القيم حسب العملية | Availability Table</h3>
+            <div class="table-container">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>العملية (Operation)</th>
+                    <th>:OLD</th>
+                    <th>:NEW</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>INSERT</td>
+                    <td>NULL</td>
+                    <td>القيمة المضافة</td>
+                  </tr>
+                  <tr>
+                    <td>UPDATE</td>
+                    <td>القيمة قبل التعديل</td>
+                    <td>القيمة بعد التعديل</td>
+                  </tr>
+                  <tr>
+                    <td>DELETE</td>
+                    <td>القيمة قبل الحذف</td>
+                    <td>NULL</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>مثال عملي (تدقيق التغييرات)</h3>
+            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER audit_emp_values
+AFTER DELETE OR INSERT OR UPDATE ON employees
+FOR EACH ROW
+BEGIN
+  INSERT INTO audit_emp (user_name, old_last_name, new_last_name)
+  VALUES (USER, :OLD.last_name, :NEW.last_name);
+END;</code></pre>
+
+            <h3>مثال عملي (التحقق من البيانات)</h3>
+            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER restrict_salary
+BEFORE INSERT OR UPDATE OF salary ON employees
+FOR EACH ROW
+BEGIN
+  IF :NEW.salary > 15000 THEN
+    RAISE_APPLICATION_ERROR(-20202, 'Salary too high');
+  END IF;
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_03_01_02.html" class="nav-prev">← Trigger Types</a>
+          <a href="../ch_03_02/topic_03_02_01.html" class="nav-next"
+            >Creating DML Triggers →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CASE Expressions and Statements | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>CASE Expressions and Statements</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>CASE Expressions and Statements</h1>
+          <p class="topic-title-ar">تعبيرات وجمل CASE</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              تستخدم <strong>CASE</strong> لاختبار شروط متعددة واختيار نتيجة
+              واحدة بناءً عليها. وهي بديل أكثر تنظيماً لجمل
+              <code>IF-ELSIF</code> المتعددة.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>تعبيرات CASE Expressions</h3>
+            <p>
+              تقوم بإرجاع قيمة واحدة بناءً على شرط معين. يمكن استخدامها، على
+              سبيل المثال، في عمليات الإسناد.
+            </p>
+            <pre><code class="language-sql">CASE selector
+  WHEN expression1 THEN result1
+  WHEN expression2 THEN result2
+  ...
+  [ELSE result_default]
+END;</code></pre>
+
+            <h3>مثال (Simple CASE)</h3>
+            <pre><code class="language-sql">appraisal := 
+  CASE grade
+    WHEN 'A' THEN 'Excellent'
+    WHEN 'B' THEN 'Very Good'
+    WHEN 'C' THEN 'Good'
+    ELSE 'No such grade'
+  END;</code></pre>
+
+            <h3>مثال (Searched CASE)</h3>
+            <p>يتم فيها اختبار شروط مختلفة (ليست مساوات فقط).</p>
+            <pre><code class="language-sql">appraisal := 
+  CASE 
+    WHEN grade = 'A' THEN 'Excellent'
+    WHEN grade IN ('B','C') THEN 'Good' 
+    ELSE 'No such grade' 
+  END;</code></pre>
+
+            <h3>جمل CASE Statements</h3>
+            <p>تستخدم لتنفيذ كتل برمجية كاملة بدلاً من مجرد إرجاع قيمة.</p>
+            <pre><code class="language-sql">CASE mngid
+  WHEN 108 THEN 
+     SELECT department_id INTO deptid ...;
+  WHEN 200 THEN 
+     ...;
+END CASE;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_03_01.html" class="nav-prev">← IF Statements</a>
+          <a href="topic_02_03_03.html" class="nav-next">Loop Types →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

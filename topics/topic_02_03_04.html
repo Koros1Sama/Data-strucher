@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nested Loops and Labels | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>Nested Loops and Labels</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Nested Loops and Labels</h1>
+          <p class="topic-title-ar">الحلقات المتداخلة والتسميات</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              يمكن وضع الحلقات داخل بعضها البعض (Nested Loops) لتنفيذ مهام
+              معقدة. وللتحكم في الخروج من حلقة معينة أو الانتقال إليها، نستخدم
+              التسميات (Labels).
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>الحلقات المتداخلة (Nested Loops)</h3>
+            <p>
+              هي حلقة داخل حلقة أخرى. الحلقة الداخلية تكمل دورتها كاملة لكل
+              تكرار واحد من الحلقة الخارجية.
+            </p>
+
+            <h3>التسميات (Labels)</h3>
+            <p>
+              تستخدم لتمييز الكتل البرمجية أو الحلقات. تكتب التسمية بين قوسين
+              مزدوجين <code>&lt;&lt;label_name&gt;&gt;</code>. فائدتها الرئيسية
+              هي السماح بالخروج من حلقات متعددة باستخدام
+              <code>EXIT label_name</code>.
+            </p>
+
+            <h3>مثال شامل | Comprehensive Example</h3>
+            <pre><code class="language-sql">BEGIN
+  &lt;&lt;Outer_Loop&gt;&gt;
+  LOOP
+    counter := counter + 1;
+    EXIT WHEN counter > 10;
+    
+    &lt;&lt;Inner_Loop&gt;&gt;
+    LOOP
+      ...
+      EXIT Outer_Loop WHEN total_done = 'YES'; -- Exit both loops
+      EXIT WHEN inner_done = 'YES';           -- Exit inner loop only
+    END LOOP Inner_Loop;
+    
+  END LOOP Outer_Loop;
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_03_03.html" class="nav-prev">← Loop Types</a>
+          <a href="../ch_02_04/topic_02_04_01.html" class="nav-next"
+            >Cursor Fundamentals →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

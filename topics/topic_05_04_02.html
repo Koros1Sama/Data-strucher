@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deferred vs Immediate Update | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_05/index.html">الوحدة 5</a> ›
+        <span>Updates Strategy</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Deferred vs. Immediate Update</h1>
+          <p class="topic-title-ar">التحديث المؤجل مقابل التحديث الفوري</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              كيف يتعامل النظام مع التعديلات قبل عمل Commit؟ هناك استراتيجيتان
+              رئيسيتان.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>1. التحديث المؤجل (Deferred Update)</h3>
+            <p>يطلق عليها تقنية "No-Undo / Redo".</p>
+            <ul class="styled-list">
+              <li>
+                <strong>الفكرة:</strong> لا يتم كتابة أي تعديل على قاعدة
+                البيانات (القرص) إلا <em>بعد</em> أن تصل المعاملة إلى نقطة
+                الالتزام (Commit).
+              </li>
+              <li>
+                <strong>في حالة الفشل:</strong> لا نحتاج لعمل Undo لأي شيء، لأن
+                البيانات الأصلية لم تُمس. نحتاج فقط لعمل Redo للمعاملات التي
+                اكتملت لكن لم تُكتب نتائجها بعد.
+              </li>
+            </ul>
+
+            <h3>2. التحديث الفوري (Immediate Update)</h3>
+            <p>يطلق عليها تقنية "Undo / Redo".</p>
+            <ul class="styled-list">
+              <li>
+                <strong>الفكرة:</strong> يمكن كتابة التعديلات على القرص في أي
+                وقت أثناء عمل المعاملة (حتى قبل الـ Commit)، بشرط كتابة السجل
+                (Log) أولاً (WAL).
+              </li>
+              <li>
+                <strong>في حالة الفشل:</strong> يجب عمل Undo لأي معاملة كانت
+                نشطة ولم تكتمل، لأنها قد تكون لوثت قاعدة البيانات بتعديلات
+                جزئية.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_05_04_01.html" class="nav-prev">← Recovery Concepts</a>
+          <a href="topic_05_04_03.html" class="nav-next">ARIES Algorithm →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

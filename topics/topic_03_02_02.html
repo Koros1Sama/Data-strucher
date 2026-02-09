@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conditional Predicates | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_03/index.html">الوحدة 3</a> ›
+        <span>Conditional Predicates</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Conditional Predicates: INSERTING, UPDATING, DELETING</h1>
+          <p class="topic-title-ar">
+            المحمولات الشرطية: الإضافة، التحديث، الحذف
+          </p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              عند إنشاء مشغل واحد يتعامل مع عدة أحداث (مثلاً
+              <code>INSERT OR UPDATE OR DELETE</code>)، نحتاج لطريقة لمعرفة أي
+              حدث تسبب في تشغيل هذا المشغل. هنا يأتي دور المحمولات الشرطية
+              (Conditional Predicates).
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>المحمولات الثلاثة</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>INSERTING:</strong> تعود بـ TRUE إذا كانت العملية هي
+                إضافة (INSERT).
+              </li>
+              <li>
+                <strong>UPDATING:</strong> تعود بـ TRUE إذا كانت العملية هي
+                تحديث (UPDATE).
+              </li>
+              <li>
+                <strong>DELETING:</strong> تعود بـ TRUE إذا كانت العملية هي حذف
+                (DELETE).
+              </li>
+            </ul>
+
+            <h3>استخدام UPDATING مع عمود محدد</h3>
+            <p>يمكن التحقق مما إذا كان تحديث عمود معين هو السبب:</p>
+            <pre><code class="language-sql">IF UPDATING('SALARY') THEN ...</code></pre>
+
+            <h3>مثال شامل</h3>
+            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER audit_trigger
+AFTER INSERT OR UPDATE OR DELETE ON employees
+BEGIN
+  IF INSERTING THEN
+    INSERT INTO log_table VALUES ('New Employee Added');
+  ELSIF DELETING THEN
+    INSERT INTO log_table VALUES ('Employee Deleted');
+  ELSIF UPDATING('SALARY') THEN
+    INSERT INTO log_table VALUES ('Salary Updated');
+  ELSE
+    INSERT INTO log_table VALUES ('Other Update');
+  END IF;
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_03_02_01.html" class="nav-prev"
+            >← Creating DML Triggers</a
+          >
+          <a href="topic_03_02_03.html" class="nav-next"
+            >INSTEAD OF Triggers →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

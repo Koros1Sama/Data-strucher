@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Procedures vs Functions | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>Procedures vs Functions</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>Procedures vs Functions</h1>
+          <p class="topic-title-ar">الفرق بين الإجراءات والدوال</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقارنة سريعة | Quick Comparison</h2>
+            <div class="highlight-box">
+              <p>
+                <strong>الإجراء (Procedure):</strong> ينفذ عملية، قد لا يعيد
+                قيمة، لا يمكن استخدامه في جمل SQL.<br />
+                <strong>الدالة (Function):</strong> تحسب وتعيد قيمة واحدة، يمكن
+                استخدامها في جمل SQL (غالباً).
+              </p>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>جدول المقارنة | Comparison Table</h3>
+            <div class="table-container">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>وجه المقارنة (Aspect)</th>
+                    <th>الإجراء (Procedure)</th>
+                    <th>الدالة (Function)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>القيمة المرجعة (Return Value)</strong></td>
+                    <td>اختياري (يمكن استخدام باراميترات OUT)</td>
+                    <td>إجباري (Must return a value)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>الاستدعاء (Invocation)</strong></td>
+                    <td>كجملة مستقلة في كود PL/SQL</td>
+                    <td>كجزء من تعبير (Expression) أو جملة SQL</td>
+                  </tr>
+                  <tr>
+                    <td><strong>الهدف (Purpose)</strong></td>
+                    <td>تنفيذ إجراء معين (Action) مثل تحديث بيانات</td>
+                    <td>حساب قيمة وإرجاعها (Computation)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>استخدام SQL</strong></td>
+                    <td>لا يمكن استدعاؤه داخل جملة SELECT</td>
+                    <td>يمكن استدعاؤها داخل جملة SELECT (بشروط)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_05_03.html" class="nav-prev"
+            >← Creating Stored Functions</a
+          >
+          <a href="../modules/module_03/index.html" class="nav-next"
+            >الوحدة 3: Database Triggers →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

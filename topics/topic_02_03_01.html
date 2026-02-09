@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cursors | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>المؤشرات (Cursors)</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Cursors</h1>
+          <p class="topic-title-ar">المؤشرات (Cursors)</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📍 ما هو المؤشر (Cursor)؟</h2>
+            <p>
+              المؤشر هو
+              <span class="term" data-ar="مؤشر لمنطقة في الذاكرة">Pointer</span>
+              يشير إلى منطقة خاصة في الذاكرة (Context Area) حيث يتم معالجة جملة
+              SQL. يسمح لنا المؤشر بالتعامل مع نتيجة الاستعلام (SELECT) صفاً بصف
+              (Row-by-Row).
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>🔄 أنواع المؤشرات</h2>
+
+            <div class="types-grid">
+              <div class="type-card">
+                <h3>1. مؤشر ضمني (Implicit Cursor)</h3>
+                <p>
+                  يتم إنشاؤه <strong>تلقائياً</strong> بواسطة Oracle عند تنفيذ
+                  أي جملة DML (INSERT, UPDATE, DELETE) أو جملة SELECT INTO (التي
+                  ترجع صفاً واحداً).
+                </p>
+              </div>
+              <div class="type-card">
+                <h3>2. مؤشر صريح (Explicit Cursor)</h3>
+                <p>
+                  يتم تعريفه <strong>يدوياً</strong> بواسطة المبرمج للتحكم في
+                  استعلام يرجع أكثر من صف (Multiple Rows).
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 خطوات التعامل مع المؤشر الصريح (Explicit)</h2>
+            <p>يجب اتباع 4 خطوات بالترتيب:</p>
+            <ol class="styled-list">
+              <li>
+                <strong>DECLARE:</strong> تعريف المؤشر وتحديد جملة SELECT
+                المرتبطة به.
+              </li>
+              <li>
+                <strong>OPEN:</strong> فتح المؤشر (تنفيذ الاستعلام وحجز
+                الذاكرة).
+              </li>
+              <li><strong>FETCH:</strong> جلب البيانات صفاً تلو الآخر.</li>
+              <li><strong>CLOSE:</strong> إغلاق المؤشر وتحرير الذاكرة.</li>
+            </ol>
+          </section>
+
+          <section class="content-section">
+            <h2>💻 مثال عملي</h2>
+            <pre><code class="language-sql">DECLARE
+    -- 1. تعريف المؤشر
+    CURSOR c_emps IS 
+        SELECT last_name, salary FROM employees WHERE department_id = 90;
+        
+    v_name   employees.last_name%TYPE;
+    v_sal    employees.salary%TYPE;
+BEGIN
+    -- 2. فتح المؤشر
+    OPEN c_emps;
+    
+    LOOP
+        -- 3. جلب صف واحد
+        FETCH c_emps INTO v_name, v_sal;
+        
+        -- شرط الخروج: إذا لم نجد بيانات
+        EXIT WHEN c_emps%NOTFOUND;
+        
+        DBMS_OUTPUT.PUT_LINE(v_name || ' earns ' || v_sal);
+    END LOOP;
+    
+    -- 4. إغلاق المؤشر
+    CLOSE c_emps;
+END;</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>⚡ خصائص المؤشر (Cursor Attributes)</h2>
+            <p>تستخدم لمعرفة حالة المؤشر (تسبق بـ <code>%</code>):</p>
+            <ul class="styled-list">
+              <li><code>%FOUND</code>: ترجع TRUE إذا تم جلب صف بنجاح.</li>
+              <li><code>%NOTFOUND</code>: ترجع TRUE إذا لم يعد هناك صفوف.</li>
+              <li>
+                <code>%ROWCOUNT</code>: عدد الصفوف التي تمت معالجتها حتى الآن.
+              </li>
+              <li><code>%ISOPEN</code>: هل المؤشر مفتوح أم لا؟</li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_02_03.html" class="nav-prev">← الحلقات (Loops)</a>
+          <a href="../modules/module_03/index.html" class="nav-next"
+            >الوحدة 3: المشغلات (Triggers) →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

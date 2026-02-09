@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Insertion and Deletion in B+ Trees | Data Structures Study Guide
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_04/index.html">الوحدة 4</a> ›
+        <span>B+ Tree Operations</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Insertion and Deletion in B+ Trees</h1>
+          <p class="topic-title-ar">الإضافة والحذف في أشجار B+ Trees</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              تحافظ B+ Tree على توازنها تلقائياً عند إضافة أو حذف البيانات. يتم
+              ذلك من خلال عمليات Splitting (التقسيم) عند الامتلاء، و Merging
+              (الدمج) أو Redistribution (إعادة التوزيع) عند النقصان.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>1. الإضافة (Insertion)</h3>
+            <ul class="styled-list">
+              <li>نبدأ بالبحث عن العقدة الورقية المناسبة (Leaf Node).</li>
+              <li>إذا كانت العقدة غير ممتلئة: نضيف المفتاح والسجل مباشرة.</li>
+              <li>
+                <strong>إذا كانت العقدة ممتلئة (Overflow):</strong>
+                <ul>
+                  <li>نقسم العقدة إلى عقدتين (Split).</li>
+                  <li>
+                    نرفع القيمة الوسطى (Middle Key) إلى العقدة الأب (Parent
+                    Node).
+                  </li>
+                  <li>إذا امتلأ الأب، تتكرر العملية صعوداً حتى الجذر.</li>
+                  <li>إذا انقسم الجذر، يزداد ارتفاع الشجرة بمقدار 1.</li>
+                </ul>
+              </li>
+            </ul>
+
+            <h3>2. الحذف (Deletion)</h3>
+            <ul class="styled-list">
+              <li>نحذف السجل من العقدة الورقية.</li>
+              <li>
+                <strong>إذا أصبحت العقدة أقل من النصف (Underflow):</strong>
+                <ul>
+                  <li>
+                    نحاول الاستعارة (Borrow) من العقدة المجاورة (Sibling).
+                  </li>
+                  <li>
+                    إذا لم يكن الاستعارة ممكناً، نقوم بدمج (Merge) العقدة مع
+                    جارتها.
+                  </li>
+                  <li>
+                    قد يتطلب الدمج حذف مفتاح من العقدة الأب، مما قد يسبب
+                    Underflow للأب وتتكرر العملية.
+                  </li>
+                  <li>إذا تم دمج ابني الجذر، يقل ارتفاع الشجرة بمقدار 1.</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_04_02_02.html" class="nav-prev">← B+ Tree Structure</a>
+          <a href="../ch_04_03/topic_04_03_01.html" class="nav-next"
+            >Hash Index →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

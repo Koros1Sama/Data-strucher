@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block Types | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_01/index.html">الوحدة 1</a> ›
+        <span>أنواع الكتل</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>Block Types</h1>
+          <p class="topic-title-ar">أنواع كتل PL/SQL</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>🧩 الأنواع الثلاثة | The Three Types</h2>
+            <p>يمكن تقسيم كتل PL/SQL إلى ثلاثة أنواع رئيسية:</p>
+
+            <div class="types-grid">
+              <div class="type-card">
+                <h3>1. كتلة مجهولة (Anonymous Block)</h3>
+                <p>
+                  ليس لها اسم، لا تُحفظ في قاعدة البيانات، تُنفذ مرة واحدة فقط
+                  ثم تختفي.
+                </p>
+                <span class="badge">للتجربة السريعة</span>
+              </div>
+              <div class="type-card">
+                <h3>2. إجراء (Procedure)</h3>
+                <p>
+                  لها اسم، تُحفظ في قاعدة البيانات، يمكن استدعاؤها مرارًا
+                  وتكرارًا. تستخدم لتنفيذ "فعل" (Action).
+                </p>
+                <span class="badge">برنامج محفوظ</span>
+              </div>
+              <div class="type-card">
+                <h3>3. دالة (Function)</h3>
+                <p>
+                  مثل الإجراء، لكنها <strong>يجب</strong> أن تُرجع قيمة (Return
+                  Value). تستخدم عادة للحسابات.
+                </p>
+                <span class="badge">ترجع قيمة</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>⚖️ مقارنة سريعة | Comparison</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>الاسم</th>
+                  <th>الحفظ في DB</th>
+                  <th>إرجاع قيمة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Anonymous</strong></td>
+                  <td>لا يوجد</td>
+                  <td>❌ لا</td>
+                  <td>❌ لا</td>
+                </tr>
+                <tr>
+                  <td><strong>Procedure</strong></td>
+                  <td>موجود</td>
+                  <td>✅ نعم</td>
+                  <td>اختياري</td>
+                </tr>
+                <tr>
+                  <td><strong>Function</strong></td>
+                  <td>موجود</td>
+                  <td>✅ نعم</td>
+                  <td>✅ نعم (إجباري)</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="content-section">
+            <h2>💻 أمثلة للكتابة Syntax</h2>
+
+            <h3>Anonymous Block</h3>
+            <pre><code class="language-sql">[DECLARE]
+BEGIN
+   -- statements
+[EXCEPTION]
+END;</code></pre>
+
+            <h3>Procedure</h3>
+            <pre><code class="language-sql">PROCEDURE name IS
+BEGIN
+   -- statements
+[EXCEPTION]
+END;</code></pre>
+
+            <h3>Function</h3>
+            <pre><code class="language-sql">FUNCTION name RETURN datatype IS
+BEGIN
+   -- statements
+   RETURN value;
+[EXCEPTION]
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_01_01_02.html" class="nav-prev">← هيكل الكتلة</a>
+          <a href="topic_01_02_01.html" class="nav-next"
+            >تعريف المتغيرات (Variables) →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

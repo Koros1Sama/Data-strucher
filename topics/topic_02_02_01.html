@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IF Statements | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>جمل IF الشرطية</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>IF Statements</h1>
+          <p class="topic-title-ar">الجمل الشرطية (IF)</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>🔀 التحكم في التدفق (Flow Control)</h2>
+            <p>
+              تسمح لك جمل <code>IF</code> بتنفيذ كود معين فقط إذا تحقق شرط محدد.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 الأشكال الثلاثة لـ IF</h2>
+
+            <h3>1. IF-THEN (البسيطة)</h3>
+            <pre><code class="language-sql">IF condition THEN
+   -- statements to execute if TRUE
+END IF;</code></pre>
+
+            <h3>2. IF-THEN-ELSE (إذا وإلا)</h3>
+            <pre><code class="language-sql">IF condition THEN
+   -- execute if TRUE
+ELSE
+   -- execute if FALSE or NULL
+END IF;</code></pre>
+
+            <h3>3. IF-THEN-ELSIF (شروط متعددة)</h3>
+            <p>لاحظ كتابة <code>ELSIF</code> (بدون E في المنتصف)!</p>
+            <pre><code class="language-sql">IF condition1 THEN
+   statements1;
+ELSIF condition2 THEN
+   statements2;
+ELSE
+   statements3;
+END IF;</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>⚠️ قاعدة هامة: التعامل مع NULL</h2>
+            <div class="highlight-box">
+              <p>
+                في PL/SQL، الشرط يمكن أن يكون نتيجته: <strong>TRUE</strong> أو
+                <strong>FALSE</strong> أو <strong>NULL</strong>.
+              </p>
+              <ul>
+                <li>
+                  جملة <code>IF</code> تنفذ الكود <strong>فقط</strong> إذا كانت
+                  النتيجة <strong>TRUE</strong>.
+                </li>
+                <li>
+                  إذا كانت النتيجة <strong>FALSE</strong> أو
+                  <strong>NULL</strong>، ينتقل التنفيذ إلى <code>ELSE</code> (إن
+                  وجدت) أو يخرج من الـ IF.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>💻 مثال عملي</h2>
+            <pre><code class="language-sql">DECLARE
+    v_salary NUMBER := 15000;
+    v_bonus  NUMBER;
+BEGIN
+    IF v_salary > 20000 THEN
+        v_bonus := 1000;
+    ELSIF v_salary > 10000 THEN
+        v_bonus := 500;
+    ELSE
+        v_bonus := 100;
+    END IF;
+    
+    DBMS_OUTPUT.PUT_LINE('Bonus: ' || v_bonus);
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_01_02.html" class="nav-prev"
+            >← المجموعات (Collections)</a
+          >
+          <a href="topic_02_02_02.html" class="nav-next">جمل CASE الشرطية →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

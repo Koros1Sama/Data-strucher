@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Index Types (Primary, Clustering, Secondary) | Data Structures Study Guide
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_04/index.html">الوحدة 4</a> ›
+        <span>أنواع الفهارس المتقدمة</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Advanced Index Types</h1>
+          <p class="topic-title-ar">الأنواع الرئيسية للفهارس</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>تصنيف الفهارس حسب الترتيب</h2>
+
+            <div class="types-grid">
+              <div class="type-card">
+                <h3>1. Primary Index</h3>
+                <p><strong>(Sparse Index)</strong></p>
+                <p>
+                  يُبنى على الحقل الذي <strong>يرتب</strong> السجلات، وهذا الحقل
+                  يجب أن يكون <strong>مفتاحاً</strong> (لا يتكرر).
+                </p>
+                <ul>
+                  <li>عادة يكون الـ Primary Key.</li>
+                  <li>يملك فهرساً واحداً فقط لكل جدول.</li>
+                </ul>
+              </div>
+              <div class="type-card">
+                <h3>2. Clustering Index</h3>
+                <p><strong>(Sparse Index)</strong></p>
+                <p>
+                  يُبنى على الحقل الذي <strong>يرتب</strong> السجلات، لكن هذا
+                  الحقل <strong>ليس مفتاحاً</strong> (قد يتكرر).
+                </p>
+                <ul>
+                  <li>مثال: ترتيب الموظفين حسب القسم (Department ID).</li>
+                  <li>يملك فهرساً واحداً فقط لكل جدول.</li>
+                </ul>
+              </div>
+              <div class="type-card">
+                <h3>3. Secondary Index</h3>
+                <p><strong>(Dense Index)</strong></p>
+                <p>يُبنى على أي حقل <strong>لا يرتب</strong> السجلات.</p>
+                <ul>
+                  <li>يمكن أن يكون مفتاحاً (Unique) أو غير مفتاح.</li>
+                  <li>يمكن إنشاء عدة فهارس ثانوية للجدول الواحد.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>🌳 شجرة B+ (B+-Tree)</h2>
+            <p>هي الهيكل الأكثر استخداماً للفهارس في قواعد البيانات الحديثة.</p>
+            <div class="highlight-box">
+              <p><strong>لماذا B+-Tree؟</strong></p>
+              <ul>
+                <li>
+                  متوازنة دائماً (Balanced): تكلفة الوصول لأي سجل متساوية.
+                </li>
+                <li>
+                  تخزن البيانات في الأوراق (Leaf Nodes) فقط، مما يجعل التخزين
+                  الداخلي أكثر كفاءة للفهارس.
+                </li>
+                <li>
+                  الأوراق مرتبطة ببعضها (Linked List)، مما يسهل البحث المتسلسل
+                  (Range Queries).
+                </li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_04_01_01.html" class="nav-prev">← مقدمة في الفهرسة</a>
+          <a href="../modules/module_05/index.html" class="nav-next"
+            >الوحدة 5: المعاملات (Transactions) →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

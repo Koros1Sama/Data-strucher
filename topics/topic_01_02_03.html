@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>%TYPE Attribute | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_01/index.html">الوحدة 1</a> ›
+        <span>الخاصية %TYPE</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>The %TYPE Attribute</h1>
+          <p class="topic-title-ar">خاصية الوراثة %TYPE</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>🎯 ما هي خاصية %TYPE؟</h2>
+            <p>
+              تُستخدم لتعريف متغير
+              <span class="term" data-ar="يرث نوع البيانات"
+                >inherits data type</span
+              >
+              من:
+            </p>
+            <ol>
+              <li>عمود في جدول قاعدة البيانات (Database Column).</li>
+              <li>متغير آخر تم تعريفه مسبقاً.</li>
+            </ol>
+
+            <div class="highlight-box">
+              <p>
+                <strong>الفائدة العظمى:</strong> إذا تغير نوع العمود في قاعدة
+                البيانات (مثلاً زاد حجم VARCHAR2 من 50 إلى 100)، سيتأقلم كودك
+                تلقائياً دون الحاجة لتعديله! وهذا يقلل من أخطاء الصيانة.
+              </p>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 الصيغة | Syntax</h2>
+            <pre><code class="language-sql">-- الوراثة من عمود في جدول
+variable_name table_name.column_name%TYPE;
+
+-- الوراثة من متغير آخر
+variable_name variable_name_2%TYPE;</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>💻 مثال عملي | Code Example</h2>
+            <p>
+              افتراضاً لدينا جدول <code>EMPLOYEES</code> فيه عمود
+              <code>LAST_NAME</code>.
+            </p>
+
+            <pre><code class="language-sql">DECLARE
+    -- تعريف تقليدي (Hardcoded) - غير منصوح به للصيانة
+    v_name_fixed  VARCHAR2(25); 
+
+    -- تعريف باستخدام %TYPE (Best Practice)
+    -- سيأخذ نفس نوع وطول عمود last_name في جدول employees
+    v_name_dynamic employees.last_name%TYPE; 
+    
+    -- الوراثة من متغير آخر
+    v_name_copy    v_name_dynamic%TYPE;
+BEGIN
+    SELECT last_name INTO v_name_dynamic
+    FROM employees
+    WHERE employee_id = 100;
+    
+    DBMS_OUTPUT.PUT_LINE(v_name_dynamic);
+END;</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>✅ المميزات | Advantages</h2>
+            <ul class="styled-list">
+              <li>
+                <strong>تتكيف مع تغييرات قاعدة البيانات:</strong> لا حاجة لتعديل
+                الكود عند تغيير خصائص الأعمدة.
+              </li>
+              <li>
+                <strong>تضمن توافق البيانات:</strong> لن يحدث خطأ "Value too
+                large" لأن المتغير دائماً بحجم العمود المناسب.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_01_02_02.html" class="nav-prev"
+            >← أنواع البيانات العددية</a
+          >
+          <a href="topic_01_02_04.html" class="nav-next"
+            >متغيرات الربط والاستبدال →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

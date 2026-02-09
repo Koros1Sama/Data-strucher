@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>B+ Tree Structure | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_04/index.html">الوحدة 4</a> ›
+        <span>B+ Tree Structure</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>B+ Tree Structure & Differences</h1>
+          <p class="topic-title-ar">هيكلية وأوجه الاختلاف في أشجار B+ Trees</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              تعد B+ Tree تحسيناً على B-Tree، وهي الهيكل الأكثر استخداماً في
+              قواعد البيانات الحديثة للفهارس.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>الفرق الجوهري عن B-Tree</h3>
+            <div class="table-container">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>الخاصية</th>
+                    <th>B-Tree</th>
+                    <th>B+ Tree</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>تخزين البيانات</td>
+                    <td>
+                      مؤشرات البيانات موجودة في
+                      <strong>كل العقد</strong> (الداخلية والأوراق).
+                    </td>
+                    <td>
+                      مؤشرات البيانات موجودة
+                      <strong>فقط في الأوراق (Leaf Nodes)</strong>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>تكرار المفاتيح</td>
+                    <td>المفتاح يظهر مرة واحدة فقط.</td>
+                    <td>
+                      المفاتيح قد تتكرر (نسخة في العقد الداخلية للتوجيه، ونسخة
+                      في الورقة للوصول).
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>البحث المتسلسل (Range Scan)</td>
+                    <td>صعب، يتطلب صعود وهبوط في الشجرة.</td>
+                    <td>
+                      سهل جداً، لأن الأوراق مرتبطة ببعضها البعض (Linked List).
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ارتفاع الشجرة</td>
+                    <td>
+                      قد يكون أكبر لأن العقد الداخلية تمتلئ بمؤشرات البيانات.
+                    </td>
+                    <td>
+                      أقل غالباً، لأن العقد الداخلية تخزن مفاتيح فقط، مما يسمح
+                      بتفرع أكبر (Higher Fan-out).
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>هيكلية العقد في B+ Tree</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>Internal Nodes (العقد الداخلية):</strong> تحتوي فقط على
+                مفاتيح البحث ومؤشرات لعقد الأبناء (Tree Pointers). وظيفتها
+                التوجيه فقط.
+              </li>
+              <li>
+                <strong>Leaf Nodes (العقد الورقية):</strong> تحتوي على مفاتيح
+                البحث ومؤشرات البيانات الفعلية (Data Pointers). كما أنها مرتبطة
+                ببعضها بمؤشر "التالي" لتسهيل القراءة المتسلسلة.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_04_02_01.html" class="nav-prev">← B-Tree Structure</a>
+          <a href="topic_04_02_03.html" class="nav-next"
+            >Insertion/Deletion in B+ Trees →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

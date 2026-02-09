@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorted Files | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_04/index.html">الوحدة 4</a> ›
+        <span>Sorted Files</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Ordered Files (Sorted Files)</h1>
+          <p class="topic-title-ar">الملفات المرتبة</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              في الملفات المرتبة (Sorted Files)، يتم تخزين السجلات بترتيب
+              فيزيائي بناءً على قيمة حقل معين يسمى "مفتاح الترتيب" (Ordering
+              Key).
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>الخصائص | Characteristics</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>الترتيب:</strong> يتم تخزين السجلات مرتبة فيزيائياً
+                بناءً على قيمة حقل معين يسمى "مفتاح الترتيب" (Ordering Key).
+              </li>
+              <li>
+                <strong>البحث (Searching):</strong> سريع جداً باستخدام البحث
+                الثنائي (Binary Search). التكلفة هي <code>log2(b)</code> حيث b
+                هو عدد الكتل.
+              </li>
+              <li>
+                <strong>القراءة المتتابعة (Reading Next):</strong> فعالة جداً،
+                حيث أن السجلات مرتبة بالفعل.
+              </li>
+            </ul>
+
+            <h3>العيوب | Disadvantages</h3>
+            <p>
+              الإدراج والحذف مكلفان جداً، لأنهما يتطلبان إزاحة السجلات للحفاظ
+              على الترتيب. لذلك تُستخدم عادةً ملفات مؤقتة (Overflow Files)
+              للإضافات الجديدة ويتم دمجها لاحقاً.
+            </p>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_04_05_01.html" class="nav-prev">← Heap Files</a>
+          <a href="topic_04_05_03.html" class="nav-next"
+            >Hashing Techniques →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

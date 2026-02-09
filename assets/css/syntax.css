@@ -1,0 +1,9 @@
+
+/* PL/SQL Syntax Highlighting */
+.hljs-keyword { color: var(--code-keyword); }
+.hljs-string { color: var(--code-string); }
+.hljs-comment { color: var(--code-comment); font-style: italic; }
+.hljs-function { color: var(--code-function); }
+.hljs-number { color: #79c0ff; }
+.hljs-operator { color: #ff7b72; }
+.hljs-built_in { color: #ffa657; }

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controlling Cursors | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>Controlling Cursors</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Controlling Cursors: DECLARE, OPEN, FETCH, CLOSE</h1>
+          <p class="topic-title-ar">التحكم بالمؤشرات: تعريف، فتح، جلب، إغلاق</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              للتعامل مع المؤشرات الصريحة (Explicit Cursors)، نمر بأربع خطوات
+              أساسية: التعريف (Declare)، الفتح (Open)، جلب البيانات (Fetch)، ثم
+              الإغلاق (Close).
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>1. التعريف (DECLARE)</h3>
+            <p>تسمية المؤشر وربطه بجملة SELECT.</p>
+            <pre><code class="language-sql">CURSOR cursor_name IS
+  SELECT columns FROM table_name
+  WHERE conditions;</code></pre>
+
+            <h3>2. الفتح (OPEN)</h3>
+            <p>
+              تنفيذ الاستعلام وتجهيز البيانات. المؤشر يشير الآن قبل الصف الأول.
+            </p>
+            <pre><code class="language-sql">OPEN cursor_name;</code></pre>
+
+            <h3>3. الجلب (FETCH)</h3>
+            <p>
+              قراءة بيانات الصف الحالي ووضعها في متغيرات، ثم تحريك المؤشر للصف
+              التالي.
+            </p>
+            <pre><code class="language-sql">FETCH cursor_name INTO variable1, variable2;</code></pre>
+
+            <h3>4. الإغلاق (CLOSE)</h3>
+            <p>تحرير الذاكرة بعد الانتهاء من المعالجة.</p>
+            <pre><code class="language-sql">CLOSE cursor_name;</code></pre>
+
+            <h3>خصائص المؤشر (Cursor Attributes)</h3>
+            <ul class="styled-list">
+              <li><code>%ISOPEN</code>: هل المؤشر مفتوح حالياً؟</li>
+              <li>
+                <code>%NOTFOUND</code>: هل انتهت البيانات؟ (TRUE إذا لم ينجح آخر
+                FETCH)
+              </li>
+              <li><code>%FOUND</code>: عكس NOTFOUND.</li>
+              <li>
+                <code>%ROWCOUNT</code>: عدد الصفوف التي تم جلبها حتى الآن.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_04_01.html" class="nav-prev"
+            >← Cursor Fundamentals</a
+          >
+          <a href="topic_02_04_03.html" class="nav-next">Cursor FOR Loops →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

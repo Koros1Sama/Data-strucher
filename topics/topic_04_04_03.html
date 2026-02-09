@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block Buffering | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_04/index.html">الوحدة 4</a> ›
+        <span>Block Buffering</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Block Buffering</h1>
+          <p class="topic-title-ar">التخزين المؤقت للكتل</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              يتم نقل البيانات بين القرص والذاكرة في وحدات تسمى "كتل" (Blocks).
+              الـ Buffering هو عملية الاحتفاظ بهذه الكتل في الذاكرة الرئيسية
+              لتقليل عدد مرات الوصول للقرص البطيء.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>Buffer Manager</h3>
+            <p>
+              هو جزء من نظام إدارة قواعد البيانات (DBMS) مسؤول عن تخصيص مساحة في
+              الذاكرة الرئيسية (Buffer Pool) لتخزين الكتل المقروءة من القرص.
+            </p>
+            <ul class="styled-list">
+              <li>
+                <strong>Pin Count:</strong> عدد العمليات الحالية التي تستخدم هذه
+                الكتلة. لا يمكن كتابة الكتلة إلى القرص إذا كان العداد > 0.
+              </li>
+              <li>
+                <strong>Dirty Bit:</strong> بت يشير إلى ما إذا تم تعديل الكتلة
+                في الذاكرة. إذا كان 1، يجب كتابة التعديلات إلى القرص قبل إخراج
+                الكتلة من الذاكرة.
+              </li>
+            </ul>
+
+            <h3>استراتيجيات الاستبدال | Replacement Strategies</h3>
+            <p>
+              عند امتلاء الذاكرة، يجب اختيار كتلة لاستبدالها. الاستراتيجيات
+              الشائعة:
+            </p>
+            <ul class="styled-list">
+              <li>
+                <strong>Least Recently Used (LRU):</strong> استبدال الكتلة التي
+                لم يتم استخدامها لفترة أطول.
+              </li>
+              <li>
+                <strong>First-In-First-Out (FIFO):</strong> استبدال أقدم كتلة
+                دخلت الذاكرة.
+              </li>
+              <li>
+                <strong>Clock Policy:</strong> تقريب لـ LRU يستخدم مؤشراً
+                دائرياً.
+              </li>
+            </ul>
+
+            <h3>Double Buffering</h3>
+            <p>
+              استخدام ذاكرتين مؤقتتين (Buffer A, Buffer B) للسماح بقراءة
+              البيانات من القرص ومعالجتها في الذاكرة في نفس الوقت (Parallelism)،
+              مما يحسن الأداء.
+            </p>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_04_04_02.html" class="nav-prev"
+            >← Secondary Storage Devices</a
+          >
+          <a href="topic_04_04_04.html" class="nav-next">Record Placement →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

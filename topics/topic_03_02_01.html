@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating DML Triggers | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_03/index.html">الوحدة 3</a> ›
+        <span>Creating DML Triggers</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Creating DML Triggers</h1>
+          <p class="topic-title-ar">إنشاء مشغلات DML</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              مشغلات DML هي كتل برمجية يتم تنفيذها تلقائياً عند حدوث عملية إضافة
+              (INSERT)، تحديث (UPDATE)، أو حذف (DELETE) على جدول معين.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>الصيغة العامة (Syntax)</h3>
+            <pre><code class="language-sql">CREATE [OR REPLACE] TRIGGER trigger_name
+  {BEFORE | AFTER}  -- التوقيت
+  {INSERT | UPDATE | DELETE} -- الحدث
+  [OF column_name] -- تحديد العمود (للتحديث فقط)
+  ON table_name
+  [FOR EACH ROW] -- للمشغلات على مستوى الصف
+  [WHEN (condition)] -- شرط لتنفيذ المشغل
+DECLARE
+  -- تعريف المتغيرات
+BEGIN
+  -- جسم المشغل
+END;</code></pre>
+
+            <h3>مكونات المشغل الأساسية</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>التوقيت (Timing):</strong> يحدد متى يعمل المشغل (BEFORE
+                قبل العملية، AFTER بعد العملية).
+              </li>
+              <li>
+                <strong>الحدث (Event):</strong> العملية التي تسبب تشغيل التريجر
+                (INSERT, UPDATE, DELETE).
+              </li>
+              <li>
+                <strong>النطاق (Scope):</strong> الجدول الذي يرتبط به المشغل.
+              </li>
+              <li>
+                <strong>النوع (Type):</strong> هل هو Statement Level أم Row
+                Level (تحدد بـ FOR EACH ROW).
+              </li>
+            </ul>
+
+            <h3>مثال (Statement Trigger)</h3>
+            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER secure_emp
+BEFORE INSERT ON employees
+BEGIN
+  IF (TO_CHAR(SYSDATE,'DY') IN ('SAT','SUN')) THEN
+    RAISE_APPLICATION_ERROR(-20500, 'لا يمكنك الإضافة في عطلة نهاية الأسبوع');
+  END IF;
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="../ch_03_01/topic_03_01_03.html" class="nav-prev"
+            >← OLD and NEW Qualifiers</a
+          >
+          <a href="topic_03_02_02.html" class="nav-next"
+            >Conditional Predicates →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

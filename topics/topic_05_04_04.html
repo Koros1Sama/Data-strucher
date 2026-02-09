@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shadow Paging | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_05/index.html">الوحدة 5</a> ›
+        <span>Shadow Paging</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Shadow Paging</h1>
+          <p class="topic-title-ar">استرجاع الصفحات الظلية</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              تقنية قديمة وبسيطة للاسترجاع لا تعتمد كثيراً على السجلات (Logs)،
+              بل تعتمد على نسخ الصفحات بالكامل.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>الفكرة الأساسية</h3>
+            <p>تحتفظ قاعدة البيانات بجدولين للصفحات (Page Tables):</p>
+            <ul class="styled-list">
+              <li>
+                <strong>Current Page Table:</strong> يشير إلى الصفحات الحالية
+                التي يجري تعديلها (في الذاكرة).
+              </li>
+              <li>
+                <strong>Shadow Page Table:</strong> يشير إلى الصفحات الأصلية
+                الثابتة على القرص (قبل التعديل).
+              </li>
+            </ul>
+
+            <h3>آلية العمل</h3>
+            <p>
+              عندما تريد المعاملة تعديل صفحة، لا تعدلها في مكانها، بل تنشئ نسخة
+              جديدة (Page Copy) وتعدلها.
+            </p>
+            <ul class="styled-list">
+              <li>
+                <strong>عند الـ Commit:</strong> يتم ببساطة استبدال مؤشر الـ
+                Shadow Table ليصبح هو الـ Current Table الجديد. التبديل سريع
+                وذرّي.
+              </li>
+              <li>
+                <strong>عند الـ Rollback/Crash:</strong> يتم ببساطة التخلص من
+                الـ Current Table والعودة لاستخدام الـ Shadow Table القديم.
+              </li>
+            </ul>
+
+            <h3>المزايا والعيوب</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>مزايا:</strong> لا حاجة لعمل Undo/Redo معقد. الاسترجاع
+                سريع جداً.
+              </li>
+              <li>
+                <strong>عيوب:</strong> تشتت البيانات (Fragmentation) لأن الصفحات
+                الجديدة تكتب في أماكن جديدة. صعوبة في التعامل مع المعاملات
+                المتزامنة الكثيرة.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_05_04_03.html" class="nav-prev">← ARIES Algorithm</a>
+          <a href="../../index.html" class="nav-next">Back to Home →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

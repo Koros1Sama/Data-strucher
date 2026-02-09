@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loops in PL/SQL | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>الحلقات (Loops)</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>PL/SQL Loops</h1>
+          <p class="topic-title-ar">الحلقات التكرارية</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>🔄 التكرار في PL/SQL</h2>
+            <p>هناك ثلاثة أنواع رئيسية للحلقات في PL/SQL:</p>
+            <ol>
+              <li><strong>Basic LOOP</strong> (الحلقة الأساسية)</li>
+              <li><strong>WHILE LOOP</strong> (طالما الشرط صحيح)</li>
+              <li><strong>FOR LOOP</strong> (عدد محدد من المرات)</li>
+            </ol>
+          </section>
+
+          <section class="content-section">
+            <h2>1. Basic LOOP</h2>
+            <p>
+              أبسط نوع، ينفذ الكود بشكل لانهائي حتى نوقفه باستخدام شرط
+              <code>EXIT WHEN</code>.
+            </p>
+            <pre><code class="language-sql">LOOP
+    v_counter := v_counter + 1;
+    EXIT WHEN v_counter > 10; -- شرط الخروج
+END LOOP;</code></pre>
+            <p>
+              <strong>تذكر:</strong> يتم تنفيذ الكود مرة واحدة على الأقل لأن شرط
+              الخروج يكون في الداخل.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>2. WHILE LOOP</h2>
+            <p>
+              ينفذ الكود طالما الشرط الموجود في البداية <code>TRUE</code>. قد لا
+              ينفذ أبداً إذا كان الشرط <code>FALSE</code> من البداية.
+            </p>
+            <pre><code class="language-sql">WHILE v_counter <= 10 LOOP
+    v_counter := v_counter + 1;
+END LOOP;</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>3. FOR LOOP</h2>
+            <p>
+              ينفذ عدداً محدداً من المرات. العداد يتم تعريفه وتحديثه تلقائياً.
+            </p>
+            <pre><code class="language-sql">-- من 1 إلى 5
+FOR i IN 1..5 LOOP
+    DBMS_OUTPUT.PUT_LINE(i);
+END LOOP;
+
+-- عد تنازلي (من 5 إلى 1)
+FOR i IN REVERSE 1..5 LOOP
+    DBMS_OUTPUT.PUT_LINE(i);
+END LOOP;</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>ملاحظة:</strong> المتغير <code>i</code> لا يحتاج لتعريف
+                مسبق، ولا يمكن تعديل قيمته داخل الحلقة (Read-Only).
+              </p>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>🕹️ التحكم بالحلقات</h2>
+            <ul class="styled-list">
+              <li><code>EXIT</code>: ينهي الحلقة فوراً.</li>
+              <li>
+                <code>CONTINUE</code>: يتجاوز الكود المتبقي في الدورة الحالية
+                وينتقل للدورة التالية.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_02_02.html" class="nav-prev">← جمل CASE</a>
+          <a href="topic_02_03_01.html" class="nav-next"
+            >المؤشرات (Cursors) →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

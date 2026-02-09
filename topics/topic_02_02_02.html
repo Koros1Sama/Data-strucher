@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CASE Statements | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>جمل CASE</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>CASE Statements</h1>
+          <p class="topic-title-ar">جمل وتعبيرات CASE</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>🎯 متى نستخدم CASE؟</h2>
+            <p>
+              تستخدم <code>CASE</code> عندما يكون لديك انشعابات شرطية كثيرة
+              (بدائل متعددة). وهي غالباً أكثر ترتيباً ووضوحاً من
+              <code>IF-ELSIF</code> المتكررة.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>🔄 الأنواع</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>الوصف</th>
+                  <th>الاستخدام</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Simple CASE Statement</strong></td>
+                  <td>تقارن متغير واحد بقيم متعددة.</td>
+                  <td>عندما تريد فحص المساواة (<code>=</code>) لمتغير واحد.</td>
+                </tr>
+                <tr>
+                  <td><strong>Searched CASE Statement</strong></td>
+                  <td>تقيم شروطاً مستقلة معقدة.</td>
+                  <td>
+                    عندما تكون الشروط معقدة (<code>></code>, <code><</code>,
+                    <code>IS NULL</code>).
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>CASE Expression</strong></td>
+                  <td>تُرجع قيمة واحدة (تستخدم في الإسناد).</td>
+                  <td><code>v_res := CASE ... END;</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="content-section">
+            <h2>💻 أمثلة للكتابة</h2>
+
+            <h3>1. Simple CASE (فحص المساواة)</h3>
+            <pre><code class="language-sql">CASE v_grade
+    WHEN 'A' THEN DBMS_OUTPUT.PUT_LINE('Excellent');
+    WHEN 'B' THEN DBMS_OUTPUT.PUT_LINE('Very Good');
+    ELSE DBMS_OUTPUT.PUT_LINE('Good');
+END CASE;</code></pre>
+
+            <h3>2. Searched CASE (شروط مختلفة)</h3>
+            <pre><code class="language-sql">CASE
+    WHEN v_salary > 20000 THEN v_tax := 0.2;
+    WHEN v_salary BETWEEN 10000 AND 20000 THEN v_tax := 0.15;
+    ELSE v_tax := 0.1;
+END CASE;</code></pre>
+
+            <h3>3. CASE Expression (ترجع قيمة)</h3>
+            <pre><code class="language-sql">v_status := CASE v_grade
+                WHEN 'A' THEN 'Excellent'
+                ELSE 'Standard'
+            END; -- لاحظ: لا يوجد END CASE هنا، فقط END</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>⚠️ ملاحظة هامة</h2>
+            <div class="highlight-box">
+              <p>
+                في <code>CASE Statement</code>، إذا لم يتحقق أي شرط ولم يكن هناك
+                <code>ELSE</code>، سيحدث خطأ:
+                <strong>CASE_NOT_FOUND_EXCEPTION</strong>.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_02_01.html" class="nav-prev">← جمل IF الشرطية</a>
+          <a href="topic_02_02_03.html" class="nav-next">الحلقات (Loops) →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

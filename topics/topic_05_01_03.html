@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transaction States | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_05/index.html">الوحدة 5</a> ›
+        <span>Transaction States</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Transaction States</h1>
+          <p class="topic-title-ar">حالات المعاملة</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              تمر المعاملة بعدة حالات منذ لحظة بدئها وحتى انتهائها سواء بالنجاح
+              (Commit) أو الفشل (Abort).
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>دورة حياة المعاملة (Lifecycle)</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>Active:</strong> الحالة الأولية، المعاملة قيد التنفيذ.
+              </li>
+              <li>
+                <strong>Partially Committed:</strong> تم تنفيذ آخر جملة، لكن لم
+                يتم تثبيت التغييرات نهائياً على القرص بعد.
+              </li>
+              <li>
+                <strong>Committed:</strong> تم تثبيت التغييرات بنجاح، وأصبحت
+                دائمة.
+              </li>
+              <li>
+                <strong>Failed:</strong> حدث خطأ ما (من النظام أو المعاملة) يمنع
+                الاستمرار.
+              </li>
+              <li>
+                <strong>Aborted:</strong> تم التراجع عن المعاملة (Rollback)
+                واستعادة الحالة السابقة للبيانات.
+              </li>
+              <li>
+                <strong>Terminated:</strong> الحالة النهائية، سواء بعد الـ
+                Commit أو الـ Abort.
+              </li>
+            </ul>
+
+            <h3>مخطط الحالات (State Diagram)</h3>
+            <div class="mermaid-diagram">
+              graph LR Active --> Partially_Committed Active --> Failed
+              Partially_Committed --> Committed Partially_Committed --> Failed
+              Failed --> Aborted Committed --> Terminated Aborted --> Terminated
+            </div>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_05_01_02.html" class="nav-prev">← ACID Properties</a>
+          <a href="../ch_05_02/topic_05_02_01.html" class="nav-next"
+            >Concurrency Problems →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

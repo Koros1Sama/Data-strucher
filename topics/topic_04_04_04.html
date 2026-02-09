@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Record Placement | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_04/index.html">الوحدة 4</a> ›
+        <span>Record Placement</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Placing File Records on Disk</h1>
+          <p class="topic-title-ar">وضع سجلات الملفات على القرص</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              كيفية ترتيب السجلات داخل الكتل تؤثر بشكل كبير على أداء قاعدة
+              البيانات. هناك سجلات ثابتة الطول وسجلات متغيرة الطول (Spanned vs
+              Unspanned).
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>Spanned vs Unspanned Records</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>Unspanned (غير الممتدة):</strong> لا يسمح للسجل أن يتجزأ
+                عبر أكثر من كتلة. إذا لم يكن هناك مساحة كافية، يتم تخزين السجل
+                كاملاً في الكتلة التالية، وتضيع المساحة المتبقية.
+              </li>
+              <li>
+                <strong>Spanned (الممتدة):</strong> يسمح بتجزئة السجل عبر أكثر
+                من كتلة. يتم وضع مؤشر (Pointer) في نهاية الكتلة الأولى ليشير إلى
+                مكان بقية السجل. مفيد للسجلات الكبيرة جداً.
+              </li>
+            </ul>
+
+            <h3>Blocking Factor (bfr)</h3>
+            <p>
+              هو متوسط عدد السجلات التي يمكن تخزينها في كتلة واحدة. يتم حسابه
+              كـ: <code>Floor(Block Size / Record Size)</code> للسجلات غير
+              الممتدة.
+            </p>
+
+            <h3>تخصيص الكتل على القرص | File Allocation</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>Contiguous Allocation:</strong> تخزين الكتل بشكل متجاور.
+                سريع جداً للقراءة المتتابعة ولكن صعب التوسع.
+              </li>
+              <li>
+                <strong>Linked Allocation:</strong> كل كتلة تحتوي مؤشراً للكتلة
+                التالية. سهل التوسع ولكن بطيء في الوصول العشوائي.
+              </li>
+              <li>
+                <strong>Indexed Allocation:</strong> استخدام جدول (Index) يحتوي
+                على عناوين الكتل.
+              </li>
+            </ul>
+
+            <h3>File Header (Descriptor)</h3>
+            <p>
+              جزء في بداية الملف يحتوي على معلومات وصفية (Metadata) مثل عناوين
+              القرص، وتوصيف شكل السجلات، والبرامج اللازمة للوصول للملف.
+            </p>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_04_04_03.html" class="nav-prev">← Block Buffering</a>
+          <a href="topic_04_05_01.html" class="nav-next">Heap Files →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Indexing Introduction | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_04/index.html">الوحدة 4</a> ›
+        <span>مقدمة في الفهرسة</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Indexing Introduction</h1>
+          <p class="topic-title-ar">مقدمة في الفهرسة (Indexing)</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>🔍 ما هو الفهرس (Index)؟</h2>
+            <p>
+              الفهرس هو
+              <span class="term" data-ar="هيكل بيانات مساعد"
+                >Auxiliary Data Structure</span
+              >
+              يستخدم لتسريع الوصول إلى البيانات في الجدول. يعمل تماماً مثل "فهرس
+              الكتاب"؛ بدلاً من قراءة الكتاب صفحة بصفحة (Full Scan) للبحث عن
+              كلمة، تذهب للفهرس لتعرف رقم الصفحة مباشرة.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>⚖️ المفاضلة (PROS & CONS)</h2>
+            <div class="highlight-box">
+              <ul>
+                <li>
+                  <strong>الميزة (Pros):</strong> يسرع عمليات البحث (SELECT)
+                  بشكل هائل.
+                </li>
+                <li>
+                  <strong>العيب (Cons):</strong> يبطئ عمليات التعديل (INSERT,
+                  UPDATE, DELETE) لأننا نحتاج لتحديث الفهرس مع كل تغيير في
+                  البيانات. كما أنه يستهلك مساحة تخزين إضافية.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>📊 أنواع الفهارس الأساسية</h2>
+
+            <h3>1. فهرس كثيف (Dense Index)</h3>
+            <p>
+              يحتوي على مدخلة فهرس (Index Entry) <strong>لكل</strong> سجل في ملف
+              البيانات.
+            </p>
+            <ul>
+              <li>سهل البحث فيه.</li>
+              <li>يستهلك مساحة كبيرة.</li>
+            </ul>
+
+            <h3>2. فهرس متفرق (Sparse Index)</h3>
+            <p>
+              يحتوي على مدخلات فهرس لبعض السجلات فقط (مثلاً، مدخلة واحدة لكل
+              "كتلة" Block من البيانات).
+            </p>
+            <ul>
+              <li>يتطلب أن يكون الملف الأصلي <strong>مرتباً</strong>.</li>
+              <li>يستهلك مساحة أقل، لكن البحث أبطأ قليلاً من الكثيف.</li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="../modules/module_03/index.html" class="nav-prev"
+            >← الوحدة 3</a
+          >
+          <a href="topic_04_01_02.html" class="nav-next"
+            >أنواع الفهارس المتقدمة →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

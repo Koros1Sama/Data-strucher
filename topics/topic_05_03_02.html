@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Two-Phase Locking (2PL) | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_05/index.html">الوحدة 5</a> ›
+        <span>Two-Phase Locking (2PL)</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Two-Phase Locking (2PL)</h1>
+          <p class="topic-title-ar">بروتوكول القفل على مرحلتين</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              مجرد استخدام الأقفال لا يضمن قابلية التسلسل (Serializability).
+              بروتوكول 2PL يضع قاعدة إضافية تضمن ذلك: لا يجوز للمعاملة طلب أي
+              قفل جديد بعد أن تكون قد حررت قفلاً واحداً.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>مراحل البروتوكول (Phases)</h3>
+            <ol class="styled-list number-list">
+              <li>
+                <strong>مرحلة النمو (Growing Phase):</strong>
+                <p>
+                  يُسمح للمعاملة بطلب أقفال جديدة (S أو X)، ولكن لا يُسمح لها
+                  بتحرير أي قفل.
+                </p>
+              </li>
+              <li>
+                <strong>نقطة القفل (Lock Point):</strong>
+                <p>
+                  اللحظة التي تمتلك فيها المعاملة جميع الأقفال التي تحتاجها.
+                  بعدها تبدأ المرحلة الثانية.
+                </p>
+              </li>
+              <li>
+                <strong>مرحلة الانكماش (Shrinking Phase):</strong>
+                <p>
+                  يُسمح للمعاملة بتحرير الأقفال، ولكن لا يُسمح لها أبداً بطلب أي
+                  قفل جديد.
+                </p>
+              </li>
+            </ol>
+
+            <h3>أنواع 2PL</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>Basic 2PL:</strong> التطبيق الأساسي كما وصف أعلاه. قد
+                يسبب Deadlock.
+              </li>
+              <li>
+                <strong>Conservative 2PL:</strong> تطلب المعاملة جميع أقفالها
+                دفعة واحدة قبل البدء. يمنع Deadlock لكنه يقلل التزامن.
+              </li>
+              <li>
+                <strong>Strict 2PL:</strong> لا تحرر أقفال الكتابة (Exclusive)
+                إلا بعد الانتهاء تماماً (Commit/Abort). يضمن Recoverability
+                ويمنع Cascading Rollback.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_05_03_01.html" class="nav-prev">← Locking Protocols</a>
+          <a href="topic_05_03_03.html" class="nav-next">Deadlocks →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

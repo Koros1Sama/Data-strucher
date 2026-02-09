@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scalar Data Types | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_01/index.html">الوحدة 1</a> ›
+        <span>أنواع البيانات العددية</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>Scalar Data Types</h1>
+          <p class="topic-title-ar">أنواع البيانات العددية (المفردة)</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>🔢 ما هي Scalar Data Types؟</h2>
+            <p>
+              هي أنواع البيانات التي تحمل
+              <span class="term" data-ar="قيمة واحدة فقط">Single Value</span>
+              (وليست قائمة أو سجل). تنقسم إلى 4 فئات رئيسية:
+            </p>
+
+            <div class="types-grid">
+              <div class="type-card">
+                <h3>1. الرقمية (Numeric)</h3>
+                <p>للأرقام الصحيحة والعشرية.</p>
+                <ul>
+                  <li><code>NUMBER(p,s)</code>: النوع الأشهر.</li>
+                  <li><code>PLS_INTEGER</code>: أسرع للحسابات (صحيح فقط).</li>
+                  <li><code>BINARY_INTEGER</code>: مشابه لـ PLS_INTEGER.</li>
+                </ul>
+              </div>
+              <div class="type-card">
+                <h3>2. النصية (Character)</h3>
+                <p>للنصوص والرموز.</p>
+                <ul>
+                  <li>
+                    <code>VARCHAR2(n)</code>: نص متغير الطول (الأكثر استخداماً).
+                  </li>
+                  <li><code>CHAR(n)</code>: نص ثابت الطول.</li>
+                  <li><code>LONG</code>: نصوص طويلة جداً (قديم).</li>
+                </ul>
+              </div>
+              <div class="type-card">
+                <h3>3. التواريخ (Date/Time)</h3>
+                <p>للتاريخ والوقت.</p>
+                <ul>
+                  <li><code>DATE</code>: يخزن التاريخ والوقت بالثانية.</li>
+                  <li><code>TIMESTAMP</code>: أدق (يخزن أجزاء الثانية).</li>
+                </ul>
+              </div>
+              <div class="type-card">
+                <h3>4. المنطقية (Boolean)</h3>
+                <p>للقيم المنطقية.</p>
+                <ul>
+                  <li><code>BOOLEAN</code>: يقبل (TRUE, FALSE, NULL).</li>
+                  <li>
+                    <strong>ملاحظة:</strong> لا يمكن طباعة القيمة Boolean
+                    مباشرة.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>💡 تفاصيل NUMBER Data Type</h2>
+            <p>النوع <code>NUMBER(p,s)</code> هو الأكثر مرونة:</p>
+            <ul class="styled-list">
+              <li>
+                <strong>p (Precision):</strong> إجمالي عدد الخانات (Max 38).
+              </li>
+              <li><strong>s (Scale):</strong> عدد الخانات بعد الفاصلة.</li>
+            </ul>
+            <div class="highlight-box">
+              <p><strong>أمثلة:</strong></p>
+              <ul>
+                <li>
+                  <code>NUMBER(5,2)</code>: يخزن 123.45 (إجمالي 5 خانات، 2 منها
+                  عشري).
+                </li>
+                <li><code>NUMBER(3)</code>: يخزن 123 (عدد صحيح).</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>💻 مثال شامل | Comprehensive Example</h2>
+            <pre><code class="language-sql">DECLARE
+    v_emp_id    NUMBER(6) := 1001;
+    v_name      VARCHAR2(50) := 'Sarah Ahmed';
+    v_salary    NUMBER(8,2) := 5000.50;
+    v_active    BOOLEAN := TRUE;
+    v_hire_date DATE := '01-JAN-2023';
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Employee: ' || v_name);
+    DBMS_OUTPUT.PUT_LINE('Salary: ' || v_salary);
+    
+    -- التعامل مع Boolean
+    IF v_active THEN
+        DBMS_OUTPUT.PUT_LINE('Status: Active');
+    END IF;
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_01_02_01.html" class="nav-prev">← تعريف المتغيرات</a>
+          <a href="topic_01_02_03.html" class="nav-next">الخاصية %TYPE →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

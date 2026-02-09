@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cursor FOR Loops | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>Cursor FOR Loops</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Cursor FOR Loops</h1>
+          <p class="topic-title-ar">حلقات FOR للمؤشرات</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              تعتبر <strong>Cursor FOR Loop</strong> طريقة مختصرة وفعالة للتعامل
+              مع المؤشرات الصريحة. تقوم هذه الحلقة بفتح المؤشر، وجلب الصفوف
+              واحداً تلو الآخر، ثم إغلاق المؤشر تلقائياً عند انتهاء البيانات،
+              دون الحاجة لكتابة أوامر OPEN، FETCH، و CLOSE يدوياً.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>المميزات | Features</h3>
+            <ul class="styled-list">
+              <li>
+                تقوم بتعريف سجل (Record) ضمنياً %ROWTYPE ليحمل بيانات الصف.
+              </li>
+              <li>
+                تتعامل مع فتح وإغلاق المؤشر تلقائياً (حتى في حالة حدوث خطأ).
+              </li>
+              <li>تجعل الكود أنظف وأسهل للقراءة.</li>
+            </ul>
+
+            <h3>الصيغة العامة | Syntax</h3>
+            <pre><code class="language-sql">FOR record_name IN cursor_name LOOP
+  -- Access data using record_name.column_name
+  statement1;
+  statement2;
+END LOOP;</code></pre>
+
+            <h3>مثال عملي | Practical Example</h3>
+            <pre><code class="language-sql">DECLARE
+  CURSOR emp_cursor IS 
+    SELECT employee_id, last_name FROM employees WHERE department_id = 30;
+BEGIN
+  -- لا حاجة لتعريف متغير للسجل، يتم تعريفه تلقائياً
+  FOR emp_record IN emp_cursor LOOP
+    DBMS_OUTPUT.PUT_LINE( emp_record.employee_id || ' ' || emp_record.last_name );
+  END LOOP;
+  -- يتم إغلاق المؤشر تلقائياً هنا
+END;</code></pre>
+
+            <h3>استخدام الاستعلام الفرعي مباشرة (Using Subqueries)</h3>
+            <p>
+              يمكننا تعريف المؤشر كجزء من الحلقة مباشرة دون الحاجة لقسم DECLARE:
+            </p>
+            <pre><code class="language-sql">BEGIN
+  FOR emp_record IN (SELECT employee_id, last_name FROM employees) LOOP
+    DBMS_OUTPUT.PUT_LINE(emp_record.last_name);
+  END LOOP;
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_04_02.html" class="nav-prev"
+            >← Controlling Cursors</a
+          >
+          <a href="topic_02_04_04.html" class="nav-next"
+            >Cursors with Parameters →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

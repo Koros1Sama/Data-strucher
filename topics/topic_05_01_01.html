@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transaction Processing | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_05/index.html">الوحدة 5</a> ›
+        <span>معالجة المعاملات (Transactions)</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Transaction Processing</h1>
+          <p class="topic-title-ar">معالجة المعاملات (Transactions)</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>💳 ما هي المعاملة (Transaction)؟</h2>
+            <p>
+              المعاملة هي
+              <span class="term" data-ar="وحدة عمل منطقية"
+                >Logical Unit of Work</span
+              >
+              تتكون من عملية أو أكثر في قاعدة البيانات. يجب أن تُنفذ هذه
+              العمليات جميعها بنجاح أو تفشل جميعها.
+            </p>
+            <div class="highlight-box">
+              <p>
+                <strong>المثال الكلاسيكي:</strong> تحويل بنكي. خصم المبلغ من
+                حسابك (Update 1) وإضافته لحساب صديقك (Update 2). يجب أن تنجح
+                العمليتان معاً، لو نجحت الأولى وفشلت الثانية ستضيع الأموال!
+              </p>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>🛡️ خصائص ACID</h2>
+            <p>لضمان سلامة البيانات، يجب أن تتوفر في المعاملات 4 خصائص:</p>
+
+            <ul class="styled-list">
+              <li>
+                <strong>A - Atomicity (الذرية):</strong> المعاملة وحدة واحدة لا
+                تتجزأ. كل شيء أو لا شيء (All or Nothing).
+              </li>
+              <li>
+                <strong>C - Consistency (الاتساق):</strong> المعاملة تنقل قاعدة
+                البيانات من حالة صحيحة إلى حالة صحيحة أخرى (تحترم القيود
+                Constraints).
+              </li>
+              <li>
+                <strong>I - Isolation (العزل):</strong> المعاملات التي تعمل في
+                نفس الوقت لا تؤثر على بعضها البعض (كأن كل واحدة تعمل وحدها).
+              </li>
+              <li>
+                <strong>D - Durability (الديمومة):</strong> بمجرد تثبيت المعاملة
+                (Commit)، التغييرات تصبح دائمة ولن تضيع حتى لو انقطعت الكهرباء.
+              </li>
+            </ul>
+          </section>
+
+          <section class="content-section">
+            <h2>🕹️ أوامر التحكم (TCL)</h2>
+            <ul>
+              <li>
+                <code>COMMIT</code>: تثبيت التغييرات وحفظها نهائياً. (تنتهي
+                المعاملة بنجاح).
+              </li>
+              <li>
+                <code>ROLLBACK</code>: التراجع عن جميع التغييرات وإلغاء
+                المعاملة. (فشل المعاملة).
+              </li>
+              <li>
+                <code>SAVEPOINT</code>: وضع علامة مرجعية داخل المعاملة يمكن
+                التراجع إليها جزئياً.
+              </li>
+            </ul>
+          </section>
+
+          <section class="content-section">
+            <h2>🚫 مشاكل التزامن (Concurrency Problems)</h2>
+            <p>
+              عندما تعمل عدة معاملات في نفس الوقت بدون عزل صحيح، تحدث مشاكل:
+            </p>
+            <ol>
+              <li>
+                <strong>Lost Update:</strong> معاملتان تعدلان نفس السجل،
+                والتعديل الثاني يمسح الأول.
+              </li>
+              <li>
+                <strong>Dirty Read:</strong> قراءة بيانات غير مثبتة
+                (Uncommitted) قد يتم التراجع عنها لاحقاً.
+              </li>
+              <li>
+                <strong>Non-Repeatable Read:</strong> قراءة نفس الصف مرتين
+                والحصول على قيم مختلفة (لأن شخصاً آخر عدّلها).
+              </li>
+            </ol>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="../modules/module_04/index.html" class="nav-prev"
+            >← الوحدة 4</a
+          >
+          <a href="../index.html" class="nav-next">العودة للرئيسية →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

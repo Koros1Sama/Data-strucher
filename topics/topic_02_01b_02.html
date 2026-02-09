@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nested Tables | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="../modules/module_02/index.html">الوحدة 2</a> ›
+        <span>Nested Tables</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Nested Tables</h1>
+          <p class="topic-title-ar">الجداول المتداخلة</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              الجداول المتداخلة (Nested Tables) هي نوع من المجموعات يمكن تخزينها
+              في قاعدة البيانات كعمود داخل جدول، أو كمتغير في PL/SQL. تتميز بأن
+              حجمها غير محدود (Unbounded).
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>المفهوم | Concept</h3>
+            <p>
+              الجداول المتداخلة هي مجموعات غير محددة الحجم (Unbounded). يمكن
+              استخدامها كمتغيرات في PL/SQL أو كنوع عمود في جداول قاعدة البيانات
+              (لتخزين جدول داخل عمود).
+            </p>
+
+            <h3>الخصائص | Characteristics</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>التهيئة (Initialization):</strong> يجب تهيئتها باستخدام
+                دالة بناء (Constructor) قبل الاستخدام، وإلا ستكون قيمتها NULL.
+              </li>
+              <li><strong>المؤشر (Index):</strong> يبدأ من 1 بشكل متسلسل.</li>
+              <li>
+                <strong>Sparse vs Dense:</strong> تبدأ ممتلئة (Dense) ولكن يمكن
+                حذف عناصر من الوسط لتصبح متفرقة (Sparse).
+              </li>
+            </ul>
+
+            <h3>Syntax</h3>
+            <pre><code class="language-sql">TYPE type_name IS TABLE OF element_type;
+
+-- Declaration & Initialization
+my_list type_name := type_name(); </code></pre>
+
+            <h3>مثال | Example</h3>
+            <pre><code class="language-sql">DECLARE
+    TYPE NameList IS TABLE OF VARCHAR2(20);
+    names NameList := NameList('Ali', 'Omar', 'Zaid'); -- Initialization
+BEGIN
+    names.EXTEND; -- Add space for new element
+    names(4) := 'Khalid';
+    
+    FOR i IN 1..names.COUNT LOOP
+        DBMS_OUTPUT.PUT_LINE(names(i));
+    END LOOP;
+END;</code></pre>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_02_01b_01.html" class="nav-prev">← INDEX BY Tables</a>
+          <a href="topic_02_01b_03.html" class="nav-next">VARRAY →</a>
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

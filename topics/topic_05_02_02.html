@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Schedules and Serializability | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../glossary/index.html">قاموس المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <a href="../../modules/module_05/index.html">الوحدة 5</a> ›
+        <span>Schedules & Serializability</span>
+      </nav>
+
+      <article class="topic-page">
+        <header class="topic-header">
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Schedules and Serializability</h1>
+          <p class="topic-title-ar">الجداول وقابلية التسلسل</p>
+        </header>
+
+        <div class="topic-body">
+          <section class="content-section">
+            <h2>📖 مقدمة | Introduction</h2>
+            <p>
+              الجدول (Schedule) هو ترتيب زمني لتنفيذ عمليات تابعة لعدة معاملات
+              متزامنة. الهدف هو إيجاد جدول يضمن صحة البيانات (Serializability)
+              مع السماح بأقصى قدر من التزامن.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 المحتوى | Content</h2>
+
+            <h3>أنواع الجداول</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>الجدول التسلسلي (Serial Schedule):</strong> يتم تنفيذ
+                المعاملات واحدة تلو الأخرى (T1 ثم T2، أو العكس). لا يوجد تداخل.
+                هذا النوع يضمن دائماً سلامة البيانات لكنه بطيء جداً.
+              </li>
+              <li>
+                <strong>الجدول غير التسلسلي (Nonserial Schedule):</strong>
+                تتداخل عمليات المعاملات مع بعضها. قد يسبب مشاكل (مثل Lost
+                Update) إذا لم يكن "قابلاً للتسلسل".
+              </li>
+            </ul>
+
+            <h3>مفهوم قابلية التسلسل (Serializability)</h3>
+            <p>
+              نقول أن الجدول S "قابل للتسلسل" (Serializable) إذا كان ناتج تنفيذه
+              مكافئاً تماماً لناتج تنفيذ جدول تسلسلي (Serial Schedule) لنفس
+              المعاملات. هذا يعني أن التداخل آمن ولا يفسد البيانات.
+            </p>
+          </section>
+        </div>
+
+        <nav class="topic-nav">
+          <a href="topic_05_02_01.html" class="nav-prev"
+            >← Concurrency Problems</a
+          >
+          <a href="topic_05_02_03.html" class="nav-next"
+            >Conflict Serializability →</a
+          >
+        </nav>
+      </article>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>
