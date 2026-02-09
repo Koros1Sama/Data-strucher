@@ -1,111 +1,0 @@
-﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Locking Protocols | Data Structures Study Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <link rel="stylesheet" href="../assets/css/syntax.css" />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
-      </div>
-      <div class="nav-links">
-        <a href="../index.html">الرئيسية</a>
-        <a href="../exam/index.html">📝 نموذج الاختبار</a>
-        <a href="../glossary/index.html">المصطلحات</a>
-        <a href="../graph/index.html">خريطة المفاهيم</a>
-      </div>
-    </nav>
-
-    <main class="container">
-      <nav class="breadcrumb">
-        <a href="../index.html">الرئيسية</a> ›
-        <a href="../modules/module_05/index.html">الوحدة 5</a> ›
-        <span>Locking Protocols</span>
-      </nav>
-
-      <article class="topic-page">
-        <header class="topic-header">
-          <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Locking Protocols</h1>
-          <p class="topic-title-ar">بروتوكولات الأقفال (Locking)</p>
-        </header>
-
-        <div class="topic-body">
-          <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              الأقفال هي الآلية الأكثر استخداماً للتحكم في التزامن (Concurrency
-              Control). تمنع الأقفال المعاملات الأخرى من الوصول إلى البيانات
-              التي يتم استخدامها حالياً، مما يضمن العزل (Isolation).
-            </p>
-          </section>
-
-          <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>أنواع الأقفال (Lock Types)</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>القفل المشترك (Shared Lock - S):</strong>
-                <p>
-                  يستخدم للقراءة فقط. يمكن لعدة معاملات الحصول على قفل S على نفس
-                  العنصر في نفس الوقت (للقراءة الجماعية)، لكن يمنع أي معاملة من
-                  الكتابة.
-                </p>
-              </li>
-              <li>
-                <strong>القفل الحصري (Exclusive Lock - X):</strong>
-                <p>
-                  يستخدم للكتابة (والقراءة). لا يمكن لأي معاملة أخرى الحصول على
-                  أي نوع من الأقفال (S أو X) على نفس العنصر إذا كان هناك قفل X
-                  عليه.
-                </p>
-              </li>
-            </ul>
-
-            <h3>مصفوفة التوافق (Compatibility Matrix)</h3>
-            <table class="comparison-table">
-              <tr>
-                <th></th>
-                <th>Shared (S)</th>
-                <th>Exclusive (X)</th>
-              </tr>
-              <tr>
-                <td><strong>Shared (S)</strong></td>
-                <td style="color: green">✔ متوافق</td>
-                <td style="color: red">✖ تعارض</td>
-              </tr>
-              <tr>
-                <td><strong>Exclusive (X)</strong></td>
-                <td style="color: red">✖ تعارض</td>
-                <td style="color: red">✖ تعارض</td>
-              </tr>
-            </table>
-          </section>
-        </div>
-
-        <nav class="topic-nav">
-          <a href="../ch_05_02/topic_05_02_04.html" class="nav-prev"
-            >← Recoverability</a
-          >
-          <a href="topic_05_03_02.html" class="nav-next"
-            >Two-Phase Locking (2PL) →</a
-          >
-        </nav>
-      </article>
-    </main>
-
-    <div id="tooltip-ar" class="tooltip-ar"></div>
-    <script src="../assets/js/main.js"></script>
-  </body>
-</html>

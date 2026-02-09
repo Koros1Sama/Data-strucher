@@ -1,100 +1,0 @@
-﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hash Index | Data Structures Study Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <link rel="stylesheet" href="../assets/css/syntax.css" />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
-      </div>
-      <div class="nav-links">
-        <a href="../index.html">الرئيسية</a>
-        <a href="../exam/index.html">📝 نموذج الاختبار</a>
-        <a href="../glossary/index.html">المصطلحات</a>
-        <a href="../graph/index.html">خريطة المفاهيم</a>
-      </div>
-    </nav>
-
-    <main class="container">
-      <nav class="breadcrumb">
-        <a href="../index.html">الرئيسية</a> ›
-        <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>Hash Index</span>
-      </nav>
-
-      <article class="topic-page">
-        <header class="topic-header">
-          <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Hash Index</h1>
-          <p class="topic-title-ar">الفهرس المعتمد على التجزئة (Hash)</p>
-        </header>
-
-        <div class="topic-body">
-          <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              يستخدم فهرس الـ Hash دالة رياضية (Hashing Function) لتحويل قيمة
-              مفتاح البحث مباشرة إلى عنوان القرص (Disk Address) حيث يوجد السجل.
-            </p>
-          </section>
-
-          <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>المبدأ الأساسي</h3>
-            <p>
-              بدلاً من استخدام شجرة للتنقل، نطبق الدالة
-              <code>h(Key) = Address</code>. هذا يعطي وصولاً مباشراً وسريعاً
-              جداً للبيانات.
-            </p>
-
-            <h3>متى نستخدمه؟ (Use Cases)</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>البحث بالمساواة (Equality Search):</strong> ممتاز جداً
-                عندما تبحث عن قيمة محددة بالضبط (مثل
-                <code>WHERE ID = 100</code>).
-              </li>
-              <li><strong>السرعة:</strong> زمن الوصول ثابت تقريباً O(1).</li>
-            </ul>
-
-            <h3>العيوب (Limitations)</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>نطاق البحث (Range Search):</strong> سيىء جداً أو مستحيل
-                لعمليات مثل <code>WHERE Salary > 5000</code>، لأن القيم
-                المتقاربة لا تخزن بالضرورة بجانب بعضها.
-              </li>
-              <li>
-                <strong>التصادم (Collisions):</strong> قد تنتج الدالة نفس
-                العنوان لمفتاحين مختلفين، مما يتطلب تقنيات إضافية للمعالجة
-                (Overhead).
-              </li>
-            </ul>
-          </section>
-        </div>
-
-        <nav class="topic-nav">
-          <a href="../ch_04_02/topic_04_02_03.html" class="nav-prev"
-            >← B+ Tree Operations</a
-          >
-          <a href="topic_04_03_02.html" class="nav-next">Bitmap Index →</a>
-        </nav>
-      </article>
-    </main>
-
-    <div id="tooltip-ar" class="tooltip-ar"></div>
-    <script src="../assets/js/main.js"></script>
-  </body>
-</html>

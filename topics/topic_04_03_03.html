@@ -1,97 +1,0 @@
-﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Function-Based Index | Data Structures Study Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <link rel="stylesheet" href="../assets/css/syntax.css" />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
-      </div>
-      <div class="nav-links">
-        <a href="../index.html">الرئيسية</a>
-        <a href="../exam/index.html">📝 نموذج الاختبار</a>
-        <a href="../glossary/index.html">المصطلحات</a>
-        <a href="../graph/index.html">خريطة المفاهيم</a>
-      </div>
-    </nav>
-
-    <main class="container">
-      <nav class="breadcrumb">
-        <a href="../index.html">الرئيسية</a> ›
-        <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>Function-Based Index</span>
-      </nav>
-
-      <article class="topic-page">
-        <header class="topic-header">
-          <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Function-Based Index</h1>
-          <p class="topic-title-ar">الفهرس المبني على الدوال</p>
-        </header>
-
-        <div class="topic-body">
-          <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              في بعض الأحيان، نحتاج للبحث باستخدام تعبير أو دالة وليس قيمة
-              العمود الخام. الفهارس التقليدية لا تفيد هنا، لذا نستخدم
-              Function-Based Index.
-            </p>
-          </section>
-
-          <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>المشكلة (The Problem)</h3>
-            <p>
-              إذا كان لديك فهرس على العمود <code>last_name</code>، وقمت
-              بالاستعلام التالي:
-            </p>
-            <pre><code class="language-sql">SELECT * FROM employees WHERE UPPER(last_name) = 'SMITH';</code></pre>
-            <p>
-              لن يستخدم قاعدة البيانات الفهرس الموجود، لأن الدالة
-              <code>UPPER</code> تغير القيمة التي يتم البحث عنها، مما يضطر
-              النظام لعمل Full Table Scan.
-            </p>
-
-            <h3>الحل (The Solution)</h3>
-            <p>نقوم بإنشاء فهرس على ناتج الدالة نفسها:</p>
-            <pre><code class="language-sql">CREATE INDEX emp_upper_name_idx 
-ON employees (UPPER(last_name));</code></pre>
-            <p>
-              الآن، عند تنفيذ نفس الاستعلام السابق، سيتم استخدام هذا الفهرس
-              وتكون الاستجابة سريعة جداً.
-            </p>
-
-            <h3>استخدامات أخرى</h3>
-            <ul class="styled-list">
-              <li>
-                الفهارس الحسابية: <code>(salary * 12 + commission)</code>.
-              </li>
-              <li>معالجة النصوص المعقدة.</li>
-            </ul>
-          </section>
-        </div>
-
-        <nav class="topic-nav">
-          <a href="topic_04_03_02.html" class="nav-prev">← Bitmap Index</a>
-          <a href="topic_04_03_04.html" class="nav-next">Reverse Key Index →</a>
-        </nav>
-      </article>
-    </main>
-
-    <div id="tooltip-ar" class="tooltip-ar"></div>
-    <script src="../assets/js/main.js"></script>
-  </body>
-</html>

@@ -1,105 +1,0 @@
-﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recoverability | Data Structures Study Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <link rel="stylesheet" href="../assets/css/syntax.css" />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
-      </div>
-      <div class="nav-links">
-        <a href="../index.html">الرئيسية</a>
-        <a href="../exam/index.html">📝 نموذج الاختبار</a>
-        <a href="../glossary/index.html">المصطلحات</a>
-        <a href="../graph/index.html">خريطة المفاهيم</a>
-      </div>
-    </nav>
-
-    <main class="container">
-      <nav class="breadcrumb">
-        <a href="../index.html">الرئيسية</a> ›
-        <a href="../modules/module_05/index.html">الوحدة 5</a> ›
-        <span>Recoverability</span>
-      </nav>
-
-      <article class="topic-page">
-        <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
-          <h1>Recoverability: Recoverable & Cascadeless</h1>
-          <p class="topic-title-ar">
-            قابلية الاسترجاع: الجداول القابلة للاستعادة والخالية من التتابع
-          </p>
-        </header>
-
-        <div class="topic-body">
-          <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              لا يكفي أن يكون الجدول قابلاً للتسلسل (Serializable)؛ يجب أيضاً أن
-              يكون قابلاً للاسترجاع (Recoverable) لضمان atomicity في حالة الفشل.
-            </p>
-          </section>
-
-          <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>1. الجدول القابل للاسترجاع (Recoverable Schedule)</h3>
-            <p>
-              هو الجدول الذي يضمن أنه إذا قرأت المعاملة T2 بيانات كتبتها
-              المعاملة T1، فإن T1 يجب أن تعمل Commit قبل T2.
-            </p>
-            <ul class="styled-list">
-              <li>
-                إذا فشلت T1 وتراجعت (Rollback) قبل أن تعمل T2 تثبيتاً (Commit)،
-                يجب أن تتراجع T2 أيضاً.
-              </li>
-              <li>
-                إذا سمحنا لـ T2 بعمل Commit قبل T1، ثم فشلت T1، سنواجه استحالة
-                في التراجع (نكون قد ثبتنا بيانات اعتمدت على بيانات ملغاة).
-              </li>
-            </ul>
-
-            <h3>2. التراجع المتتابع (Cascading Rollback)</h3>
-            <p>
-              يحدث عندما يؤدي فشل معاملة واحدة (T1) إلى إجبار سلسلة من المعاملات
-              الأخرى (T2, T3...) على التراجع لأنها قرأت ما كتبته T1. هذا إهدار
-              كبير للموارد.
-            </p>
-
-            <h3>3. الجدول الخالي من التتابع (Cascadeless Schedule)</h3>
-            <p>
-              هو جدول يتجنب مشكلة التراجع المتتابع.
-              <strong>القاعدة:</strong> لا يُسمح للمعاملة T2 بقراءة بيانات
-              كتبتها T1 إلا <em>بعد</em> أن تقوم T1 بعمل Commit. بذلك، إذا فشلت
-              T1، لن تتأثر T2 لأنها لم تقرأ البيانات بعد.
-            </p>
-            <p class="note-box">كل جدول Cascadeless هو بالضرورة Recoverable.</p>
-          </section>
-        </div>
-
-        <nav class="topic-nav">
-          <a href="topic_05_02_03.html" class="nav-prev"
-            >← Conflict Serializability</a
-          >
-          <a href="../ch_05_03/topic_05_03_01.html" class="nav-next"
-            >Locking Protocols →</a
-          >
-        </nav>
-      </article>
-    </main>
-
-    <div id="tooltip-ar" class="tooltip-ar"></div>
-    <script src="../assets/js/main.js"></script>
-  </body>
-</html>

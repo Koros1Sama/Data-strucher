@@ -1,131 +1,0 @@
-﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bitmap Index | Data Structures Study Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <link rel="stylesheet" href="../assets/css/syntax.css" />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
-      </div>
-      <div class="nav-links">
-        <a href="../index.html">الرئيسية</a>
-        <a href="../exam/index.html">📝 نموذج الاختبار</a>
-        <a href="../glossary/index.html">المصطلحات</a>
-        <a href="../graph/index.html">خريطة المفاهيم</a>
-      </div>
-    </nav>
-
-    <main class="container">
-      <nav class="breadcrumb">
-        <a href="../index.html">الرئيسية</a> ›
-        <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>Bitmap Index</span>
-      </nav>
-
-      <article class="topic-page">
-        <header class="topic-header">
-          <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Bitmap Index</h1>
-          <p class="topic-title-ar">فهرس الخريطة النقطية (Bitmap)</p>
-        </header>
-
-        <div class="topic-body">
-          <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              يستخدم فهرس Bitmap مصفوفة من البتات (Bits Array) لتمثيل وجود
-              القيم. وهو فعال جداً للأعمدة ذات التنوع المنخفض (Low Cardinality).
-            </p>
-          </section>
-
-          <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>متى نستخدمه؟ (Use Cases)</h3>
-            <p>
-              مثالي للأعمدة التي تحتوي على عدد قليل من القيم الفريدة مقارنة بعدد
-              الصفوف الكلي.
-            </p>
-            <ul class="styled-list">
-              <li><strong>الجنس (Gender):</strong> ذكر، أنثى.</li>
-              <li>
-                <strong>الحالة الاجتماعية:</strong> أعزب، متزوج، مطلق، أرمل.
-              </li>
-              <li><strong>المنطقة:</strong> شمال، جنوب، شرق، غرب.</li>
-            </ul>
-
-            <h3>آلية العمل (Mechanism)</h3>
-            <p>
-              لكل قيمة فريدة في العمود، يتم إنشاء Bitmap (سلسلة من 0 و 1) بطول
-              يساوي عدد الصفوف في الجدول.
-            </p>
-            <table class="comparison-table">
-              <tr>
-                <th>Row ID</th>
-                <th>Gender</th>
-                <th>Bitmap (M)</th>
-                <th>Bitmap (F)</th>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>M</td>
-                <td><strong>1</strong></td>
-                <td>0</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>F</td>
-                <td>0</td>
-                <td><strong>1</strong></td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>M</td>
-                <td><strong>1</strong></td>
-                <td>0</td>
-              </tr>
-            </table>
-
-            <h3>المزايا</h3>
-            <ul class="styled-list">
-              <li>حجم الفهرس صغير جداً.</li>
-              <li>
-                سريع جداً في عمليات المنطق البولياني (AND, OR, NOT) عند دمج عدة
-                شروط.
-              </li>
-            </ul>
-
-            <h3>العيوب</h3>
-            <ul class="styled-list">
-              <li>
-                سيىء جداً في بيئات التعديل الكثيف (OLTP) لأنه يقفل أجزاء كبيرة
-                من الفهرس عند التعديل، مما يقلل التزامن (Concurrency).
-              </li>
-            </ul>
-          </section>
-        </div>
-
-        <nav class="topic-nav">
-          <a href="topic_04_03_01.html" class="nav-prev">← Hash Index</a>
-          <a href="topic_04_03_03.html" class="nav-next"
-            >Function-Based Index →</a
-          >
-        </nav>
-      </article>
-    </main>
-
-    <div id="tooltip-ar" class="tooltip-ar"></div>
-    <script src="../assets/js/main.js"></script>
-  </body>
-</html>

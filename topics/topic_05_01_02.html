@@ -1,99 +1,0 @@
-﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ACID Properties | Data Structures Study Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <link rel="stylesheet" href="../assets/css/syntax.css" />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
-      </div>
-      <div class="nav-links">
-        <a href="../index.html">الرئيسية</a>
-        <a href="../exam/index.html">📝 نموذج الاختبار</a>
-        <a href="../glossary/index.html">المصطلحات</a>
-        <a href="../graph/index.html">خريطة المفاهيم</a>
-      </div>
-    </nav>
-
-    <main class="container">
-      <nav class="breadcrumb">
-        <a href="../index.html">الرئيسية</a> ›
-        <a href="../modules/module_05/index.html">الوحدة 5</a> ›
-        <span>ACID Properties</span>
-      </nav>
-
-      <article class="topic-page">
-        <header class="topic-header">
-          <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>ACID Properties</h1>
-          <p class="topic-title-ar">خصائص المعاملات (ACID)</p>
-        </header>
-
-        <div class="topic-body">
-          <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              لضمان سلامة البيانات (Data Integrity) في قواعد البيانات، يجب أن
-              تتمتع أي معاملة (Transaction) بأربع خصائص أساسية تعرف اختصاراً بـ
-              ACID.
-            </p>
-          </section>
-
-          <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>1. الذرية (Atomicity)</h3>
-            <p>
-              "الكل أو لا شيء". يجب تنفيذ جميع عمليات المعاملة بنجاح، أو التراجع
-              عنها بالكامل في حال فشل أي جزء منها. لا يجوز تنفيذ نصف معاملة.
-            </p>
-
-            <h3>2. الاتساق (Consistency)</h3>
-            <p>
-              يجب أن تنقل المعاملة قاعدة البيانات من حالة صحيحة (Consistent
-              State) إلى حالة صحيحة أخرى، مع الالتزام بجميع القيود (Constraints)
-              وقواعد التكامل.
-            </p>
-
-            <h3>3. العزل (Isolation)</h3>
-            <p>
-              يجب أن تعمل كل معاملة وكأنها الوحيدة في النظام. لا ينبغي أن تؤثر
-              المعاملات المتزامن تنفيذها (Concurrent) على بعضها البعض بشكل يؤدي
-              لنتائج خاطئة.
-            </p>
-
-            <h3>4. الديمومة (Durability)</h3>
-            <p>
-              بمجرد تأكيد المعاملة (Commit)، تصبح التغييرات دائمة ومحفوظة في
-              قاعدة البيانات، ولا يمكن فقدانها حتى في حال انقطاع التيار
-              الكهربائي أو تعطل النظام.
-            </p>
-          </section>
-        </div>
-
-        <nav class="topic-nav">
-          <a href="topic_05_01_01.html" class="nav-prev"
-            >← Introduction to Transactions</a
-          >
-          <a href="topic_05_01_03.html" class="nav-next"
-            >Transaction States →</a
-          >
-        </nav>
-      </article>
-    </main>
-
-    <div id="tooltip-ar" class="tooltip-ar"></div>
-    <script src="../assets/js/main.js"></script>
-  </body>
-</html>

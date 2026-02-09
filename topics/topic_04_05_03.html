@@ -1,101 +1,0 @@
-﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hashing Techniques | Data Structures Study Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <link rel="stylesheet" href="../assets/css/syntax.css" />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
-      </div>
-      <div class="nav-links">
-        <a href="../index.html">الرئيسية</a>
-        <a href="../exam/index.html">📝 نموذج الاختبار</a>
-        <a href="../glossary/index.html">المصطلحات</a>
-        <a href="../graph/index.html">خريطة المفاهيم</a>
-      </div>
-    </nav>
-
-    <main class="container">
-      <nav class="breadcrumb">
-        <a href="../index.html">الرئيسية</a> ›
-        <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>Hashing Techniques</span>
-      </nav>
-
-      <article class="topic-page">
-        <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
-          <h1>Hashing Techniques</h1>
-          <p class="topic-title-ar">تقنيات التجزئة</p>
-        </header>
-
-        <div class="topic-body">
-          <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              التجزئة (Hashing) هي طريقة للوصول المباشر للسجلات باستخدام "دالة
-              تجزئة" (Hash Function) تحسب عنوان السجل بناءً على قيمة مفتاح
-              البحث.
-            </p>
-          </section>
-
-          <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>التجزئة الداخلية | Internal Hashing</h3>
-            <p>
-              تستخدم للجداول المخزنة بالكامل في الذاكرة. يتم استخدام دالة تجزئة
-              (Hash Function) لتحويل مفتاح البحث إلى عنوان في الجدول.
-            </p>
-            <h4>معالجة التصادم | Collision Resolution</h4>
-            <ul class="styled-list">
-              <li>
-                <strong>Open Addressing:</strong> البحث عن الخلية التالية
-                الفارغة.
-              </li>
-              <li>
-                <strong>Chaining:</strong> استخدام قائمة مرتبطة لكل خلية في
-                الجدول.
-              </li>
-            </ul>
-
-            <h3>التجزئة الخارجية | External Hashing (Disk Files)</h3>
-            <p>
-              يتم تقسيم مساحة التجزئة إلى "سلات" (Buckets)، كل سلة عبارة عن كتلة
-              قرص أو أكثر.
-            </p>
-            <ul class="styled-list">
-              <li>
-                <strong>Static Hashing:</strong> عدد السلات ثابت. قد يمتلئ
-                ويتطلب سلاسل (Overlfow Chains).
-              </li>
-              <li>
-                <strong>Dynamic Hashing:</strong> يتغير عدد السلات وحجم الفهرس
-                حسب الحاجة (مثل Extendible Hashing و Linear Hashing).
-              </li>
-            </ul>
-          </section>
-        </div>
-
-        <nav class="topic-nav">
-          <a href="topic_04_05_02.html" class="nav-prev">← Sorted Files</a>
-          <a href="topic_04_05_04.html" class="nav-next">RAID Technology →</a>
-        </nav>
-      </article>
-    </main>
-
-    <div id="tooltip-ar" class="tooltip-ar"></div>
-    <script src="../assets/js/main.js"></script>
-  </body>
-</html>
