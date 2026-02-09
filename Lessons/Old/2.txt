@@ -1,0 +1,1690 @@
+--- Slide 1: Working with Composite 
+Data Types ---
+
+--- Slide 2: Composite Data Types ---
+Can hold multiple values, unlike scalar types
+Are of two types:
+PL/SQL records
+PL/SQL collections
+INDEX BY tables or associative arrays
+Nested table
+VARRAY
+
+--- Slide 3: Composite Data Types ---
+Use PL/SQL records when you want to store values of different data types but only one occurrence at a time.
+Use PL/SQL collections when you want to store values of same data type.
+
+--- Slide 4: PL/SQL Records ---
+Must contain one or more components of any scalar, RECORD, or INDEX BY table data type, called fields
+Are similar to structures in most 3GL languages including C and C++
+Are user defined and can be a subset of a row in a table
+Treat a collection of fields as a logical unit
+Are convenient for fetching a row of data from a table for processing
+
+--- Slide 5: Creating a PL/SQL Record ---
+Syntax:
+TYPE type_name IS RECORD
+     (field_declaration[, field_declaration]…);
+field_name {field_type | variable%TYPE 
+           | table.column%TYPE | table%ROWTYPE}
+           [[NOT NULL] {:= | DEFAULT} expr]
+identifier	type_name;
+1
+2
+field_declaration:
+
+--- Slide 6: Creating a PL/SQL Record ---
+Declare variables to store the name, job, and salary of a new employee.
+Example:
+...
+  TYPE emp_record_type IS RECORD
+    (last_name   VARCHAR2(25),
+     job_id      VARCHAR2(10),
+     salary      NUMBER(8,2));
+  emp_record     emp_record_type;
+...
+
+--- Slide 7: The %ROWTYPE Attribute ---
+Declare a variable according to a collection of columns in a database table or view.
+Prefix %ROWTYPE with the database table or view.
+Fields in the record take their names and data types from the columns of the table or view.
+DECLARE
+   identifier	 reference%ROWTYPE;
+Syntax:
+
+--- Slide 8: The %ROWTYPE Attribute ---
+Declare a variable according to a collection of columns in a database table or view.
+Prefix %ROWTYPE with the database table.
+Fields in the record take their names and data types from the columns of the table or view.
+
+--- Slide 9: Advantages of Using %ROWTYPE ---
+The number and data types of the underlying database columns need not be known.
+The number and data types of the underlying database column may change at run time.
+The attribute is useful when retrieving a row with the SELECT * statement.
+
+--- Slide 10: The %ROWTYPE Attribute ---
+...
+DEFINE employee_number = 124
+ DECLARE
+  emp_rec   employees%ROWTYPE;
+ BEGIN
+  SELECT * INTO emp_rec FROM employees
+  WHERE  employee_id = &employee_number;
+  INSERT INTO retired_emps(empno, ename, job, mgr,
+  hiredate, leavedate, sal, comm, deptno)
+  VALUES (emp_rec.employee_id, emp_rec.last_name,
+  emp_rec.job_id,emp_rec.manager_id,
+  emp_rec.hire_date, SYSDATE, emp_rec.salary,   
+  emp_rec.commission_pct, emp_rec.department_id);
+END;
+/
+
+--- Slide 11: Inserting a Record Using %ROWTYPE ---
+...
+DEFINE employee_number = 124
+DECLARE
+   emp_rec  retired_emps%ROWTYPE;
+BEGIN
+ SELECT employee_id, last_name, job_id, manager_id, 
+ hire_date, hire_date, salary, commission_pct,
+ department_id INTO emp_rec FROM employees
+ WHERE  employee_id = &employee_number;
+ INSERT INTO retired_emps VALUES emp_rec;
+END;
+/
+SELECT * FROM retired_emps;
+
+--- Slide 12: Updating a Row in a Table Using a Record ---
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+DEFINE employee_number = 124
+DECLARE
+   emp_rec retired_emps%ROWTYPE;
+BEGIN
+ SELECT * INTO emp_rec FROM retired_emps;
+ emp_rec.leavedate:=SYSDATE;
+ UPDATE retired_emps SET ROW = emp_rec WHERE 
+  empno=&employee_number;
+END;
+/
+SELECT * FROM retired_emps;
+
+--- Slide 13: Writing Executable Statements ---
+
+--- Slide 14: Commenting Code ---
+Prefix single-line comments with two dashes (--).
+Place multiple-line comments between the symbols “/*” and “*/”.
+Example:
+DECLARE
+...
+annual_sal NUMBER (9,2);
+BEGIN    -- Begin the executable section
+  
+/* Compute the annual salary based on the       
+   monthly salary input from the user */
+annual_sal := monthly_sal * 12;
+END; 		-- This is the end of the block
+/
+
+--- Slide 15: Nested Blocks ---
+PL/SQL blocks can be nested.
+An executable section (BEGIN … END) can contain nested blocks.
+An exception section can contain nested blocks.
+
+--- Slide 16: Nested Blocks ---
+DECLARE
+ outer_variable VARCHAR2(20):='GLOBAL VARIABLE';
+BEGIN
+  DECLARE
+   inner_variable VARCHAR2(20):='LOCAL VARIABLE';
+  BEGIN
+   DBMS_OUTPUT.PUT_LINE(inner_variable);
+   DBMS_OUTPUT.PUT_LINE(outer_variable);
+  END;
+ DBMS_OUTPUT.PUT_LINE(outer_variable); 
+END;
+/
+Example:
+
+--- Slide 17: Variable Scope and Visibility ---
+DECLARE
+ father_name VARCHAR2(20):='Patrick';
+ date_of_birth DATE:='20-Apr-1972';
+BEGIN
+  DECLARE
+   child_name VARCHAR2(20):='Mike';
+   date_of_birth DATE:='12-Dec-2002';
+  BEGIN
+   DBMS_OUTPUT.PUT_LINE('Father''s Name: '||father_name);
+   DBMS_OUTPUT.PUT_LINE('Date of Birth: '||date_of_birth);
+   DBMS_OUTPUT.PUT_LINE('Child''s Name: '||child_name);
+  END;
+ DBMS_OUTPUT.PUT_LINE('Date of Birth: '||date_of_birth); 
+END;
+/
+1
+2
+
+--- Slide 18: Qualify an Identifier ---
+<<outer>>
+DECLARE
+ father_name VARCHAR2(20):='Patrick';
+ date_of_birth DATE:='20-Apr-1972';
+BEGIN
+  DECLARE
+   child_name VARCHAR2(20):='Mike';
+   date_of_birth DATE:='12-Dec-2002';
+  BEGIN
+   DBMS_OUTPUT.PUT_LINE('Father''s Name: '||father_name);
+   DBMS_OUTPUT.PUT_LINE('Date of Birth: '
+                        ||outer.date_of_birth);
+   DBMS_OUTPUT.PUT_LINE('Child''s Name: '||child_name);
+   DBMS_OUTPUT.PUT_LINE('Date of Birth: '||date_of_birth);
+  END;
+END;
+/`
+
+--- Slide 19: Determining Variable Scope ---
+<<outer>>
+DECLARE
+  sal      NUMBER(7,2) := 60000;
+  comm     NUMBER(7,2) := sal * 0.20;
+  message  VARCHAR2(255) := ' eligible for commission';
+BEGIN 
+  DECLARE
+    	sal	    NUMBER(7,2) := 50000;
+    	comm  	    NUMBER(7,2) := 0;
+    	total_comp  NUMBER(7,2) := sal + comm;
+  BEGIN 
+    	message := 'CLERK not'||message;
+    	outer.comm := sal * 0.30; 
+  END;
+ message := 'SALESMAN'||message;
+
+END;
+/
+1
+2
+
+--- Slide 20: Operators in PL/SQL ---
+Logical
+Arithmetic
+Concatenation 
+Parentheses to control order 
+of operations
+
+Exponential operator (**)
+Same as in SQL
+}
+
+--- Slide 21: Operators in PL/SQL ---
+Examples:
+Increment the counter for a loop.
+
+
+Set the value of a Boolean flag. 
+
+
+Validate whether an employee number contains a value.
+loop_count := loop_count + 1;
+good_sal := sal BETWEEN 50000 AND 150000;
+valid	:= (empno IS NOT NULL);
+
+--- Slide 22: Programming Guidelines ---
+Make code maintenance easier by:
+Documenting code with comments
+Developing a case convention for the code
+Developing naming conventions for identifiers and other objects
+Enhancing readability by indenting
+
+--- Slide 23: Indenting Code ---
+For clarity, indent each level of code.
+Example:
+BEGIN
+  IF x=0 THEN
+     y:=1;
+  END IF;
+END;
+/
+DECLARE
+  deptno       NUMBER(4);
+  location_id  NUMBER(4);
+BEGIN
+  SELECT	department_id,
+         	location_id
+  INTO		deptno,
+			location_id
+  FROM		departments
+  WHERE	department_name 
+          = 'Sales';   
+...
+END;
+/
+
+--- Slide 24: Interacting with
+the Oracle Server ---
+
+--- Slide 25: SQL Statements in PL/SQL ---
+Retrieve a row from the database by using the SELECT command. 
+Make changes to rows in the database by using DML commands.
+Control a transaction with the COMMIT, ROLLBACK, or SAVEPOINT command.
+
+--- Slide 26: SELECT Statements in PL/SQL ---
+Retrieve data from the database with a SELECT statement.
+Syntax:
+SELECT  select_list
+INTO	 {variable_name[, variable_name]...
+	 | record_name}  
+FROM	 table
+[WHERE	 condition];
+
+--- Slide 27: SELECT Statements in PL/SQL ---
+The INTO clause is required.
+Queries must return only one row.
+Example:
+SET SERVEROUTPUT ON
+DECLARE
+ fname VARCHAR2(25);
+BEGIN
+ SELECT first_name INTO fname 
+ FROM employees WHERE employee_id=200;
+ DBMS_OUTPUT.PUT_LINE(' First Name is : '||fname);
+END;
+/
+
+--- Slide 28: Retrieving Data in PL/SQL ---
+Retrieve the hire_date and the salary for the specified employee.
+Example:
+DECLARE
+ emp_hiredate   employees.hire_date%TYPE;
+ emp_salary     employees.salary%TYPE;  
+BEGIN
+  SELECT   hire_date, salary
+  INTO     emp_hiredate, emp_salary
+  FROM     employees
+  WHERE    employee_id = 100;  
+END;
+/
+
+--- Slide 29: Retrieving Data in PL/SQL ---
+SET SERVEROUTPUT ON
+DECLARE    
+   sum_sal  NUMBER(10,2); 
+   deptno   NUMBER NOT NULL := 60;           
+BEGIN
+   SELECT  SUM(salary)  -- group function
+   INTO sum_sal FROM employees
+   WHERE  department_id = deptno;
+   DBMS_OUTPUT.PUT_LINE ('The sum of salary is '
+   || sum_sal);
+END;
+/
+Return the sum of the salaries for all the employees in the specified department.
+Example:
+
+--- Slide 30: Naming Conventions ---
+DECLARE
+  hire_date      employees.hire_date%TYPE;
+  sysdate        hire_date%TYPE;
+  employee_id    employees.employee_id%TYPE := 176;        
+BEGIN
+  SELECT 	hire_date, sysdate
+  INTO   	hire_date, sysdate
+  FROM   	employees
+  WHERE  	employee_id = employee_id;        
+END;
+/
+
+--- Slide 31: Manipulating Data Using PL/SQL ---
+Make changes to database tables by using DML commands:
+INSERT
+UPDATE
+DELETE
+MERGE
+INSERT
+UPDATE
+DELETE
+MERGE
+
+--- Slide 32: Inserting Data ---
+Add new employee information to the EMPLOYEES table.
+Example:
+BEGIN
+ INSERT INTO employees
+  (employee_id, first_name, last_name, email,     
+   hire_date, job_id, salary)
+   VALUES(employees_seq.NEXTVAL, 'Ruth', 'Cores',
+   'RCORES',sysdate, 'AD_ASST', 4000);
+END;
+/
+
+--- Slide 33: Updating Data ---
+Increase the salary of all employees who are stock clerks.
+Example:
+DECLARE					
+  sal_increase   employees.salary%TYPE := 800;   
+BEGIN
+  UPDATE	employees
+  SET		salary = salary + sal_increase
+  WHERE	job_id = 'ST_CLERK';
+END;
+/
+
+--- Slide 34: Deleting Data ---
+Delete rows that belong to department 10 from the employees table.
+Example:
+DECLARE
+  deptno   employees.department_id%TYPE := 10; 
+BEGIN							
+  DELETE FROM   employees
+  WHERE  department_id = deptno;
+END;
+/
+
+--- Slide 35: SQL Cursor ---
+A cursor is a pointer to the private memory area allocated by the Oracle server.
+There are two types of cursors:
+Implicit cursors: Created and managed internally by the Oracle server to process SQL statements
+Explicit cursors: Explicitly declared by the programmer
+
+--- Slide 36: SQL Cursor Attributes for Implicit Cursors ---
+Using SQL cursor attributes, you can test the outcome of your SQL statements.
+
+--- Slide 37: SQL Cursor Attributes for Implicit Cursors ---
+Delete rows that have the specified employee ID from the employees table. Print the number of rows deleted.
+Example:
+VARIABLE rows_deleted VARCHAR2(30)
+DECLARE
+  empno employees.employee_id%TYPE := 176;
+BEGIN
+  DELETE FROM  employees 
+  WHERE employee_id = empno;
+  :rows_deleted := (SQL%ROWCOUNT ||
+                       ' row deleted.');
+END;
+/
+PRINT rows_deleted
+
+--- Slide 38: Writing Control Structures ---
+
+--- Slide 39: Controlling Flow of Execution ---
+for
+loop
+while
+
+--- Slide 40: IF Statements ---
+Syntax:
+IF condition THEN
+  statements;
+[ELSIF condition THEN 
+  statements;]
+[ELSE 
+  statements;]
+END IF;
+
+--- Slide 41: IF ELSIF ELSE Clause ---
+DECLARE
+myage number:=21;
+BEGIN
+IF myage < 11
+ THEN
+       DBMS_OUTPUT.PUT_LINE(' I am a child ');
+   ELSIF myage < 20 
+     THEN 
+       DBMS_OUTPUT.PUT_LINE(' I am young ');
+   ELSIF myage < 30
+     THEN
+       DBMS_OUTPUT.PUT_LINE(' I am in my twenties');
+   ELSIF myage < 40
+     THEN
+       DBMS_OUTPUT.PUT_LINE(' I am in my thirties');
+ ELSE
+    DBMS_OUTPUT.PUT_LINE(' I am always young ');
+END IF;
+END;
+/
+
+--- Slide 42: NULL Values in IF Statements ---
+DECLARE
+myage number;
+BEGIN
+IF myage < 11
+ THEN
+    DBMS_OUTPUT.PUT_LINE(' I am a child ');  
+ ELSE
+    DBMS_OUTPUT.PUT_LINE(' I am not a child ');
+END IF;
+END;
+/
+
+--- Slide 43: CASE Expressions ---
+A CASE expression selects a result and returns it. 
+To select the result, the CASE expression uses expressions. The value returned by these expressions is used to select one of several alternatives.
+CASE selector
+   WHEN expression1 THEN result1
+   WHEN expression2 THEN result2
+   ...
+   WHEN expressionN THEN resultN
+  [ELSE resultN+1]
+END;
+/
+
+--- Slide 44: CASE Expressions: Example ---
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+DECLARE
+   grade CHAR(1) := UPPER('&grade');
+   appraisal VARCHAR2(20);
+BEGIN
+   appraisal := 
+      CASE grade
+         WHEN 'A' THEN 'Excellent'
+         WHEN 'B' THEN 'Very Good'
+         WHEN 'C' THEN 'Good'
+         ELSE 'No such grade'
+      END;
+DBMS_OUTPUT.PUT_LINE ('Grade: '|| grade || ' 
+                       Appraisal ' || appraisal);
+END;
+/
+
+--- Slide 45: Searched CASE Expressions ---
+DECLARE
+   grade CHAR(1) := UPPER('&grade');
+   appraisal VARCHAR2(20);
+BEGIN
+    appraisal := 
+     CASE 
+         WHEN grade = 'A' THEN 'Excellent'
+         WHEN grade IN ('B','C') THEN 'Good'          
+         ELSE 'No such grade'   
+     END;
+   DBMS_OUTPUT.PUT_LINE ('Grade: '|| grade || ' 
+                  Appraisal ' || appraisal);
+END;
+/
+
+--- Slide 46: CASE Statement ---
+DECLARE
+   deptid NUMBER;
+   deptname VARCHAR2(20);
+   emps NUMBER;
+   mngid NUMBER:= 108;   
+BEGIN
+  CASE  mngid
+   WHEN  108 THEN 
+    SELECT department_id, department_name 
+     INTO deptid, deptname FROM departments 
+     WHERE manager_id=108;
+    SELECT count(*) INTO emps FROM employees 
+     WHERE department_id=deptid;
+   WHEN  200 THEN 
+    ...
+ END CASE;
+DBMS_OUTPUT.PUT_LINE ('You are working in the '|| deptname||
+' department. There are '||emps ||' employees in this 
+department');
+END;
+/
+
+--- Slide 47: Handling Nulls ---
+When working with nulls, you can avoid some common mistakes by keeping in mind the following rules: 
+Simple comparisons involving nulls always yield NULL. 
+Applying the logical operator NOT to a null yields NULL. 
+In conditional control statements, if the condition yields NULL, its associated sequence of statements is not executed.
+
+--- Slide 48: Logic Tables ---
+Build a simple Boolean condition with a comparison operator.
+AND
+TRUE
+FALSE
+NULL
+TRUE
+FALSE
+NULL
+TRUE
+NULL
+NULL
+NULL
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+NOT
+TRUE
+FALSE
+NULL
+FALSE
+TRUE
+NULL
+TRUE
+NULL
+OR
+TRUE
+FALSE
+NULL
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+FALSE
+NULL
+NULL
+NULL
+FALSE
+
+--- Slide 49: Boolean Conditions ---
+What is the value of flag in each case?
+REORDER_FLAG
+AVAILABLE_FLAG
+FLAG
+TRUE		 	 TRUE
+
+TRUE			 FALSE
+
+NULL			 TRUE
+
+NULL			 FALSE
+flag := reorder_flag AND available_flag;
+?
+?
+?
+?
+
+--- Slide 50: Iterative Control: LOOP Statements ---
+Loops repeat a statement or sequence of statements multiple times.
+There are three loop types:
+Basic loop
+FOR loop
+WHILE loop
+
+--- Slide 51: Basic Loops ---
+Syntax:
+LOOP                      
+  statement1;
+  . . .
+  EXIT [WHEN condition];
+END LOOP;
+
+--- Slide 52: Basic Loops ---
+DECLARE
+  countryid    locations.country_id%TYPE := 'CA';
+  loc_id       locations.location_id%TYPE;
+  counter		  NUMBER(2) := 1;
+  new_city     locations.city%TYPE := 'Montreal';
+BEGIN
+  SELECT MAX(location_id) INTO loc_id FROM locations
+  WHERE country_id = countryid;
+  LOOP
+    INSERT INTO locations(location_id, city, country_id)   
+    VALUES((loc_id + counter), new_city, countryid);
+    counter := counter + 1;
+    EXIT WHEN counter > 3;
+  END LOOP;
+END;
+/
+Example:
+
+--- Slide 53: WHILE Loops ---
+Syntax:
+
+
+
+
+Use the WHILE loop to repeat statements while a condition is TRUE.
+WHILE condition LOOP
+  statement1;
+  statement2;
+  . . .
+END LOOP;
+
+--- Slide 54: WHILE Loops ---
+Example:
+DECLARE
+  countryid   locations.country_id%TYPE := 'CA';
+  loc_id      locations.location_id%TYPE;
+  new_city    locations.city%TYPE := 'Montreal';
+  counter     NUMBER := 1;
+BEGIN
+  SELECT MAX(location_id) INTO loc_id FROM locations
+  WHERE country_id = countryid;
+  WHILE counter <= 3 LOOP
+    INSERT INTO locations(location_id, city, country_id)   
+    VALUES((loc_id + counter), new_city, countryid);
+    counter := counter + 1;
+  END LOOP;
+END;
+/
+
+--- Slide 55: FOR Loops ---
+Use a FOR loop to shortcut the test for the number of iterations.
+Do not declare the counter; it is declared implicitly.
+'lower_bound .. upper_bound' is required syntax.
+FOR counter IN [REVERSE] 
+    lower_bound..upper_bound LOOP  
+  statement1;
+  statement2;
+  . . .
+END LOOP;
+
+--- Slide 56: FOR Loops ---
+Example:
+DECLARE
+  countryid   locations.country_id%TYPE := 'CA';
+  loc_id      locations.location_id%TYPE;
+  new_city    locations.city%TYPE := 'Montreal';
+BEGIN
+  SELECT MAX(location_id) INTO loc_id 
+    FROM locations
+    WHERE country_id = countryid;
+  FOR i IN 1..3 LOOP
+    INSERT INTO locations(location_id, city, country_id)   
+    VALUES((loc_id + i), new_city, countryid );
+  END LOOP;
+END;
+/
+
+--- Slide 57: FOR Loops ---
+Guidelines
+Reference the counter within the loop only; it is undefined outside the loop.
+Do not reference the counter as the target of an assignment.
+Neither loop bound should be NULL.
+
+--- Slide 58: Guidelines While Using Loops ---
+Use the basic loop when the statements inside the loop must execute at least once.
+Use the WHILE loop if the condition has to be evaluated at the start of each iteration.
+Use a FOR loop if the number of iterations is known.
+
+--- Slide 59: Nested Loops and Labels ---
+Nest loops to multiple levels.
+Use labels to distinguish between blocks and loops.
+Exit the outer loop with the EXIT statement that references the label.
+
+--- Slide 60: Nested Loops and Labels ---
+...
+BEGIN
+  <<Outer_loop>> 
+  LOOP
+    counter := counter+1;
+  EXIT WHEN counter>10;
+    <<Inner_loop>> 
+    LOOP
+      ...
+      EXIT Outer_loop WHEN total_done = 'YES';
+      -- Leave both loops
+      EXIT WHEN inner_done = 'YES';
+      -- Leave inner loop only
+      ...
+    END LOOP Inner_loop;
+    ...
+  END LOOP Outer_loop;
+END;  
+/
+
+--- Slide 61: Using Explicit Cursors ---
+
+--- Slide 62: About Cursors ---
+Every SQL statement executed by the Oracle Server has an individual cursor associated with it:
+Implicit cursors: Declared and managed by PL/SQL for all DML and PL/SQL SELECT statements
+Explicit cursors: Declared and managed by the programmer
+
+--- Slide 63: Explicit Cursor Operations ---
+Active set
+Table
+100 King    AD_PRES
+101 Kochhar AD_VP
+102 De Haan AD_VP
+.   .       .
+.   .       .
+.   .       .
+139 Seo    ST_CLERK
+140 Patel  ST_CLERK
+.   .      .
+
+--- Slide 64: Controlling Explicit Cursors ---
+Load the current row into variables
+FETCH
+Test for existing rows
+EMPTY?
+Return to FETCH if rows are found
+No
+Release the active set
+CLOSE
+Yes
+Create a named SQL area
+DECLARE
+Identify the active set
+OPEN
+
+--- Slide 65: Controlling Explicit Cursors ---
+Fetch a row.
+Close the cursor.
+Cursor 
+pointer
+Open the cursor.
+1
+2
+3
+Cursor 
+pointer
+Cursor 
+pointer
+
+--- Slide 66: Declaring the Cursor ---
+Syntax:
+CURSOR cursor_name IS
+     select_statement;
+Examples:
+DECLARE
+  CURSOR emp_cursor IS 
+  SELECT employee_id, last_name FROM employees
+  WHERE department_id =30;
+DECLARE
+  locid NUMBER:= 1700;
+  CURSOR dept_cursor IS
+  SELECT * FROM departments 
+  WHERE location_id = locid;
+...
+
+--- Slide 67: Opening the Cursor ---
+DECLARE
+  CURSOR emp_cursor IS 
+   SELECT employee_id, last_name FROM employees
+   WHERE department_id =30;
+...
+BEGIN
+  OPEN emp_cursor;
+
+--- Slide 68: Fetching Data from the Cursor ---
+SET SERVEROUTPUT ON
+DECLARE
+  CURSOR emp_cursor IS 
+   SELECT employee_id, last_name FROM employees
+   WHERE department_id =30;
+  empno employees.employee_id%TYPE;
+  lname employees.last_name%TYPE;
+BEGIN
+  OPEN emp_cursor;
+  FETCH emp_cursor INTO empno, lname;
+  DBMS_OUTPUT.PUT_LINE( empno ||' '||lname); 
+  ... 
+END;
+/
+
+--- Slide 69: Fetching Data from the Cursor ---
+SET SERVEROUTPUT ON
+DECLARE
+  CURSOR emp_cursor IS 
+   SELECT employee_id, last_name FROM employees
+   WHERE  department_id =30;
+  empno employees.employee_id%TYPE;
+  lname employees.last_name%TYPE;
+BEGIN
+  OPEN emp_cursor;
+  LOOP
+    FETCH emp_cursor INTO empno, lname;
+    EXIT WHEN emp_cursor%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE( empno ||' '||lname);    
+  END LOOP;
+  ...
+END;
+/
+
+--- Slide 70: Closing the Cursor ---
+...  
+  LOOP
+    FETCH emp_cursor INTO empno, lname;
+    EXIT WHEN emp_cursor%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE( empno ||' '||lname);    
+  END LOOP;
+ CLOSE emp_cursor;
+END;
+/
+
+--- Slide 71: Cursors and Records ---
+Process the rows of the active set by fetching values into a PL/SQL RECORD.
+DECLARE 
+  CURSOR emp_cursor IS 
+   SELECT employee_id, last_name FROM employees
+   WHERE  department_id =30;
+   emp_record	emp_cursor%ROWTYPE;
+BEGIN
+  OPEN emp_cursor;
+  LOOP
+    FETCH emp_cursor INTO emp_record;
+  ...
+
+--- Slide 72: Cursor FOR Loops ---
+Syntax:
+
+
+
+
+
+The cursor FOR loop is a shortcut to process explicit cursors.
+Implicit open, fetch, exit, and close occur.
+The record is implicitly declared.
+FOR record_name IN cursor_name LOOP   
+  statement1;
+  statement2;
+  . . .
+END LOOP;
+
+--- Slide 73: Cursor FOR Loops ---
+SET SERVEROUTPUT ON
+DECLARE
+  CURSOR emp_cursor IS 
+   SELECT employee_id, last_name FROM employees
+   WHERE department_id =30; 
+BEGIN
+   FOR emp_record IN emp_cursor 
+    LOOP
+     DBMS_OUTPUT.PUT_LINE( emp_record.employee_id 
+     ||' ' ||emp_record.last_name);   
+    END LOOP; 
+END;
+/
+
+--- Slide 74: Explicit Cursor Attributes ---
+Obtain status information about a cursor.
+Boolean
+Evaluates to TRUE if the cursor is open
+Evaluates to TRUE if the most recent fetch does not return a row
+Evaluates to TRUE if the most recent fetch returns a row; complement of %NOTFOUND
+Evaluates to the total number of  rows returned so far
+Boolean
+Boolean
+Number
+%ISOPEN
+%NOTFOUND
+%FOUND
+%ROWCOUNT
+Attribute		  	   Type 	       Description
+
+--- Slide 75: The %ISOPEN Attribute ---
+Fetch rows only when the cursor is open. 
+Use the %ISOPEN cursor attribute before performing a fetch to test whether the cursor is open.
+Example:
+IF NOT emp_cursor%ISOPEN THEN
+	OPEN emp_cursor;
+END IF;
+LOOP
+  FETCH emp_cursor...
+
+--- Slide 76: Example of %ROWCOUNT and %NOTFOUND ---
+SET SERVEROUTPUT ON
+DECLARE
+  empno	employees.employee_id%TYPE;
+  ename	employees.last_name%TYPE;
+  CURSOR emp_cursor IS SELECT employee_id, 
+  last_name FROM employees;
+BEGIN
+  OPEN emp_cursor;
+  LOOP
+   FETCH emp_cursor INTO empno, ename;
+   EXIT WHEN emp_cursor%ROWCOUNT > 10 OR  
+                     emp_cursor%NOTFOUND;        
+   DBMS_OUTPUT.PUT_LINE(TO_CHAR(empno) 
+                       ||' '|| ename);
+  END LOOP;
+  CLOSE emp_cursor;
+END ;
+/
+
+--- Slide 77: Cursor FOR Loops Using Subqueries ---
+No need to declare the cursor.
+Example:
+SET SERVEROUTPUT ON
+BEGIN
+  FOR emp_record IN (SELECT employee_id, last_name 
+   FROM employees WHERE department_id =30)
+  LOOP
+   DBMS_OUTPUT.PUT_LINE( emp_record.employee_id ||' 
+   '||emp_record.last_name);   
+  END LOOP; 
+END;
+/
+
+--- Slide 78: Creating Stored Procedures ---
+
+--- Slide 79: What Is a Procedure? ---
+A procedure:
+Is a type of subprogram that performs an action
+Can be stored in the database as a schema object
+Promotes reusability and maintainability
+
+--- Slide 80: Syntax for Creating Procedures ---
+Use CREATE PROCEDURE followed by the name, optional parameters, and keyword IS or AS.
+Add the OR REPLACE option to overwrite an existing procedure.
+Write a PL/SQL block containing local variables,
+a BEGIN, and an END (or END procedure_name).
+CREATE [OR REPLACE] PROCEDURE procedure_name
+ [(parameter1 [mode] datatype1,
+   parameter2 [mode] datatype2, ...)]
+IS|AS
+  [local_variable_declarations; …]
+BEGIN
+  -- actions;
+END [procedure_name];
+PL/SQL Block
+
+--- Slide 81: What Are Parameters? ---
+Parameters:
+Are declared after the subprogram name in the PL/SQL header
+Pass or communicate data between the caller and the subprogram
+Are used like local variables but are dependent on their parameter-passing mode:
+An IN parameter (the default) provides values for a subprogram to process.
+An OUT parameter returns a value to the caller.
+An IN OUT parameter supplies an input value, which may be returned (output) as a modified value.
+
+--- Slide 82: Formal and Actual Parameters ---
+Formal parameters: Local variables declared in the parameter list of a subprogram specification
+
+	Example:
+
+
+
+
+Actual parameters: Literal values, variables, or expressions used in the parameter list of the called subprogram
+
+Example:
+CREATE PROCEDURE raise_sal(id NUMBER,sal NUMBER) IS
+BEGIN ...
+END raise_sal;
+emp_id := 100;
+raise_sal(emp_id, 2000)
+
+--- Slide 83: Procedural Parameter Modes ---
+Parameter modes are specified in the formal parameter declaration, after the parameter name and before its data type.
+The IN mode is the default if no mode is specified.
+Modes
+IN (default)
+OUT
+IN OUT
+Calling
+environment
+CREATE PROCEDURE procedure(param [mode] datatype)
+...
+Procedure
+
+--- Slide 84: Using IN Parameters: Example ---
+CREATE OR REPLACE PROCEDURE raise_salary
+  (id      IN employees.employee_id%TYPE,
+   percent IN NUMBER)
+IS
+BEGIN
+  UPDATE employees
+  SET    salary = salary * (1 + percent/100)
+  WHERE  employee_id = id;
+END raise_salary;
+/
+EXECUTE raise_salary(176,10)
+
+--- Slide 85: Using OUT Parameters: Example ---
+CREATE OR REPLACE PROCEDURE query_emp
+ (id     IN  employees.employee_id%TYPE,
+  name   OUT employees.last_name%TYPE,
+  salary OUT employees.salary%TYPE) IS
+BEGIN
+  SELECT   last_name, salary INTO name, salary
+   FROM    employees
+   WHERE   employee_id = id;
+END query_emp;
+DECLARE
+  emp_name employees.last_name%TYPE;
+  emp_sal  employees.salary%TYPE;
+BEGIN
+  query_emp(171, emp_name, emp_sal); ...
+END;
+
+--- Slide 86: Viewing OUT Parameters with iSQL*Plus ---
+Use PL/SQL variables that are printed with calls to the DBMS_OUTPUT.PUT_LINE procedure.
+
+
+
+
+
+
+Use iSQL*Plus host variables, execute QUERY_EMP using host variables, and print the host variables.
+VARIABLE name	VARCHAR2(25)
+VARIABLE sal	NUMBER
+EXECUTE query_emp(171, :name, :sal)
+PRINT name sal
+SET SERVEROUTPUT ON
+DECLARE
+  emp_name employees.last_name%TYPE;
+  emp_sal  employees.salary%TYPE;
+BEGIN
+  query_emp(171, emp_name, emp_sal);
+  DBMS_OUTPUT.PUT_LINE('Name: ' || emp_name);
+  DBMS_OUTPUT.PUT_LINE('Salary: ' || emp_sal);
+END;
+
+--- Slide 87: Syntax for Passing Parameters ---
+Positional:
+Lists the actual parameters in the same order as the formal parameters
+Named:
+Lists the actual parameters in arbitrary order and uses the association operator (=>) to associate a named formal parameter with its actual parameter
+Combination:
+Lists some of the actual parameters as positional and some as named
+
+--- Slide 88: Parameter Passing: Examples ---
+Passing by positional notation
+
+Passing by named notation
+CREATE OR REPLACE PROCEDURE add_dept(
+  name IN departments.department_name%TYPE,
+  loc  IN departments.location_id%TYPE) IS
+BEGIN
+  INSERT INTO departments(department_id,
+            department_name, location_id)
+  VALUES (departments_seq.NEXTVAL, name, loc);
+END add_dept;
+/
+EXECUTE add_dept ('TRAINING', 2500)
+EXECUTE add_dept (loc=>2400, name=>'EDUCATION')
+
+--- Slide 89: Using the DEFAULT Option for Parameters ---
+Defines default values for parameters:
+
+
+
+
+
+
+Provides flexibility by combining the positional and named parameter-passing syntax:
+CREATE OR REPLACE PROCEDURE add_dept(
+ name departments.department_name%TYPE:='Unknown',
+ loc  departments.location_id%TYPE DEFAULT 1700)
+IS
+BEGIN
+  INSERT INTO departments (...)
+  VALUES (departments_seq.NEXTVAL, name, loc);
+END add_dept;
+EXECUTE add_dept
+EXECUTE add_dept ('ADVERTISING', loc => 1200)
+EXECUTE add_dept (loc => 1200)
+
+--- Slide 90: Summary of Parameter Modes ---
+
+--- Slide 91: Invoking Procedures ---
+CREATE OR REPLACE PROCEDURE process_employees
+IS
+   CURSOR emp_cursor IS
+    SELECT employee_id
+    FROM   employees;
+BEGIN
+   FOR emp_rec IN emp_cursor 
+   LOOP
+     raise_salary(emp_rec.employee_id, 10);
+   END LOOP;    
+   COMMIT;
+END process_employees;
+/
+You can invoke parameters by:
+Using anonymous blocks
+Using another procedure, as in the following:
+
+--- Slide 92: Removing Procedures ---
+You can remove a procedure that is stored in the database.
+Syntax:
+
+
+Example:
+DROP PROCEDURE procedure_name
+DROP PROCEDURE raise_salary;
+
+--- Slide 93: Viewing Procedures in the Data Dictionary ---
+Information for PL/SQL procedures is saved in the following data dictionary views:
+View source code in the USER_SOURCE table to view the subprograms that you own, or the ALL_SOURCE table for procedures that are owned by others who have granted you the EXECUTE privilege.
+
+
+
+View the names of procedures in USER_OBJECTS.
+SELECT text
+FROM   user_source
+WHERE  name='ADD_DEPARTMENT' and type='PROCEDURE'
+ORDER BY line;
+SELECT object_name
+FROM   user_objects
+WHERE  object_type = 'PROCEDURE';
+
+--- Slide 94: Creating Stored Functions ---
+
+--- Slide 95: Overview of Stored Functions ---
+A function:
+Is a named PL/SQL block that returns a value
+Can be stored in the database as a schema object for repeated execution
+Is called as part of an expression or is used to provide a parameter value
+
+--- Slide 96: Syntax for Creating Functions ---
+CREATE [OR REPLACE] FUNCTION function_name
+ [(parameter1 [mode1] datatype1, ...)]
+RETURN datatype IS|AS
+ [local_variable_declarations; …]
+BEGIN
+  -- actions;
+  RETURN expression;
+END [function_name];
+The PL/SQL block must have at least one RETURN statement.
+PL/SQL Block
+
+--- Slide 97: Developing Functions ---
+func.sql
+1
+2
+3
+Edit
+Load
+Create (compile and store)
+Execute
+Use SHOW ERRORS
+for compilation errors
+4
+
+--- Slide 98: Stored Function: Example ---
+Create the function:
+
+
+
+
+
+
+
+
+Invoke the function as an expression or as a parameter value:
+CREATE OR REPLACE FUNCTION get_sal
+ (id employees.employee_id%TYPE) RETURN NUMBER IS
+  sal employees.salary%TYPE := 0;
+BEGIN
+  SELECT salary
+  INTO   sal
+  FROM   employees         
+  WHERE  employee_id = id;
+  RETURN sal;
+END get_sal;
+/
+EXECUTE dbms_output.put_line(get_sal(100))
+
+--- Slide 99: Ways to Execute Functions ---
+Invoke as part of a PL/SQL expression
+Using a host variable to obtain the result
+
+
+Using a local variable to obtain the result
+
+
+
+Use as a parameter to another subprogram
+
+Use in a SQL statement (subject to restrictions)
+EXECUTE dbms_output.put_line(get_sal(100))
+SELECT job_id, get_sal(employee_id) FROM employees;
+VARIABLE salary NUMBER
+EXECUTE :salary := get_sal(100)
+DECLARE sal employees.salary%type;
+BEGIN
+  sal := get_sal(100); ...
+END;
+
+--- Slide 100: Advantages of User-Defined Functions in SQL Statements ---
+Can extend SQL where activities are too complex, too awkward, or unavailable with SQL
+Can increase efficiency when used in the WHERE clause to filter data, as opposed to filtering the data in the application
+Can manipulate data values
+
+--- Slide 101: Function in SQL Expressions: Example ---
+CREATE OR REPLACE FUNCTION tax(value IN NUMBER)
+ RETURN NUMBER IS
+BEGIN
+   RETURN (value * 0.08);
+END tax;
+/
+SELECT employee_id, last_name, salary, tax(salary)
+FROM   employees
+WHERE  department_id = 100;
+Function created.
+
+
+
+6 rows selected.
+
+--- Slide 102: Locations to Call User-Defined Functions ---
+User-defined functions act like built-in single-row functions and can be used in:
+The SELECT list or clause of a query
+Conditional expressions of the WHERE and HAVING clauses
+The CONNECT BY, START WITH, ORDER BY, and GROUP BY clauses of a query
+The VALUES clause of the INSERT statement
+The SET clause of the UPDATE statement
+
+--- Slide 103: example ---
+SELECT empno, tax(salary)
+FROM   emp
+WHERE  tax(salary) > (SELECT MAX(tax(salary))
+                      FROM emp
+                      WHERE deptno= 30)
+ORDER BY tax(salary) DESC;
+
+--- Slide 104: Restrictions on Calling Functions from SQL Expressions ---
+User-defined functions that are callable from SQL expressions must:
+Be stored in the database
+Accept only IN parameters with valid SQL data types, not PL/SQL-specific types
+Return valid SQL data types, not PL/SQL-specific types
+When calling functions in SQL statements:
+Parameters must be specified with positional notation
+You must own the function or have the EXECUTE privilege
+
+--- Slide 105: Controlling Side Effects When Calling Functions from SQL Expressions ---
+Functions called from:
+A SELECT statement cannot contain DML statements
+An UPDATE or DELETE statement on a table T cannot query or contain DML on the same table T
+SQL statements cannot end transactions (that is, cannot execute COMMIT or ROLLBACK operations)
+Note: Calls to subprograms that break these restrictions are also not allowed in the function.
+
+--- Slide 106: Restrictions on Calling Functions from SQL: Example ---
+CREATE OR REPLACE FUNCTION dml_call_sql(sal NUMBER)
+   RETURN NUMBER IS
+BEGIN
+  INSERT INTO employees(employee_id, last_name,
+                 email, hire_date, job_id, salary)
+  VALUES(1, 'Frost', 'jfrost@company.com',
+         SYSDATE, 'SA_MAN', sal);
+  RETURN (sal + 100);
+END;
+UPDATE employees
+  SET salary = dml_call_sql(2000)
+WHERE employee_id = 170;
+UPDATE employees SET salary = dml_call_sql(2000)
+               *
+ERROR at line 1:
+ORA-04091: table PLSQL.EMPLOYEES is mutating, trigger/function may not see it
+ORA-06512: at "PLSQL.DML_CALL_SQL", line 4
+
+--- Slide 107: Removing Functions ---
+Removing a stored function:
+You can drop a stored function by using the following syntax: 
+
+Example:
+
+All the privileges that are granted on a function are revoked when the function is dropped.
+The CREATE OR REPLACE syntax is equivalent to dropping a function and re-creating it. Privileges granted on the function remain the same when this syntax is used.
+DROP FUNCTION function_name
+DROP FUNCTION get_sal;
+
+--- Slide 108: Viewing Functions in the Data Dictionary ---
+Information for PL/SQL functions is stored in the following Oracle data dictionary views: 
+You can view source code in the USER_SOURCE table for subprograms that you own, or the ALL_SOURCE table for functions owned by others who have granted you the EXECUTE privilege.
+
+
+
+You can view the names of functions by using USER_OBJECTS.
+SELECT text
+FROM   user_source
+WHERE  type = 'FUNCTION'
+ORDER BY line;
+SELECT object_name
+FROM   user_objects
+WHERE  object_type = 'FUNCTION';
+
+--- Slide 109: Procedures Versus Functions ---
+Procedures
+Execute as a PL/SQL statement
+Do not contain RETURN clause in the header
+Can return values (if any) in output parameters
+Can contain a RETURN statement without a value
+Functions
+Invoke as part of an expression
+Must contain a RETURN
+clause in the header
+Must return a single value
+
+Must contain at least one RETURN statement
+
+--- Slide 110 ---
+Disk Storage, Basic File Structures, Hashing, and Modern Storage Architectures
+
+--- Slide 111: 16.1 Introduction ---
+Databases typically stored on magnetic disks
+Accessed using physical database file structures
+Storage hierarchy
+Primary storage
+CPU main memory, cache memory
+Secondary storage
+Magnetic disks, flash memory, solid-state drives
+Tertiary storage
+Removable media
+Slide 16- 111
+
+--- Slide 112: Memory Hierarchies and Storage Devices ---
+Cache memory
+Static RAM
+DRAM
+Mass storage
+Magnetic disks
+CD-ROM, DVD, tape drives
+Flash memory
+Nonvolatile
+Slide 16- 112
+
+--- Slide 113: Storage Types and Characteristics ---
+Slide 16-113
+Table 16.1 Types of Storage with Capacity, Access Time, Max Bandwidth (Transfer Speed), and Commodity Cost
+
+--- Slide 114: Storage Organization of Databases ---
+Persistent data
+Most databases
+Transient data
+Exists only during program execution
+File organization
+Determines how records are physically placed on the disk
+Determines how records are accessed
+Slide 16- 114
+
+--- Slide 115: 16.2 Secondary Storage Devices ---
+Hard disk drive
+Bits (ones and zeros)
+Grouped into bytes or characters
+Disk capacity measures storage size
+Disks may be single or double-sided
+Concentric circles called tracks
+Tracks divided into blocks or sectors
+Disk packs
+Cylinder
+Slide 16- 115
+
+--- Slide 116: Single-Sided Disk and Disk Pack ---
+Slide 16-116
+Figure 16.1 (a) A single-sided disk with read/write hardware (b) A disk pack with read/write hardware
+
+--- Slide 117: Sectors on a Disk ---
+Slide 16-117
+Figure 16.2 Different sector organizations on disk (a) Sectors subtending a fixed angle (b) Sectors maintaining a uniform recording density
+
+--- Slide 118: Secondary Storage Devices (cont’d.) ---
+Formatting
+Divides tracks into equal-sized disk blocks
+Blocks separated by interblock gaps
+Data transfer in units of disk blocks
+Hardware address supplied to disk I/O hardware
+Buffer
+Used in read and write operations
+Read/write head
+Hardware mechanism for read and write operations
+Slide 16- 118
+
+--- Slide 119: Secondary Storage Devices (cont’d.) ---
+Disk controller
+Interfaces disk drive to computer system
+Standard interfaces
+SCSI
+SATA
+SAS
+Slide 16- 119
+
+--- Slide 120: Secondary Storage Devices (cont’d.) ---
+Techniques for efficient data access
+Data buffering
+Proper organization of data on disk
+Reading data ahead of request
+Proper scheduling of I/O requests
+Use of log disks to temporarily hold writes
+Use of SSDs or flash memory for recovery purposes
+Slide 16- 120
+
+--- Slide 121: Solid State Device Storage ---
+Sometimes called flash storage
+Main component: controller
+Set of interconnected flash memory cards
+No moving parts
+Data less likely to be fragmented
+More costly than HDDs
+DRAM-based SSDs available
+Faster access times compared with flash
+Slide 16- 121
+
+--- Slide 122: Magnetic Tape Storage Devices ---
+Sequential access 
+Must scan preceding blocks
+Tape is mounted and scanned until required block is under read/write head
+Important functions
+Backup
+Archive
+Slide 16- 122
+
+--- Slide 123: 16.3 Buffering of Blocks ---
+Buffering most useful when processes can run concurrently in parallel
+Slide 16- 123
+Figure 16.3 Interleaved concurrency versus parallel execution
+
+--- Slide 124: Buffering of Blocks (cont’d.) ---
+Double buffering can be used to read continuous stream of blocks
+Slide 16- 124
+Figure 16.4 Use of two buffers, A and B, for reading from disk
+
+--- Slide 125: Buffer Management and Replacement Strategies ---
+Buffer management information
+Pin count
+Dirty bit
+Buffer replacement strategies
+Least recently used (LRU)
+Clock policy
+First-in-first-out (FIFO)
+Slide 16- 125
+
+--- Slide 126: 16.4 Placing File Records on Disk ---
+Record: collection of related data values or items
+Values correspond to record field
+Data types
+Numeric
+String
+Boolean
+Date/time
+Binary large objects (BLOBs)
+Unstructured objects
+Slide 16- 126
+
+--- Slide 127: Placing File Records on Disk (cont’d.) ---
+Reasons for variable-length records
+One or more fields have variable length
+One or more fields are repeating
+One or more fields are optional
+File contains records of different types
+Slide 16- 127
+
+--- Slide 128: Record Blocking and Spanned Versus Unspanned Records ---
+File records allocated to disk blocks
+Spanned records
+Larger than a single block
+Pointer at end of first block points to block containing remainder of record
+Unspanned
+Records not allowed to cross block boundaries
+Slide 16- 128
+
+--- Slide 129: Record Blocking and Spanned Versus Unspanned Records (cont’d.) ---
+Blocking factor
+Average number of records per block for the file
+Slide 16-129
+Figure 16.6 Types of record organization (a) Unspanned (b) Spanned
+
+--- Slide 130: Record Blocking and Spanned Versus Unspanned Records (cont’d.) ---
+Allocating file blocks on disk
+Contiguous allocation
+Linked allocation
+Indexed allocation
+File header (file descriptor)
+Contains file information needed by system programs
+Disk addresses
+Format descriptions
+Slide 16- 130
+
+--- Slide 131: 16.5 Operations on Files ---
+Retrieval operations
+No change to file data
+Update operations
+File change by insertion, deletion, or modification
+Records selected based on selection condition
+Slide 16- 131
+
+--- Slide 132: Operations on Files (cont’d.) ---
+Examples of operations for accessing file records
+Open
+Find
+Read
+FindNext
+Delete
+Insert
+Close
+Scan
+Slide 16- 132
+
+--- Slide 133: 16.6 Files of Unordered Records (Heap Files) ---
+Heap (or pile) file
+Records placed in file in order of insertion
+Inserting a new record is very efficient
+Searching for a record requires linear search
+Deletion techniques
+Rewrite the block
+Use deletion marker
+Slide 16- 133
+
+--- Slide 134: 16.7 Files of Ordered Records (Sorted Files) ---
+Ordered (sequential) file
+Records sorted by ordering field
+Called ordering key if ordering field is a key field
+Advantages
+Reading records in order of ordering key value is extremely efficient
+Finding next record
+Binary search technique
+Slide 16- 134
+
+--- Slide 135: Access Times for Various File Organizations ---
+Slide 16-135
+Table 16.3 Average access times for a file of b blocks under basic file organizations
+
+--- Slide 136: 16.8 Hashing Techniques ---
+Hash function (randomizing function)
+Applied to hash field value of a record
+Yields address of the disk block of stored record
+Organization called hash file
+Search condition is equality condition on the hash field
+Hash field typically key field
+Hashing also internal search structure
+Used when group of records accessed exclusively by one field value
+Slide 16- 136
+
+--- Slide 137: Hashing Techniques (cont’d.) ---
+Internal hashing
+Hash table
+Collision
+Hash field value for inserted record hashes to address already containing a different record
+Collision resolution
+Open addressing
+Chaining
+Multiple hashing
+Slide 16- 137
+
+--- Slide 138: Hashing Techniques (cont’d.) ---
+External hashing for disk files
+Target address space made of buckets
+Bucket: one disk block or contiguous blocks
+Hashing function maps a key into relative bucket
+Table in file header converts bucket number to disk block address
+Collision problem less severe with buckets
+Static hashing
+Fixed number of buckets allocated
+Slide 16- 138
+
+--- Slide 139: Hashing Techniques (cont’d.) ---
+Hashing techniques that allow dynamic file expansion
+Extendible hashing
+File performance does not degrade as file grows
+Dynamic hashing
+Maintains tree-structured directory
+Linear hashing
+Allows hash file to expand and shrink buckets without needing a directory
+Slide 16- 139
+
+--- Slide 140: 16.9 Other Primary File Organizations ---
+Files of mixed records
+Relationships implemented by logical field references
+Physical clustering
+B-tree data structure
+Column-based data storage
+Slide 16- 140
+
+--- Slide 141: 16.10 Parallelizing Disk Access Using RAID Technology ---
+Redundant arrays of independent disks (RAID)
+Goal: improve disk speed and access time
+Set of RAID architectures (0 through 6)
+Data striping
+Bit-level striping
+Block-level striping
+Improving Performance with RAID
+Data striping achieves higher transfer rates
+Slide 16- 141
+
+--- Slide 142: Parallelizing Disk Access Using RAID Technology (cont’d.) ---
+Improving reliability with RAID
+Redundancy techniques: mirroring and shadowing
+RAID organizations and levels
+Level 0
+Data striping, no redundant data
+Spits data evenly across two or more disks
+Level 1
+Uses mirrored disks
+Slide 16- 142
+
+--- Slide 143: Parallelizing Disk Access Using RAID Technology (cont’d.) ---
+RAID organizations and levels (cont’d.)
+Level 2
+Hamming codes for memory-style redundancy
+Error detection and correction
+Level 3
+Single parity disk relying on disk controller
+Levels 4 and 5
+Block-level data striping
+Data distribution across all disks (level 5)
+Slide 16- 143
+
+--- Slide 144: Parallelizing Disk Access Using RAID Technology (cont’d.) ---
+RAID organizations and levels (cont’d.)
+Level 6
+Applies P+Q redundancy scheme
+Protects against up to two disk failures by using just two redundant disks
+Rebuilding easiest for RAID level 1
+Other levels require reconstruction by reading multiple disks
+RAID levels 3 and 5 preferred for large volume storage
+Slide 16- 144
+
+--- Slide 145: RAID Levels ---
+Slide 16-145
+Figure 16.14 Some popular levels of RAID (a) RAID level 1: Mirroring of data on two disks (b) RAID level 5: Striping of data with distributed parity across four disks
+
+--- Slide 146: 16.11 Modern Storage Architectures ---
+Storage area networks
+Online storage peripherals configured as nodes on high-speed network
+Network-attached storage
+Servers used for file sharing
+High degree of scalability, reliability, flexibility, performance
+iSCSI
+Clients send SCSI commands to SCSI storage devices on remote channels
+Slide 16- 146
+
+--- Slide 147: Modern Storage Architectures (cont’d.) ---
+Fibre Channel over IP (FCIP)
+Fibre Channel control codes and data translated into IP packets
+Transmitted between geographically distant Fibre Channel SANs
+Fibre Channel over Ethernet (FCoE)
+Similar to iSCSI without the IP
+Slide 16- 147
+
+--- Slide 148: Modern Storage Architectures (cont’d.) ---
+Automated storage tiering
+Automatically moves data between different storage types depending on need
+Frequently-used data moved to solid-state drives
+Object-based storage
+Data managed in form of objects rather than files made of blocks
+Objects carry metadata and global identifier
+Ideally suited for scalable storage of unstructured data
+Slide 16- 148

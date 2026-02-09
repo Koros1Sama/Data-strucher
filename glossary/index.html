@@ -1,641 +1,974 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Glossary | Data Structures Study Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/syntax.css">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="nav-brand">
-            <a href="../index.html">📚 Data Structures Study Guide</a>
-        </div>
-        <div class="nav-links">
-            <a href="../glossary/index.html">المصطلحات</a>
-            <a href="../graph/index.html">خريطة المفاهيم</a>
-            <button id="search-btn" class="nav-btn">🔍 بحث</button>
-        </div>
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../index.html">الرئيسية</a>
+        <a href="../exam/index.html">📝 نموذج الاختبار</a>
+        <a href="../glossary/index.html">المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+        <button id="search-btn" class="nav-btn">🔍 بحث</button>
+      </div>
     </nav>
-    
+
     <main class="container">
-        
-<header class="page-header">
-    <h1>📖 قاموس المصطلحات</h1>
-    <p>جميع المصطلحات الأساسية مع الشرح بالعربية</p>
-</header>
+      <header class="page-header">
+        <h1>📖 قاموس المصطلحات</h1>
+        <p>جميع المصطلحات الأساسية مع الشرح بالعربية</p>
+      </header>
 
-<div class="glossary-filters">
-    <button class="filter-btn active" data-filter="all">الكل</button>
-    <button class="filter-btn" data-filter="advanced">Advanced</button><button class="filter-btn" data-filter="beginner">Beginner</button><button class="filter-btn" data-filter="intermediate">Intermediate</button>
-</div>
+      <div class="glossary-filters">
+        <button class="filter-btn active" data-filter="all">الكل</button>
+        <button class="filter-btn" data-filter="advanced">Advanced</button
+        ><button class="filter-btn" data-filter="beginner">Beginner</button
+        ><button class="filter-btn" data-filter="intermediate">
+          Intermediate
+        </button>
+      </div>
 
-<div class="glossary-grid">
-    
-<div class="term-card" data-category="beginner">
-    <h3 class="term-name">PL/SQL</h3>
-    <p class="term-def-en">Procedural Language extension to SQL, Oracle's standard data access language for relational databases</p>
-    <p class="term-def-ar">امتداد اللغة الإجرائية لـ SQL، لغة الوصول إلى البيانات القياسية من Oracle</p>
-    <div class="term-meta">
-        <span class="term-difficulty beginner">beginner</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_01/index.html" class="lesson-link">الوحدة 1</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="beginner">
-    <h3 class="term-name">Block</h3>
-    <p class="term-def-en">The fundamental unit of PL/SQL code containing DECLARE, BEGIN, EXCEPTION, and END sections</p>
-    <p class="term-def-ar">الوحدة الأساسية لكود PL/SQL تحتوي على أقسام DECLARE و BEGIN و EXCEPTION و END</p>
-    <div class="term-meta">
-        <span class="term-difficulty beginner">beginner</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_01/index.html" class="lesson-link">الوحدة 1</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="beginner">
-    <h3 class="term-name">Variable</h3>
-    <p class="term-def-en">A named storage location in PL/SQL that holds a value which can be changed during program execution</p>
-    <p class="term-def-ar">موقع تخزين مسمى في PL/SQL يحمل قيمة يمكن تغييرها أثناء تنفيذ البرنامج</p>
-    <div class="term-meta">
-        <span class="term-difficulty beginner">beginner</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_01/index.html" class="lesson-link">الوحدة 1</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">%TYPE</h3>
-    <p class="term-def-en">An attribute used to declare a variable with the same data type as a database column or another variable</p>
-    <p class="term-def-ar">خاصية تُستخدم لتعريف متغير بنفس نوع بيانات عمود في قاعدة البيانات أو متغير آخر</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_01/index.html" class="lesson-link">الوحدة 1</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">%ROWTYPE</h3>
-    <p class="term-def-en">An attribute that declares a record with fields corresponding to all columns of a table or view</p>
-    <p class="term-def-ar">خاصية تعرّف سجلاً بحقول تتوافق مع جميع أعمدة جدول أو عرض</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Record</h3>
-    <p class="term-def-en">A composite data type that contains multiple fields of different data types, similar to a row in a table</p>
-    <p class="term-def-ar">نوع بيانات مركب يحتوي على حقول متعددة بأنواع بيانات مختلفة، مشابه لصف في جدول</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Cursor</h3>
-    <p class="term-def-en">A pointer to the private memory area allocated by Oracle server to process SQL statements</p>
-    <p class="term-def-ar">مؤشر إلى منطقة الذاكرة الخاصة المخصصة من خادم Oracle لمعالجة جمل SQL</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Implicit Cursor</h3>
-    <p class="term-def-en">A cursor automatically created by Oracle for all DML and SELECT statements</p>
-    <p class="term-def-ar">مؤشر ينشئه Oracle تلقائياً لجميع عمليات DML وجمل SELECT</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Explicit Cursor</h3>
-    <p class="term-def-en">A cursor explicitly declared and managed by the programmer for processing multiple rows</p>
-    <p class="term-def-ar">مؤشر يُعرّف ويُدار صراحةً من قبل المبرمج لمعالجة صفوف متعددة</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Trigger</h3>
-    <p class="term-def-en">A PL/SQL block that executes automatically when a specific database event occurs</p>
-    <p class="term-def-ar">كتلة PL/SQL تُنفذ تلقائياً عند حدوث حدث معين في قاعدة البيانات</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_03/index.html" class="lesson-link">الوحدة 3</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Statement Trigger</h3>
-    <p class="term-def-en">A trigger that fires once for the entire triggering statement, regardless of rows affected</p>
-    <p class="term-def-ar">مشغل يُنفذ مرة واحدة للجملة المحفّزة بأكملها، بغض النظر عن الصفوف المتأثرة</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_03/index.html" class="lesson-link">الوحدة 3</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Row Trigger</h3>
-    <p class="term-def-en">A trigger that fires once for each row affected by the triggering statement</p>
-    <p class="term-def-ar">مشغل يُنفذ مرة واحدة لكل صف متأثر بالجملة المحفّزة</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_03/index.html" class="lesson-link">الوحدة 3</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="advanced">
-    <h3 class="term-name">:OLD</h3>
-    <p class="term-def-en">A qualifier in row triggers that refers to the original value of a column before the DML operation</p>
-    <p class="term-def-ar">محدد في مشغلات الصف يشير إلى القيمة الأصلية للعمود قبل عملية DML</p>
-    <div class="term-meta">
-        <span class="term-difficulty advanced">advanced</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_03/index.html" class="lesson-link">الوحدة 3</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="advanced">
-    <h3 class="term-name">:NEW</h3>
-    <p class="term-def-en">A qualifier in row triggers that refers to the new value of a column after the DML operation</p>
-    <p class="term-def-ar">محدد في مشغلات الصف يشير إلى القيمة الجديدة للعمود بعد عملية DML</p>
-    <div class="term-meta">
-        <span class="term-difficulty advanced">advanced</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_03/index.html" class="lesson-link">الوحدة 3</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Index</h3>
-    <p class="term-def-en">An auxiliary file structure that makes searching for records more efficient</p>
-    <p class="term-def-ar">هيكل ملف مساعد يجعل البحث عن السجلات أكثر كفاءة</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Dense Index</h3>
-    <p class="term-def-en">An index with an entry for every search key value in the data file</p>
-    <p class="term-def-ar">فهرس يحتوي على مدخلة لكل قيمة مفتاح بحث في ملف البيانات</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Sparse Index</h3>
-    <p class="term-def-en">An index with entries for only some of the search values, typically one per block</p>
-    <p class="term-def-ar">فهرس يحتوي على مدخلات لبعض قيم البحث فقط، عادةً واحدة لكل كتلة</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Primary Index</h3>
-    <p class="term-def-en">A sparse index on an ordered data file where the ordering field is the key field</p>
-    <p class="term-def-ar">فهرس متفرق على ملف بيانات مرتب حيث حقل الترتيب هو حقل المفتاح</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Clustering Index</h3>
-    <p class="term-def-en">An index on an ordered file where the ordering field is not a key (has duplicates)</p>
-    <p class="term-def-ar">فهرس على ملف مرتب حيث حقل الترتيب ليس مفتاحاً (يحتوي تكرارات)</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Secondary Index</h3>
-    <p class="term-def-en">A dense index that provides an alternative access path to a file</p>
-    <p class="term-def-ar">فهرس كثيف يوفر مسار وصول بديل للملف</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="advanced">
-    <h3 class="term-name">B-Tree</h3>
-    <p class="term-def-en">A balanced tree data structure where pointers to data records exist at all levels</p>
-    <p class="term-def-ar">هيكل بيانات شجرة متوازنة حيث توجد مؤشرات للسجلات في جميع المستويات</p>
-    <div class="term-meta">
-        <span class="term-difficulty advanced">advanced</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="advanced">
-    <h3 class="term-name">B+-Tree</h3>
-    <p class="term-def-en">A balanced tree where all data pointers exist only at leaf nodes, with leaves linked together</p>
-    <p class="term-def-ar">شجرة متوازنة حيث توجد جميع مؤشرات البيانات في العقد الورقية فقط، مع ترابط الأوراق</p>
-    <div class="term-meta">
-        <span class="term-difficulty advanced">advanced</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Transaction</h3>
-    <p class="term-def-en">A logical unit of database operations that must be executed completely or not at all</p>
-    <p class="term-def-ar">وحدة منطقية من عمليات قاعدة البيانات يجب تنفيذها بالكامل أو عدم تنفيذها</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_05/index.html" class="lesson-link">الوحدة 5</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">ACID Properties</h3>
-    <p class="term-def-en">The four properties that guarantee reliable transaction processing: Atomicity, Consistency, Isolation, Durability</p>
-    <p class="term-def-ar">الخصائص الأربع التي تضمن معالجة موثوقة للمعاملات: الذرية، الاتساق، العزل، الديمومة</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_05/index.html" class="lesson-link">الوحدة 5</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Atomicity</h3>
-    <p class="term-def-en">The property ensuring a transaction is performed entirely or not at all</p>
-    <p class="term-def-ar">الخاصية التي تضمن تنفيذ المعاملة بالكامل أو عدم تنفيذها على الإطلاق</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_05/index.html" class="lesson-link">الوحدة 5</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Consistency</h3>
-    <p class="term-def-en">The property ensuring a transaction takes the database from one valid state to another</p>
-    <p class="term-def-ar">الخاصية التي تضمن نقل قاعدة البيانات من حالة صالحة إلى حالة صالحة أخرى</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_05/index.html" class="lesson-link">الوحدة 5</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Isolation</h3>
-    <p class="term-def-en">The property ensuring concurrent transactions do not interfere with each other</p>
-    <p class="term-def-ar">الخاصية التي تضمن عدم تداخل المعاملات المتزامنة مع بعضها البعض</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_05/index.html" class="lesson-link">الوحدة 5</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Durability</h3>
-    <p class="term-def-en">The property ensuring committed transactions permanently persist in the database</p>
-    <p class="term-def-ar">الخاصية التي تضمن بقاء المعاملات الملتزمة بشكل دائم في قاعدة البيانات</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_05/index.html" class="lesson-link">الوحدة 5</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="beginner">
-    <h3 class="term-name">Commit</h3>
-    <p class="term-def-en">The operation that makes all transaction changes permanent in the database</p>
-    <p class="term-def-ar">العملية التي تجعل جميع تغييرات المعاملة دائمة في قاعدة البيانات</p>
-    <div class="term-meta">
-        <span class="term-difficulty beginner">beginner</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_05/index.html" class="lesson-link">الوحدة 5</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="beginner">
-    <h3 class="term-name">Rollback</h3>
-    <p class="term-def-en">The operation that undoes all changes made by a transaction</p>
-    <p class="term-def-ar">العملية التي تتراجع عن جميع التغييرات التي أجرتها المعاملة</p>
-    <div class="term-meta">
-        <span class="term-difficulty beginner">beginner</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_05/index.html" class="lesson-link">الوحدة 5</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Lost Update Problem</h3>
-    <p class="term-def-en">A concurrency issue where one transaction overwrites another transaction's uncommitted changes</p>
-    <p class="term-def-ar">مشكلة تزامن حيث تكتب معاملة فوق تغييرات معاملة أخرى غير ملتزمة</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_05/index.html" class="lesson-link">الوحدة 5</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Dirty Read</h3>
-    <p class="term-def-en">Reading data that has been modified by another transaction that has not yet committed</p>
-    <p class="term-def-ar">قراءة بيانات تم تعديلها بواسطة معاملة أخرى لم تُثبّت بعد</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_05/index.html" class="lesson-link">الوحدة 5</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">System Log</h3>
-    <p class="term-def-en">A sequential file that records all transaction operations for recovery purposes</p>
-    <p class="term-def-ar">ملف تسلسلي يسجل جميع عمليات المعاملات لأغراض الاسترداد</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_05/index.html" class="lesson-link">الوحدة 5</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Stored Procedure</h3>
-    <p class="term-def-en">A named PL/SQL block stored in the database that performs an action and can be called repeatedly</p>
-    <p class="term-def-ar">كتلة PL/SQL مسماة مخزنة في قاعدة البيانات تنفذ عملية ويمكن استدعاؤها بشكل متكرر</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Stored Function</h3>
-    <p class="term-def-en">A named PL/SQL block that computes and returns a single value, can be used in SQL expressions</p>
-    <p class="term-def-ar">كتلة PL/SQL مسماة تحسب وتُرجع قيمة واحدة، يمكن استخدامها في تعبيرات SQL</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">IN Parameter</h3>
-    <p class="term-def-en">The default parameter mode that passes a value into a subprogram (read-only)</p>
-    <p class="term-def-ar">النمط الافتراضي للمعامل الذي يمرر قيمة إلى البرنامج الفرعي (للقراءة فقط)</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">OUT Parameter</h3>
-    <p class="term-def-en">A parameter mode that returns a value from a subprogram to the calling environment</p>
-    <p class="term-def-ar">نمط معامل يُرجع قيمة من البرنامج الفرعي إلى بيئة الاستدعاء</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">IN OUT Parameter</h3>
-    <p class="term-def-en">A parameter mode that both receives a value and can return a modified value</p>
-    <p class="term-def-ar">نمط معامل يستقبل قيمة ويمكنه إرجاع قيمة معدلة</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Heap File</h3>
-    <p class="term-def-en">An unordered file where records are placed in the order they are inserted</p>
-    <p class="term-def-ar">ملف غير مرتب حيث توضع السجلات بترتيب إدراجها</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">Sorted File</h3>
-    <p class="term-def-en">An ordered file where records are physically sorted by an ordering field</p>
-    <p class="term-def-ar">ملف مرتب حيث يتم ترتيب السجلات فعلياً حسب حقل الترتيب</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="advanced">
-    <h3 class="term-name">Hashing</h3>
-    <p class="term-def-en">A technique that uses a hash function to compute the address of a record directly</p>
-    <p class="term-def-ar">تقنية تستخدم دالة تجزئة لحساب عنوان السجل مباشرة</p>
-    <div class="term-meta">
-        <span class="term-difficulty advanced">advanced</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="advanced">
-    <h3 class="term-name">RAID</h3>
-    <p class="term-def-en">Redundant Array of Independent Disks - technology for disk parallelism and reliability</p>
-    <p class="term-def-ar">مصفوفة متكررة من الأقراص المستقلة - تقنية للتوازي والموثوقية</p>
-    <div class="term-meta">
-        <span class="term-difficulty advanced">advanced</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_04/index.html" class="lesson-link">الوحدة 4</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="intermediate">
-    <h3 class="term-name">INDEX BY Table</h3>
-    <p class="term-def-en">An associative array that uses a primary key to access elements, similar to a hash table</p>
-    <p class="term-def-ar">مصفوفة ترابطية تستخدم مفتاحاً أساسياً للوصول إلى العناصر</p>
-    <div class="term-meta">
-        <span class="term-difficulty intermediate">intermediate</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="advanced">
-    <h3 class="term-name">Nested Table</h3>
-    <p class="term-def-en">A collection type that can hold an arbitrary number of elements, stored out-of-line</p>
-    <p class="term-def-ar">نوع مجموعة يمكنه استيعاب عدد غير محدود من العناصر</p>
-    <div class="term-meta">
-        <span class="term-difficulty advanced">advanced</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-<div class="term-card" data-category="advanced">
-    <h3 class="term-name">VARRAY</h3>
-    <p class="term-def-en">A variable-size array with a fixed maximum size, stored in-line with the table</p>
-    <p class="term-def-ar">مصفوفة متغيرة الحجم بحد أقصى ثابت</p>
-    <div class="term-meta">
-        <span class="term-difficulty advanced">advanced</span>
-    </div>
-    <div class="term-lessons">
-        <span class="lessons-label">📚 الدروس المرتبطة:</span>
-        <a href="../modules/module_02/index.html" class="lesson-link">الوحدة 2</a>
-    </div>
-</div>
-
-</div>
-
-    </main>
-    
-    <div id="tooltip-ar" class="tooltip-ar"></div>
-    
-    <div id="search-modal" class="modal hidden">
-        <div class="modal-content">
-            <input type="text" id="search-input" placeholder="ابحث عن المواضيع...">
-            <div id="search-results"></div>
+      <div class="glossary-grid">
+        <div class="term-card" data-category="beginner">
+          <h3 class="term-name">PL/SQL</h3>
+          <p class="term-def-en">
+            Procedural Language extension to SQL, Oracle's standard data access
+            language for relational databases
+          </p>
+          <p class="term-def-ar">
+            امتداد اللغة الإجرائية لـ SQL، لغة الوصول إلى البيانات القياسية من
+            Oracle
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty beginner">beginner</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_01/index.html" class="lesson-link"
+              >الوحدة 1</a
+            >
+          </div>
         </div>
+
+        <div class="term-card" data-category="beginner">
+          <h3 class="term-name">Block</h3>
+          <p class="term-def-en">
+            The fundamental unit of PL/SQL code containing DECLARE, BEGIN,
+            EXCEPTION, and END sections
+          </p>
+          <p class="term-def-ar">
+            الوحدة الأساسية لكود PL/SQL تحتوي على أقسام DECLARE و BEGIN و
+            EXCEPTION و END
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty beginner">beginner</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_01/index.html" class="lesson-link"
+              >الوحدة 1</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="beginner">
+          <h3 class="term-name">Variable</h3>
+          <p class="term-def-en">
+            A named storage location in PL/SQL that holds a value which can be
+            changed during program execution
+          </p>
+          <p class="term-def-ar">
+            موقع تخزين مسمى في PL/SQL يحمل قيمة يمكن تغييرها أثناء تنفيذ
+            البرنامج
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty beginner">beginner</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_01/index.html" class="lesson-link"
+              >الوحدة 1</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">%TYPE</h3>
+          <p class="term-def-en">
+            An attribute used to declare a variable with the same data type as a
+            database column or another variable
+          </p>
+          <p class="term-def-ar">
+            خاصية تُستخدم لتعريف متغير بنفس نوع بيانات عمود في قاعدة البيانات أو
+            متغير آخر
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_01/index.html" class="lesson-link"
+              >الوحدة 1</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">%ROWTYPE</h3>
+          <p class="term-def-en">
+            An attribute that declares a record with fields corresponding to all
+            columns of a table or view
+          </p>
+          <p class="term-def-ar">
+            خاصية تعرّف سجلاً بحقول تتوافق مع جميع أعمدة جدول أو عرض
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Record</h3>
+          <p class="term-def-en">
+            A composite data type that contains multiple fields of different
+            data types, similar to a row in a table
+          </p>
+          <p class="term-def-ar">
+            نوع بيانات مركب يحتوي على حقول متعددة بأنواع بيانات مختلفة، مشابه
+            لصف في جدول
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Cursor</h3>
+          <p class="term-def-en">
+            A pointer to the private memory area allocated by Oracle server to
+            process SQL statements
+          </p>
+          <p class="term-def-ar">
+            مؤشر إلى منطقة الذاكرة الخاصة المخصصة من خادم Oracle لمعالجة جمل SQL
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Implicit Cursor</h3>
+          <p class="term-def-en">
+            A cursor automatically created by Oracle for all DML and SELECT
+            statements
+          </p>
+          <p class="term-def-ar">
+            مؤشر ينشئه Oracle تلقائياً لجميع عمليات DML وجمل SELECT
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Explicit Cursor</h3>
+          <p class="term-def-en">
+            A cursor explicitly declared and managed by the programmer for
+            processing multiple rows
+          </p>
+          <p class="term-def-ar">
+            مؤشر يُعرّف ويُدار صراحةً من قبل المبرمج لمعالجة صفوف متعددة
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Trigger</h3>
+          <p class="term-def-en">
+            A PL/SQL block that executes automatically when a specific database
+            event occurs
+          </p>
+          <p class="term-def-ar">
+            كتلة PL/SQL تُنفذ تلقائياً عند حدوث حدث معين في قاعدة البيانات
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_03/index.html" class="lesson-link"
+              >الوحدة 3</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Statement Trigger</h3>
+          <p class="term-def-en">
+            A trigger that fires once for the entire triggering statement,
+            regardless of rows affected
+          </p>
+          <p class="term-def-ar">
+            مشغل يُنفذ مرة واحدة للجملة المحفّزة بأكملها، بغض النظر عن الصفوف
+            المتأثرة
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_03/index.html" class="lesson-link"
+              >الوحدة 3</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Row Trigger</h3>
+          <p class="term-def-en">
+            A trigger that fires once for each row affected by the triggering
+            statement
+          </p>
+          <p class="term-def-ar">
+            مشغل يُنفذ مرة واحدة لكل صف متأثر بالجملة المحفّزة
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_03/index.html" class="lesson-link"
+              >الوحدة 3</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="advanced">
+          <h3 class="term-name">:OLD</h3>
+          <p class="term-def-en">
+            A qualifier in row triggers that refers to the original value of a
+            column before the DML operation
+          </p>
+          <p class="term-def-ar">
+            محدد في مشغلات الصف يشير إلى القيمة الأصلية للعمود قبل عملية DML
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty advanced">advanced</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_03/index.html" class="lesson-link"
+              >الوحدة 3</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="advanced">
+          <h3 class="term-name">:NEW</h3>
+          <p class="term-def-en">
+            A qualifier in row triggers that refers to the new value of a column
+            after the DML operation
+          </p>
+          <p class="term-def-ar">
+            محدد في مشغلات الصف يشير إلى القيمة الجديدة للعمود بعد عملية DML
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty advanced">advanced</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_03/index.html" class="lesson-link"
+              >الوحدة 3</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Index</h3>
+          <p class="term-def-en">
+            An auxiliary file structure that makes searching for records more
+            efficient
+          </p>
+          <p class="term-def-ar">
+            هيكل ملف مساعد يجعل البحث عن السجلات أكثر كفاءة
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Dense Index</h3>
+          <p class="term-def-en">
+            An index with an entry for every search key value in the data file
+          </p>
+          <p class="term-def-ar">
+            فهرس يحتوي على مدخلة لكل قيمة مفتاح بحث في ملف البيانات
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Sparse Index</h3>
+          <p class="term-def-en">
+            An index with entries for only some of the search values, typically
+            one per block
+          </p>
+          <p class="term-def-ar">
+            فهرس يحتوي على مدخلات لبعض قيم البحث فقط، عادةً واحدة لكل كتلة
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Primary Index</h3>
+          <p class="term-def-en">
+            A sparse index on an ordered data file where the ordering field is
+            the key field
+          </p>
+          <p class="term-def-ar">
+            فهرس متفرق على ملف بيانات مرتب حيث حقل الترتيب هو حقل المفتاح
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Clustering Index</h3>
+          <p class="term-def-en">
+            An index on an ordered file where the ordering field is not a key
+            (has duplicates)
+          </p>
+          <p class="term-def-ar">
+            فهرس على ملف مرتب حيث حقل الترتيب ليس مفتاحاً (يحتوي تكرارات)
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Secondary Index</h3>
+          <p class="term-def-en">
+            A dense index that provides an alternative access path to a file
+          </p>
+          <p class="term-def-ar">فهرس كثيف يوفر مسار وصول بديل للملف</p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="advanced">
+          <h3 class="term-name">B-Tree</h3>
+          <p class="term-def-en">
+            A balanced tree data structure where pointers to data records exist
+            at all levels
+          </p>
+          <p class="term-def-ar">
+            هيكل بيانات شجرة متوازنة حيث توجد مؤشرات للسجلات في جميع المستويات
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty advanced">advanced</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="advanced">
+          <h3 class="term-name">B+-Tree</h3>
+          <p class="term-def-en">
+            A balanced tree where all data pointers exist only at leaf nodes,
+            with leaves linked together
+          </p>
+          <p class="term-def-ar">
+            شجرة متوازنة حيث توجد جميع مؤشرات البيانات في العقد الورقية فقط، مع
+            ترابط الأوراق
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty advanced">advanced</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Transaction</h3>
+          <p class="term-def-en">
+            A logical unit of database operations that must be executed
+            completely or not at all
+          </p>
+          <p class="term-def-ar">
+            وحدة منطقية من عمليات قاعدة البيانات يجب تنفيذها بالكامل أو عدم
+            تنفيذها
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_05/index.html" class="lesson-link"
+              >الوحدة 5</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">ACID Properties</h3>
+          <p class="term-def-en">
+            The four properties that guarantee reliable transaction processing:
+            Atomicity, Consistency, Isolation, Durability
+          </p>
+          <p class="term-def-ar">
+            الخصائص الأربع التي تضمن معالجة موثوقة للمعاملات: الذرية، الاتساق،
+            العزل، الديمومة
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_05/index.html" class="lesson-link"
+              >الوحدة 5</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Atomicity</h3>
+          <p class="term-def-en">
+            The property ensuring a transaction is performed entirely or not at
+            all
+          </p>
+          <p class="term-def-ar">
+            الخاصية التي تضمن تنفيذ المعاملة بالكامل أو عدم تنفيذها على الإطلاق
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_05/index.html" class="lesson-link"
+              >الوحدة 5</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Consistency</h3>
+          <p class="term-def-en">
+            The property ensuring a transaction takes the database from one
+            valid state to another
+          </p>
+          <p class="term-def-ar">
+            الخاصية التي تضمن نقل قاعدة البيانات من حالة صالحة إلى حالة صالحة
+            أخرى
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_05/index.html" class="lesson-link"
+              >الوحدة 5</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Isolation</h3>
+          <p class="term-def-en">
+            The property ensuring concurrent transactions do not interfere with
+            each other
+          </p>
+          <p class="term-def-ar">
+            الخاصية التي تضمن عدم تداخل المعاملات المتزامنة مع بعضها البعض
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_05/index.html" class="lesson-link"
+              >الوحدة 5</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Durability</h3>
+          <p class="term-def-en">
+            The property ensuring committed transactions permanently persist in
+            the database
+          </p>
+          <p class="term-def-ar">
+            الخاصية التي تضمن بقاء المعاملات الملتزمة بشكل دائم في قاعدة
+            البيانات
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_05/index.html" class="lesson-link"
+              >الوحدة 5</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="beginner">
+          <h3 class="term-name">Commit</h3>
+          <p class="term-def-en">
+            The operation that makes all transaction changes permanent in the
+            database
+          </p>
+          <p class="term-def-ar">
+            العملية التي تجعل جميع تغييرات المعاملة دائمة في قاعدة البيانات
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty beginner">beginner</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_05/index.html" class="lesson-link"
+              >الوحدة 5</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="beginner">
+          <h3 class="term-name">Rollback</h3>
+          <p class="term-def-en">
+            The operation that undoes all changes made by a transaction
+          </p>
+          <p class="term-def-ar">
+            العملية التي تتراجع عن جميع التغييرات التي أجرتها المعاملة
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty beginner">beginner</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_05/index.html" class="lesson-link"
+              >الوحدة 5</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Lost Update Problem</h3>
+          <p class="term-def-en">
+            A concurrency issue where one transaction overwrites another
+            transaction's uncommitted changes
+          </p>
+          <p class="term-def-ar">
+            مشكلة تزامن حيث تكتب معاملة فوق تغييرات معاملة أخرى غير ملتزمة
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_05/index.html" class="lesson-link"
+              >الوحدة 5</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Dirty Read</h3>
+          <p class="term-def-en">
+            Reading data that has been modified by another transaction that has
+            not yet committed
+          </p>
+          <p class="term-def-ar">
+            قراءة بيانات تم تعديلها بواسطة معاملة أخرى لم تُثبّت بعد
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_05/index.html" class="lesson-link"
+              >الوحدة 5</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">System Log</h3>
+          <p class="term-def-en">
+            A sequential file that records all transaction operations for
+            recovery purposes
+          </p>
+          <p class="term-def-ar">
+            ملف تسلسلي يسجل جميع عمليات المعاملات لأغراض الاسترداد
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_05/index.html" class="lesson-link"
+              >الوحدة 5</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Stored Procedure</h3>
+          <p class="term-def-en">
+            A named PL/SQL block stored in the database that performs an action
+            and can be called repeatedly
+          </p>
+          <p class="term-def-ar">
+            كتلة PL/SQL مسماة مخزنة في قاعدة البيانات تنفذ عملية ويمكن استدعاؤها
+            بشكل متكرر
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Stored Function</h3>
+          <p class="term-def-en">
+            A named PL/SQL block that computes and returns a single value, can
+            be used in SQL expressions
+          </p>
+          <p class="term-def-ar">
+            كتلة PL/SQL مسماة تحسب وتُرجع قيمة واحدة، يمكن استخدامها في تعبيرات
+            SQL
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">IN Parameter</h3>
+          <p class="term-def-en">
+            The default parameter mode that passes a value into a subprogram
+            (read-only)
+          </p>
+          <p class="term-def-ar">
+            النمط الافتراضي للمعامل الذي يمرر قيمة إلى البرنامج الفرعي (للقراءة
+            فقط)
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">OUT Parameter</h3>
+          <p class="term-def-en">
+            A parameter mode that returns a value from a subprogram to the
+            calling environment
+          </p>
+          <p class="term-def-ar">
+            نمط معامل يُرجع قيمة من البرنامج الفرعي إلى بيئة الاستدعاء
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">IN OUT Parameter</h3>
+          <p class="term-def-en">
+            A parameter mode that both receives a value and can return a
+            modified value
+          </p>
+          <p class="term-def-ar">
+            نمط معامل يستقبل قيمة ويمكنه إرجاع قيمة معدلة
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Heap File</h3>
+          <p class="term-def-en">
+            An unordered file where records are placed in the order they are
+            inserted
+          </p>
+          <p class="term-def-ar">
+            ملف غير مرتب حيث توضع السجلات بترتيب إدراجها
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">Sorted File</h3>
+          <p class="term-def-en">
+            An ordered file where records are physically sorted by an ordering
+            field
+          </p>
+          <p class="term-def-ar">
+            ملف مرتب حيث يتم ترتيب السجلات فعلياً حسب حقل الترتيب
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="advanced">
+          <h3 class="term-name">Hashing</h3>
+          <p class="term-def-en">
+            A technique that uses a hash function to compute the address of a
+            record directly
+          </p>
+          <p class="term-def-ar">
+            تقنية تستخدم دالة تجزئة لحساب عنوان السجل مباشرة
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty advanced">advanced</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="advanced">
+          <h3 class="term-name">RAID</h3>
+          <p class="term-def-en">
+            Redundant Array of Independent Disks - technology for disk
+            parallelism and reliability
+          </p>
+          <p class="term-def-ar">
+            مصفوفة متكررة من الأقراص المستقلة - تقنية للتوازي والموثوقية
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty advanced">advanced</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_04/index.html" class="lesson-link"
+              >الوحدة 4</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="intermediate">
+          <h3 class="term-name">INDEX BY Table</h3>
+          <p class="term-def-en">
+            An associative array that uses a primary key to access elements,
+            similar to a hash table
+          </p>
+          <p class="term-def-ar">
+            مصفوفة ترابطية تستخدم مفتاحاً أساسياً للوصول إلى العناصر
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty intermediate">intermediate</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="advanced">
+          <h3 class="term-name">Nested Table</h3>
+          <p class="term-def-en">
+            A collection type that can hold an arbitrary number of elements,
+            stored out-of-line
+          </p>
+          <p class="term-def-ar">
+            نوع مجموعة يمكنه استيعاب عدد غير محدود من العناصر
+          </p>
+          <div class="term-meta">
+            <span class="term-difficulty advanced">advanced</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+
+        <div class="term-card" data-category="advanced">
+          <h3 class="term-name">VARRAY</h3>
+          <p class="term-def-en">
+            A variable-size array with a fixed maximum size, stored in-line with
+            the table
+          </p>
+          <p class="term-def-ar">مصفوفة متغيرة الحجم بحد أقصى ثابت</p>
+          <div class="term-meta">
+            <span class="term-difficulty advanced">advanced</span>
+          </div>
+          <div class="term-lessons">
+            <span class="lessons-label">📚 الدروس المرتبطة:</span>
+            <a href="../modules/module_02/index.html" class="lesson-link"
+              >الوحدة 2</a
+            >
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+
+    <div id="search-modal" class="modal hidden">
+      <div class="modal-content">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="ابحث عن المواضيع..."
+        />
+        <div id="search-results"></div>
+      </div>
     </div>
-    
-    <script>const SITE_ROOT = "../";</script>
+
+    <script>
+      const SITE_ROOT = "../";
+    </script>
     <script src="../assets/js/search_data.js"></script>
     <script src="../assets/js/main.js"></script>
-</body>
+  </body>
 </html>

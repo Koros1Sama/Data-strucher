@@ -1,0 +1,371 @@
+{
+  "exam_metadata": {
+    "university": "Sana'a University",
+    "country": "Republic of Yemen",
+    "department": "Computer Science - Faculty of Computer and Information Technology",
+    "subject": "Database Systems",
+    "level": "Second Level",
+    "instructor": "Dr. Suad Othman",
+    "exam_grade": 40,
+    "center": "Electronic Testing Center"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "question": "If record size in a database is 512 bytes, and a block size is 1 MB in size, how many records can be stored in each block?",
+      "options": [
+        { "text": "512", "is_correct": false },
+        { "text": "1024", "is_correct": false },
+        { "text": "2048", "is_correct": true },
+        { "text": "4096", "is_correct": false }
+      ]
+    },
+    {
+      "id": 2,
+      "question": "A sector is divided into smaller track",
+      "options": [
+        { "text": "TRUE", "is_correct": false },
+        { "text": "FALSE", "is_correct": true }
+      ]
+    },
+    {
+      "id": 3,
+      "question": "refers to the number of records per block.",
+      "options": [
+        { "text": "rotational delay", "is_correct": false },
+        { "text": "Blocking factor", "is_correct": true },
+        { "text": "Spanned Records", "is_correct": false }
+      ]
+    },
+    {
+      "id": 4,
+      "question": "Refers to records that exceed the size of one or more blocks",
+      "options": [
+        { "text": "rotational delay", "is_correct": false },
+        { "text": "Blocking factor", "is_correct": false },
+        { "text": "Spanned Records", "is_correct": true },
+        { "text": "Unspanned Records", "is_correct": false }
+      ]
+    },
+    {
+      "id": 5,
+      "question": "New records are inserted at the end of the file in.",
+      "options": [
+        { "text": "ordered Files", "is_correct": false },
+        { "text": "Unordered Files", "is_correct": true },
+        { "text": "Hash Files", "is_correct": false }
+      ]
+    },
+    {
+      "id": 6,
+      "question": "distributes data transparently over multiple disks to make them appear as a single large, fast disk",
+      "options": [
+        { "text": "Data striping", "is_correct": true },
+        { "text": "mirrored disks", "is_correct": false },
+        { "text": "Hash Files", "is_correct": false }
+      ]
+    },
+    {
+      "id": 7,
+      "question": "has an index entry for every search key value in the data file.",
+      "options": [
+        { "text": "INDEX", "is_correct": false },
+        { "text": "A sparse index", "is_correct": false },
+        { "text": "A dense index", "is_correct": true }
+      ]
+    },
+    {
+      "id": 8,
+      "question": "Includes one index entry for each block in the data file",
+      "options": [
+        { "text": "Primary Index", "is_correct": true },
+        { "text": "Clusterd Index", "is_correct": false },
+        { "text": "Secondray Index", "is_correct": false }
+      ]
+    },
+    {
+      "id": 9,
+      "question": "A primary index is a dense index",
+      "options": [
+        { "text": "TRUE", "is_correct": false },
+        { "text": "FALSE", "is_correct": true }
+      ]
+    },
+    {
+      "id": 10,
+      "question": "The data file is ordered on a non-key field, which requires that the ordering field of the data file have a distinct value for each record.",
+      "options": [
+        { "text": "Primary Index", "is_correct": false },
+        { "text": "Clusterd Index", "is_correct": true },
+        { "text": "Secondray Index", "is_correct": false }
+      ]
+    },
+    {
+      "id": 11,
+      "question": "value for the first record in the block, which is called",
+      "options": [
+        { "text": "block anchor", "is_correct": true },
+        { "text": "files", "is_correct": false },
+        { "text": "bloking", "is_correct": false }
+      ]
+    },
+    {
+      "id": 12,
+      "question": "number of entries key in primary index =",
+      "options": [
+        { "text": "number of primary key value", "is_correct": false },
+        { "text": "number of block", "is_correct": true },
+        { "text": "number of data", "is_correct": false }
+      ]
+    },
+    {
+      "id": 13,
+      "question": "An insertion into a node that is full is quite efficient",
+      "options": [
+        { "text": "TRUE", "is_correct": false },
+        { "text": "FALSE", "is_correct": true }
+      ]
+    },
+    {
+      "id": 14,
+      "question": "A deletion is quite efficient if a node become less than half full",
+      "options": [
+        { "text": "TRUE", "is_correct": false },
+        { "text": "FALSE", "is_correct": true }
+      ]
+    },
+    {
+      "id": 15,
+      "question": "All pointers to data records exists at the leaf-level nodes in",
+      "options": [
+        { "text": "Tree", "is_correct": false },
+        { "text": "B+-tree", "is_correct": true },
+        { "text": "B-tree", "is_correct": false }
+      ]
+    },
+    {
+      "id": 16,
+      "question": "Executes commands from one process, then suspends that process and executes commands from another process",
+      "options": [
+        { "text": "Multiprogramming", "is_correct": true },
+        { "text": "Interleaved processing", "is_correct": false },
+        { "text": "Parallel processing", "is_correct": false }
+      ]
+    },
+    {
+      "id": 17,
+      "question": "tow transactions access and update the same database items, a problem may occur:",
+      "options": [
+        { "text": "The lost update problem", "is_correct": true },
+        { "text": "Temporary Update Problem", "is_correct": false },
+        { "text": "The Incorrect Summary Problem", "is_correct": false }
+      ]
+    },
+    {
+      "id": 18,
+      "question": "Which of the following statements is correct and is used to print bind variables ?",
+      "options": [
+        { "text": "DBMS OUTPUT.PUT LINE", "is_correct": false },
+        { "text": "set autoprint on", "is_correct": true },
+        { "text": "Set serveroutput on", "is_correct": false }
+      ]
+    },
+    {
+      "id": 19,
+      "question": "Which of the following is true for defining a host variable?",
+      "options": [
+        { "text": "Declare m number $=20$;", "is_correct": false },
+        { "text": "Variable m number $:=20$", "is_correct": true },
+        { "text": "Declare m number $=20$", "is_correct": false },
+        { "text": "Variable m number:=20;", "is_correct": false }
+      ]
+    },
+    {
+      "id": 20,
+      "question": "Which of the following is true for defining function",
+      "options": [
+        { "text": "Create or replace function fun(name number) return 0 as", "is_correct": false },
+        { "text": "Create or replace function fun(name in number) return number as", "is_correct": true },
+        { "text": "Create or replace function fun(name out number) return number as", "is_correct": false }
+      ]
+    },
+    {
+      "id": 21,
+      "question": "Load the current row in active set into variables",
+      "options": [
+        { "text": "declare", "is_correct": false },
+        { "text": "open", "is_correct": false },
+        { "text": "fetch", "is_correct": true }
+      ]
+    },
+    {
+      "id": 22,
+      "question": "The cursor FOR loop is a shortcut to open and fetch processes and the record is explicitly declared.",
+      "options": [
+        { "text": "TRUE", "is_correct": false },
+        { "text": "FALSE", "is_correct": true }
+      ]
+    },
+    {
+      "id": 23,
+      "question": "Evaluates to TRUE if the most recent fetch returns a row",
+      "options": [
+        { "text": "%NOTFOUND", "is_correct": false },
+        { "text": "%FOUND", "is_correct": true },
+        { "text": "%ROWCOUNT", "is_correct": false }
+      ]
+    },
+    {
+      "id": 24,
+      "question": "Executes once for the triggering event",
+      "options": [
+        { "text": "Application trigger", "is_correct": false },
+        { "text": "A row trigger", "is_correct": false },
+        { "text": "A statement trigger", "is_correct": true }
+      ]
+    },
+    {
+      "id": 25,
+      "question": "The public part in package",
+      "options": [
+        { "text": "package body", "is_correct": false },
+        { "text": "package specification", "is_correct": true },
+        { "text": "package specification and body", "is_correct": false }
+      ]
+    },
+    {
+      "id": 26,
+      "question": "The package body should contain only those constructs that you want to be public",
+      "options": [
+        { "text": "TRUE", "is_correct": false },
+        { "text": "FALSE", "is_correct": true }
+      ]
+    },
+    {
+      "id": 27,
+      "question": "If multiple triggers are defined for the same object the last tigger is fire",
+      "options": [
+        { "text": "befor statement trigger", "is_correct": false },
+        { "text": "after statement trigger", "is_correct": true },
+        { "text": "befor row trigger", "is_correct": false },
+        { "text": "after row trigger", "is_correct": false }
+      ]
+    },
+    {
+      "id": 28,
+      "question": "The Data dictionary contains source code in USER_SOURCE for trigger.",
+      "options": [
+        { "text": "TRUE", "is_correct": false },
+        { "text": "FALSE", "is_correct": true }
+      ]
+    },
+    {
+      "id": 29,
+      "question": "Which is correct to create a trigger fire to check if the data insert corresponds with the data type?",
+      "options": [
+        { "text": "create or replace trigger emptrig after insert on emplyees is", "is_correct": false },
+        { "text": "create or replace trigger emptrig befor insert on emplyees is", "is_correct": true },
+        { "text": "create or replace trigger emptrig after insert on emplyees for each row is", "is_correct": false },
+        { "text": "create or replace trigger emptrig befor insert on emplyees for each row is", "is_correct": false }
+      ]
+    },
+    {
+      "id": 30,
+      "question": "parameter provides values for a subprogram to process.",
+      "options": [
+        { "text": "in", "is_correct": true },
+        { "text": "out", "is_correct": false },
+        { "text": "inout", "is_correct": false }
+      ]
+    },
+    {
+      "id": 31,
+      "question": "which lists the actual parameter values in the order in which the formal parameters are declared",
+      "options": [
+        { "text": "Positional method", "is_correct": true },
+        { "text": "named method", "is_correct": false },
+        { "text": "Combination method", "is_correct": false }
+      ]
+    },
+    {
+      "id": 32,
+      "question": "The best subprogram to display the salary and job ID for employee ID 120",
+      "options": [
+        { "text": "procedure", "is_correct": true },
+        { "text": "function", "is_correct": false },
+        { "text": "trigger", "is_correct": false },
+        { "text": "package", "is_correct": false }
+      ]
+    },
+    {
+      "id": 33,
+      "question": "Which of the following is true for making conditions in the PLSQL?",
+      "options": [
+        { "text": "IF condition then.. ELSIF condation then... ELSE", "is_correct": true },
+        { "text": "IF condition then.. ELSEIF condition then.. ELSE", "is_correct": false },
+        { "text": "IF condition then.. ELSEIF condition then..", "is_correct": false }
+      ]
+    },
+    {
+      "id": 34,
+      "question": "Used to define a variable of the same type as the columns in the database.",
+      "options": [
+        { "text": "%type", "is_correct": false },
+        { "text": "%rowtype", "is_correct": true },
+        { "text": "%column", "is_correct": false }
+      ]
+    },
+    {
+      "id": 35,
+      "question": "Use PL/SQL collections when you want to store values of same data type.",
+      "options": [
+        { "text": "TRUE", "is_correct": true },
+        { "text": "FALSE", "is_correct": false }
+      ]
+    },
+    {
+      "id": 36,
+      "question": "optional block sections",
+      "options": [
+        { "text": "begin and end", "is_correct": false },
+        { "text": "declare and exception", "is_correct": true },
+        { "text": "declare and begin", "is_correct": false }
+      ]
+    },
+    {
+      "id": 37,
+      "question": "which is correct to define for loop",
+      "options": [
+        { "text": "FOR i IN 1..3 LOOP", "is_correct": true },
+        { "text": "FOR i IN from 1 to 3 LOOP", "is_correct": false },
+        { "text": "FOR i number IN 1..3 LOOP", "is_correct": false }
+      ]
+    },
+    {
+      "id": 38,
+      "question": "to retrieve data The INTO clause is required in the select statement",
+      "options": [
+        { "text": "TRUE", "is_correct": true },
+        { "text": "FALSE", "is_correct": false }
+      ]
+    },
+    {
+      "id": 39,
+      "question": "which is true for define varible",
+      "options": [
+        { "text": "employee_id employees.employee_id%TYPE : $=176;$", "is_correct": false },
+        { "text": "employeeid employees.employee_id%TYPE : $=176$;", "is_correct": true },
+        { "text": "employee_id employee_id.employees%TYPE := 176;", "is_correct": false },
+        { "text": "employeeid employee_id.employees%TYPE : $=176$;", "is_correct": false }
+      ]
+    },
+    {
+      "id": 40,
+      "question": "You can access to the variable in the inner block from the outer block",
+      "options": [
+        { "text": "TRUE", "is_correct": false },
+        { "text": "FALSE", "is_correct": true }
+      ]
+    }
+  ]
+}

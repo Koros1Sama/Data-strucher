@@ -1,0 +1,117 @@
+--- Slide 1 ---
+Indexing Structures for Files and Physical Database Design
+
+--- Slide 2: Indexes as Access Paths ---
+A single-level index is an auxiliary file that makes it more efficient to search for a record in the data file.
+The index is usually specified on one field of the file (although it could be specified on several fields)
+One form of an index is a file of entries <field value, pointer to record>, which is ordered by field value
+The index is called an access path on the field.
+
+--- Slide 3: Indexes as Access Paths (contd.) ---
+The index file usually occupies considerably less disk blocks than the data file because its entries are much smaller
+A binary search on the index yields a pointer to the file record
+Indexes can also be characterized as dense or sparse 
+A dense index has an index entry for every search key value (and hence every record) in the data file. 
+A sparse (or nondense) index, on the other hand, has index entries for only some of the search values
+
+--- Slide 4: Index ---
+Example: Given the following data file EMPLOYEE(NAME, SSN, ADDRESS, JOB, SAL, ... )
+Suppose that:
+	record size R=150 bytes	block size B=512 bytes	r=30000 records
+Then, we get:
+	blocking factor Bfr= B div R= 512 div 150= 3 records/block
+	number of file blocks b= (r/Bfr)= (30000/3)= 10000 blocks
+For an index on the SSN field, assume the field size VSSN=9 bytes, assume the record pointer size PR=7 bytes. Then:
+	index entry size RI=(VSSN+ PR)=(9+7)=16 bytes
+	index blocking factor BfrI= B div RI= 512 div 16= 32 entries/block
+	number of index blocks b= (r/ BfrI)= (30000/32)= 938 blocks
+	binary search needs log2bI= log2938= 10 block accesses
+	This is compared to an average linear search cost of:
+(b/2)= 30000/2= 15000 block accesses
+	If the file records are ordered, the binary search cost would be:
+log2b=  log230000= 15 block accesses
+
+--- Slide 5: Types of Single-Level Indexes ---
+Primary Index
+Defined on an ordered data file
+The data file is ordered on a key field
+Includes one index entry for each block in the data file; the index entry has the key field value for the first record in the block, which is called the block anchor
+A similar scheme can use the last record in a block.
+A primary index is a nondense index, since it includes an entry for each disk block of the data file and the keys of its anchor record rather than for every search value.
+
+--- Slide 6: Primary index on the ordering key field ---
+
+--- Slide 7: Types of Single-Level Indexes ---
+Clustering Index
+Defined on an ordered data file
+The data file is ordered on a non-key field unlike primary index, which requires that the ordering field of the data file have a distinct value for each record.
+Includes one index entry for each distinct value of the field; the index entry points to the first data block that contains records with that field value.
+It is another example of nondense index where Insertion and Deletion is relatively straightforward with a clustering index.
+
+--- Slide 8: Clustering Index Example ---
+
+--- Slide 9: Types of Single-Level Indexes ---
+Secondary Index
+A secondary index provides a secondary means of accessing a file for which some primary access already exists.
+The secondary index may be on a field which is a candidate key and has a unique value in every record, or a non-key with duplicate values.
+The index is an ordered file with two fields.
+The first field is of the same data type as some non-ordering field of the data file that is an indexing field. 
+The second field is either a block pointer or a record pointer.
+There can be many secondary indexes (and hence, indexing fields) for the same file.
+Includes one entry for each record in the data file; hence, it is a dense index
+
+--- Slide 10: Example of a Dense Secondary Index ---
+
+--- Slide 11: An Example of a Secondary Index ---
+
+--- Slide 12: Properties of Index Types ---
+
+--- Slide 13: Multi-Level Indexes ---
+Because a single-level index is an ordered file, we can create a primary index to the index itself;
+In this case, the original index file is called the first-level index and the index to the index is called the second-level index.
+We can repeat the process, creating a third, fourth, ..., top level until all entries of the top level fit in one disk block
+A multi-level index can be created for any type of first-level index (primary, secondary, clustering) as long as the first-level index consists of more than one disk block
+
+--- Slide 14: A Two-level Primary Index ---
+
+--- Slide 15: Multi-Level Indexes ---
+Such a multi-level index is a form of search tree
+However, insertion and deletion of new index entries is a severe problem because every level of the index is an ordered file.
+
+--- Slide 16: A Node in a Search Tree with Pointers to Subtrees below It ---
+A search tree of order p = 3.
+
+--- Slide 17: Dynamic Multilevel Indexes Using B-Trees and B+-Trees ---
+Most multi-level indexes use B-tree or B+-tree data structures because of the insertion and deletion problem
+This leaves space in each tree node (disk block) to allow for new index entries
+These data structures are variations of search trees that allow efficient insertion and deletion of new search values.
+In B-Tree and B+-Tree data structures, each node corresponds to a disk block
+Each node is kept between half-full and completely full
+
+--- Slide 18: Dynamic Multilevel Indexes Using B-Trees and B+-Trees (contd.) ---
+An insertion into a node that is not full is quite efficient
+If a node is full the insertion causes a split into two nodes
+Splitting may propagate to other tree levels
+A deletion is quite efficient if a node does not become less than half full
+If a deletion causes a node to become less than half full, it must be merged with neighboring nodes
+
+--- Slide 19: Difference between B-tree and B+-tree ---
+In a B-tree, pointers to data records exist at all levels of the tree
+In a B+-tree, all pointers to data records exists at the leaf-level nodes
+A B+-tree can have less levels (or higher capacity of search values) than the corresponding B-tree
+
+--- Slide 20: B-tree Structures ---
+
+--- Slide 21: The Nodes of a B+-tree ---
+FIGURE 11 The nodes of a B+-tree
+(a) Internal node of a B+-tree with q –1 search values.
+(b) Leaf node of a B+-tree with q – 1 search values and q – 1 data pointers.
+
+--- Slide 22: An Example of an Insertion in a B+-tree ---
+
+--- Slide 23: An Example of a Deletion in a B+-tree ---
+
+--- Slide 24: Other Types of Indexes ---
+The hash index is a secondary structure to access the file by using hashing.
+The bitmap index is another popular data structure that facilitates querying on multiple keys. Bitmap indexing is used for relations that contain a large number of rows.
+Function-Based Indexing

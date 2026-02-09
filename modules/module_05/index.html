@@ -1,169 +1,172 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Transaction Processing | Data Structures Study Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/main.css">
-    <link rel="stylesheet" href="../../assets/css/syntax.css">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="nav-brand">
-            <a href="../../index.html">📚 Data Structures Study Guide</a>
-        </div>
-        <div class="nav-links">
-            <a href="../../glossary/index.html">المصطلحات</a>
-            <a href="../../graph/index.html">خريطة المفاهيم</a>
-            <button id="search-btn" class="nav-btn">🔍 بحث</button>
-        </div>
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../index.html">الرئيسية</a>
+        <a href="../../exam/index.html">📝 نموذج الاختبار</a>
+        <a href="../../glossary/index.html">المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+        <button id="search-btn" class="nav-btn">🔍 بحث</button>
+      </div>
     </nav>
-    
+
     <main class="container">
-        
-<nav class="breadcrumb">
-    <a href="../../index.html">الرئيسية</a> › 
-    <span>الوحدة 5</span>
-</nav>
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <span>الوحدة 5</span>
+      </nav>
 
-<header class="module-hero">
-    <span class="module-number-large">الوحدة 5</span>
-    <h1>Transaction Processing</h1>
-    <p class="module-meta">4 فصول • 14 مواضيع</p>
-</header>
+      <header class="module-hero">
+        <span class="module-number-large">الوحدة 5</span>
+        <h1>Transaction Processing</h1>
+        <p class="module-meta">4 فصول • 14 مواضيع</p>
+      </header>
 
-<div class="chapters-container">
-    
-<section class="chapter-section">
-    <h2 class="chapter-title">Transaction Fundamentals</h2>
-    <div class="topics-grid">
-        
-<a href="../../topics/topic_05_01_01.html" class="topic-link">
-    <span class="topic-title">What is a Transaction</span>
-    <span class="topic-title-ar">ما هي المعاملة</span>
-    <span class="difficulty-badge beginner">beginner</span>
-</a>
+      <div class="chapters-container">
+        <section class="chapter-section">
+          <h2 class="chapter-title">Transaction Fundamentals</h2>
+          <div class="topics-grid">
+            <a href="../../topics/topic_05_01_01.html" class="topic-link">
+              <span class="topic-title">What is a Transaction</span>
+              <span class="topic-title-ar">ما هي المعاملة</span>
+              <span class="difficulty-badge beginner">beginner</span>
+            </a>
 
-<a href="../../topics/topic_05_01_02.html" class="topic-link">
-    <span class="topic-title">Single-User vs Multi-User DBMS</span>
-    <span class="topic-title-ar">نظام قواعد بيانات المستخدم الواحد مقابل المتعدد</span>
-    <span class="difficulty-badge beginner">beginner</span>
-</a>
+            <a href="../../topics/topic_05_01_02.html" class="topic-link">
+              <span class="topic-title">Single-User vs Multi-User DBMS</span>
+              <span class="topic-title-ar"
+                >نظام قواعد بيانات المستخدم الواحد مقابل المتعدد</span
+              >
+              <span class="difficulty-badge beginner">beginner</span>
+            </a>
 
-<a href="../../topics/topic_05_01_03.html" class="topic-link">
-    <span class="topic-title">Read and Write Operations</span>
-    <span class="topic-title-ar">عمليات القراءة والكتابة</span>
-    <span class="difficulty-badge beginner">beginner</span>
-</a>
+            <a href="../../topics/topic_05_01_03.html" class="topic-link">
+              <span class="topic-title">Read and Write Operations</span>
+              <span class="topic-title-ar">عمليات القراءة والكتابة</span>
+              <span class="difficulty-badge beginner">beginner</span>
+            </a>
+          </div>
+        </section>
 
-    </div>
-</section>
+        <section class="chapter-section">
+          <h2 class="chapter-title">Concurrency Control</h2>
+          <div class="topics-grid">
+            <a href="../../topics/topic_05_02_01.html" class="topic-link">
+              <span class="topic-title">The Lost Update Problem</span>
+              <span class="topic-title-ar">مشكلة التحديث المفقود</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-<section class="chapter-section">
-    <h2 class="chapter-title">Concurrency Control</h2>
-    <div class="topics-grid">
-        
-<a href="../../topics/topic_05_02_01.html" class="topic-link">
-    <span class="topic-title">The Lost Update Problem</span>
-    <span class="topic-title-ar">مشكلة التحديث المفقود</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+            <a href="../../topics/topic_05_02_02.html" class="topic-link">
+              <span class="topic-title">The Temporary Update Problem</span>
+              <span class="topic-title-ar">مشكلة التحديث المؤقت</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-<a href="../../topics/topic_05_02_02.html" class="topic-link">
-    <span class="topic-title">The Temporary Update Problem</span>
-    <span class="topic-title-ar">مشكلة التحديث المؤقت</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+            <a href="../../topics/topic_05_02_03.html" class="topic-link">
+              <span class="topic-title">The Incorrect Summary Problem</span>
+              <span class="topic-title-ar">مشكلة الملخص غير الصحيح</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-<a href="../../topics/topic_05_02_03.html" class="topic-link">
-    <span class="topic-title">The Incorrect Summary Problem</span>
-    <span class="topic-title-ar">مشكلة الملخص غير الصحيح</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+            <a href="../../topics/topic_05_02_04.html" class="topic-link">
+              <span class="topic-title">The Unrepeatable Read Problem</span>
+              <span class="topic-title-ar"
+                >مشكلة القراءة غير القابلة للتكرار</span
+              >
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
+          </div>
+        </section>
 
-<a href="../../topics/topic_05_02_04.html" class="topic-link">
-    <span class="topic-title">The Unrepeatable Read Problem</span>
-    <span class="topic-title-ar">مشكلة القراءة غير القابلة للتكرار</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+        <section class="chapter-section">
+          <h2 class="chapter-title">Transaction States and Recovery</h2>
+          <div class="topics-grid">
+            <a href="../../topics/topic_05_03_01.html" class="topic-link">
+              <span class="topic-title">Transaction States</span>
+              <span class="topic-title-ar">حالات المعاملة</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-    </div>
-</section>
+            <a href="../../topics/topic_05_03_02.html" class="topic-link">
+              <span class="topic-title">The System Log</span>
+              <span class="topic-title-ar">سجل النظام</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-<section class="chapter-section">
-    <h2 class="chapter-title">Transaction States and Recovery</h2>
-    <div class="topics-grid">
-        
-<a href="../../topics/topic_05_03_01.html" class="topic-link">
-    <span class="topic-title">Transaction States</span>
-    <span class="topic-title-ar">حالات المعاملة</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+            <a href="../../topics/topic_05_03_03.html" class="topic-link">
+              <span class="topic-title">Commit Point and Recovery</span>
+              <span class="topic-title-ar">نقطة الالتزام والاسترداد</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
+          </div>
+        </section>
 
-<a href="../../topics/topic_05_03_02.html" class="topic-link">
-    <span class="topic-title">The System Log</span>
-    <span class="topic-title-ar">سجل النظام</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+        <section class="chapter-section">
+          <h2 class="chapter-title">ACID Properties</h2>
+          <div class="topics-grid">
+            <a href="../../topics/topic_05_04_01.html" class="topic-link">
+              <span class="topic-title">Atomicity</span>
+              <span class="topic-title-ar">الذرية</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-<a href="../../topics/topic_05_03_03.html" class="topic-link">
-    <span class="topic-title">Commit Point and Recovery</span>
-    <span class="topic-title-ar">نقطة الالتزام والاسترداد</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+            <a href="../../topics/topic_05_04_02.html" class="topic-link">
+              <span class="topic-title">Consistency</span>
+              <span class="topic-title-ar">الاتساق</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-    </div>
-</section>
+            <a href="../../topics/topic_05_04_03.html" class="topic-link">
+              <span class="topic-title">Isolation and Isolation Levels</span>
+              <span class="topic-title-ar">العزل ومستويات العزل</span>
+              <span class="difficulty-badge advanced">advanced</span>
+            </a>
 
-<section class="chapter-section">
-    <h2 class="chapter-title">ACID Properties</h2>
-    <div class="topics-grid">
-        
-<a href="../../topics/topic_05_04_01.html" class="topic-link">
-    <span class="topic-title">Atomicity</span>
-    <span class="topic-title-ar">الذرية</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
-
-<a href="../../topics/topic_05_04_02.html" class="topic-link">
-    <span class="topic-title">Consistency</span>
-    <span class="topic-title-ar">الاتساق</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
-
-<a href="../../topics/topic_05_04_03.html" class="topic-link">
-    <span class="topic-title">Isolation and Isolation Levels</span>
-    <span class="topic-title-ar">العزل ومستويات العزل</span>
-    <span class="difficulty-badge advanced">advanced</span>
-</a>
-
-<a href="../../topics/topic_05_04_04.html" class="topic-link">
-    <span class="topic-title">Durability</span>
-    <span class="topic-title-ar">الديمومة</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
-
-    </div>
-</section>
-
-</div>
-
+            <a href="../../topics/topic_05_04_04.html" class="topic-link">
+              <span class="topic-title">Durability</span>
+              <span class="topic-title-ar">الديمومة</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
+          </div>
+        </section>
+      </div>
     </main>
-    
+
     <div id="tooltip-ar" class="tooltip-ar"></div>
-    
+
     <div id="search-modal" class="modal hidden">
-        <div class="modal-content">
-            <input type="text" id="search-input" placeholder="ابحث عن المواضيع...">
-            <div id="search-results"></div>
-        </div>
+      <div class="modal-content">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="ابحث عن المواضيع..."
+        />
+        <div id="search-results"></div>
+      </div>
     </div>
-    
-    <script>const SITE_ROOT = "../../";</script>
+
+    <script>
+      const SITE_ROOT = "../../";
+    </script>
     <script src="../../assets/js/search_data.js"></script>
     <script src="../../assets/js/main.js"></script>
-</body>
+  </body>
 </html>

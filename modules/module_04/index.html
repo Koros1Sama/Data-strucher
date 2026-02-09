@@ -1,194 +1,219 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indexing and Physical Database Design | Data Structures Study Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/main.css">
-    <link rel="stylesheet" href="../../assets/css/syntax.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Indexing and Physical Database Design | Data Structures Study Guide
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/syntax.css" />
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="nav-brand">
-            <a href="../../index.html">📚 Data Structures Study Guide</a>
-        </div>
-        <div class="nav-links">
-            <a href="../../glossary/index.html">المصطلحات</a>
-            <a href="../../graph/index.html">خريطة المفاهيم</a>
-            <button id="search-btn" class="nav-btn">🔍 بحث</button>
-        </div>
+      <div class="nav-brand">
+        <a href="../../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../../index.html">الرئيسية</a>
+        <a href="../../exam/index.html">📝 نموذج الاختبار</a>
+        <a href="../../glossary/index.html">المصطلحات</a>
+        <a href="../../graph/index.html">خريطة المفاهيم</a>
+        <button id="search-btn" class="nav-btn">🔍 بحث</button>
+      </div>
     </nav>
-    
+
     <main class="container">
-        
-<nav class="breadcrumb">
-    <a href="../../index.html">الرئيسية</a> › 
-    <span>الوحدة 4</span>
-</nav>
+      <nav class="breadcrumb">
+        <a href="../../index.html">الرئيسية</a> ›
+        <span>الوحدة 4</span>
+      </nav>
 
-<header class="module-hero">
-    <span class="module-number-large">الوحدة 4</span>
-    <h1>Indexing and Physical Database Design</h1>
-    <p class="module-meta">5 فصول • 17 مواضيع</p>
-</header>
+      <header class="module-hero">
+        <span class="module-number-large">الوحدة 4</span>
+        <h1>Indexing and Physical Database Design</h1>
+        <p class="module-meta">5 فصول • 17 مواضيع</p>
+      </header>
 
-<div class="chapters-container">
-    
-<section class="chapter-section">
-    <h2 class="chapter-title">Index Fundamentals</h2>
-    <div class="topics-grid">
-        
-<a href="../../topics/topic_04_01_01.html" class="topic-link">
-    <span class="topic-title">Indexes as Access Paths</span>
-    <span class="topic-title-ar">الفهارس كمسارات وصول</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+      <div class="chapters-container">
+        <section class="chapter-section">
+          <h2 class="chapter-title">Index Fundamentals</h2>
+          <div class="topics-grid">
+            <a href="../../topics/topic_04_01_01.html" class="topic-link">
+              <span class="topic-title">Indexes as Access Paths</span>
+              <span class="topic-title-ar">الفهارس كمسارات وصول</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-<a href="../../topics/topic_04_01_02.html" class="topic-link">
-    <span class="topic-title">Dense vs Sparse Indexes</span>
-    <span class="topic-title-ar">الفهارس الكثيفة مقابل المتفرقة</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+            <a href="../../topics/topic_04_01_02.html" class="topic-link">
+              <span class="topic-title">Dense vs Sparse Indexes</span>
+              <span class="topic-title-ar">الفهارس الكثيفة مقابل المتفرقة</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
+          </div>
+        </section>
 
-    </div>
-</section>
+        <section class="chapter-section">
+          <h2 class="chapter-title">Types of Single-Level Indexes</h2>
+          <div class="topics-grid">
+            <a href="../../topics/topic_04_02_01.html" class="topic-link">
+              <span class="topic-title">Primary Index</span>
+              <span class="topic-title-ar">الفهرس الأساسي</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-<section class="chapter-section">
-    <h2 class="chapter-title">Types of Single-Level Indexes</h2>
-    <div class="topics-grid">
-        
-<a href="../../topics/topic_04_02_01.html" class="topic-link">
-    <span class="topic-title">Primary Index</span>
-    <span class="topic-title-ar">الفهرس الأساسي</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+            <a href="../../topics/topic_04_02_02.html" class="topic-link">
+              <span class="topic-title">Clustering Index</span>
+              <span class="topic-title-ar">فهرس التجميع</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-<a href="../../topics/topic_04_02_02.html" class="topic-link">
-    <span class="topic-title">Clustering Index</span>
-    <span class="topic-title-ar">فهرس التجميع</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+            <a href="../../topics/topic_04_02_03.html" class="topic-link">
+              <span class="topic-title">Secondary Index</span>
+              <span class="topic-title-ar">الفهرس الثانوي</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
+          </div>
+        </section>
 
-<a href="../../topics/topic_04_02_03.html" class="topic-link">
-    <span class="topic-title">Secondary Index</span>
-    <span class="topic-title-ar">الفهرس الثانوي</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+        <section class="chapter-section">
+          <h2 class="chapter-title">Multi-Level Indexes and Trees</h2>
+          <div class="topics-grid">
+            <a href="../../topics/topic_04_03_01.html" class="topic-link">
+              <span class="topic-title">Multi-Level Index Structure</span>
+              <span class="topic-title-ar">هيكل الفهرس متعدد المستويات</span>
+              <span class="difficulty-badge advanced">advanced</span>
+            </a>
 
-    </div>
-</section>
+            <a href="../../topics/topic_04_03_02.html" class="topic-link">
+              <span class="topic-title">B-Tree Structure</span>
+              <span class="topic-title-ar">هيكل شجرة B</span>
+              <span class="difficulty-badge advanced">advanced</span>
+            </a>
 
-<section class="chapter-section">
-    <h2 class="chapter-title">Multi-Level Indexes and Trees</h2>
-    <div class="topics-grid">
-        
-<a href="../../topics/topic_04_03_01.html" class="topic-link">
-    <span class="topic-title">Multi-Level Index Structure</span>
-    <span class="topic-title-ar">هيكل الفهرس متعدد المستويات</span>
-    <span class="difficulty-badge advanced">advanced</span>
-</a>
+            <a href="../../topics/topic_04_03_03.html" class="topic-link">
+              <span class="topic-title">B+-Tree: Insertion and Deletion</span>
+              <span class="topic-title-ar">شجرة B+: الإدراج والحذف</span>
+              <span class="difficulty-badge advanced">advanced</span>
+            </a>
 
-<a href="../../topics/topic_04_03_02.html" class="topic-link">
-    <span class="topic-title">B-Tree Structure</span>
-    <span class="topic-title-ar">هيكل شجرة B</span>
-    <span class="difficulty-badge advanced">advanced</span>
-</a>
+            <a href="../../topics/topic_04_03_04.html" class="topic-link">
+              <span class="topic-title"
+                >Hash, Bitmap, and Function-Based Indexes</span
+              >
+              <span class="topic-title-ar"
+                >فهارس التجزئة والنقطية والقائمة على الدوال</span
+              >
+              <span class="difficulty-badge advanced">advanced</span>
+            </a>
+          </div>
+        </section>
 
-<a href="../../topics/topic_04_03_03.html" class="topic-link">
-    <span class="topic-title">B+-Tree: Insertion and Deletion</span>
-    <span class="topic-title-ar">شجرة B+: الإدراج والحذف</span>
-    <span class="difficulty-badge advanced">advanced</span>
-</a>
+        <section class="chapter-section">
+          <h2 class="chapter-title">Disk Storage Fundamentals</h2>
+          <div class="topics-grid">
+            <a href="../../topics/topic_04_04_01.html" class="topic-link">
+              <span class="topic-title"
+                >Storage Hierarchy and Memory Types</span
+              >
+              <span class="topic-title-ar"
+                >التسلسل الهرمي للتخزين وأنواع الذاكرة</span
+              >
+              <span class="difficulty-badge beginner">beginner</span>
+            </a>
 
-<a href="../../topics/topic_04_03_04.html" class="topic-link">
-    <span class="topic-title">Hash, Bitmap, and Function-Based Indexes</span>
-    <span class="topic-title-ar">فهارس التجزئة والنقطية والقائمة على الدوال</span>
-    <span class="difficulty-badge advanced">advanced</span>
-</a>
+            <a href="../../topics/topic_04_04_02.html" class="topic-link">
+              <span class="topic-title"
+                >Secondary Storage Devices: HDD and SSD</span
+              >
+              <span class="topic-title-ar"
+                >أجهزة التخزين الثانوي: HDD و SSD</span
+              >
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-    </div>
-</section>
+            <a href="../../topics/topic_04_04_03.html" class="topic-link">
+              <span class="topic-title"
+                >Block Buffering and I/O Operations</span
+              >
+              <span class="topic-title-ar"
+                >تخزين الكتل المؤقت وعمليات الإدخال/الإخراج</span
+              >
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-<section class="chapter-section">
-    <h2 class="chapter-title">Disk Storage Fundamentals</h2>
-    <div class="topics-grid">
-        
-<a href="../../topics/topic_04_04_01.html" class="topic-link">
-    <span class="topic-title">Storage Hierarchy and Memory Types</span>
-    <span class="topic-title-ar">التسلسل الهرمي للتخزين وأنواع الذاكرة</span>
-    <span class="difficulty-badge beginner">beginner</span>
-</a>
+            <a href="../../topics/topic_04_04_04.html" class="topic-link">
+              <span class="topic-title"
+                >Record Placement: Spanned vs Unspanned</span
+              >
+              <span class="topic-title-ar"
+                >وضع السجلات: الممتدة مقابل غير الممتدة</span
+              >
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
+          </div>
+        </section>
 
-<a href="../../topics/topic_04_04_02.html" class="topic-link">
-    <span class="topic-title">Secondary Storage Devices: HDD and SSD</span>
-    <span class="topic-title-ar">أجهزة التخزين الثانوي: HDD و SSD</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+        <section class="chapter-section">
+          <h2 class="chapter-title">File Organization and Hashing</h2>
+          <div class="topics-grid">
+            <a href="../../topics/topic_04_05_01.html" class="topic-link">
+              <span class="topic-title">Heap Files (Unordered)</span>
+              <span class="topic-title-ar">ملفات الكومة (غير مرتبة)</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-<a href="../../topics/topic_04_04_03.html" class="topic-link">
-    <span class="topic-title">Block Buffering and I/O Operations</span>
-    <span class="topic-title-ar">تخزين الكتل المؤقت وعمليات الإدخال/الإخراج</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+            <a href="../../topics/topic_04_05_02.html" class="topic-link">
+              <span class="topic-title">Sorted Files (Ordered)</span>
+              <span class="topic-title-ar">الملفات المرتبة</span>
+              <span class="difficulty-badge intermediate">intermediate</span>
+            </a>
 
-<a href="../../topics/topic_04_04_04.html" class="topic-link">
-    <span class="topic-title">Record Placement: Spanned vs Unspanned</span>
-    <span class="topic-title-ar">وضع السجلات: الممتدة مقابل غير الممتدة</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
+            <a href="../../topics/topic_04_05_03.html" class="topic-link">
+              <span class="topic-title"
+                >Hashing Techniques: Internal and External</span
+              >
+              <span class="topic-title-ar"
+                >تقنيات التجزئة: الداخلية والخارجية</span
+              >
+              <span class="difficulty-badge advanced">advanced</span>
+            </a>
 
-    </div>
-</section>
-
-<section class="chapter-section">
-    <h2 class="chapter-title">File Organization and Hashing</h2>
-    <div class="topics-grid">
-        
-<a href="../../topics/topic_04_05_01.html" class="topic-link">
-    <span class="topic-title">Heap Files (Unordered)</span>
-    <span class="topic-title-ar">ملفات الكومة (غير مرتبة)</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
-
-<a href="../../topics/topic_04_05_02.html" class="topic-link">
-    <span class="topic-title">Sorted Files (Ordered)</span>
-    <span class="topic-title-ar">الملفات المرتبة</span>
-    <span class="difficulty-badge intermediate">intermediate</span>
-</a>
-
-<a href="../../topics/topic_04_05_03.html" class="topic-link">
-    <span class="topic-title">Hashing Techniques: Internal and External</span>
-    <span class="topic-title-ar">تقنيات التجزئة: الداخلية والخارجية</span>
-    <span class="difficulty-badge advanced">advanced</span>
-</a>
-
-<a href="../../topics/topic_04_05_04.html" class="topic-link">
-    <span class="topic-title">RAID Technology and Storage Architectures</span>
-    <span class="topic-title-ar">تقنية RAID وهياكل التخزين</span>
-    <span class="difficulty-badge advanced">advanced</span>
-</a>
-
-    </div>
-</section>
-
-</div>
-
+            <a href="../../topics/topic_04_05_04.html" class="topic-link">
+              <span class="topic-title"
+                >RAID Technology and Storage Architectures</span
+              >
+              <span class="topic-title-ar">تقنية RAID وهياكل التخزين</span>
+              <span class="difficulty-badge advanced">advanced</span>
+            </a>
+          </div>
+        </section>
+      </div>
     </main>
-    
+
     <div id="tooltip-ar" class="tooltip-ar"></div>
-    
+
     <div id="search-modal" class="modal hidden">
-        <div class="modal-content">
-            <input type="text" id="search-input" placeholder="ابحث عن المواضيع...">
-            <div id="search-results"></div>
-        </div>
+      <div class="modal-content">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="ابحث عن المواضيع..."
+        />
+        <div id="search-results"></div>
+      </div>
     </div>
-    
-    <script>const SITE_ROOT = "../../";</script>
+
+    <script>
+      const SITE_ROOT = "../../";
+    </script>
     <script src="../../assets/js/search_data.js"></script>
     <script src="../../assets/js/main.js"></script>
-</body>
+  </body>
 </html>

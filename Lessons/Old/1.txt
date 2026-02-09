@@ -1,0 +1,316 @@
+--- Slide 1: Lec1
+Introduction to PL/SQL ---
+ا. سعاد عثمان
+
+--- Slide 2: Objectives ---
+After completing this lesson, you should be able to do the following: 
+Explain the need for PL/SQL 
+Explain the benefits of PL/SQL
+Identify the different types of PL/SQL blocks
+Use iSQL*Plus as a development environment for PL/SQL 
+Output messages in PL/SQL
+
+--- Slide 3: What Is PL/SQL? ---
+PL/SQL:
+Stands for Procedural Language extension to SQL
+Is Oracle Corporation’s standard data access language for relational databases
+Seamlessly integrates procedural constructs with SQL
+
+--- Slide 4: About PL/SQL ---
+PL/SQL:
+Provides a block structure for executable units of code. Maintenance of code is made easier with such a well-defined structure.
+Provides procedural constructs such as:
+Variables, constants, and types
+Control structures such as conditional statements and loops
+Reusable program units that are written once and executed many times
+
+--- Slide 5: PL/SQL Environment ---
+PL/SQL Engine
+Oracle Database Server
+SQL Statement 
+Executor
+Procedural 
+Statement 
+Executor
+procedural
+SQL
+PL/SQL
+Block
+
+--- Slide 6: Benefits of PL/SQL ---
+SQL
+IF...THEN
+	SQL
+ELSE
+	SQL
+END IF;
+SQL
+Integration of procedural constructs with SQL
+Improved performance
+SQL 1
+SQL 2
+…
+
+--- Slide 7: Benefits of PL/SQL ---
+Modularized program development
+Integration with Oracle tools
+Portability
+Exception handling
+
+--- Slide 8: PL/SQL Block Structure ---
+DECLARE (Optional)
+		Variables, cursors, user-defined exceptions
+BEGIN (Mandatory)
+	- SQL statements
+	- PL/SQL statements
+EXCEPTION (Optional)
+		Actions to perform
+	when errors occur
+END; (Mandatory)
+
+--- Slide 9: Block Types ---
+Anonymous					Procedure					Function
+[DECLARE]
+
+
+BEGIN
+  --statements
+
+[EXCEPTION]
+
+END;
+PROCEDURE name
+IS
+
+BEGIN
+  --statements
+
+[EXCEPTION]
+
+END;
+FUNCTION name
+RETURN datatype
+IS
+BEGIN
+  --statements
+  RETURN value;
+[EXCEPTION]
+
+END;
+
+--- Slide 10: PL/SQL Programming Environments ---
+iSQL*Plus
+
+--- Slide 11: iSQL*Plus Architecture ---
+
+--- Slide 12: Test the Output of a PL/SQL Block ---
+Enable output in iSQL*Plus with the command
+SET SERVEROUTPUT ON
+Use a predefined Oracle package and its procedure:
+DBMS_OUTPUT.PUT_LINE
+SET SERVEROUTPUT ON
+…
+DBMS_OUTPUT.PUT_LINE(' The First Name of the Employee is ' || f_name);
+…
+
+--- Slide 13: Declaring PL/SQL Variables ---
+
+--- Slide 14: Use of Variables ---
+Variables can be used for:
+Temporary storage of data
+Manipulation of stored values
+Reusability
+SELECT 
+first_name, 
+department_id 
+INTO 
+emp_fname,
+emp_deptno
+FROM …
+emp_fname
+emp_deptno
+Jennifer
+10
+
+--- Slide 15: Identifiers ---
+Identifiers are used for:
+Naming a variable
+Providing a convention for variable names:
+Must start with a letter 
+Can include letters or numbers
+Can include special characters such as dollar sign, underscore, and pound sign
+Must limit the length to 30 characters
+Must not be reserved words
+
+--- Slide 16: Handling Variables in PL/SQL ---
+Variables are:
+Declared and initialized in the declarative section
+Used and assigned new values in the executable section
+Passed as parameters to PL/SQL subprograms
+Used to hold the output of a PL/SQL subprogram
+
+--- Slide 17: Declaring and Initializing PL/SQL Variables ---
+Syntax:
+
+
+
+Examples:
+identifier [CONSTANT] datatype [NOT NULL]   
+		[:= | DEFAULT expr];
+DECLARE
+	  emp_hiredate		DATE;		
+  emp_deptno		NUMBER(2) NOT NULL := 10;
+	  location		   VARCHAR2(13) := 'Atlanta';
+  c_comm				CONSTANT NUMBER := 1400;
+
+--- Slide 18: Declaring and Initializing PL/SQL Variables ---
+SET SERVEROUTPUT ON
+DECLARE
+  Myname VARCHAR2(20);
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('My name is: '||Myname);
+  Myname := 'John';
+  DBMS_OUTPUT.PUT_LINE('My name is: '||Myname);
+END;
+/
+SET SERVEROUTPUT ON
+DECLARE
+  Myname VARCHAR2(20):= 'John';
+BEGIN
+  Myname := 'Steven';
+  DBMS_OUTPUT.PUT_LINE('My name is: '||Myname);
+END; 
+/
+1
+2
+
+--- Slide 19: Delimiters in String Literals ---
+SET SERVEROUTPUT ON
+DECLARE
+   event VARCHAR2(15);
+BEGIN
+  event := q'!Father's day!';
+  DBMS_OUTPUT.PUT_LINE('3rd Sunday in June is :
+   '||event);
+  event := q'[Mother's day]';
+  DBMS_OUTPUT.PUT_LINE('2nd Sunday in May is :
+   '||event);
+END;
+/
+
+--- Slide 20: Types of Variables ---
+PL/SQL variables:
+Scalar
+Composite
+Reference
+Large objects (LOB)
+Non-PL/SQL variables: Bind variables
+
+--- Slide 21: Guidelines for Declaring and Initializing PL/SQL Variables ---
+Follow naming conventions.
+Use meaningful names for variables.
+Initialize variables designated as NOT NULL and CONSTANT.
+Initialize variables with the assignment operator (:=) or the DEFAULT keyword:
+
+
+
+Declare one identifier per line for better readability and code maintenance.
+Myname VARCHAR2(20):='John';
+Myname VARCHAR2(20) DEFAULT 'John';
+
+--- Slide 22: Guidelines for Declaring PL/SQL Variables ---
+Avoid using column names as identifiers.
+DECLARE
+  employee_id	NUMBER(6);
+BEGIN
+  SELECT	   employee_id
+	  INTO		employee_id
+	  FROM		employees
+  WHERE 		last_name = 'Kochhar';
+END;
+/
+Use the NOT NULL constraint when the variable must hold a value.
+
+--- Slide 23: Declaring Scalar Variables ---
+Examples:
+DECLARE
+  emp_job			VARCHAR2(9);
+  count_loop	   BINARY_INTEGER := 0;
+  dept_total_sal	NUMBER(9,2) := 0;
+  orderdate		   DATE := SYSDATE + 7;
+  c_tax_rate		CONSTANT NUMBER(3,2) := 8.25;
+  valid			   BOOLEAN NOT NULL := TRUE;
+  ...
+
+--- Slide 24: The %TYPE Attribute ---
+The %TYPE attribute
+Is used to declare a variable according to: 
+A database column definition
+Another declared variable
+Is prefixed with:
+The database table and column
+The name of the declared variable
+
+--- Slide 25: Declaring Variables 
+with the %TYPE Attribute ---
+Syntax:
+
+
+
+Examples:
+...
+  emp_lname      employees.last_name%TYPE;
+  balance        NUMBER(7,2);
+	  min_balance    balance%TYPE := 1000;
+...
+identifier		table.column_name%TYPE;
+
+--- Slide 26: Bind Variables ---
+Bind variables are:
+Created in the environment 
+Also called host variables
+Created with the VARIABLE keyword
+Used in SQL statements and PL/SQL blocks
+Accessed even after the PL/SQL block is executed
+Referenced with a preceding colon
+
+--- Slide 27: Printing Bind Variables ---
+Example:
+VARIABLE emp_salary NUMBER
+BEGIN
+   SELECT salary  INTO :emp_salary 
+   FROM  employees WHERE employee_id = 178;  
+END;
+/
+PRINT emp_salary
+SELECT first_name, last_name FROM employees 
+WHERE salary=:emp_salary;
+
+--- Slide 28: Printing Bind Variables ---
+Example:
+VARIABLE emp_salary NUMBER
+SET AUTOPRINT ON
+BEGIN
+   SELECT salary  INTO :emp_salary 
+   FROM  employees WHERE employee_id = 178;  
+END;
+/
+
+--- Slide 29: Substitution Variables ---
+Are used to get user input at run time   
+Are referenced within a PL/SQL block with a preceding ampersand 
+Are used to avoid hard coding values that can be obtained at run time
+VARIABLE emp_salary NUMBER
+SET AUTOPRINT ON
+DECLARE
+  empno NUMBER(6):=&empno;
+BEGIN
+  SELECT salary  INTO :emp_salary 
+  FROM  employees WHERE employee_id = empno;  
+END;
+/
+
+--- Slide 30: Substitution Variables ---
+1
+2
+3

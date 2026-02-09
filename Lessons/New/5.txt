@@ -1,0 +1,94 @@
+--- Slide 1 ---
+CHAPTER 20
+
+Introduction to Transaction Processing Concepts and Theory
+
+--- Slide 2: Introduction ---
+Transaction
+Describes local unit of database processing
+Transaction processing systems
+Systems with large databases and hundreds of concurrent users
+Require high availability and fast response time
+Slide 20- 2
+
+--- Slide 3: Transactions ---
+Transaction: an executing program
+Forms logical unit of database processing
+Begin and end transaction statements
+Specify transaction boundaries
+Read-only transaction
+Read-write transaction
+Slide 20- 3
+
+--- Slide 4: Database Items ---
+Database represented as collection of named data items
+Size of a data item called its granularity
+Data item
+Record
+Disk block
+Attribute value of a record
+Transaction processing concepts independent of item granularity
+Slide 20- 4
+
+--- Slide 5: DBMS Buffers ---
+DBMS will maintain several main memory data buffers in the database cache
+When buffers are occupied, a buffer replacement policy is used to choose which buffer will be replaced
+Example policy: least recently used
+Slide 20- 5
+
+--- Slide 6: Concurrency Control ---
+Transactions submitted by various users may execute concurrently
+Access and update the same database items
+Some form of concurrency control is needed
+The lost update problem
+Occurs when two transactions that access the same database items have operations interleaved
+Results in incorrect value of some database items
+Slide 20- 6
+
+--- Slide 7: The Lost Update Problem ---
+Slide 20-7
+Figure 20.3 Some problems that occur when concurrent execution is uncontrolled (a) The lost update problem
+
+--- Slide 8: The Temporary Update Problem ---
+Slide 20-8
+Figure 20.3 (cont’d.) Some problems that occur when concurrent execution is uncontrolled (b) The temporary update problem
+
+--- Slide 9: The Incorrect Summary Problem ---
+Slide 20-9
+Figure 20.3 (cont’d.) Some problems that occur when concurrent execution is uncontrolled (c) The incorrect summary problem
+
+--- Slide 10: The Unrepeatable Read Problem ---
+Slide 20- 10
+
+--- Slide 11: The System Log ---
+System log keeps track of transaction operations
+Sequential, append-only file
+Not affected by failure (except disk or catastrophic failure)
+Log buffer
+Main memory buffer
+When full, appended to end of log file on disk
+Log file is backed up periodically
+Undo and redo operations based on log possible
+Slide 20- 11
+
+--- Slide 12: 20.3 Desirable Properties of Transactions ---
+ACID properties
+Atomicity
+Transaction performed in its entirety or not at all
+Consistency preservation
+Takes database from one consistent state to another
+Isolation
+Not interfered with by other transactions
+Durability or permanency
+Changes must persist in the database
+Slide 20- 12
+
+--- Slide 13: Desirable Properties of Transactions (cont’d.) ---
+Levels of isolation
+Level 0 isolation does not overwrite the dirty reads of higher-level transactions
+Level 1 isolation has no lost updates
+Level 2 isolation has no lost updates and no dirty reads
+Level 3 (true) isolation has repeatable reads
+In addition to level 2 properties
+Snapshot isolation
+Slide 20- 13

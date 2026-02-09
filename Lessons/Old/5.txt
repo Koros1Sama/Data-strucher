@@ -1,0 +1,195 @@
+--- Slide 1 ---
+CHAPTER 20
+
+Introduction to Transaction Processing Concepts and Theory
+
+--- Slide 2: Introduction ---
+Transaction
+Describes local unit of database processing
+Transaction processing systems
+Systems with large databases and hundreds of concurrent users
+Require high availability and fast response time
+Slide 20- 2
+
+--- Slide 3: 20.1 Introduction to Transaction Processing ---
+Single-user DBMS
+At most one user at a time can use the system
+Example: home computer
+Multiuser DBMS
+Many users can access the system (database) concurrently
+Example: airline reservations system
+Slide 20- 3
+
+--- Slide 4: Introduction to Transaction Processing (cont’d.) ---
+Multiprogramming
+Allows operating system to execute multiple processes concurrently
+Executes commands from one process, then suspends that process and executes commands from another process, etc.
+Slide 20- 4
+
+--- Slide 5: Introduction to Transaction Processing (cont’d.) ---
+Interleaved processing
+Parallel processing
+Processes C and D in figure below
+Slide 20-5
+Figure 20.1 Interleaved processing versus parallel processing of concurrent transactions
+
+--- Slide 6: Transactions ---
+Transaction: an executing program
+Forms logical unit of database processing
+Begin and end transaction statements
+Specify transaction boundaries
+Read-only transaction
+Read-write transaction
+Slide 20- 6
+
+--- Slide 7: Database Items ---
+Database represented as collection of named data items
+Size of a data item called its granularity
+Data item
+Record
+Disk block
+Attribute value of a record
+Transaction processing concepts independent of item granularity
+Slide 20- 7
+
+--- Slide 8: Read and Write Operations ---
+read_item(X)
+Reads a database item named X into a program variable named X
+Process includes finding the address of the disk block, and copying to and from a memory buffer
+write_item(X)
+Writes the value of program variable X into the database item named X
+Process includes finding the address of the disk block, copying to and from a memory buffer, and storing the updated disk block back to disk
+Slide 20- 8
+
+--- Slide 9: Read and Write Operations (cont’d.) ---
+Read set of a transaction
+Set of all items read
+Write set of a transaction
+Set of all items written
+Slide 20- 9
+Figure 20.2 Two sample transactions (a) Transaction T1 (b) Transaction T2
+
+--- Slide 10: DBMS Buffers ---
+DBMS will maintain several main memory data buffers in the database cache
+When buffers are occupied, a buffer replacement policy is used to choose which buffer will be replaced
+Example policy: least recently used
+Slide 20- 10
+
+--- Slide 11: Concurrency Control ---
+Transactions submitted by various users may execute concurrently
+Access and update the same database items
+Some form of concurrency control is needed
+The lost update problem
+Occurs when two transactions that access the same database items have operations interleaved
+Results in incorrect value of some database items
+Slide 20- 11
+
+--- Slide 12: The Lost Update Problem ---
+Slide 20-12
+Figure 20.3 Some problems that occur when concurrent execution is uncontrolled (a) The lost update problem
+
+--- Slide 13: The Temporary Update Problem ---
+Slide 20-13
+Figure 20.3 (cont’d.) Some problems that occur when concurrent execution is uncontrolled (b) The temporary update problem
+
+--- Slide 14: The Incorrect Summary Problem ---
+Slide 20-14
+Figure 20.3 (cont’d.) Some problems that occur when concurrent execution is uncontrolled (c) The incorrect summary problem
+
+--- Slide 15: The Unrepeatable Read Problem ---
+Slide 20- 15
+
+--- Slide 16: Why Recovery is Needed ---
+Committed transaction
+Effect recorded permanently in the database
+Aborted transaction
+Does not affect the database
+Types of transaction failures
+Computer failure (system crash)
+Transaction or system error
+Local errors or exception conditions detected by the transaction
+Slide 20- 16
+
+--- Slide 17: Why Recovery is Needed (cont’d.) ---
+Types of transaction failures (cont’d.)
+Concurrency control enforcement
+Disk failure
+Physical problems or catastrophes
+System must keep sufficient information to recover quickly from the failure
+Disk failure or other catastrophes have long recovery times
+Slide 20- 17
+
+--- Slide 18: 20.2 Transaction and System Concepts ---
+System must keep track of when each transaction starts, terminates, commits, and/or aborts
+BEGIN_TRANSACTION
+READ or WRITE
+END_TRANSACTION
+COMMIT_TRANSACTION
+ROLLBACK (or ABORT)
+Slide 20- 18
+
+--- Slide 19: Transaction and System Concepts (cont’d.) ---
+Slide 20-19
+Figure 20.4 State transition diagram illustrating the states for transaction execution
+
+--- Slide 20: The System Log ---
+System log keeps track of transaction operations
+Sequential, append-only file
+Not affected by failure (except disk or catastrophic failure)
+Log buffer
+Main memory buffer
+When full, appended to end of log file on disk
+Log file is backed up periodically
+Undo and redo operations based on log possible
+Slide 20- 20
+
+--- Slide 21: Commit Point of a Transaction ---
+Occurs when all operations that access the database have completed successfully
+And effect of operations recorded in the log
+Transaction writes a commit record into the log
+If system failure occurs, can search for transactions with recorded start_transaction but no commit record
+Force-writing the log buffer to disk
+Writing log buffer to disk before transaction reaches commit point
+Slide 20- 21
+
+--- Slide 22: DBMS-Specific Buffer Replacement Policies ---
+Page replacement policy
+Selects particular buffers to be replaced when all are full
+Domain separation (DS) method 
+Each domain handles one type of disk pages
+Index pages
+Data file pages
+Log file pages
+Number of available buffers for each domain is predetermined
+Slide 20- 22
+
+--- Slide 23: DBMS-Specific Buffer Replacement Policies (cont’d.) ---
+Hot set method
+Useful in queries that scan a set of pages repeatedly
+Does not replace the set in the buffers until processing is completed
+The DBMIN method
+Predetermines the pattern of page references for each algorithm for a particular type of database operation
+Calculates locality set using query locality set model (QLSM)
+Slide 20- 23
+
+--- Slide 24: 20.3 Desirable Properties of Transactions ---
+ACID properties
+Atomicity
+Transaction performed in its entirety or not at all
+Consistency preservation
+Takes database from one consistent state to another
+Isolation
+Not interfered with by other transactions
+Durability or permanency
+Changes must persist in the database
+Slide 20- 24
+
+--- Slide 25: Desirable Properties of Transactions (cont’d.) ---
+Levels of isolation
+Level 0 isolation does not overwrite the dirty reads of higher-level transactions
+Level 1 isolation has no lost updates
+Level 2 isolation has no lost updates and no dirty reads
+Level 3 (true) isolation has repeatable reads
+In addition to level 2 properties
+Snapshot isolation
+Slide 20- 25
