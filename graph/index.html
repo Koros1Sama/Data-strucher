@@ -1,145 +1,616 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Interactive Knowledge Graph | Data Structures Study Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/syntax.css">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/syntax.css" />
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="nav-brand">
-            <a href="../index.html">📚 Data Structures Study Guide</a>
-        </div>
-        <div class="nav-links">
-            <a href="../glossary/index.html">المصطلحات</a>
-            <a href="../graph/index.html">خريطة المفاهيم</a>
-            <button id="search-btn" class="nav-btn">🔍 بحث</button>
-        </div>
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../glossary/index.html">المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+        <button id="search-btn" class="nav-btn">🔍 بحث</button>
+      </div>
     </nav>
-    
+
     <main class="container">
-        
-    <header class="page-header">
+      <header class="page-header">
         <h1>🔗 خريطة المفاهيم التفاعلية</h1>
         <p>اضغط على أي عقدة لاستعراض التفاصيل والذهاب للدرس</p>
-    </header>
-    
-        <div style="position: relative; height: 75vh; border: 1px solid var(--border-default); background: var(--bg-secondary); border-radius: 12px;">
-            <div id="mynetwork" style="width: 100%; height: 100%; border-radius: 12px;"></div>
-        </div>
-        
-        <!-- Details Panel -->
-        <div id="graph-details-panel">
-            <button class="close-panel" onclick="hidePanel()">×</button>
-            <h3 class="details-header" id="panel-title">عنوان المفهوم</h3>
-            <p class="details-definition" id="panel-def">شرح المفهوم...</p>
-            <a href="#" class="details-link" id="panel-link">الذهاب للدرس ←</a>
-        </div>
+      </header>
 
-        <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-        <script type="text/javascript">
-            // Data
-            var nodes = new vis.DataSet([{"id": "plsql", "label": "PL/SQL", "group": "module_01", "color": "#FF6B6B", "title": "PL/SQL", "def": "امتداد اللغة الإجرائية لـ SQL، لغة الوصول إلى البيانات القياسية من Oracle", "url": "../topics/topic_01_01_01.html", "label_en": "PL/SQL"}, {"id": "block", "label": "هيكل الكتلة", "group": "module_01", "color": "#FF6B6B", "title": "Block Structure", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_01_01_02.html", "label_en": "Block Structure"}, {"id": "variable", "label": "المتغيرات", "group": "module_01", "color": "#FF6B6B", "title": "Variables", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_01_02_01.html", "label_en": "Variables"}, {"id": "type_attr", "label": "%TYPE", "group": "module_01", "color": "#FF6B6B", "title": "%TYPE", "def": "خاصية تُستخدم لتعريف متغير بنفس نوع بيانات عمود في قاعدة البيانات أو متغير آخر", "url": "../topics/topic_01_02_03.html", "label_en": "%TYPE"}, {"id": "rowtype_attr", "label": "%ROWTYPE", "group": "module_02", "color": "#4ECDC4", "title": "%ROWTYPE", "def": "خاصية تعرّف سجلاً بحقول تتوافق مع جميع أعمدة جدول أو عرض", "url": "#", "label_en": "%ROWTYPE"}, {"id": "record", "label": "السجلات", "group": "module_02", "color": "#4ECDC4", "title": "PL/SQL Records", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_02_01_01.html", "label_en": "PL/SQL Records"}, {"id": "collection", "label": "PL/SQL Collections", "group": "module_02", "color": "#4ECDC4", "title": "PL/SQL Collections", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "#", "label_en": "PL/SQL Collections"}, {"id": "dml", "label": "عمليات DML", "group": "module_02", "color": "#4ECDC4", "title": "DML Operations", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_02_02_02.html", "label_en": "DML Operations"}, {"id": "cursor", "label": "المؤشرات", "group": "module_02", "color": "#4ECDC4", "title": "Cursors", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_02_04_01.html", "label_en": "Cursors"}, {"id": "implicit_cursor", "label": "مؤشرات ضمنية", "group": "module_02", "color": "#4ECDC4", "title": "Implicit Cursors", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_02_02_03.html", "label_en": "Implicit Cursors"}, {"id": "explicit_cursor", "label": "مؤشرات صريحة", "group": "module_02", "color": "#4ECDC4", "title": "Explicit Cursors", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_02_04_01.html", "label_en": "Explicit Cursors"}, {"id": "control", "label": "هياكل التحكم", "group": "module_02", "color": "#4ECDC4", "title": "Control Structures", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_02_03_01.html", "label_en": "Control Structures"}, {"id": "if_stmt", "label": "جمل IF", "group": "module_02", "color": "#4ECDC4", "title": "IF Statements", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_02_03_01.html", "label_en": "IF Statements"}, {"id": "case_stmt", "label": "جمل CASE", "group": "module_02", "color": "#4ECDC4", "title": "CASE Statements", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_02_03_02.html", "label_en": "CASE Statements"}, {"id": "loops", "label": "الحلقات", "group": "module_02", "color": "#4ECDC4", "title": "Loops", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_02_03_03.html", "label_en": "Loops"}, {"id": "procedure", "label": "Stored Procedure", "group": "module_02", "color": "#4ECDC4", "title": "Stored Procedure", "def": "كتلة PL/SQL مسماة مخزنة في قاعدة البيانات تنفذ عملية ويمكن استدعاؤها بشكل متكرر", "url": "#", "label_en": "Stored Procedure"}, {"id": "function", "label": "Stored Function", "group": "module_02", "color": "#4ECDC4", "title": "Stored Function", "def": "كتلة PL/SQL مسماة تحسب وتُرجع قيمة واحدة، يمكن استخدامها في تعبيرات SQL", "url": "#", "label_en": "Stored Function"}, {"id": "parameters", "label": "Parameter Modes", "group": "module_02", "color": "#4ECDC4", "title": "Parameter Modes", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "#", "label_en": "Parameter Modes"}, {"id": "nested_loop", "label": "Nested Loops", "group": "module_02", "color": "#4ECDC4", "title": "Nested Loops", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "#", "label_en": "Nested Loops"}, {"id": "cursor_for_loop", "label": "Cursor FOR Loop", "group": "module_02", "color": "#4ECDC4", "title": "Cursor FOR Loop", "def": "حلقة تتعامل تلقائياً مع فتح وجلب وإغلاق المؤشر لكل صف في مجموعة النتائج", "url": "#", "label_en": "Cursor FOR Loop"}, {"id": "cursor_life_cycle", "label": "Cursor Life Cycle", "group": "module_02", "color": "#4ECDC4", "title": "Cursor Life Cycle", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "#", "label_en": "Cursor Life Cycle"}, {"id": "trigger", "label": "المشغلات", "group": "module_03", "color": "#FFE66D", "title": "Triggers", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_03_01_01.html", "label_en": "Triggers"}, {"id": "stmt_trigger", "label": "مشغلات الجملة", "group": "module_03", "color": "#FFE66D", "title": "Statement Triggers", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_03_02_01.html", "label_en": "Statement Triggers"}, {"id": "row_trigger", "label": "مشغلات الصف", "group": "module_03", "color": "#FFE66D", "title": "Row Triggers", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_03_02_02.html", "label_en": "Row Triggers"}, {"id": "old_new", "label": ":OLD و :NEW", "group": "module_03", "color": "#FFE66D", "title": ":OLD and :NEW", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "#", "label_en": ":OLD and :NEW"}, {"id": "conditional_pred", "label": "Conditional Predicates", "group": "module_03", "color": "#FFE66D", "title": "Conditional Predicates", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "#", "label_en": "Conditional Predicates"}, {"id": "instead_of_trg", "label": "INSTEAD OF Trigger", "group": "module_03", "color": "#FFE66D", "title": "INSTEAD OF Trigger", "def": "مشغل ينفذ بدلاً من الجملة المحفّزة، يستخدم عادة لتحديث طرق العرض المعقدة", "url": "#", "label_en": "INSTEAD OF Trigger"}, {"id": "index", "label": "الفهارس", "group": "module_04", "color": "#1A535C", "title": "Indexes", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_04_01_01.html", "label_en": "Indexes"}, {"id": "primary_idx", "label": "فهرس أساسي", "group": "module_04", "color": "#1A535C", "title": "Primary Index", "def": "فهرس متفرق على ملف بيانات مرتب حيث حقل الترتيب هو حقل المفتاح", "url": "../topics/topic_04_02_01.html", "label_en": "Primary Index"}, {"id": "secondary_idx", "label": "فهرس ثانوي", "group": "module_04", "color": "#1A535C", "title": "Secondary Index", "def": "فهرس كثيف يوفر مسار وصول بديل للملف", "url": "../topics/topic_04_02_03.html", "label_en": "Secondary Index"}, {"id": "btree", "label": "شجرة B", "group": "module_04", "color": "#1A535C", "title": "B-Tree", "def": "هيكل بيانات شجري متوازن ذاتياً يحافظ على ترتيب البيانات ويسمح بالبحث والوصول المتسلسل والإضافة والحذف في وقت لوغاريتمي", "url": "../topics/topic_04_03_02.html", "label_en": "B-Tree"}, {"id": "bplus_tree", "label": "B+ Tree", "group": "module_04", "color": "#1A535C", "title": "B+ Tree", "def": "نوع من B-tree حيث تخزن مؤشرات الداتا فقط في العقد الورقية، مما يسهل البحث المتسلسل", "url": "#", "label_en": "B+ Tree"}, {"id": "bitmap_idx", "label": "Bitmap Index", "group": "module_04", "color": "#1A535C", "title": "Bitmap Index", "def": "طريقة فهرسة تستخدم مصفوفات البت (Bitmaps) وتجيب على الاستعلامات بعمليات منطقية", "url": "#", "label_en": "Bitmap Index"}, {"id": "function_idx", "label": "Function-Based Index", "group": "module_04", "color": "#1A535C", "title": "Function-Based Index", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "#", "label_en": "Function-Based Index"}, {"id": "bplus_tree", "label": "شجرة B+", "group": "module_04", "color": "#1A535C", "title": "B+-Tree", "def": "شجرة متوازنة حيث توجد جميع مؤشرات البيانات في العقد الورقية فقط، مع ترابط الأوراق", "url": "../topics/topic_04_03_03.html", "label_en": "B+-Tree"}, {"id": "heap_file", "label": "Heap File", "group": "module_04", "color": "#1A535C", "title": "Heap File", "def": "ملف غير مرتب حيث توضع السجلات بترتيب إدراجها", "url": "#", "label_en": "Heap File"}, {"id": "sorted_file", "label": "Sorted File", "group": "module_04", "color": "#1A535C", "title": "Sorted File", "def": "ملف مرتب حيث يتم ترتيب السجلات فعلياً حسب حقل الترتيب", "url": "#", "label_en": "Sorted File"}, {"id": "hashing", "label": "Hashing", "group": "module_04", "color": "#1A535C", "title": "Hashing", "def": "تقنية تستخدم دالة تجزئة لحساب عنوان السجل مباشرة", "url": "#", "label_en": "Hashing"}, {"id": "raid", "label": "RAID", "group": "module_04", "color": "#1A535C", "title": "RAID", "def": "مصفوفة متكررة من الأقراص المستقلة - تقنية للتوازي والموثوقية", "url": "#", "label_en": "RAID"}, {"id": "transaction", "label": "المعاملات", "group": "module_05", "color": "#F7FFF7", "title": "Transactions", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_05_01_01.html", "label_en": "Transactions"}, {"id": "acid", "label": "خصائص ACID", "group": "module_05", "color": "#F7FFF7", "title": "ACID Properties", "def": "الخصائص الأربع التي تضمن معالجة موثوقة للمعاملات: الذرية، الاتساق، العزل، الديمومة", "url": "../topics/topic_05_04_01.html", "label_en": "ACID Properties"}, {"id": "serializability", "label": "Serializability", "group": "module_05", "color": "#F7FFF7", "title": "Serializability", "def": "معيار صحة يضمن أن نتيجة تنفيذ المعاملات المتزامنة تكافئ نتيجة تنفيذ تسلسلي لها", "url": "#", "label_en": "Serializability"}, {"id": "2pl", "label": "Two-Phase Locking", "group": "module_05", "color": "#F7FFF7", "title": "Two-Phase Locking", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "#", "label_en": "Two-Phase Locking"}, {"id": "wal", "label": "Write-Ahead Logging", "group": "module_05", "color": "#F7FFF7", "title": "Write-Ahead Logging", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "#", "label_en": "Write-Ahead Logging"}, {"id": "atomicity", "label": "الذرية", "group": "module_05", "color": "#F7FFF7", "title": "Atomicity", "def": "الخاصية التي تضمن تنفيذ المعاملة بالكامل أو عدم تنفيذها على الإطلاق", "url": "#", "label_en": "Atomicity"}, {"id": "consistency", "label": "الاتساق", "group": "module_05", "color": "#F7FFF7", "title": "Consistency", "def": "الخاصية التي تضمن نقل قاعدة البيانات من حالة صالحة إلى حالة صالحة أخرى", "url": "#", "label_en": "Consistency"}, {"id": "isolation", "label": "العزل", "group": "module_05", "color": "#F7FFF7", "title": "Isolation", "def": "الخاصية التي تضمن عدم تداخل المعاملات المتزامنة مع بعضها البعض", "url": "#", "label_en": "Isolation"}, {"id": "durability", "label": "الديمومة", "group": "module_05", "color": "#F7FFF7", "title": "Durability", "def": "الخاصية التي تضمن بقاء المعاملات الملتزمة بشكل دائم في قاعدة البيانات", "url": "#", "label_en": "Durability"}, {"id": "concurrency", "label": "مشاكل التزامن", "group": "module_05", "color": "#F7FFF7", "title": "Concurrency Problems", "def": "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.", "url": "../topics/topic_05_02_01.html", "label_en": "Concurrency Problems"}, {"id": "commit", "label": "تثبيت", "group": "module_05", "color": "#F7FFF7", "title": "Commit", "def": "العملية التي تجعل جميع تغييرات المعاملة دائمة في قاعدة البيانات", "url": "#", "label_en": "Commit"}, {"id": "rollback", "label": "تراجع", "group": "module_05", "color": "#F7FFF7", "title": "Rollback", "def": "العملية التي تتراجع عن جميع التغييرات التي أجرتها المعاملة", "url": "#", "label_en": "Rollback"}]);
-            var edges = new vis.DataSet([{"from": "plsql", "to": "block", "arrows": "to"}, {"from": "block", "to": "variable", "arrows": "to"}, {"from": "variable", "to": "type_attr", "arrows": "to"}, {"from": "type_attr", "to": "rowtype_attr", "arrows": "to"}, {"from": "rowtype_attr", "to": "record", "arrows": "to"}, {"from": "record", "to": "collection", "arrows": "to"}, {"from": "plsql", "to": "dml", "arrows": "to"}, {"from": "dml", "to": "cursor", "arrows": "to"}, {"from": "cursor", "to": "implicit_cursor", "arrows": "to"}, {"from": "cursor", "to": "explicit_cursor", "arrows": "to"}, {"from": "loops", "to": "nested_loop", "arrows": "to"}, {"from": "loops", "to": "cursor_for_loop", "arrows": "to"}, {"from": "explicit_cursor", "to": "cursor_for_loop", "arrows": "to"}, {"from": "explicit_cursor", "to": "cursor_life_cycle", "arrows": "to"}, {"from": "block", "to": "control", "arrows": "to"}, {"from": "control", "to": "if_stmt", "arrows": "to"}, {"from": "control", "to": "case_stmt", "arrows": "to"}, {"from": "control", "to": "loops", "arrows": "to"}, {"from": "if_stmt", "to": "case_stmt", "arrows": "to"}, {"from": "plsql", "to": "procedure", "arrows": "to"}, {"from": "plsql", "to": "function", "arrows": "to"}, {"from": "procedure", "to": "parameters", "arrows": "to"}, {"from": "function", "to": "parameters", "arrows": "to"}, {"from": "procedure", "to": "function", "arrows": "to"}, {"from": "plsql", "to": "trigger", "arrows": "to"}, {"from": "trigger", "to": "stmt_trigger", "arrows": "to"}, {"from": "trigger", "to": "row_trigger", "arrows": "to"}, {"from": "row_trigger", "to": "old_new", "arrows": "to"}, {"from": "stmt_trigger", "to": "row_trigger", "arrows": "to"}, {"from": "dml", "to": "trigger", "arrows": "to"}, {"from": "index", "to": "primary_idx", "arrows": "to"}, {"from": "index", "to": "secondary_idx", "arrows": "to"}, {"from": "primary_idx", "to": "secondary_idx", "arrows": "to"}, {"from": "index", "to": "btree", "arrows": "to"}, {"from": "btree", "to": "bplus_tree", "arrows": "to"}, {"from": "heap_file", "to": "sorted_file", "arrows": "to"}, {"from": "hashing", "to": "index", "arrows": "to"}, {"from": "transaction", "to": "acid", "arrows": "to"}, {"from": "acid", "to": "atomicity", "arrows": "to"}, {"from": "acid", "to": "consistency", "arrows": "to"}, {"from": "acid", "to": "isolation", "arrows": "to"}, {"from": "acid", "to": "durability", "arrows": "to"}, {"from": "transaction", "to": "concurrency", "arrows": "to"}, {"from": "isolation", "to": "concurrency", "arrows": "to"}, {"from": "transaction", "to": "commit", "arrows": "to"}, {"from": "transaction", "to": "rollback", "arrows": "to"}, {"from": "atomicity", "to": "rollback", "arrows": "to"}, {"from": "durability", "to": "commit", "arrows": "to"}, {"from": "dml", "to": "transaction", "arrows": "to"}]);
-            var container = document.getElementById('mynetwork');
-            var data = { nodes: nodes, edges: edges };
-            
-            // Options
-            var options = {
-                nodes: {
-                    shape: 'dot',
-                    size: 25,
-                    font: { size: 16, color: '#e0e0e0', face: 'Noto Kufi Arabic' },
-                    borderWidth: 2,
-                    shadow: true
-                },
-                edges: {
-                    width: 2,
-                    color: { color: '#666', highlight: '#FFD700' },
-                    shadow: true,
-                    smooth: { type: 'continuous' }
-                },
-                physics: {
-                    stabilization: false,
-                    barnesHut: { gravitationalConstant: -30000, springConstant: 0.04, springLength: 150 }
-                },
-                interaction: { 
-                    hover: true, 
-                    tooltipDelay: 200,
-                    selectable: true,
-                    selectConnectedEdges: true
-                }
-            };
-            
-            // Initialize Network
-            var network = new vis.Network(container, data, options);
-            
-            // UI Elements
-            var panel = document.getElementById('graph-details-panel');
-            var title = document.getElementById('panel-title');
-            var def = document.getElementById('panel-def');
-            var link = document.getElementById('panel-link');
+      <div
+        style="
+          position: relative;
+          height: 75vh;
+          border: 1px solid var(--border-default);
+          background: var(--bg-secondary);
+          border-radius: 12px;
+        "
+      >
+        <div
+          id="mynetwork"
+          style="width: 100%; height: 100%; border-radius: 12px"
+        ></div>
+      </div>
 
-            // Global function to hide panel
-            window.hidePanel = function() {
-                panel.classList.remove('visible');
-                network.unselectAll();
-            };
+      <!-- Details Panel -->
+      <div id="graph-details-panel">
+        <button class="close-panel" onclick="hidePanel()">×</button>
+        <h3 class="details-header" id="panel-title">عنوان المفهوم</h3>
+        <p class="details-definition" id="panel-def">شرح المفهوم...</p>
+        <a href="#" class="details-link" id="panel-link">الذهاب للدرس ←</a>
+      </div>
 
-            // Click Handler
-            network.on("click", function (params) {
-                if (params.nodes.length > 0) {
-                    var nodeId = params.nodes[0];
-                    var nodeData = nodes.get(nodeId);
-                    
-                    // Update content
-                    title.textContent = nodeData.label + " (" + nodeData.label_en + ")";
-                    def.textContent = nodeData.def || "لا يوجد تعريف متاح.";
-                    
-                    if (nodeData.url && nodeData.url !== "#") {
-                        link.href = nodeData.url;
-                        link.style.display = "inline-block";
-                        link.textContent = "الذهاب للدرس ←";
-                    } else {
-                        link.style.display = "none";
-                    }
-                    
-                    // Show panel
-                    panel.classList.add('visible');
-                } else {
-                    // Clicked on empty space
-                    hidePanel();
-                }
-            });
-            
-            // Cursor change on hover
-            network.on("hoverNode", function () {
-                container.style.cursor = 'pointer';
-            });
-            network.on("blurNode", function () {
-                container.style.cursor = 'default';
-            });
-        </script>
-        
-    
+      <script
+        type="text/javascript"
+        src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
+      ></script>
+      <script type="text/javascript">
+        // Data
+        var nodes = new vis.DataSet([
+          {
+            id: "plsql",
+            label: "PL/SQL",
+            group: "module_01",
+            color: "#FF6B6B",
+            title: "PL/SQL",
+            def: "امتداد اللغة الإجرائية لـ SQL، لغة الوصول إلى البيانات القياسية من Oracle",
+            url: "../topics/topic_01_01_01.html",
+            label_en: "PL/SQL",
+          },
+          {
+            id: "block",
+            label: "هيكل الكتلة",
+            group: "module_01",
+            color: "#FF6B6B",
+            title: "Block Structure",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_01_01_02.html",
+            label_en: "Block Structure",
+          },
+          {
+            id: "variable",
+            label: "المتغيرات",
+            group: "module_01",
+            color: "#FF6B6B",
+            title: "Variables",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_01_02_01.html",
+            label_en: "Variables",
+          },
+          {
+            id: "type_attr",
+            label: "%TYPE",
+            group: "module_01",
+            color: "#FF6B6B",
+            title: "%TYPE",
+            def: "خاصية تُستخدم لتعريف متغير بنفس نوع بيانات عمود في قاعدة البيانات أو متغير آخر",
+            url: "../topics/topic_01_02_03.html",
+            label_en: "%TYPE",
+          },
+          {
+            id: "rowtype_attr",
+            label: "%ROWTYPE",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "%ROWTYPE",
+            def: "خاصية تعرّف سجلاً بحقول تتوافق مع جميع أعمدة جدول أو عرض",
+            url: "../topics/topic_02_01_01.html",
+            label_en: "%ROWTYPE",
+          },
+          {
+            id: "record",
+            label: "السجلات",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "PL/SQL Records",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_02_01_01.html",
+            label_en: "PL/SQL Records",
+          },
+          {
+            id: "collection",
+            label: "PL/SQL Collections",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "PL/SQL Collections",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_02_01_02.html",
+            label_en: "PL/SQL Collections",
+          },
+          {
+            id: "dml",
+            label: "عمليات DML",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "DML Operations",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_02_02_02.html",
+            label_en: "DML Operations",
+          },
+          {
+            id: "cursor",
+            label: "المؤشرات",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "Cursors",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_02_04_01.html",
+            label_en: "Cursors",
+          },
+          {
+            id: "implicit_cursor",
+            label: "مؤشرات ضمنية",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "Implicit Cursors",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_02_02_03.html",
+            label_en: "Implicit Cursors",
+          },
+          {
+            id: "explicit_cursor",
+            label: "مؤشرات صريحة",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "Explicit Cursors",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_02_04_01.html",
+            label_en: "Explicit Cursors",
+          },
+          {
+            id: "control",
+            label: "هياكل التحكم",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "Control Structures",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_02_03_01.html",
+            label_en: "Control Structures",
+          },
+          {
+            id: "if_stmt",
+            label: "جمل IF",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "IF Statements",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_02_03_01.html",
+            label_en: "IF Statements",
+          },
+          {
+            id: "case_stmt",
+            label: "جمل CASE",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "CASE Statements",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_02_03_02.html",
+            label_en: "CASE Statements",
+          },
+          {
+            id: "loops",
+            label: "الحلقات",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "Loops",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_02_03_03.html",
+            label_en: "Loops",
+          },
+          {
+            id: "procedure",
+            label: "Stored Procedure",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "Stored Procedure",
+            def: "كتلة PL/SQL مسماة مخزنة في قاعدة البيانات تنفذ عملية ويمكن استدعاؤها بشكل متكرر",
+            url: "../topics/topic_02_05_01.html",
+            label_en: "Stored Procedure",
+          },
+          {
+            id: "function",
+            label: "Stored Function",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "Stored Function",
+            def: "كتلة PL/SQL مسماة تحسب وتُرجع قيمة واحدة، يمكن استخدامها في تعبيرات SQL",
+            url: "../topics/topic_02_05_03.html",
+            label_en: "Stored Function",
+          },
+          {
+            id: "parameters",
+            label: "Parameter Modes",
+            group: "module_02",
+            color: "#4ECDC4",
+            title: "Parameter Modes",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_02_05_02.html",
+            label_en: "Parameter Modes",
+          },
+          {
+            id: "trigger",
+            label: "المشغلات",
+            group: "module_03",
+            color: "#FFE66D",
+            title: "Triggers",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_03_01_01.html",
+            label_en: "Triggers",
+          },
+          {
+            id: "stmt_trigger",
+            label: "مشغلات الجملة",
+            group: "module_03",
+            color: "#FFE66D",
+            title: "Statement Triggers",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_03_02_01.html",
+            label_en: "Statement Triggers",
+          },
+          {
+            id: "row_trigger",
+            label: "مشغلات الصف",
+            group: "module_03",
+            color: "#FFE66D",
+            title: "Row Triggers",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_03_02_02.html",
+            label_en: "Row Triggers",
+          },
+          {
+            id: "old_new",
+            label: ":OLD و :NEW",
+            group: "module_03",
+            color: "#FFE66D",
+            title: ":OLD and :NEW",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_03_01_03.html",
+            label_en: ":OLD and :NEW",
+          },
+          {
+            id: "index",
+            label: "الفهارس",
+            group: "module_04",
+            color: "#1A535C",
+            title: "Indexes",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_04_01_01.html",
+            label_en: "Indexes",
+          },
+          {
+            id: "primary_idx",
+            label: "فهرس أساسي",
+            group: "module_04",
+            color: "#1A535C",
+            title: "Primary Index",
+            def: "فهرس متفرق على ملف بيانات مرتب حيث حقل الترتيب هو حقل المفتاح",
+            url: "../topics/topic_04_02_01.html",
+            label_en: "Primary Index",
+          },
+          {
+            id: "secondary_idx",
+            label: "فهرس ثانوي",
+            group: "module_04",
+            color: "#1A535C",
+            title: "Secondary Index",
+            def: "فهرس كثيف يوفر مسار وصول بديل للملف",
+            url: "../topics/topic_04_02_03.html",
+            label_en: "Secondary Index",
+          },
+          {
+            id: "btree",
+            label: "شجرة B",
+            group: "module_04",
+            color: "#1A535C",
+            title: "B-Tree",
+            def: "هيكل بيانات شجرة متوازنة حيث توجد مؤشرات للسجلات في جميع المستويات",
+            url: "../topics/topic_04_03_02.html",
+            label_en: "B-Tree",
+          },
+          {
+            id: "bplus_tree",
+            label: "شجرة B+",
+            group: "module_04",
+            color: "#1A535C",
+            title: "B+-Tree",
+            def: "شجرة متوازنة حيث توجد جميع مؤشرات البيانات في العقد الورقية فقط، مع ترابط الأوراق",
+            url: "../topics/topic_04_03_03.html",
+            label_en: "B+-Tree",
+          },
+          {
+            id: "heap_file",
+            label: "Heap File",
+            group: "module_04",
+            color: "#1A535C",
+            title: "Heap File",
+            def: "ملف غير مرتب حيث توضع السجلات بترتيب إدراجها",
+            url: "../topics/topic_04_05_01.html",
+            label_en: "Heap File",
+          },
+          {
+            id: "sorted_file",
+            label: "Sorted File",
+            group: "module_04",
+            color: "#1A535C",
+            title: "Sorted File",
+            def: "ملف مرتب حيث يتم ترتيب السجلات فعلياً حسب حقل الترتيب",
+            url: "../topics/topic_04_05_02.html",
+            label_en: "Sorted File",
+          },
+          {
+            id: "hashing",
+            label: "Hashing",
+            group: "module_04",
+            color: "#1A535C",
+            title: "Hashing",
+            def: "تقنية تستخدم دالة تجزئة لحساب عنوان السجل مباشرة",
+            url: "../topics/topic_04_05_03.html",
+            label_en: "Hashing",
+          },
+          {
+            id: "raid",
+            label: "RAID",
+            group: "module_04",
+            color: "#1A535C",
+            title: "RAID",
+            def: "مصفوفة متكررة من الأقراص المستقلة - تقنية للتوازي والموثوقية",
+            url: "../topics/topic_04_05_04.html",
+            label_en: "RAID",
+          },
+          {
+            id: "transaction",
+            label: "المعاملات",
+            group: "module_05",
+            color: "#F7FFF7",
+            title: "Transactions",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_05_01_01.html",
+            label_en: "Transactions",
+          },
+          {
+            id: "acid",
+            label: "خصائص ACID",
+            group: "module_05",
+            color: "#F7FFF7",
+            title: "ACID Properties",
+            def: "الخصائص الأربع التي تضمن معالجة موثوقة للمعاملات: الذرية، الاتساق، العزل، الديمومة",
+            url: "../topics/topic_05_01_02.html",
+            label_en: "ACID Properties",
+          },
+          {
+            id: "atomicity",
+            label: "الذرية",
+            group: "module_05",
+            color: "#F7FFF7",
+            title: "Atomicity",
+            def: "الخاصية التي تضمن تنفيذ المعاملة بالكامل أو عدم تنفيذها على الإطلاق",
+            url: "../topics/topic_05_01_02.html",
+            label_en: "Atomicity",
+          },
+          {
+            id: "consistency",
+            label: "الاتساق",
+            group: "module_05",
+            color: "#F7FFF7",
+            title: "Consistency",
+            def: "الخاصية التي تضمن نقل قاعدة البيانات من حالة صالحة إلى حالة صالحة أخرى",
+            url: "../topics/topic_05_01_02.html",
+            label_en: "Consistency",
+          },
+          {
+            id: "isolation",
+            label: "العزل",
+            group: "module_05",
+            color: "#F7FFF7",
+            title: "Isolation",
+            def: "الخاصية التي تضمن عدم تداخل المعاملات المتزامنة مع بعضها البعض",
+            url: "../topics/topic_05_01_02.html",
+            label_en: "Isolation",
+          },
+          {
+            id: "durability",
+            label: "الديمومة",
+            group: "module_05",
+            color: "#F7FFF7",
+            title: "Durability",
+            def: "الخاصية التي تضمن بقاء المعاملات الملتزمة بشكل دائم في قاعدة البيانات",
+            url: "../topics/topic_05_01_02.html",
+            label_en: "Durability",
+          },
+          {
+            id: "concurrency",
+            label: "مشاكل التزامن",
+            group: "module_05",
+            color: "#F7FFF7",
+            title: "Concurrency Problems",
+            def: "انقر للاستكشاف ومعرفة المزيد عن هذا المفهوم.",
+            url: "../topics/topic_05_02_01.html",
+            label_en: "Concurrency Problems",
+          },
+          {
+            id: "commit",
+            label: "تثبيت",
+            group: "module_05",
+            color: "#F7FFF7",
+            title: "Commit",
+            def: "العملية التي تجعل جميع تغييرات المعاملة دائمة في قاعدة البيانات",
+            url: "../topics/topic_05_01_01.html",
+            label_en: "Commit",
+          },
+          {
+            id: "rollback",
+            label: "تراجع",
+            group: "module_05",
+            color: "#F7FFF7",
+            title: "Rollback",
+            def: "العملية التي تتراجع عن جميع التغييرات التي أجرتها المعاملة",
+            url: "../topics/topic_05_01_01.html",
+            label_en: "Rollback",
+          },
+        ]);
+        var edges = new vis.DataSet([
+          { from: "plsql", to: "block", arrows: "to" },
+          { from: "block", to: "variable", arrows: "to" },
+          { from: "variable", to: "type_attr", arrows: "to" },
+          { from: "type_attr", to: "rowtype_attr", arrows: "to" },
+          { from: "rowtype_attr", to: "record", arrows: "to" },
+          { from: "record", to: "collection", arrows: "to" },
+          { from: "plsql", to: "dml", arrows: "to" },
+          { from: "dml", to: "cursor", arrows: "to" },
+          { from: "cursor", to: "implicit_cursor", arrows: "to" },
+          { from: "cursor", to: "explicit_cursor", arrows: "to" },
+          { from: "block", to: "control", arrows: "to" },
+          { from: "control", to: "if_stmt", arrows: "to" },
+          { from: "control", to: "case_stmt", arrows: "to" },
+          { from: "control", to: "loops", arrows: "to" },
+          { from: "if_stmt", to: "case_stmt", arrows: "to" },
+          { from: "plsql", to: "procedure", arrows: "to" },
+          { from: "plsql", to: "function", arrows: "to" },
+          { from: "procedure", to: "parameters", arrows: "to" },
+          { from: "function", to: "parameters", arrows: "to" },
+          { from: "procedure", to: "function", arrows: "to" },
+          { from: "plsql", to: "trigger", arrows: "to" },
+          { from: "trigger", to: "stmt_trigger", arrows: "to" },
+          { from: "trigger", to: "row_trigger", arrows: "to" },
+          { from: "row_trigger", to: "old_new", arrows: "to" },
+          { from: "stmt_trigger", to: "row_trigger", arrows: "to" },
+          { from: "dml", to: "trigger", arrows: "to" },
+          { from: "index", to: "primary_idx", arrows: "to" },
+          { from: "index", to: "secondary_idx", arrows: "to" },
+          { from: "primary_idx", to: "secondary_idx", arrows: "to" },
+          { from: "index", to: "btree", arrows: "to" },
+          { from: "btree", to: "bplus_tree", arrows: "to" },
+          { from: "heap_file", to: "sorted_file", arrows: "to" },
+          { from: "hashing", to: "index", arrows: "to" },
+          { from: "transaction", to: "acid", arrows: "to" },
+          { from: "acid", to: "atomicity", arrows: "to" },
+          { from: "acid", to: "consistency", arrows: "to" },
+          { from: "acid", to: "isolation", arrows: "to" },
+          { from: "acid", to: "durability", arrows: "to" },
+          { from: "transaction", to: "concurrency", arrows: "to" },
+          { from: "isolation", to: "concurrency", arrows: "to" },
+          { from: "transaction", to: "commit", arrows: "to" },
+          { from: "transaction", to: "rollback", arrows: "to" },
+          { from: "atomicity", to: "rollback", arrows: "to" },
+          { from: "durability", to: "commit", arrows: "to" },
+          { from: "dml", to: "transaction", arrows: "to" },
+        ]);
+        var container = document.getElementById("mynetwork");
+        var data = { nodes: nodes, edges: edges };
+
+        // Options
+        var options = {
+          nodes: {
+            shape: "dot",
+            size: 25,
+            font: { size: 16, color: "#e0e0e0", face: "Noto Kufi Arabic" },
+            borderWidth: 2,
+            shadow: true,
+          },
+          edges: {
+            width: 2,
+            color: { color: "#666", highlight: "#FFD700" },
+            shadow: true,
+            smooth: { type: "continuous" },
+          },
+          physics: {
+            stabilization: false,
+            barnesHut: {
+              gravitationalConstant: -30000,
+              springConstant: 0.04,
+              springLength: 150,
+            },
+          },
+          interaction: {
+            hover: true,
+            tooltipDelay: 200,
+            selectable: true,
+            selectConnectedEdges: true,
+          },
+        };
+
+        // Initialize Network
+        var network = new vis.Network(container, data, options);
+
+        // UI Elements
+        var panel = document.getElementById("graph-details-panel");
+        var title = document.getElementById("panel-title");
+        var def = document.getElementById("panel-def");
+        var link = document.getElementById("panel-link");
+
+        // Global function to hide panel
+        window.hidePanel = function () {
+          panel.classList.remove("visible");
+          network.unselectAll();
+        };
+
+        // Click Handler
+        network.on("click", function (params) {
+          if (params.nodes.length > 0) {
+            var nodeId = params.nodes[0];
+            var nodeData = nodes.get(nodeId);
+
+            // Update content
+            title.textContent = nodeData.label + " (" + nodeData.label_en + ")";
+            def.textContent = nodeData.def || "لا يوجد تعريف متاح.";
+
+            if (nodeData.url && nodeData.url !== "#") {
+              link.href = nodeData.url;
+              link.style.display = "inline-block";
+              link.textContent = "الذهاب للدرس ←";
+            } else {
+              link.style.display = "none";
+            }
+
+            // Show panel
+            panel.classList.add("visible");
+          } else {
+            // Clicked on empty space
+            hidePanel();
+          }
+        });
+
+        // Cursor change on hover
+        network.on("hoverNode", function () {
+          container.style.cursor = "pointer";
+        });
+        network.on("blurNode", function () {
+          container.style.cursor = "default";
+        });
+      </script>
     </main>
-    
+
     <div id="tooltip-ar" class="tooltip-ar"></div>
-    
+
     <div id="search-modal" class="modal hidden">
-        <div class="modal-content">
-            <input type="text" id="search-input" placeholder="ابحث عن المواضيع...">
-            <div id="search-results"></div>
-        </div>
+      <div class="modal-content">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="ابحث عن المواضيع..."
+        />
+        <div id="search-results"></div>
+      </div>
     </div>
-    
-    <script>const SITE_ROOT = "../";</script>
+
+    <script>
+      const SITE_ROOT = "../";
+    </script>
     <script src="../assets/js/search_data.js"></script>
     <script src="../assets/js/main.js"></script>
-</body>
+  </body>
 </html>
