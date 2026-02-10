@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نموذج الاختبار | Data Structures Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <style>
+      /* Exam Page Styles */
+      .exam-header {
+        text-align: center;
+        padding: 3rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--bg-secondary),
+          var(--bg-tertiary)
+        );
+        border-radius: 16px;
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-default);
+      }
+
+      .exam-header h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(
+          135deg,
+          var(--text-primary),
+          var(--accent-primary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .exam-meta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      .exam-meta span {
+        padding: 0.5rem 1rem;
+        background: var(--bg-tertiary);
+        border-radius: 8px;
+        border: 1px solid var(--border-default);
+      }
+
+      .exam-grade {
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary),
+          var(--accent-purple)
+        ) !important;
+        color: white !important;
+        font-weight: 600;
+      }
+
+      .questions-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .question-card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-default);
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .question-card:hover {
+        border-color: var(--accent-primary);
+        box-shadow: 0 4px 20px var(--shadow-glow);
+      }
+
+      .question-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .question-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary),
+          var(--accent-purple)
+        );
+        border-radius: 10px;
+        font-weight: 700;
+        color: white;
+        font-size: 1rem;
+      }
+
+      .question-text {
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        line-height: 1.6;
+        flex: 1;
+        direction: ltr;
+        text-align: left;
+      }
+
+      .options-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin: 1rem 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .option {
+        padding: 0.75rem 1rem;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-default);
+        border-radius: 8px;
+        color: var(--text-secondary);
+        direction: ltr;
+        text-align: left;
+        transition: all 0.2s;
+      }
+
+      .option.correct {
+        background: rgba(63, 185, 80, 0.15);
+        border-color: var(--accent-success);
+        color: var(--accent-success);
+      }
+
+      /* In RTL, the checkmark should be at the "start" (physically right) */
+      .option.correct::before {
+        content: "✓ ";
+        font-weight: bold;
+        float: right; /* Ensure it floats to the right in RTL layout for LTR text */
+        margin-left: 10px;
+      }
+
+      .explanation-box {
+        background: var(--bg-tertiary);
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin-top: 1rem;
+        border-right: 4px solid var(--accent-primary);
+      }
+
+      .explanation-title {
+        font-weight: 600;
+        color: var(--accent-primary);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .explanation-text {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-family: var(--font-arabic);
+      }
+
+      .topic-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        padding: 0.6rem 1.2rem;
+        background: rgba(88, 166, 255, 0.1);
+        color: var(--accent-primary);
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+
+      .topic-link:hover {
+        background: var(--accent-primary);
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 768px) {
+        .question-header {
+          flex-direction: column;
+        }
+
+        .exam-meta {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      /* Floating Toggle Button */
+      .toggle-answers-btn {
+        position: fixed;
+        bottom: 2rem;
+        left: 2rem;
+        padding: 1rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary),
+          var(--accent-purple)
+        );
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(88, 166, 255, 0.4);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-arabic);
+      }
+
+      .toggle-answers-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 25px rgba(88, 166, 255, 0.5);
+      }
+
+      .toggle-answers-btn.hidden-mode {
+        background: linear-gradient(
+          135deg,
+          var(--accent-warning),
+          var(--accent-danger)
+        );
+      }
+
+      /* Hidden answers mode */
+      body.hide-answers .option.correct {
+        background: var(--bg-tertiary);
+        border-color: var(--border-default);
+        color: var(--text-secondary);
+      }
+
+      body.hide-answers .option.correct::before {
+        content: "";
+      }
+
+      body.hide-answers .explanation-box {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 Data Structures Study Guide</a>
+      </div>
+      <div class="nav-links">
+        <a href="../index.html">الرئيسية</a>
+        <a href="../exam/index.html">📝 نموذج الاختبار</a>
+        <a href="../glossary/index.html">المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+        <button id="search-btn" class="nav-btn">🔍 بحث</button>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <span>نموذج الاختبار</span>
+      </nav>
+
+      <header class="exam-header">
+        <h1>📝 نموذج اختبار قواعد البيانات</h1>
+        <div class="exam-meta">
+          <span>🏛️ جامعة صنعاء</span>
+          <span>📚 Database Systems</span>
+          <span>👨‍🏫 د. سعاد عثمان</span>
+          <span>🎓 المستوى الثاني</span>
+          <span class="exam-grade">✨ الدرجة: 40</span>
+        </div>
+      </header>
+
+      <div class="questions-container">
+        <!-- Question 1 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">1</span>
+            <p class="question-text">
+              If record size in a database is 512 bytes, and a block size is 1
+              MB in size, how many records can be stored in each block?
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">512</li>
+            <li class="option">1024</li>
+            <li class="option correct">2048</li>
+            <li class="option">4096</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              عدد السجلات = حجم الكتلة ÷ حجم السجل = 1 MB ÷ 512 bytes =
+              1,048,576 ÷ 512 = 2048 سجل. هذا يُعرف بـ
+              <strong>Blocking Factor</strong> وهو عدد السجلات التي يمكن تخزينها
+              في كتلة واحدة.
+            </p>
+          </div>
+          <a href="../topics/topic_04_04_03.html" class="topic-link"
+            >📖 راجع: Block Buffering and I/O Operations</a
+          >
+        </article>
+
+        <!-- Question 2 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">2</span>
+            <p class="question-text">A sector is divided into smaller track</p>
+          </div>
+          <ul class="options-list">
+            <li class="option">TRUE</li>
+            <li class="option correct">FALSE</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              العكس هو الصحيح! الـ <strong>Track</strong> (المسار) هو الذي
+              يُقسَّم إلى <strong>Sectors</strong> (قطاعات) وليس العكس. المسار
+              هو دائرة كاملة على سطح القرص، والقطاع هو جزء من هذا المسار.
+            </p>
+          </div>
+          <a href="../topics/topic_04_04_02.html" class="topic-link"
+            >📖 راجع: Secondary Storage Devices: HDD and SSD</a
+          >
+        </article>
+
+        <!-- Question 3 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">3</span>
+            <p class="question-text">
+              _________ refers to the number of records per block.
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">rotational delay</li>
+            <li class="option correct">Blocking factor</li>
+            <li class="option">Spanned Records</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Blocking Factor (معامل التجميع)</strong> هو عدد السجلات
+              التي يمكن تخزينها في كتلة واحدة. يُحسب بقسمة حجم الكتلة على حجم
+              السجل: bfr = ⌊B/R⌋
+            </p>
+          </div>
+          <a href="../topics/topic_04_04_03.html" class="topic-link"
+            >📖 راجع: Block Buffering and I/O Operations</a
+          >
+        </article>
+
+        <!-- Question 4 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">4</span>
+            <p class="question-text">
+              Refers to records that exceed the size of one or more blocks
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">rotational delay</li>
+            <li class="option">Blocking factor</li>
+            <li class="option correct">Spanned Records</li>
+            <li class="option">Unspanned Records</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Spanned Records (السجلات الممتدة)</strong> هي السجلات التي
+              يتجاوز حجمها حجم كتلة واحدة، فيتم تخزينها على أكثر من كتلة. مؤشر
+              خاص في نهاية الكتلة يشير إلى الجزء التالي من السجل.
+            </p>
+          </div>
+          <a href="../topics/topic_04_04_04.html" class="topic-link"
+            >📖 راجع: Record Placement: Spanned vs Unspanned</a
+          >
+        </article>
+
+        <!-- Question 5 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">5</span>
+            <p class="question-text">
+              New records are inserted at the end of the file in _________.
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">ordered Files</li>
+            <li class="option correct">Unordered Files</li>
+            <li class="option">Hash Files</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              في <strong>Unordered Files (Heap Files)</strong> تُدرج السجلات
+              الجديدة في نهاية الملف دون ترتيب. هذا يجعل الإدراج سريعاً جداً
+              O(1) لكن البحث بطيء O(n).
+            </p>
+          </div>
+          <a href="../modules/module_04/index.html" class="topic-link"
+            >📖 راجع: Disk Storage and File Organization</a
+          >
+        </article>
+
+        <!-- Question 6 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">6</span>
+            <p class="question-text">
+              _________ distributes data transparently over multiple disks to
+              make them appear as a single large, fast disk
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">Data striping</li>
+            <li class="option">mirrored disks</li>
+            <li class="option">Hash Files</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Data Striping (توزيع البيانات)</strong> هي تقنية في RAID
+              تقوم بتوزيع البيانات على عدة أقراص لتظهر كقرص واحد كبير وسريع.
+              يزيد السرعة لأن القراءة/الكتابة تتم بالتوازي.
+            </p>
+          </div>
+          <a href="../topics/topic_04_05_04.html" class="topic-link"
+            >📖 راجع: RAID Technology and Storage Architectures</a
+          >
+        </article>
+
+        <!-- Question 7 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">7</span>
+            <p class="question-text">
+              _________ has an index entry for every search key value in the
+              data file.
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">INDEX</li>
+            <li class="option">A sparse index</li>
+            <li class="option correct">A dense index</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Dense Index (الفهرس الكثيف)</strong> يحتوي على مدخلة لكل
+              قيمة مفتاح بحث في ملف البيانات. على عكس Sparse Index الذي يحتوي
+              على مدخلات لبعض الكتل فقط.
+            </p>
+          </div>
+          <a href="../topics/topic_04_01_01.html" class="topic-link"
+            >📖 راجع: Indexes as Access Paths</a
+          >
+        </article>
+
+        <!-- Question 8 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">8</span>
+            <p class="question-text">
+              _________ Includes one index entry for each block in the data file
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">Primary Index</li>
+            <li class="option">Clusterd Index</li>
+            <li class="option">Secondray Index</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Primary Index (الفهرس الأساسي)</strong> هو فهرس متفرق
+              (Sparse) يحتوي على مدخلة واحدة لكل كتلة. يُنشأ على حقل ترتيب الملف
+              (ordering key field) وهو المفتاح الرئيسي عادةً.
+            </p>
+          </div>
+          <a href="../topics/topic_04_02_01.html" class="topic-link"
+            >📖 راجع: Primary Index</a
+          >
+        </article>
+
+        <!-- Question 9 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">9</span>
+            <p class="question-text">A primary index is a dense index</p>
+          </div>
+          <ul class="options-list">
+            <li class="option">TRUE</li>
+            <li class="option correct">FALSE</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              خطأ! <strong>Primary Index</strong> هو فهرس
+              <strong>متفرق (Sparse)</strong> وليس كثيفاً. يحتوي على مدخلة واحدة
+              لكل كتلة (block anchor) وليس لكل سجل.
+            </p>
+          </div>
+          <a href="../topics/topic_04_01_02.html" class="topic-link"
+            >📖 راجع: Dense vs Sparse Indexes</a
+          >
+        </article>
+
+        <!-- Question 10 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">10</span>
+            <p class="question-text">
+              The data file is ordered on a non-key field, which requires that
+              the ordering field of the data file have a distinct value for each
+              record.
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">Primary Index</li>
+            <li class="option correct">Clusterd Index</li>
+            <li class="option">Secondray Index</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Clustering Index (فهرس التجميع)</strong> يُنشأ عندما يكون
+              الملف مرتباً على حقل غير مفتاح (non-key field). يمكن أن تتكرر
+              القيم في هذا الحقل، ويحتوي الفهرس على مدخلة لكل قيمة مميزة.
+            </p>
+          </div>
+          <a href="../topics/topic_04_02_02.html" class="topic-link"
+            >📖 راجع: Clustering Index</a
+          >
+        </article>
+
+        <!-- Question 11 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">11</span>
+            <p class="question-text">
+              _________ value for the first record in the block, which is called
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">block anchor</li>
+            <li class="option">files</li>
+            <li class="option">bloking</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Block Anchor (مرساة الكتلة)</strong> هي قيمة المفتاح للسجل
+              الأول في كل كتلة. تُستخدم في الفهارس المتفرقة لتحديد موقع الكتلة
+              التي قد تحتوي على السجل المطلوب.
+            </p>
+          </div>
+          <a href="../topics/topic_04_02_01.html" class="topic-link"
+            >📖 راجع: Primary Index</a
+          >
+        </article>
+
+        <!-- Question 12 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">12</span>
+            <p class="question-text">
+              number of entries key in primary index =
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">number of primary key value</li>
+            <li class="option correct">number of block</li>
+            <li class="option">number of data</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              في <strong>Primary Index</strong> عدد المدخلات = عدد الكتل
+              (blocks) في ملف البيانات. لأنه فهرس متفرق يحتوي على مدخلة واحدة
+              لكل كتلة فقط.
+            </p>
+          </div>
+          <a href="../topics/topic_04_02_01.html" class="topic-link"
+            >📖 راجع: Primary Index</a
+          >
+        </article>
+
+        <!-- Question 13 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">13</span>
+            <p class="question-text">
+              An insertion into a node that is full is quite efficient
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">TRUE</li>
+            <li class="option correct">FALSE</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              خطأ! الإدراج في عقدة ممتلئة <strong>غير فعال</strong> لأنه يتطلب
+              عملية <strong>Split (انقسام)</strong>. يجب تقسيم العقدة إلى عقدتين
+              ونقل نصف العناصر للعقدة الجديدة.
+            </p>
+          </div>
+          <a href="../topics/topic_04_03_03.html" class="topic-link"
+            >📖 راجع: B+-Tree: Insertion and Deletion</a
+          >
+        </article>
+
+        <!-- Question 14 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">14</span>
+            <p class="question-text">
+              A deletion is quite efficient if a node become less than half full
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">TRUE</li>
+            <li class="option correct">FALSE</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              خطأ! إذا أصبحت العقدة أقل من نصف امتلائها، يجب إما
+              <strong>الاستعارة</strong> من عقدة مجاورة أو
+              <strong>الدمج (Merge)</strong> مع عقدة أخرى، وهذا يجعل الحذف غير
+              فعال.
+            </p>
+          </div>
+          <a href="../topics/topic_04_03_03.html" class="topic-link"
+            >📖 راجع: B+-Tree: Insertion and Deletion</a
+          >
+        </article>
+
+        <!-- Question 15 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">15</span>
+            <p class="question-text">
+              All pointers to data records exists at the leaf-level nodes in
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">Tree</li>
+            <li class="option correct">B+-tree</li>
+            <li class="option">B-tree</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              في <strong>B+-Tree</strong> جميع مؤشرات البيانات موجودة فقط في
+              العقد الورقية (Leaf Nodes). العقد الداخلية تحتوي فقط على مفاتيح
+              للتوجيه. بينما في B-Tree تكون المؤشرات في جميع المستويات.
+            </p>
+          </div>
+          <a href="../topics/topic_04_03_02.html" class="topic-link"
+            >📖 راجع: B-Tree Structure</a
+          >
+        </article>
+
+        <!-- Question 16 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">16</span>
+            <p class="question-text">
+              _________ Executes commands from one process, then suspends that
+              process and executes commands from another process
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">Multiprogramming</li>
+            <li class="option">Interleaved processing</li>
+            <li class="option">Parallel processing</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Multiprogramming (تعدد البرمجة)</strong> هو تنفيذ أوامر من
+              عملية واحدة ثم إيقافها مؤقتاً والانتقال لتنفيذ أوامر من عملية
+              أخرى. يُعرف أيضاً بـ Interleaved Concurrency.
+            </p>
+          </div>
+          <a href="../topics/topic_05_01_01.html" class="topic-link"
+            >📖 راجع: What is a Transaction</a
+          >
+        </article>
+
+        <!-- Question 17 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">17</span>
+            <p class="question-text">
+              Two transactions access and update the same database items, a
+              problem may occur:
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">The lost update problem</li>
+            <li class="option">Temporary Update Problem</li>
+            <li class="option">The Incorrect Summary Problem</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Lost Update Problem (مشكلة التحديث المفقود)</strong> تحدث
+              عندما تقوم معاملتان بتحديث نفس البيانات، فيُفقد تحديث إحداهما.
+              مثال: T1 و T2 يقرآن X=20، T1 يكتب X=25، T2 يكتب X=30، فيُفقد تحديث
+              T1.
+            </p>
+          </div>
+          <a href="../topics/topic_05_02_01.html" class="topic-link"
+            >📖 راجع: The Lost Update Problem</a
+          >
+        </article>
+
+        <!-- Question 18 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">18</span>
+            <p class="question-text">
+              Which of the following statements is correct and is used to print
+              bind variables?
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">DBMS OUTPUT.PUT LINE</li>
+            <li class="option correct">set autoprint on</li>
+            <li class="option">Set serveroutput on</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>SET AUTOPRINT ON</strong> يُستخدم لطباعة قيم متغيرات الربط
+              (Bind Variables) تلقائياً بعد تنفيذ البلوك. أما
+              DBMS_OUTPUT.PUT_LINE فتُستخدم لطباعة المتغيرات العادية داخل
+              البلوك.
+            </p>
+          </div>
+          <a href="../topics/topic_01_02_04.html" class="topic-link"
+            >📖 راجع: Bind and Substitution Variables</a
+          >
+        </article>
+
+        <!-- Question 19 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">19</span>
+            <p class="question-text">
+              Which of the following is true for defining a host variable?
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">Declare m number $=20$;</li>
+            <li class="option correct">Variable m number $:=20$</li>
+            <li class="option">Declare m number $=20$</li>
+            <li class="option">Variable m number:=20;</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              متغيرات الربط (Host/Bind Variables) تُعرَّف باستخدام
+              <strong>VARIABLE</strong> وليس DECLARE. الصيغة:
+              <code>VARIABLE m NUMBER</code> ثم يمكن تعيين قيمة لها داخل بلوك
+              PL/SQL.
+            </p>
+          </div>
+          <a href="../topics/topic_01_02_04.html" class="topic-link"
+            >📖 راجع: Bind and Substitution Variables</a
+          >
+        </article>
+
+        <!-- Question 20 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">20</span>
+            <p class="question-text">
+              Which of the following is true for defining function
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">
+              Create or replace function fun(name number) return 0 as
+            </li>
+            <li class="option correct">
+              Create or replace function fun(name in number) return number as
+            </li>
+            <li class="option">
+              Create or replace function fun(name out number) return number as
+            </li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              الدالة يجب أن تُرجع نوع بيانات (وليس قيمة). معاملات الدالة يجب أن
+              تكون <strong>IN</strong> فقط (افتراضياً). لا يمكن استخدام OUT في
+              معاملات الدوال لأن الدالة تُرجع قيمة واحدة عبر RETURN.
+            </p>
+          </div>
+          <a href="../topics/topic_02_05_03.html" class="topic-link"
+            >📖 راجع: Creating Stored Functions</a
+          >
+        </article>
+
+        <!-- Question 21 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">21</span>
+            <p class="question-text">
+              _________ Load the current row in active set into variables
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">declare</li>
+            <li class="option">open</li>
+            <li class="option correct">fetch</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>FETCH</strong> يقوم بتحميل الصف الحالي من مجموعة النتائج
+              (Active Set) إلى المتغيرات. ترتيب العمليات: DECLARE → OPEN → FETCH
+              → CLOSE
+            </p>
+          </div>
+          <a href="../topics/topic_02_04_02.html" class="topic-link"
+            >📖 راجع: Controlling Cursors: DECLARE, OPEN, FETCH, CLOSE</a
+          >
+        </article>
+
+        <!-- Question 22 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">22</span>
+            <p class="question-text">
+              The cursor FOR loop is a shortcut to open and fetch processes and
+              the record is explicitly declared.
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">TRUE</li>
+            <li class="option correct">FALSE</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              الجزء الأول صحيح لكن الجزء الثاني خطأ! في Cursor FOR Loop يتم
+              الإعلان عن السجل <strong>ضمنياً (implicitly)</strong>
+              وليس صراحةً. الحلقة تفتح وتجلب وتغلق المؤشر تلقائياً.
+            </p>
+          </div>
+          <a href="../topics/topic_02_04_03.html" class="topic-link"
+            >📖 راجع: Cursor FOR Loops</a
+          >
+        </article>
+
+        <!-- Question 23 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">23</span>
+            <p class="question-text">
+              _________ Evaluates to TRUE if the most recent fetch returns a row
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">%NOTFOUND</li>
+            <li class="option correct">%FOUND</li>
+            <li class="option">%ROWCOUNT</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>%FOUND</strong> تُرجع TRUE إذا جلب FETCH الأخير صفاً
+              بنجاح. %NOTFOUND تُرجع TRUE إذا لم يُجلب صف. %ROWCOUNT تُرجع عدد
+              الصفوف المجلوبة حتى الآن.
+            </p>
+          </div>
+          <a href="../topics/topic_02_04_02.html" class="topic-link"
+            >📖 راجع: Controlling Cursors: DECLARE, OPEN, FETCH, CLOSE</a
+          >
+        </article>
+
+        <!-- Question 24 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">24</span>
+            <p class="question-text">
+              _________ Executes once for the triggering event
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">Application trigger</li>
+            <li class="option">A row trigger</li>
+            <li class="option correct">A statement trigger</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Statement Trigger</strong> يُنفَّذ مرة واحدة فقط للحدث
+              المُشغِّل بغض النظر عن عدد الصفوف المتأثرة. أما Row Trigger
+              فيُنفَّذ مرة لكل صف متأثر.
+            </p>
+          </div>
+          <a href="../topics/topic_03_01_02.html" class="topic-link"
+            >📖 راجع: DML Triggers: Statement vs Row</a
+          >
+        </article>
+
+        <!-- Question 25 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">25</span>
+            <p class="question-text">The public part in package</p>
+          </div>
+          <ul class="options-list">
+            <li class="option">package body</li>
+            <li class="option correct">package specification</li>
+            <li class="option">package specification and body</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Package Specification</strong> هو الجزء العام (Public) من
+              الحزمة الذي يحتوي على التعريفات المتاحة للمستخدمين. Package Body
+              يحتوي على التنفيذ الفعلي والمكونات الخاصة.
+            </p>
+          </div>
+          <a href="../topics/topic_03_01_01.html" class="topic-link"
+            >📖 راجع: Types of Triggers</a
+          >
+        </article>
+
+        <!-- Question 26 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">26</span>
+            <p class="question-text">
+              The package body should contain only those constructs that you
+              want to be public
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">TRUE</li>
+            <li class="option correct">FALSE</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              خطأ! <strong>Package Body</strong> يحتوي على التنفيذ الفعلي
+              والمكونات الخاصة (Private). المكونات العامة تُعرَّف في Package
+              Specification.
+            </p>
+          </div>
+          <a href="../topics/topic_03_01_01.html" class="topic-link"
+            >📖 راجع: Types of Triggers</a
+          >
+        </article>
+
+        <!-- Question 27 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">27</span>
+            <p class="question-text">
+              If multiple triggers are defined for the same object the last
+              trigger is fire
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">befor statement trigger</li>
+            <li class="option correct">after statement trigger</li>
+            <li class="option">befor row trigger</li>
+            <li class="option">after row trigger</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              ترتيب تنفيذ المشغلات: 1) BEFORE Statement → 2) BEFORE Row (لكل صف)
+              → 3) AFTER Row (لكل صف) → 4)
+              <strong>AFTER Statement</strong> (الأخير).
+            </p>
+          </div>
+          <a href="../topics/topic_03_03_02.html" class="topic-link"
+            >📖 راجع: Trigger Firing Sequence</a
+          >
+        </article>
+
+        <!-- Question 28 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">28</span>
+            <p class="question-text">
+              The Data dictionary contains source code in USER_SOURCE for
+              trigger.
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">TRUE</li>
+            <li class="option correct">FALSE</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              خطأ! كود المشغلات يُخزَّن في <strong>USER_TRIGGERS</strong> وليس
+              USER_SOURCE. USER_SOURCE تُستخدم للإجراءات والدوال والحزم.
+            </p>
+          </div>
+          <a href="../topics/topic_03_03_01.html" class="topic-link"
+            >📖 راجع: Enable, Disable, and Drop Triggers</a
+          >
+        </article>
+
+        <!-- Question 29 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">29</span>
+            <p class="question-text">
+              Which is correct to create a trigger fire to check if the data
+              insert corresponds with the data type?
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">
+              create or replace trigger emptrig after insert on emplyees is
+            </li>
+            <li class="option correct">
+              create or replace trigger emptrig befor insert on emplyees is
+            </li>
+            <li class="option">
+              create or replace trigger emptrig after insert on emplyees for
+              each row is
+            </li>
+            <li class="option">
+              create or replace trigger emptrig befor insert on emplyees for
+              each row is
+            </li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              للتحقق من صحة البيانات قبل إدراجها، نستخدم
+              <strong>BEFORE INSERT</strong> بدون FOR EACH ROW (Statement Level)
+              للتحقق من نوع البيانات بشكل عام.
+            </p>
+          </div>
+          <a href="../topics/topic_03_02_01.html" class="topic-link"
+            >📖 راجع: Statement Triggers</a
+          >
+        </article>
+
+        <!-- Question 30 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">30</span>
+            <p class="question-text">
+              _________ parameter provides values for a subprogram to process.
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">in</li>
+            <li class="option">out</li>
+            <li class="option">inout</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>IN</strong> معامل للإدخال فقط - يوفر قيماً للبرنامج الفرعي
+              لمعالجتها. لا يمكن تغيير قيمته داخل البرنامج. OUT للإخراج، IN OUT
+              للإدخال والإخراج معاً.
+            </p>
+          </div>
+          <a href="../topics/topic_02_05_02.html" class="topic-link"
+            >📖 راجع: Parameter Modes: IN, OUT, IN OUT</a
+          >
+        </article>
+
+        <!-- Question 31 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">31</span>
+            <p class="question-text">
+              _________ which lists the actual parameter values in the order in
+              which the formal parameters are declared
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">Positional method</li>
+            <li class="option">named method</li>
+            <li class="option">Combination method</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Positional Method</strong> يُمرر المعاملات بنفس ترتيب
+              تعريفها في الإجراء/الدالة. Named Method يستخدم الأسماء (param =>
+              value). Combination يجمع بينهما.
+            </p>
+          </div>
+          <a href="../topics/topic_02_05_02.html" class="topic-link"
+            >📖 راجع: Parameter Modes: IN, OUT, IN OUT</a
+          >
+        </article>
+
+        <!-- Question 32 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">32</span>
+            <p class="question-text">
+              The best subprogram to display the salary and job ID for employee
+              ID 120
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">procedure</li>
+            <li class="option">function</li>
+            <li class="option">trigger</li>
+            <li class="option">package</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              <strong>Procedure</strong> هو الأنسب لعرض بيانات متعددة (الراتب
+              ورقم الوظيفة) لأنه يمكن أن يُرجع قيماً متعددة عبر معاملات OUT.
+              الدالة تُرجع قيمة واحدة فقط.
+            </p>
+          </div>
+          <a href="../topics/topic_02_05_04.html" class="topic-link"
+            >📖 راجع: Procedures vs Functions</a
+          >
+        </article>
+
+        <!-- Question 33 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">33</span>
+            <p class="question-text">
+              Which of the following is true for making conditions in the PLSQL?
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">
+              IF condition then.. ELSIF condation then... ELSE
+            </li>
+            <li class="option">
+              IF condition then.. ELSEIF condition then.. ELSE
+            </li>
+            <li class="option">IF condition then.. ELSEIF condition then..</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              في PL/SQL نستخدم <strong>ELSIF</strong> (وليس ELSEIF) للشروط
+              المتعددة. الصيغة: IF...THEN...ELSIF...THEN...ELSE...END IF;
+            </p>
+          </div>
+          <a href="../topics/topic_02_03_01.html" class="topic-link"
+            >📖 راجع: IF Statements</a
+          >
+        </article>
+
+        <!-- Question 34 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">34</span>
+            <p class="question-text">
+              _________ Used to define a variable of the same type as the
+              columns in the database.
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">%type</li>
+            <li class="option correct">%rowtype</li>
+            <li class="option">%column</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              السؤال يقول "columns" (أعمدة) بصيغة الجمع، لذا الإجابة هي
+              <strong>%ROWTYPE</strong> التي تُعرّف متغيراً بنفس نوع جميع أعمدة
+              الجدول. %TYPE لعمود واحد فقط.
+            </p>
+          </div>
+          <a href="../topics/topic_02_01_02.html" class="topic-link"
+            >📖 راجع: The %ROWTYPE Attribute</a
+          >
+        </article>
+
+        <!-- Question 35 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">35</span>
+            <p class="question-text">
+              Use PL/SQL collections when you want to store values of same data
+              type.
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">TRUE</li>
+            <li class="option">FALSE</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              صحيح! <strong>PL/SQL Collections</strong> (مثل Associative Arrays,
+              Nested Tables, VARRAYs) تُستخدم لتخزين قيم من نفس نوع البيانات في
+              هيكل واحد.
+            </p>
+          </div>
+          <a href="../topics/topic_02_01b_01.html" class="topic-link"
+            >📖 راجع: INDEX BY Tables (Associative Arrays)</a
+          >
+        </article>
+
+        <!-- Question 36 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">36</span>
+            <p class="question-text">_________ optional block sections</p>
+          </div>
+          <ul class="options-list">
+            <li class="option">begin and end</li>
+            <li class="option correct">declare and exception</li>
+            <li class="option">declare and begin</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              في بلوك PL/SQL الأقسام الاختيارية هي
+              <strong>DECLARE</strong> (للتعريفات) و<strong>EXCEPTION</strong>
+              (لمعالجة الأخطاء). BEGIN و END إلزاميان دائماً.
+            </p>
+          </div>
+          <a href="../topics/topic_01_01_02.html" class="topic-link"
+            >📖 راجع: PL/SQL Block Structure</a
+          >
+        </article>
+
+        <!-- Question 37 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">37</span>
+            <p class="question-text">which is correct to define for loop</p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">FOR i IN 1..3 LOOP</li>
+            <li class="option">FOR i IN from 1 to 3 LOOP</li>
+            <li class="option">FOR i number IN 1..3 LOOP</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              صيغة FOR Loop في PL/SQL: <strong>FOR i IN 1..3 LOOP</strong>
+              المتغير i يُعرَّف ضمنياً ولا نحتاج لتحديد نوعه. نستخدم (..) وليس
+              "from...to".
+            </p>
+          </div>
+          <a href="../topics/topic_02_03_03.html" class="topic-link"
+            >📖 راجع: Loop Types: Basic, WHILE, FOR</a
+          >
+        </article>
+
+        <!-- Question 38 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">38</span>
+            <p class="question-text">
+              to retrieve data The INTO clause is required in the select
+              statement
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option correct">TRUE</li>
+            <li class="option">FALSE</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              صحيح! في PL/SQL يجب استخدام <strong>INTO</strong> مع SELECT لتخزين
+              النتائج في متغيرات. لا يمكن تنفيذ SELECT بدون INTO في بلوك PL/SQL
+              (إلا في CURSOR).
+            </p>
+          </div>
+          <a href="../topics/topic_02_02_01.html" class="topic-link"
+            >📖 راجع: SELECT Statements in PL/SQL</a
+          >
+        </article>
+
+        <!-- Question 39 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">39</span>
+            <p class="question-text">which is true for define variable</p>
+          </div>
+          <ul class="options-list">
+            <li class="option">
+              employee_id employees.employee_id%TYPE : $=176;$
+            </li>
+            <li class="option correct">
+              employeeid employees.employee_id%TYPE : $=176$;
+            </li>
+            <li class="option">
+              employee_id employee_id.employees%TYPE := 176;
+            </li>
+            <li class="option">
+              employeeid employee_id.employees%TYPE : $=176$;
+            </li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              صيغة تعريف متغير باستخدام %TYPE:
+              <strong>variable_name table.column%TYPE := value;</strong>
+              لاحظ أن الجدول يأتي أولاً ثم العمود (employees.employee_id وليس
+              employee_id.employees).
+            </p>
+          </div>
+          <a href="../topics/topic_01_02_03.html" class="topic-link"
+            >📖 راجع: The %TYPE Attribute</a
+          >
+        </article>
+
+        <!-- Question 40 -->
+        <article class="question-card">
+          <div class="question-header">
+            <span class="question-number">40</span>
+            <p class="question-text">
+              You can access to the variable in the inner block from the outer
+              block
+            </p>
+          </div>
+          <ul class="options-list">
+            <li class="option">TRUE</li>
+            <li class="option correct">FALSE</li>
+          </ul>
+          <div class="explanation-box">
+            <div class="explanation-title">💡 الشرح</div>
+            <p class="explanation-text">
+              خطأ! المتغيرات المُعرَّفة في البلوك الداخلي
+              <strong>لا يمكن الوصول إليها</strong> من البلوك الخارجي. العكس
+              صحيح: يمكن الوصول لمتغيرات البلوك الخارجي من الداخلي. هذا يُسمى
+              Variable Scope.
+            </p>
+          </div>
+          <a href="../topics/topic_01_02_01.html" class="topic-link"
+            >📖 راجع: Declaring Variables</a
+          >
+        </article>
+      </div>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+
+    <!-- Floating Toggle Button -->
+    <button id="toggle-answers" class="toggle-answers-btn">
+      👁️ إخفاء الإجابات
+    </button>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+      // Toggle answers visibility
+      const toggleBtn = document.getElementById("toggle-answers");
+      let answersHidden = false;
+
+      toggleBtn.addEventListener("click", () => {
+        answersHidden = !answersHidden;
+        document.body.classList.toggle("hide-answers", answersHidden);
+        toggleBtn.classList.toggle("hidden-mode", answersHidden);
+        toggleBtn.innerHTML = answersHidden
+          ? "👁️ إظهار الإجابات"
+          : "👁️ إخفاء الإجابات";
+      });
+    </script>
+  </body>
+</html>
