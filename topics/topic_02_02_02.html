@@ -4,12 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CASE Statements | PL/SQL & Database Systems</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="../assets/css/fonts.css" />
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="stylesheet" href="../assets/css/syntax.css" />
   </head>
@@ -20,9 +15,10 @@
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
-        <a href="../exam/index.html">📝 نموذج الاختبار</a>
+        <a href="../exam/index.html">📝 نماذج الاختبار</a>
         <a href="../glossary/index.html">المصطلحات</a>
         <a href="../graph/index.html">خريطة المفاهيم</a>
+        <button id="search-btn" class="nav-btn">🔍 بحث</button>
       </div>
     </nav>
 
@@ -127,6 +123,18 @@ END CASE;</code></pre>
     </main>
 
     <div id="tooltip-ar" class="tooltip-ar"></div>
+
+    <div id="search-modal" class="modal hidden">
+      <div class="modal-content">
+        <input type="text" id="search-input" placeholder="ابحث عن المواضيع..." />
+        <div id="search-results"></div>
+      </div>
+    </div>
+
+    <script>
+      const SITE_ROOT = "../";
+    </script>
+    <script src="../assets/js/search_data.js" defer></script>
     <script src="../assets/js/main.js"></script>
   </body>
 </html>
