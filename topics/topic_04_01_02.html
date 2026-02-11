@@ -1,11 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Index Types (Primary, Clustering, Secondary) | Data Structures Study Guide
-    </title>
+    <title>Types of Single-Level Indexes | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -32,84 +30,94 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>أنواع الفهارس المتقدمة</span>
+        <span>Types of Single-Level Indexes</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
-          <h1>Advanced Index Types</h1>
-          <p class="topic-title-ar">الأنواع الرئيسية للفهارس</p>
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Types of Single-Level Indexes</h1>
+          <p class="topic-title-ar">أنواع الفهارس أحادية المستوى</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>تصنيف الفهارس حسب الترتيب</h2>
-
-            <div class="types-grid">
-              <div class="type-card">
-                <h3>1. Primary Index</h3>
-                <p><strong>(Sparse Index)</strong></p>
-                <p>
-                  يُبنى على الحقل الذي <strong>يرتب</strong> السجلات، وهذا الحقل
-                  يجب أن يكون <strong>مفتاحاً</strong> (لا يتكرر).
-                </p>
-                <ul>
-                  <li>عادة يكون الـ Primary Key.</li>
-                  <li>يملك فهرساً واحداً فقط لكل جدول.</li>
-                </ul>
-              </div>
-              <div class="type-card">
-                <h3>2. Clustering Index</h3>
-                <p><strong>(Sparse Index)</strong></p>
-                <p>
-                  يُبنى على الحقل الذي <strong>يرتب</strong> السجلات، لكن هذا
-                  الحقل <strong>ليس مفتاحاً</strong> (قد يتكرر).
-                </p>
-                <ul>
-                  <li>مثال: ترتيب الموظفين حسب القسم (Department ID).</li>
-                  <li>يملك فهرساً واحداً فقط لكل جدول.</li>
-                </ul>
-              </div>
-              <div class="type-card">
-                <h3>3. Secondary Index</h3>
-                <p><strong>(Dense Index)</strong></p>
-                <p>يُبنى على أي حقل <strong>لا يرتب</strong> السجلات.</p>
-                <ul>
-                  <li>يمكن أن يكون مفتاحاً (Unique) أو غير مفتاح.</li>
-                  <li>يمكن إنشاء عدة فهارس ثانوية للجدول الواحد.</li>
-                </ul>
-              </div>
-            </div>
+            <h2>📊 ملخص الأنواع الثلاثة (Slides 5, 7, 9)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>ملف البيانات</th>
+                  <th>حقل الترتيب</th>
+                  <th>Dense/Sparse</th>
+                  <th>المدخل يشير إلى</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Primary</strong></td>
+                  <td>مُرتّب</td>
+                  <td>Key field (فريد)</td>
+                  <td><strong>Sparse</strong></td>
+                  <td>أول سجل في كل كتلة (Block Anchor)</td>
+                </tr>
+                <tr>
+                  <td><strong>Clustering</strong></td>
+                  <td>مُرتّب</td>
+                  <td>Non-key field (مكرر)</td>
+                  <td><strong>Sparse</strong></td>
+                  <td>أول كتلة لكل قيمة مميزة</td>
+                </tr>
+                <tr>
+                  <td><strong>Secondary</strong></td>
+                  <td><strong>غير مُرتّب</strong></td>
+                  <td>أي حقل</td>
+                  <td><strong>Dense</strong></td>
+                  <td>كل سجل على حدة</td>
+                </tr>
+              </tbody>
+            </table>
           </section>
 
           <section class="content-section">
-            <h2>🌳 شجرة B+ (B+-Tree)</h2>
-            <p>هي الهيكل الأكثر استخداماً للفهارس في قواعد البيانات الحديثة.</p>
-            <div class="highlight-box">
-              <p><strong>لماذا B+-Tree؟</strong></p>
+            <h2>🔗 للتفاصيل</h2>
+            <ul class="styled-list">
+              <li>
+                <a href="topic_04_02_01.html"
+                  >Primary Index — التفاصيل الكاملة</a
+                >
+              </li>
+              <li>
+                <a href="topic_04_02_02.html"
+                  >Clustering Index — التفاصيل الكاملة</a
+                >
+              </li>
+              <li>
+                <a href="topic_04_02_03.html"
+                  >Secondary Index — التفاصيل الكاملة</a
+                >
+              </li>
+            </ul>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
               <ul>
                 <li>
-                  متوازنة دائماً (Balanced): تكلفة الوصول لأي سجل متساوية.
+                  Primary + Clustering = <strong>Sparse</strong> (ملف مرتب)
                 </li>
-                <li>
-                  تخزن البيانات في الأوراق (Leaf Nodes) فقط، مما يجعل التخزين
-                  الداخلي أكثر كفاءة للفهارس.
-                </li>
-                <li>
-                  الأوراق مرتبطة ببعضها (Linked List)، مما يسهل البحث المتسلسل
-                  (Range Queries).
-                </li>
+                <li>Secondary = <strong>Dense</strong> (ملف غير مرتب)</li>
+                <li>Primary: الحقل المفتاحي | Clustering: حقل غير مفتاحي</li>
+                <li>يمكن وجود عدة Secondary indexes على نفس الملف</li>
               </ul>
             </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_04_01_01.html" class="nav-prev">← مقدمة في الفهرسة</a>
-          <a href="../modules/module_05/index.html" class="nav-next"
-            >الوحدة 5: المعاملات (Transactions) →</a
-          >
+          <a href="topic_04_01_01.html" class="nav-prev">← Access Paths</a>
+          <a href="topic_04_02_01.html" class="nav-next">Primary Index →</a>
         </nav>
       </article>
     </main>

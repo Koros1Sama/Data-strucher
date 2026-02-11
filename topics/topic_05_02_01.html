@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Concurrency Problems | Data Structures Study Guide</title>
+    <title>Concurrency Problems | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -35,61 +35,92 @@
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Concurrency Execution Problems</h1>
-          <p class="topic-title-ar">مشاكل التنفيذ المتزامن</p>
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Concurrency Control Problems</h1>
+          <p class="topic-title-ar">مشاكل التحكم في التزامن</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 6: Intro -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
+            <h2>📖 لماذا نحتاج Concurrency Control? (Slide 6)</h2>
             <p>
-              عندما يُسمح لعدة معاملات بالعمل في نفس الوقت (Interleaved
-              execution) دون تحكم مناسب، قد تحدث عدة مشاكل خطيرة تؤدي إلى بيانات
-              غير صحيحة.
+              المعاملات من مستخدمين مختلفين قد تعمل
+              <strong>بالتزامن</strong> وتصل وتُعدّل نفس عناصر البيانات.
             </p>
+            <p>بدون تحكم → مشاكل خطيرة:</p>
+          </section>
+
+          <!-- Slides 7-10 -->
+          <section class="content-section">
+            <h2>🚨 المشاكل الأربع (Slides 7-10)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>المشكلة</th>
+                  <th>الاسم</th>
+                  <th>الوصف</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1</strong></td>
+                  <td><strong>Lost Update</strong><br />التحديث المفقود</td>
+                  <td>
+                    معاملتان تُعدّلان نفس العنصر → التحديث الأول
+                    <strong>يُفقد</strong> بسبب الثاني
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2</strong></td>
+                  <td><strong>Temporary Update</strong><br />(Dirty Read)</td>
+                  <td>
+                    معاملة تقرأ قيمة كتبتها معاملة
+                    <strong>لم تُنهَ بعد</strong> — ثم تُلغى
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>3</strong></td>
+                  <td><strong>Incorrect Summary</strong></td>
+                  <td>
+                    معاملة تحسب مجموع بينما معاملة أخرى
+                    <strong>تُعدّل البيانات</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>4</strong></td>
+                  <td><strong>Unrepeatable Read</strong></td>
+                  <td>
+                    معاملة تقرأ نفس العنصر مرتين وتحصل على
+                    <strong>قيم مختلفة</strong>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>1. مشكلة التحديث الضائع (Lost Update)</h3>
-            <p>
-              تحدث عندما تقوم معاملتان بقراءة نفس القيمة، ثم تقوم كل منهما
-              بتعديلها. التعديل الأخير "يكتب فوق" التعديل الأول، مما يؤدي لضياع
-              أثره.
-            </p>
-
-            <h3>2. القراءة القذرة (Dirty Read / Temporary Update)</h3>
-            <p>
-              تحدث عندما تقرأ المعاملة T2 قيمة قامت المعاملة T1 بتعديلها لكن لم
-              تقم بتثبيتها (Commit) بعد. إذا فشلت T1 وتراجعت (Rollback)، تكون T2
-              قد قرأت قيمة غير موجودة أصلاً.
-            </p>
-
-            <h3>3. الملخص غير الصحيح (Incorrect Summary)</h3>
-            <p>
-              تحدث عندما تقوم معاملة بحساب دالة تجميعية (مثل SUM) على مجموعة
-              بيانات، بينما تقوم معاملة أخرى بتعديل جزء من هذه البيانات أثناء
-              عملية الحساب.
-            </p>
-
-            <h3>4. القراءة غير القابلة للتكرار (Unrepeatable Read)</h3>
-            <p>
-              تحدث عندما تقرأ المعاملة T1 نفس السجل مرتين، وبين القراءتين تقوم
-              معاملة T2 بتعديل قيمة السجل. تحصل T1 على قيمتين مختلفتين لنفس
-              البيانات في نفس المعاملة.
-            </p>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  4 مشاكل رئيسية: Lost Update, Dirty Read, Incorrect Summary,
+                  Unrepeatable Read
+                </li>
+                <li>
+                  كلها تحدث بسبب <strong>تداخل العمليات</strong> بدون تحكم
+                </li>
+                <li>الحل: Concurrency Control mechanisms</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="../ch_05_01/topic_05_01_03.html" class="nav-prev"
-            >← Transaction States</a
+          <a href="topic_05_01_01.html" class="nav-prev"
+            >← Transaction Concepts</a
           >
-          <a href="topic_05_02_02.html" class="nav-next"
-            >Schedules & Serializability →</a
-          >
+          <a href="topic_05_04_01.html" class="nav-next">ACID Properties →</a>
         </nav>
       </article>
     </main>

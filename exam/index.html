@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>نموذج الاختبار | Data Structures Study Guide</title>
+    <title>نموذج الاختبار | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -106,34 +106,80 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 دليل هيكلية البيانات</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
         <a href="index.html" class="active">📝 نماذج الاختبار</a>
         <a href="../glossary/index.html">المصطلحات</a>
-        <a href="Whatsapp_exam.html">📝 نموذج الاختبار (1)</a>
-        <a href="gemini_exam.html">🤖 Gemini 3 Pro Exam</a>
-        <a href="predicted_exam.html">🎯 نموذج متوقع</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+        <button id="search-btn" class="nav-btn">🔍 بحث</button>
       </div>
     </nav>
 
     <main class="container">
       <header class="hero">
         <h1>نماذج الاختبارات</h1>
-        <p class="hero-subtitle">اختر النموذج الذي تريد التدرب عليه</p>
+        <p class="hero-subtitle">
+          اختر النموذج الذي تريد التدرب عليه — جميع النماذج تتضمن خاصية الضغط
+          لكشف الإجابة
+        </p>
       </header>
 
       <div class="exams-grid">
-        <!-- WhatsApp Exam -->
+        <!-- Combined WhatsApp Exam -->
+        <a
+          href="combined_whatsapp_exam.html"
+          class="exam-card"
+          style="
+            border-color: var(--accent-primary);
+            background: linear-gradient(
+              135deg,
+              rgba(63, 185, 80, 0.1),
+              rgba(88, 166, 255, 0.1)
+            );
+          "
+        >
+          <div class="exam-icon">🚀</div>
+          <h2 class="exam-title">شامل نماذج الواتساب (1-3)</h2>
+          <p class="exam-desc">
+            جميع أسئلة نماذج الواتساب الثلاثة في مكان واحد. مرتبة ومجهزة
+            للمراجعة الشاملة.
+          </p>
+          <span class="exam-badge">🔥 120 سؤال</span>
+        </a>
+
+        <!-- WhatsApp Exam 1 -->
         <a href="Whatsapp_exam.html" class="exam-card">
           <div class="exam-icon">📱</div>
-          <h2 class="exam-title">نموذج تجميعات الواتساب</h2>
+          <h2 class="exam-title">نموذج واتساب (1)</h2>
           <p class="exam-desc">
-            النموذج المتداول في مجموعات الطلاب (Last Exam). يحتوي على 40 سؤال
-            شامل.
+            النموذج المتداول في مجموعات الطلاب (Last Exam). يغطي PL/SQL,
+            Triggers, Storage.
           </p>
           <span class="exam-badge">40 سؤال</span>
+        </a>
+
+        <!-- WhatsApp Exam 2 -->
+        <a href="second_whatsapp_exam.html" class="exam-card">
+          <div class="exam-icon">📱</div>
+          <h2 class="exam-title">نموذج واتساب (2)</h2>
+          <p class="exam-desc">
+            نموذج يغطي Relational Algebra, Query Optimization, Indexing, و
+            Transactions.
+          </p>
+          <span class="exam-badge">🆕 40 سؤال</span>
+        </a>
+
+        <!-- WhatsApp Exam 3 -->
+        <a href="third_whatsapp_exam.html" class="exam-card">
+          <div class="exam-icon">📱</div>
+          <h2 class="exam-title">نموذج واتساب (3)</h2>
+          <p class="exam-desc">
+            نموذج يغطي Transactions, Failures, Security, Procedures, و
+            Concurrency Control.
+          </p>
+          <span class="exam-badge">🆕 40 سؤال</span>
         </a>
 
         <!-- Gemini Exam -->
@@ -142,7 +188,7 @@
           <h2 class="exam-title">نموذج Gemini 3 Pro</h2>
           <p class="exam-desc">
             اختبار مصمم خصيصاً بواسطة الذكاء الاصطناعي لتغطية المنهج الجديد بدقة
-            عالية وتوزيع موزون.
+            عالية.
           </p>
           <span class="exam-badge">جديد • 40 سؤال</span>
         </a>
@@ -152,14 +198,29 @@
           <div class="exam-icon">🎯</div>
           <h2 class="exam-title">نموذج الاختبار المتوقع</h2>
           <p class="exam-desc">
-            اختبار متوقع بناءً على تحليل عميق للمنهج بواسطة Claude Opus 4.6
-            خمسون سؤالا يغطي جميع المواضيع بنسبة مئوية متوازنة.
+            اختبار متوقع بناءً على تحليل عميق للمنهج بواسطة Claude Opus 4.6.
+            يغطي جميع المواضيع.
           </p>
           <span class="exam-badge">🔥 جديد • 50 سؤال</span>
         </a>
       </div>
     </main>
 
+    <div id="search-modal" class="modal hidden">
+      <div class="modal-content">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="ابحث عن المواضيع..."
+        />
+        <div id="search-results"></div>
+      </div>
+    </div>
+
+    <script>
+      const SITE_ROOT = "../";
+    </script>
+    <script src="../assets/js/search_data.js"></script>
     <script src="../assets/js/main.js"></script>
   </body>
 </html>

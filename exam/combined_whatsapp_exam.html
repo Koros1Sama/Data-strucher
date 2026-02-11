@@ -1,0 +1,2360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>شامل نماذج الواتساب (1+2+3) | PL/SQL & Database Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Main Site Styling (Embedded for Portability) */
+      :root {
+        --bg-primary: #0d1117;
+        --bg-secondary: #161b22;
+        --bg-tertiary: #21262d;
+        --bg-hover: #30363d;
+        --text-primary: #e6edf3;
+        --text-secondary: #8b949e;
+        --text-muted: #6e7681;
+        --accent-primary: #58a6ff;
+        --accent-success: #3fb950;
+        --accent-warning: #d29922;
+        --accent-danger: #f85149;
+        --accent-purple: #a371f7;
+        --code-bg: #161b22;
+        --border-default: #30363d;
+        --shadow-glow: rgba(88, 166, 255, 0.15);
+        --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-arabic: "Noto Kufi Arabic", "Segoe UI", sans-serif;
+        --font-mono: "JetBrains Mono", "Consolas", monospace;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: var(--font-sans);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: rgba(13, 17, 23, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-default);
+      }
+      .nav-brand a {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--accent-primary);
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      .breadcrumb {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+      .breadcrumb a {
+        color: var(--text-secondary);
+        text-decoration: none;
+      }
+      .breadcrumb a:hover {
+        color: var(--accent-primary);
+      }
+      @media (max-width: 768px) {
+        .navbar {
+          flex-direction: column;
+          gap: 1rem;
+          align-items: center;
+          padding: 1rem;
+        }
+        .nav-links {
+          gap: 0.75rem;
+          font-size: 0.85rem;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .container {
+          padding: 1rem;
+        }
+      }
+    </style>
+
+    <style>
+      .exam-header {
+        text-align: center;
+        padding: 3rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--bg-secondary),
+          var(--bg-tertiary)
+        );
+        border-radius: 16px;
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-default);
+      }
+      .exam-header h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(
+          135deg,
+          var(--text-primary),
+          var(--accent-primary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .exam-meta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+      .exam-meta span {
+        padding: 0.5rem 1rem;
+        background: var(--bg-tertiary);
+        border-radius: 8px;
+        border: 1px solid var(--border-default);
+      }
+      .exam-grade {
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary),
+          var(--accent-purple)
+        ) !important;
+        color: white !important;
+        font-weight: 600;
+      }
+      .questions-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .question-card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-default);
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+      }
+      .question-card:hover {
+        border-color: var(--accent-primary);
+        box-shadow: 0 4px 20px var(--shadow-glow);
+      }
+      .question-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .question-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary),
+          var(--accent-purple)
+        );
+        border-radius: 10px;
+        font-weight: 700;
+        color: white;
+        font-size: 1rem;
+      }
+      .question-text {
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        line-height: 1.6;
+        flex: 1;
+        direction: ltr;
+        text-align: left;
+      }
+      .options-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin: 1rem 0;
+        padding: 0;
+        list-style: none;
+      }
+      .option {
+        padding: 0.75rem 1rem;
+        background: var(--bg-tertiary);
+        border: 2px solid var(--border-default);
+        border-radius: 8px;
+        color: var(--text-secondary);
+        direction: ltr;
+        text-align: left;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        user-select: none;
+      }
+      .option:hover:not(.selected):not(.dimmed) {
+        border-color: var(--accent-primary);
+        background: rgba(88, 166, 255, 0.05);
+      }
+      .option.selected.correct-answer {
+        background: rgba(63, 185, 80, 0.15);
+        border-color: #3fb950;
+        color: #3fb950;
+      }
+      .option.selected.correct-answer::before {
+        content: "✓ ";
+        font-weight: bold;
+        float: right;
+        margin-left: 10px;
+      }
+      .option.selected.wrong-answer {
+        background: rgba(248, 81, 73, 0.15);
+        border-color: #f85149;
+        color: #f85149;
+      }
+      .option.selected.wrong-answer::before {
+        content: "✗ ";
+        font-weight: bold;
+        float: right;
+        margin-left: 10px;
+      }
+      .option.reveal-correct {
+        background: rgba(63, 185, 80, 0.1);
+        border-color: #3fb950;
+        color: #3fb950;
+      }
+      .option.reveal-correct::before {
+        content: "✓ ";
+        font-weight: bold;
+        float: right;
+        margin-left: 10px;
+      }
+      .option.dimmed {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .option.correct {
+        background: rgba(63, 185, 80, 0.15);
+        border-color: #3fb950;
+        color: #3fb950;
+      }
+      .option.correct::before {
+        content: "✓ ";
+        font-weight: bold;
+        float: right;
+        margin-left: 10px;
+      }
+      .explanation-box {
+        background: var(--bg-tertiary);
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin-top: 1rem;
+        border-right: 4px solid var(--accent-primary);
+        display: none;
+      }
+      .explanation-box.visible {
+        display: block;
+      }
+      .explanation-title {
+        font-weight: 600;
+        color: var(--accent-primary);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .explanation-text {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-family: var(--font-arabic);
+      }
+      .topic-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        padding: 0.6rem 1.2rem;
+        background: rgba(88, 166, 255, 0.1);
+        color: var(--accent-primary);
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+      .topic-link:hover {
+        background: var(--accent-primary);
+        color: white;
+        transform: translateY(-2px);
+      }
+      .toggle-answers-btn {
+        position: fixed;
+        bottom: 2rem;
+        left: 2rem;
+        padding: 1rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary),
+          var(--accent-purple)
+        );
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(88, 166, 255, 0.4);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-arabic);
+      }
+      .toggle-answers-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 25px rgba(88, 166, 255, 0.5);
+      }
+      .toggle-answers-btn.hidden-mode {
+        background: linear-gradient(
+          135deg,
+          var(--accent-warning),
+          var(--accent-danger)
+        );
+      }
+      .score-counter {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        padding: 0.75rem 1.25rem;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-default);
+        border-radius: 50px;
+        font-family: var(--font-arabic);
+        font-weight: 600;
+        color: var(--text-primary);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      /* Undo & Reset buttons */
+      .question-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+      }
+      .undo-btn {
+        padding: 0.5rem 1rem;
+        background: rgba(248, 166, 0, 0.12);
+        color: #f8a600;
+        border: 1px solid rgba(248, 166, 0, 0.3);
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: var(--font-arabic);
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .undo-btn:hover {
+        background: rgba(248, 166, 0, 0.25);
+        transform: translateY(-1px);
+      }
+      .reset-all-btn {
+        position: fixed;
+        bottom: 5.5rem;
+        left: 2rem;
+        padding: 0.75rem 1.25rem;
+        background: linear-gradient(135deg, #f85149, #da3633);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(248, 81, 73, 0.3);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-arabic);
+      }
+      .reset-all-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(248, 81, 73, 0.4);
+      }
+      @media (max-width: 768px) {
+        .question-header {
+          flex-direction: column;
+        }
+        .exam-header {
+          padding: 1.5rem 1rem;
+          margin-bottom: 1.5rem;
+        }
+        .exam-header h1 {
+          font-size: 1.5rem;
+        }
+        .exam-meta {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.5rem;
+        }
+        .exam-meta span {
+          padding: 0.3rem 0.6rem;
+          font-size: 0.8rem;
+          background: var(--bg-secondary);
+        }
+
+        .toggle-answers-btn {
+          bottom: 1rem;
+          left: 1rem;
+          padding: 0.8rem 1.2rem;
+          font-size: 0.9rem;
+        }
+        .reset-all-btn {
+          bottom: 5rem;
+          left: 1rem;
+          padding: 0.7rem 1.1rem;
+          font-size: 0.8rem;
+        }
+        .score-counter {
+          bottom: 1rem;
+          right: 1rem;
+          padding: 0.7rem 1.1rem;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
+      </div>
+      <div class="nav-links">
+        <a href="../index.html">الرئيسية</a>
+        <a href="index.html">📝 نماذج الاختبار</a>
+        <a href="../glossary/index.html">المصطلحات</a>
+        <a href="../graph/index.html">خريطة المفاهيم</a>
+        <button id="search-btn" class="nav-btn">🔍 بحث</button>
+      </div>
+    </nav>
+
+    <main class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">الرئيسية</a> ›
+        <a href="index.html">نماذج الاختبار</a> ›
+        <span>شامل نماذج الواتساب (1+2+3)</span>
+      </nav>
+
+      <header class="exam-header">
+        <h1>📝 شامل نماذج الواتساب (1+2+3)</h1>
+        <div class="exam-meta">
+          <span>🏛️ جامعة صنعاء</span>
+          <span>📚 Database Systems</span>
+          <span>👨‍🏫 د. سعاد عثمان</span>
+          <span>🎓 المستوى الثاني</span>
+          <span class="exam-grade">✨ الدرجة: 120</span>
+        </div>
+      </header>
+
+      <div class="questions-container" id="questions-container"></div>
+    </main>
+
+    <div id="tooltip-ar" class="tooltip-ar"></div>
+    <button id="toggle-answers" class="toggle-answers-btn">
+      👁️ إظهار الكل
+    </button>
+    <button id="reset-all" class="reset-all-btn">🔄 إعادة تعيين</button>
+    <div class="score-counter" id="score-counter">
+      📊 <span id="score-text">0 / 120</span>
+    </div>
+
+    <script>
+      const examData = [
+        {
+          id: 1,
+          question:
+            "If record size in a database is 512 bytes, and a block size is 1 MB in size, how many records can be stored in each block?",
+          options: ["512", "1024", "2048", "4096"],
+          correct: "2048",
+          explanation:
+            "عدد السجلات = حجم الكتلة ÷ حجم السجل = 1 MB ÷ 512 bytes = 1,048,576 ÷ 512 = 2048 سجل. هذا يُعرف بـ Blocking Factor.",
+          topicLink: "../topics/topic_04_05_02.html",
+          topicTitle: "File Organizations & Buffering",
+        },
+        {
+          id: 2,
+          question: "A sector is divided into smaller track",
+          options: ["TRUE", "FALSE"],
+          correct: "FALSE",
+          explanation:
+            "العكس هو الصحيح! الـ Track (المسار) هو الذي يُقسَّم إلى Sectors (قطاعات) وليس العكس.",
+          topicLink: "../topics/topic_04_05_01.html",
+          topicTitle: "Disk Storage & File Structures",
+        },
+        {
+          id: 3,
+          question: "_________ refers to the number of records per block.",
+          options: ["rotational delay", "Blocking factor", "Spanned Records"],
+          correct: "Blocking factor",
+          explanation:
+            "Blocking Factor (معامل التجميع) هو عدد السجلات التي يمكن تخزينها في كتلة واحدة. يُحسب بقسمة حجم الكتلة على حجم السجل: bfr = ⌊B/R⌋",
+          topicLink: "../topics/topic_04_05_02.html",
+          topicTitle: "File Organizations & Buffering",
+        },
+        {
+          id: 4,
+          question:
+            "Refers to records that exceed the size of one or more blocks",
+          options: [
+            "rotational delay",
+            "Blocking factor",
+            "Spanned Records",
+            "Unspanned Records",
+          ],
+          correct: "Spanned Records",
+          explanation:
+            "Spanned Records (السجلات الممتدة) هي السجلات التي يتجاوز حجمها حجم كتلة واحدة، فيتم تخزينها على أكثر من كتلة.",
+          topicLink: "../topics/topic_04_05_02.html",
+          topicTitle: "File Organizations & Buffering",
+        },
+        {
+          id: 5,
+          question:
+            "New records are inserted at the end of the file in _________.",
+          options: ["ordered Files", "Unordered Files", "Hash Files"],
+          correct: "Unordered Files",
+          explanation:
+            "في Unordered Files (Heap Files) تُدرج السجلات الجديدة في نهاية الملف دون ترتيب. هذا يجعل الإدراج سريعاً جداً O(1) لكن البحث بطيء O(n).",
+          topicLink: "../topics/topic_04_05_02.html",
+          topicTitle: "File Organizations & Buffering",
+        },
+        {
+          id: 6,
+          question:
+            "_________ distributes data transparently over multiple disks to make them appear as a single large, fast disk",
+          options: ["Data striping", "mirrored disks", "Hash Files"],
+          correct: "Data striping",
+          explanation:
+            "Data Striping (توزيع البيانات) هي تقنية في RAID تقوم بتوزيع البيانات على عدة أقراص لتظهر كقرص واحد كبير وسريع.",
+          topicLink: "../topics/topic_04_05_04.html",
+          topicTitle: "RAID Technology",
+        },
+        {
+          id: 7,
+          question:
+            "_________ has an index entry for every search key value in the data file.",
+          options: ["INDEX", "A sparse index", "A dense index"],
+          correct: "A dense index",
+          explanation:
+            "Dense Index (الفهرس الكثيف) يحتوي على مدخلة لكل قيمة مفتاح بحث في ملف البيانات.",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 8,
+          question:
+            "_________ Includes one index entry for each block in the data file",
+          options: ["Primary Index", "Clusterd Index", "Secondray Index"],
+          correct: "Primary Index",
+          explanation:
+            "Primary Index (الفهرس الأساسي) هو فهرس متفرق (Sparse) يحتوي على مدخلة واحدة لكل كتلة.",
+          topicLink: "../topics/topic_04_02_01.html",
+          topicTitle: "Primary Index",
+        },
+        {
+          id: 9,
+          question: "A primary index is a dense index",
+          options: ["TRUE", "FALSE"],
+          correct: "FALSE",
+          explanation:
+            "خطأ! Primary Index هو فهرس متفرق (Sparse) وليس كثيفاً. يحتوي على مدخلة واحدة لكل كتلة (block anchor) وليس لكل سجل.",
+          topicLink: "../topics/topic_04_01_02.html",
+          topicTitle: "Index Types Summary",
+        },
+        {
+          id: 10,
+          question:
+            "The data file is ordered on a non-key field, which requires that the ordering field of the data file have a distinct value for each record.",
+          options: ["Primary Index", "Clusterd Index", "Secondray Index"],
+          correct: "Clusterd Index",
+          explanation:
+            "Clustering Index (فهرس التجميع) يُنشأ عندما يكون الملف مرتباً على حقل غير مفتاح (non-key field).",
+          topicLink: "../topics/topic_04_02_02.html",
+          topicTitle: "Clustering Index",
+        },
+        {
+          id: 11,
+          question:
+            "_________ value for the first record in the block, which is called",
+          options: ["block anchor", "files", "bloking"],
+          correct: "block anchor",
+          explanation:
+            "Block Anchor (مرساة الكتلة) هي قيمة المفتاح للسجل الأول في كل كتلة.",
+          topicLink: "../topics/topic_04_02_01.html",
+          topicTitle: "Primary Index",
+        },
+        {
+          id: 12,
+          question: "number of entries key in primary index =",
+          options: [
+            "number of primary key value",
+            "number of block",
+            "number of data",
+          ],
+          correct: "number of block",
+          explanation:
+            "في Primary Index عدد المدخلات = عدد الكتل (blocks) في ملف البيانات.",
+          topicLink: "../topics/topic_04_02_01.html",
+          topicTitle: "Primary Index",
+        },
+        {
+          id: 13,
+          question: "An insertion into a node that is full is quite efficient",
+          options: ["TRUE", "FALSE"],
+          correct: "FALSE",
+          explanation:
+            "خطأ! الإدراج في عقدة ممتلئة غير فعال لأنه يتطلب عملية Split (انقسام).",
+          topicLink: "../topics/topic_04_04_03.html",
+          topicTitle: "B-Trees",
+        },
+        {
+          id: 14,
+          question:
+            "A deletion is quite efficient if a node become less than half full",
+          options: ["TRUE", "FALSE"],
+          correct: "FALSE",
+          explanation:
+            "خطأ! إذا أصبحت العقدة أقل من نصف امتلائها، يجب إما الاستعارة من عقدة مجاورة أو الدمج (Merge).",
+          topicLink: "../topics/topic_04_04_03.html",
+          topicTitle: "B-Trees",
+        },
+        {
+          id: 15,
+          question:
+            "All pointers to data records exists at the leaf-level nodes in",
+          options: ["Tree", "B+-tree", "B-tree"],
+          correct: "B+-tree",
+          explanation:
+            "في B+-Tree جميع مؤشرات البيانات موجودة فقط في العقد الورقية (Leaf Nodes).",
+          topicLink: "../topics/topic_04_04_04.html",
+          topicTitle: "B+-Trees",
+        },
+        {
+          id: 16,
+          question:
+            "_________ Executes commands from one process, then suspends that process and executes commands from another process",
+          options: [
+            "Multiprogramming",
+            "Interleaved processing",
+            "Parallel processing",
+          ],
+          correct: "Multiprogramming",
+          explanation:
+            "Multiprogramming (تعدد البرمجة) هو تنفيذ أوامر من عملية واحدة ثم إيقافها مؤقتاً والانتقال لعملية أخرى.",
+          topicLink: "../topics/topic_05_01_01.html",
+          topicTitle: "Transaction Concepts",
+        },
+        {
+          id: 17,
+          question:
+            "Two transactions access and update the same database items, a problem may occur:",
+          options: [
+            "The lost update problem",
+            "Temporary Update Problem",
+            "The Incorrect Summary Problem",
+          ],
+          correct: "The lost update problem",
+          explanation:
+            "Lost Update Problem تحدث عندما تقوم معاملتان بتحديث نفس البيانات، فيُفقد تحديث إحداهما.",
+          topicLink: "../topics/topic_05_02_01.html",
+          topicTitle: "Concurrency Problems",
+        },
+        {
+          id: 18,
+          question:
+            "Which of the following statements is correct and is used to print bind variables?",
+          options: [
+            "DBMS OUTPUT.PUT LINE",
+            "set autoprint on",
+            "Set serveroutput on",
+          ],
+          correct: "set autoprint on",
+          explanation:
+            "SET AUTOPRINT ON يُستخدم لطباعة قيم متغيرات الربط (Bind Variables) تلقائياً بعد تنفيذ البلوك.",
+          topicLink: "../topics/topic_01_02_03.html",
+          topicTitle: "Bind Variables",
+        },
+        {
+          id: 19,
+          question:
+            "Which of the following is true for defining a host variable?",
+          options: [
+            "Declare m number $=20$;",
+            "Variable m number $:=20$",
+            "Declare m number $=20$",
+            "Variable m number:=20;",
+          ],
+          correct: "Variable m number $:=20$",
+          explanation:
+            "متغيرات الربط (Host/Bind Variables) تُعرَّف باستخدام VARIABLE وليس DECLARE.",
+          topicLink: "../topics/topic_01_02_03.html",
+          topicTitle: "Bind Variables",
+        },
+        {
+          id: 20,
+          question: "Which of the following is true for defining function",
+          options: [
+            "Create or replace function fun(name number) return 0 as",
+            "Create or replace function fun(name in number) return number as",
+            "Create or replace function fun(name out number) return number as",
+          ],
+          correct:
+            "Create or replace function fun(name in number) return number as",
+          explanation:
+            "الدالة يجب أن تُرجع نوع بيانات (وليس قيمة). معاملات الدالة يجب أن تكون IN فقط (افتراضياً).",
+          topicLink: "../topics/topic_02_05_03.html",
+          topicTitle: "Stored Functions",
+        },
+        {
+          id: 21,
+          question:
+            "_________ Load the current row in active set into variables",
+          options: ["declare", "open", "fetch"],
+          correct: "fetch",
+          explanation:
+            "FETCH يقوم بتحميل الصف الحالي من مجموعة النتائج (Active Set) إلى المتغيرات.",
+          topicLink: "../topics/topic_02_04_01.html",
+          topicTitle: "Explicit Cursors",
+        },
+        {
+          id: 22,
+          question:
+            "The cursor FOR loop is a shortcut to open and fetch processes and the record is explicitly declared.",
+          options: ["TRUE", "FALSE"],
+          correct: "FALSE",
+          explanation:
+            "الجزء الأول صحيح لكن الجزء الثاني خطأ! في Cursor FOR Loop يتم الإعلان عن السجل ضمنياً (implicitly) وليس صراحةً.",
+          topicLink: "../topics/topic_02_04_02.html",
+          topicTitle: "Cursor FOR Loops",
+        },
+        {
+          id: 23,
+          question:
+            "_________ Evaluates to TRUE if the most recent fetch returns a row",
+          options: ["%NOTFOUND", "%FOUND", "%ROWCOUNT"],
+          correct: "%FOUND",
+          explanation: "%FOUND تُرجع TRUE إذا جلب FETCH الأخير صفاً بنجاح.",
+          topicLink: "../topics/topic_02_04_01.html",
+          topicTitle: "Explicit Cursors",
+        },
+        {
+          id: 24,
+          question: "_________ Executes once for the triggering event",
+          options: [
+            "Application trigger",
+            "A row trigger",
+            "A statement trigger",
+          ],
+          correct: "A statement trigger",
+          explanation:
+            "Statement Trigger يُنفَّذ مرة واحدة فقط للحدث المُشغِّل بغض النظر عن عدد الصفوف المتأثرة.",
+          topicLink: "../topics/topic_03_02_01.html",
+          topicTitle: "Statement Triggers",
+        },
+        {
+          id: 25,
+          question: "The public part in package",
+          options: [
+            "package body",
+            "package specification",
+            "package specification and body",
+          ],
+          correct: "package specification",
+          explanation:
+            "Package Specification هو الجزء العام (Public) من الحزمة الذي يحتوي على التعريفات المتاحة للمستخدمين.",
+          topicLink: "../topics/topic_03_01_01.html",
+          topicTitle: "Creating Triggers",
+        },
+        {
+          id: 26,
+          question:
+            "The package body should contain only those constructs that you want to be public",
+          options: ["TRUE", "FALSE"],
+          correct: "FALSE",
+          explanation:
+            "خطأ! Package Body يحتوي على التنفيذ الفعلي والمكونات الخاصة (Private).",
+          topicLink: "../topics/topic_03_01_01.html",
+          topicTitle: "Creating Triggers",
+        },
+        {
+          id: 27,
+          question:
+            "If multiple triggers are defined for the same object the last trigger is fire",
+          options: [
+            "befor statement trigger",
+            "after statement trigger",
+            "befor row trigger",
+            "after row trigger",
+          ],
+          correct: "after statement trigger",
+          explanation:
+            "ترتيب تنفيذ المشغلات: BEFORE Statement → BEFORE Row → AFTER Row → AFTER Statement (الأخير).",
+          topicLink: "../topics/topic_03_01_02.html",
+          topicTitle: "Trigger Firing Sequence",
+        },
+        {
+          id: 28,
+          question:
+            "The Data dictionary contains source code in USER_SOURCE for trigger.",
+          options: ["TRUE", "FALSE"],
+          correct: "FALSE",
+          explanation:
+            "خطأ! كود المشغلات يُخزَّن في USER_TRIGGERS وليس USER_SOURCE.",
+          topicLink: "../topics/topic_03_03_01.html",
+          topicTitle: "Managing Triggers",
+        },
+        {
+          id: 29,
+          question:
+            "Which is correct to create a trigger fire to check if the data insert corresponds with the data type?",
+          options: [
+            "create or replace trigger emptrig after insert on emplyees is",
+            "create or replace trigger emptrig befor insert on emplyees is",
+            "create or replace trigger emptrig after insert on emplyees for each row is",
+            "create or replace trigger emptrig befor insert on emplyees for each row is",
+          ],
+          correct:
+            "create or replace trigger emptrig befor insert on emplyees is",
+          explanation:
+            "للتحقق من صحة البيانات قبل إدراجها، نستخدم BEFORE INSERT بدون FOR EACH ROW.",
+          topicLink: "../topics/topic_03_02_01.html",
+          topicTitle: "Statement Triggers",
+        },
+        {
+          id: 30,
+          question:
+            "_________ parameter provides values for a subprogram to process.",
+          options: ["in", "out", "inout"],
+          correct: "in",
+          explanation:
+            "IN معامل للإدخال فقط - يوفر قيماً للبرنامج الفرعي لمعالجتها. لا يمكن تغيير قيمته داخل البرنامج.",
+          topicLink: "../topics/topic_02_05_02.html",
+          topicTitle: "Parameter Modes",
+        },
+        {
+          id: 31,
+          question:
+            "_________ which lists the actual parameter values in the order in which the formal parameters are declared",
+          options: ["Positional method", "named method", "Combination method"],
+          correct: "Positional method",
+          explanation:
+            "Positional Method يُمرر المعاملات بنفس ترتيب تعريفها في الإجراء/الدالة.",
+          topicLink: "../topics/topic_02_05_02.html",
+          topicTitle: "Parameter Modes",
+        },
+        {
+          id: 32,
+          question:
+            "The best subprogram to display the salary and job ID for employee ID 120",
+          options: ["procedure", "function", "trigger", "package"],
+          correct: "procedure",
+          explanation:
+            "Procedure هو الأنسب لعرض بيانات متعددة لأنه يمكن أن يُرجع قيماً متعددة عبر معاملات OUT.",
+          topicLink: "../topics/topic_02_05_04.html",
+          topicTitle: "Procedures vs Functions",
+        },
+        {
+          id: 33,
+          question:
+            "Which of the following is true for making conditions in the PLSQL?",
+          options: [
+            "IF condition then.. ELSIF condation then... ELSE",
+            "IF condition then.. ELSEIF condition then.. ELSE",
+            "IF condition then.. ELSEIF condition then..",
+          ],
+          correct: "IF condition then.. ELSIF condation then... ELSE",
+          explanation: "في PL/SQL نستخدم ELSIF (وليس ELSEIF) للشروط المتعددة.",
+          topicLink: "../topics/topic_02_03_01.html",
+          topicTitle: "IF Statements",
+        },
+        {
+          id: 34,
+          question:
+            "_________ Used to define a variable of the same type as the columns in the database.",
+          options: ["%type", "%rowtype", "%column"],
+          correct: "%rowtype",
+          explanation:
+            "السؤال يقول 'columns' (أعمدة) بصيغة الجمع، لذا الإجابة هي %ROWTYPE التي تُعرّف متغيراً بنفس نوع جميع أعمدة الجدول.",
+          topicLink: "../topics/topic_02_01_01.html",
+          topicTitle: "Records & %ROWTYPE",
+        },
+        {
+          id: 35,
+          question:
+            "Use PL/SQL collections when you want to store values of same data type.",
+          options: ["TRUE", "FALSE"],
+          correct: "TRUE",
+          explanation:
+            "صحيح! PL/SQL Collections (مثل Associative Arrays, Nested Tables, VARRAYs) تُستخدم لتخزين قيم من نفس نوع البيانات.",
+          topicLink: "../topics/topic_02_01_01.html",
+          topicTitle: "Records & %ROWTYPE",
+        },
+        {
+          id: 36,
+          question: "_________ optional block sections",
+          options: [
+            "begin and end",
+            "declare and exception",
+            "declare and begin",
+          ],
+          correct: "declare and exception",
+          explanation:
+            "في بلوك PL/SQL الأقسام الاختيارية هي DECLARE (للتعريفات) و EXCEPTION (لمعالجة الأخطاء). BEGIN و END إلزاميان.",
+          topicLink: "../topics/topic_01_01_02.html",
+          topicTitle: "PL/SQL Block Structure",
+        },
+        {
+          id: 37,
+          question: "which is correct to define for loop",
+          options: [
+            "FOR i IN 1..3 LOOP",
+            "FOR i IN from 1 to 3 LOOP",
+            "FOR i number IN 1..3 LOOP",
+          ],
+          correct: "FOR i IN 1..3 LOOP",
+          explanation:
+            "صيغة FOR Loop في PL/SQL هي FOR i IN 1..3 LOOP — المتغير i يُعرَّف ضمنياً.",
+          topicLink: "../topics/topic_02_03_03.html",
+          topicTitle: "Loop Types",
+        },
+        {
+          id: 38,
+          question:
+            "to retrieve data The INTO clause is required in the select statement",
+          options: ["TRUE", "FALSE"],
+          correct: "TRUE",
+          explanation:
+            "صحيح! في PL/SQL يجب استخدام INTO مع SELECT لتخزين النتائج في متغيرات.",
+          topicLink: "../topics/topic_02_01b_01.html",
+          topicTitle: "SELECT INTO",
+        },
+        {
+          id: 39,
+          question: "which is true for define variable",
+          options: [
+            "employee_id employees.employee_id%TYPE : $=176;$",
+            "employeeid employees.employee_id%TYPE : $=176$;",
+            "employee_id employee_id.employees%TYPE := 176;",
+            "employeeid employee_id.employees%TYPE : $=176$;",
+          ],
+          correct: "employeeid employees.employee_id%TYPE : $=176$;",
+          explanation:
+            "صيغة تعريف متغير باستخدام %TYPE: variable_name table.column%TYPE := value; — الجدول يأتي أولاً ثم العمود.",
+          topicLink: "../topics/topic_01_02_02.html",
+          topicTitle: "%TYPE Attribute",
+        },
+        {
+          id: 40,
+          question:
+            "You can access to the variable in the inner block from the outer block",
+          options: ["TRUE", "FALSE"],
+          correct: "FALSE",
+          explanation:
+            "خطأ! المتغيرات المُعرَّفة في البلوك الداخلي لا يمكن الوصول إليها من البلوك الخارجي. العكس صحيح.",
+          topicLink: "../topics/topic_02_01_02.html",
+          topicTitle: "Nested Blocks & Scope",
+        },
+        ,
+        {
+          id: 41,
+          question:
+            "What does the below relational algebra expression return? σ DNO=5(EMPLOYEE)",
+          options: [
+            "First name, last name, and salary of all employees in the company.",
+            "First name, last name, and salary of employees working in department 5.",
+            "All attributes of employees in department 5.",
+            "Only the department numbers of all employees.",
+          ],
+          correct: "All attributes of employees in department 5.",
+          explanation:
+            "عملية Selection (σ) تختار صفوف تحقق الشرط. σ DNO=5(EMPLOYEE) تعيد جميع أعمدة الموظفين في القسم 5.",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Schedules & Operations",
+        },
+        {
+          id: 42,
+          question:
+            "What does the below relational algebra expression return? π FNAME,LNAME,SALARY (σ DNO=5(EMPLOYEE))",
+          options: [
+            "First name, last name, and salary of all employees in the company.",
+            "All attributes of employees in department 5.",
+            "Only the department numbers of all employees.",
+            "First name, last name, and salary of employees working in department 5.",
+          ],
+          correct:
+            "First name, last name, and salary of employees working in department 5.",
+          explanation:
+            "أولاً σ DNO=5 تختار موظفي القسم 5، ثم π تعرض الأعمدة المحددة فقط (FNAME, LNAME, SALARY).",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Schedules & Operations",
+        },
+        {
+          id: 43,
+          question:
+            "What does the selection (σ) operation do in relational algebra?",
+          options: [
+            "Removes duplicate tuples from a relation.",
+            "Chooses a subset of tuples based on a condition.",
+            "Rearranges tuples in a relation into a new order.",
+            "Merges two relations into one.",
+          ],
+          correct: "Chooses a subset of tuples based on a condition.",
+          explanation:
+            "Selection (σ) تختار مجموعة فرعية من الصفوف بناءً على شرط معين — مثل WHERE في SQL.",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Schedules & Operations",
+        },
+        {
+          id: 44,
+          question:
+            "How does Relational Algebra help in database query optimization?",
+          options: [
+            "It forces all databases to use the same execution plan.",
+            "It replaces SQL queries entirely in modern databases.",
+            "It ensures that all queries return only one tuple as output.",
+            "It provides a mathematical foundation for rewriting queries in a more efficient way.",
+          ],
+          correct:
+            "It provides a mathematical foundation for rewriting queries in a more efficient way.",
+          explanation:
+            "Relational Algebra يوفر أساساً رياضياً لإعادة كتابة الاستعلامات بطريقة أكثر كفاءة.",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Schedules & Operations",
+        },
+        {
+          id: 45,
+          question:
+            "Which of the following is true about the Projection (π) operation?",
+          options: [
+            "It filters tuples based on a condition.",
+            "It removes duplicate tuples and keeps only the specified attributes.",
+            "It combines two relations based on a join condition.",
+            "It produces a Cartesian Product of two relations.",
+          ],
+          correct:
+            "It removes duplicate tuples and keeps only the specified attributes.",
+          explanation:
+            "Projection (π) تعرض أعمدة محددة فقط وتزيل الصفوف المكررة — مثل SELECT DISTINCT.",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Schedules & Operations",
+        },
+        {
+          id: 46,
+          question:
+            "What is the main problem with using the Cartesian Product (X) in relational algebra?",
+          options: [
+            "It returns only distinct values from both relations.",
+            "It always removes duplicate rows.",
+            "It automatically filters only related records.",
+            "It produces too many meaningless tuples.",
+          ],
+          correct: "It produces too many meaningless tuples.",
+          explanation:
+            "Cartesian Product ينتج عدداً كبيراً من الصفوف غير المفيدة (حاصل ضرب عدد الصفوف).",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Schedules & Operations",
+        },
+        {
+          id: 47,
+          question:
+            "Which of the following best describes Materialized Evaluation in query execution?",
+          options: [
+            "A) It evaluates multiple operations simultaneously without storing intermediate results.",
+            "B) It stores intermediate results as temporary relations before executing the next operation.",
+            "C) It eliminates the need for indexing in database queries.",
+            "D) It is used only for transactions, not for query optimization.",
+          ],
+          correct:
+            "B) It stores intermediate results as temporary relations before executing the next operation.",
+          explanation:
+            "Materialized Evaluation تخزن النتائج الوسيطة كجداول مؤقتة قبل تنفيذ العملية التالية.",
+          topicLink: "../topics/topic_04_05_02.html",
+          topicTitle: "File Organizations & Buffering",
+        },
+        {
+          id: 48,
+          question: "Why is External Sorting needed in databases?",
+          options: [
+            "A) Because databases store data in sorted order by default.",
+            "B) Because sorting in memory is always slow.",
+            "C) Because the data is too large to fit in main memory.",
+            "D) Because external sorting reduces the number of queries needed.",
+          ],
+          correct: "C) Because the data is too large to fit in main memory.",
+          explanation:
+            "External Sorting مطلوبة لأن البيانات أكبر من أن تتسع في الذاكرة الرئيسية.",
+          topicLink: "../topics/topic_04_05_02.html",
+          topicTitle: "File Organizations & Buffering",
+        },
+        {
+          id: 49,
+          question:
+            "Which factor most affects the performance of External Sorting?",
+          options: [
+            "A) The CPU processing speed",
+            "B) The number of available memory buffers.",
+            "C) The number of users running queries.",
+            "D) The complexity of SQL queries.",
+          ],
+          correct: "B) The number of available memory buffers.",
+          explanation:
+            "عدد ال buffers المتاحة في الذاكرة هو العامل الأكثر تأثيراً على أداء الترتيب الخارجي.",
+          topicLink: "../topics/topic_04_05_02.html",
+          topicTitle: "File Organizations & Buffering",
+        },
+        {
+          id: 50,
+          question:
+            "What is the main advantage of using Pipelining over Materialization in query execution?",
+          options: [
+            "A) Pipelining always produces the result faster than any other method.",
+            "B) Pipelining increases the number of disk I/O operations, making query execution more reliable.",
+            "C) Pipelining eliminates the need for query optimization altogether.",
+            "D) Pipelining requires less memory by avoiding storing intermediate results.",
+          ],
+          correct:
+            "D) Pipelining requires less memory by avoiding storing intermediate results.",
+          explanation:
+            "Pipelining تتجنب تخزين النتائج الوسيطة مما يقلل استهلاك الذاكرة مقارنة بـ Materialization.",
+          topicLink: "../topics/topic_04_05_02.html",
+          topicTitle: "File Organizations & Buffering",
+        },
+        {
+          id: 51,
+          question:
+            "Consider the following query: SELECT * FROM EMPLOYEE WHERE Age>30 AND City = 'New York'; There is an index on Age, but City is not indexed. What might happen during query execution?",
+          options: [
+            "A) The database will always use the Age index and filter City later.",
+            "B) The database will ignore the index and process both conditions together.",
+            "C) Since City has no index, the database might scan the entire table because filtering by Age alone is not enough.",
+            "D) The database will create a temporary index on City for better performance.",
+          ],
+          correct:
+            "A) The database will always use the Age index and filter City later.",
+          explanation:
+            "قاعدة البيانات ستستخدم فهرس Age أولاً ثم تفلتر City من النتائج (filter after index scan).",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 52,
+          question:
+            "A database needs to sort a large file that does not fit in memory. The system has 10 memory pages available, and the file has 1000 pages. How many initial sorted runs will be created in the first phase of External Sort-Merge?",
+          options: ["1", "1000", "10", "100"],
+          correct: "100",
+          explanation:
+            "عدد الـ runs = عدد صفحات الملف ÷ عدد صفحات الذاكرة = 1000 ÷ 10 = 100 run.",
+          topicLink: "../topics/topic_04_05_02.html",
+          topicTitle: "File Organizations & Buffering",
+        },
+        {
+          id: 53,
+          question:
+            "An SQL query first translated into which form before execution?",
+          options: [
+            "A) Machine code",
+            "B) Relational algebra",
+            "C) Binary data",
+            "D) Assembly language",
+          ],
+          correct: "B) Relational algebra",
+          explanation:
+            "استعلام SQL يُترجم أولاً إلى Relational Algebra ثم يُحسّن قبل التنفيذ.",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Schedules & Operations",
+        },
+        {
+          id: 54,
+          question: "What is the main goal of query optimization in a DBMS?",
+          options: [
+            "A) To execute queries as fast as possible",
+            "B) To ensure queries always return correct results",
+            "C) To use as many indexes as possible",
+            "D) To minimize the use of SQL functions",
+          ],
+          correct: "A) To execute queries as fast as possible",
+          explanation:
+            "الهدف الرئيسي لتحسين الاستعلامات هو تنفيذها بأسرع وقت ممكن.",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 55,
+          question:
+            "Why do we apply SELECT and PROJECT operations before JOIN in heuristic optimization?",
+          options: [
+            "A) To increase the number of attributes in the result",
+            "B) To ensure all joins are performed",
+            "C) To minimize the size of intermediate results",
+            "D) To avoid Cartesian products",
+          ],
+          correct: "C) To minimize the size of intermediate results",
+          explanation:
+            "تطبيق SELECT و PROJECT مبكراً يقلل حجم النتائج الوسيطة مما يسرّع العمليات التالية.",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 56,
+          question:
+            "What is the main disadvantage of a Cartesian product in query execution?",
+          options: [
+            "It requires a secondary index",
+            "It cannot be used with joins",
+            "It produces a large number of unnecessary tuples",
+            "D) It does not support sorting",
+          ],
+          correct: "It produces a large number of unnecessary tuples",
+          explanation:
+            "Cartesian Product ينتج عدداً ضخماً من الصفوف غير الضرورية.",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Schedules & Operations",
+        },
+        {
+          id: 57,
+          question:
+            "Which of the following is NOT a heuristic rule in query optimization?",
+          options: [
+            "A) Apply SELECT early",
+            "B) Apply PROJECT early",
+            "C) Perform Cartesian products before joins",
+            "D) Use the most restrictive conditions first",
+          ],
+          correct: "C) Perform Cartesian products before joins",
+          explanation:
+            "العكس صحيح! القاعدة هي تجنب Cartesian Products واستخدام JOINs بدلاً منها.",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 58,
+          question: "What is the role of a query tree in query optimization?",
+          options: [
+            "A) It stores query results",
+            "B) It represents query execution steps",
+            "C) It executes queries directly",
+            "D) It sorts all database records",
+          ],
+          correct: "B) It represents query execution steps",
+          explanation:
+            "Query Tree يمثل خطوات تنفيذ الاستعلام بشكل هرمي لتسهيل التحسين.",
+          topicLink: "../topics/topic_04_04_03.html",
+          topicTitle: "B-Trees",
+        },
+        {
+          id: 59,
+          question:
+            "How does heuristic optimization improve query performance?",
+          options: [
+            "A) By removing duplicate records",
+            "B) By rewriting SQL statements",
+            "C) By optimizing queries based on predefined rules",
+            "D) By storing a query result permanently",
+          ],
+          correct: "C) By optimizing queries based on predefined rules",
+          explanation:
+            "التحسين الاستدلالي يعتمد على قواعد محددة مسبقاً لإعادة ترتيب العمليات.",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 60,
+          question:
+            "The schedule in the following table (T1 reads X... T2 reads Y... T1 reads X...) is an example of ______ schedule.",
+          options: [
+            "A) Recoverable.",
+            "B) Nonrecoverable.",
+            "C) Serializable.",
+            "D) Serial.",
+          ],
+          correct: "D) Serial.",
+          explanation:
+            "إذا كانت المعاملات تُنفّذ واحدة تلو الأخرى بدون تداخل فهو Serial Schedule.",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Transaction Schedules",
+        },
+        {
+          id: 61,
+          question: "______ keeps track of transaction operations.",
+          options: [
+            "A) Operating system.",
+            "B) System log",
+            "C) Database system.",
+            "D) Data.",
+          ],
+          correct: "B) System log",
+          explanation:
+            "System Log يتتبع عمليات المعاملات للتمكن من Undo/Redo عند الحاجة.",
+          topicLink: "../topics/topic_05_04_02.html",
+          topicTitle: "System Log",
+        },
+        {
+          id: 62,
+          question: "What is a transaction in a database system?",
+          options: [
+            "A) A logical unit of database processing",
+            "B) A single read operation",
+            "C) A backup copy of a database",
+            "D) A process that always modifies all records",
+          ],
+          correct: "A) A logical unit of database processing",
+          explanation: "Transaction = وحدة منطقية لمعالجة قاعدة البيانات.",
+          topicLink: "../topics/topic_05_01_01.html",
+          topicTitle: "Transaction Concepts",
+        },
+        {
+          id: 63,
+          question: "In a multi-user database, transactions are processed:",
+          options: [
+            "A) Sequentially, one at a time",
+            "B) Only when no other transaction is running",
+            "C) Concurrently, with possible interleaving",
+            "D) Only when the database is offline",
+          ],
+          correct: "C) Concurrently, with possible interleaving",
+          explanation:
+            "في أنظمة تعدد المستخدمين، المعاملات تُعالج بالتزامن مع إمكانية التداخل.",
+          topicLink: "../topics/topic_05_02_01.html",
+          topicTitle: "Concurrency Problems",
+        },
+        {
+          id: 64,
+          question:
+            "The schedule in the following table is an example of ______ problem.",
+          options: [
+            "Lost update.",
+            "Unrepeatable read.",
+            "Incorrect Summary.",
+            "Dirty Read.",
+          ],
+          correct: "Lost update.",
+          explanation:
+            "Lost Update: معاملتان تُعدّلان نفس العنصر فيُفقد تحديث إحداهما.",
+          topicLink: "../topics/topic_05_02_01.html",
+          topicTitle: "Concurrency Problems",
+        },
+        {
+          id: 65,
+          question: "What happens if a transaction is committed?",
+          options: [
+            "The database is restored",
+            "The transaction is aborted",
+            "The transaction is rolled back",
+            "All changes made by the transaction are permanent",
+          ],
+          correct: "All changes made by the transaction are permanent",
+          explanation:
+            "عند Commit، جميع التغييرات تصبح دائمة (Durability في ACID).",
+          topicLink: "../topics/topic_05_04_01.html",
+          topicTitle: "ACID Properties",
+        },
+        {
+          id: 66,
+          question: "If a transaction aborts, what should happen?",
+          options: [
+            "A) The database should be shut down",
+            "B) The operations already performed should be undone",
+            "C) The transaction should be committed",
+            "D) The transaction should retry automatically",
+          ],
+          correct: "B) The operations already performed should be undone",
+          explanation:
+            "عند Abort، يجب التراجع (Undo) عن جميع العمليات التي تمت (Atomicity).",
+          topicLink: "../topics/topic_05_04_01.html",
+          topicTitle: "ACID Properties",
+        },
+        {
+          id: 67,
+          question: "A serial schedule is one where:",
+          options: [
+            "A) All transactions execute at the same time",
+            "B) Transactions execute one after another without interleaving",
+            "C) Transactions do not use concurrency control",
+            "D) Transactions execute in random order",
+          ],
+          correct:
+            "B) Transactions execute one after another without interleaving",
+          explanation:
+            "Serial Schedule: المعاملات تُنفّذ واحدة تلو الأخرى بدون تداخل.",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Transaction Schedules",
+        },
+        {
+          id: 68,
+          question: "The system log helps in:",
+          options: [
+            "A) Scheduling transactions",
+            "B) Monitoring user activities",
+            "C) Undoing or redoing transactions during failure recovery",
+            "D) Improving database indexing",
+          ],
+          correct: "C) Undoing or redoing transactions during failure recovery",
+          explanation:
+            "System Log يساعد في Undo/Redo للمعاملات أثناء استعادة النظام من الأعطال.",
+          topicLink: "../topics/topic_05_04_02.html",
+          topicTitle: "System Log",
+        },
+        {
+          id: 69,
+          question: "A non-serial schedule:",
+          options: [
+            "A) Is always incorrect",
+            "B) Executes transactions without interleaving",
+            "C) May be serializable",
+            "D) Cannot be recovered",
+          ],
+          correct: "C) May be serializable",
+          explanation:
+            "Non-serial schedule قد يكون Serializable إذا كانت نتيجته مكافئة لجدول تسلسلي.",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Transaction Schedules",
+        },
+        {
+          id: 70,
+          question: "What is the main purpose of a multilevel index?",
+          options: [
+            "A) To increase data redundancy",
+            "B) To speed up searching",
+            "C) To store more data",
+            "D) To replace primary indexing",
+          ],
+          correct: "B) To speed up searching",
+          explanation:
+            "الهدف الرئيسي للفهرس متعدد المستويات هو تسريع البحث عن طريق تقليل عدد عمليات I/O.",
+          topicLink: "../topics/topic_04_04_01.html",
+          topicTitle: "Multilevel Indexes",
+        },
+        {
+          id: 71,
+          question: "What is a key advantage of hash indexing?",
+          options: [
+            "It organizes data hierarchically",
+            "It is better for ordered datasets",
+            "It supports fast lookup for specific values",
+            "It works best for range queries",
+          ],
+          correct: "It supports fast lookup for specific values",
+          explanation:
+            "Hash indexing يدعم البحث السريع عن قيم محددة (exact match) بزمن O(1).",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 72,
+          question:
+            "What type of database column benefits most from a bitmap index?",
+          options: [
+            "Columns with long text data",
+            "Columns used as primary keys",
+            "Columns with few distinct values",
+            "Columns with many unique values",
+          ],
+          correct: "Columns with few distinct values",
+          explanation:
+            "Bitmap Index مناسب للأعمدة ذات القيم القليلة المتكررة (مثل الجنس: ذكر/أنثى).",
+          topicLink: "../topics/topic_04_01_02.html",
+          topicTitle: "Index Types Summary",
+        },
+        {
+          id: 73,
+          question: "When should a function-based index be used?",
+          options: [
+            "A) When sorting data in ascending order",
+            "B) When all queries use primary keys",
+            "C) When queries use expressions in WHERE clauses",
+            "D) When using simple SELECT * statements",
+          ],
+          correct: "C) When queries use expressions in WHERE clauses",
+          explanation:
+            "Function-based index يُستخدم عندما تحتوي WHERE على تعبيرات (مثل UPPER(name)).",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 74,
+          question:
+            "What is a key advantage of using a multilevel index over a single-level index?",
+          options: [
+            "A) It speeds up search operations",
+            "B) It removes duplicate data",
+            "C) It requires no additional storage",
+            "D) It simplifies database structure",
+          ],
+          correct: "B) It removes duplicate data",
+          explanation:
+            "الإجابة في الاختبار الأصلي هي B، لكن الميزة الرئيسية هي تسريع البحث بتقليل عدد block accesses.",
+          topicLink: "../topics/topic_04_04_01.html",
+          topicTitle: "Multilevel Indexes",
+        },
+        {
+          id: 75,
+          question:
+            "What type of index is used at each level in a multilevel index?",
+          options: [
+            "A) Secondary index",
+            "B) Hash index",
+            "C) Bitmap index",
+            "D) Primary index",
+          ],
+          correct: "D) Primary index",
+          explanation:
+            "كل مستوى في الفهرس متعدد المستويات يستخدم Primary Index (فهرس على ملف مرتب).",
+          topicLink: "../topics/topic_04_04_01.html",
+          topicTitle: "Multilevel Indexes",
+        },
+        {
+          id: 76,
+          question: "What is the purpose of an index in a database?",
+          options: [
+            "A) To store data permanently",
+            "B) To speed up record retrieval",
+            "C) To replace the primary key",
+            "D) To prevent data duplication",
+          ],
+          correct: "B) To speed up record retrieval",
+          explanation: "الهدف الأساسي للفهرس هو تسريع استرجاع السجلات.",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 77,
+          question: "A secondary index can be created on which type of field?",
+          options: [
+            "A) Only primary key",
+            "B) Only ordered fields",
+            "C) Any non-ordering field",
+            "D) Only foreign key",
+          ],
+          correct: "C) Any non-ordering field",
+          explanation:
+            "Secondary Index يمكن إنشاؤه على أي حقل غير مرتب (non-ordering field).",
+          topicLink: "../topics/topic_04_02_03.html",
+          topicTitle: "Secondary Index",
+        },
+        {
+          id: 78,
+          question: "Which statement is true about secondary indexes?",
+          options: [
+            "A) They are always sparse",
+            "B) They are based on the primary key",
+            "C) They can be created on non-ordering fields",
+            "D) They replace primary indexes",
+          ],
+          correct: "B) They are based on the primary key",
+          explanation:
+            "الإجابة في الاختبار الأصلي هي B. Secondary indexes يمكن إنشاؤها على حقول غير مفتاحية أيضاً.",
+          topicLink: "../topics/topic_04_02_03.html",
+          topicTitle: "Secondary Index",
+        },
+        {
+          id: 79,
+          question: "What is a major drawback of secondary indexes?",
+          options: [
+            "A) They require additional storage space",
+            "B) They can only be created on primary keys",
+            "C) They do not improve performance",
+            "D) They make searching slower",
+          ],
+          correct: "A) They require additional storage space",
+          explanation:
+            "العيب الرئيسي للفهارس الثانوية هو أنها تتطلب مساحة تخزين إضافية (Dense Index).",
+          topicLink: "../topics/topic_04_02_03.html",
+          topicTitle: "Secondary Index",
+        },
+        {
+          id: 80,
+          question: "Which index type is best suited for range queries?",
+          options: [
+            "A) Hash index",
+            "B) Bitmap index",
+            "C) Multilevel index",
+            "D) Sparse index",
+          ],
+          correct: "C) Multilevel index",
+          explanation:
+            "Multilevel Index (مثل B+-Tree) هو الأنسب لاستعلامات المدى لأن البيانات مرتبة ومتصلة في الأوراق.",
+          topicLink: "../topics/topic_04_04_01.html",
+          topicTitle: "Multilevel Indexes",
+        },
+        ,
+        {
+          id: 81,
+          question:
+            "A hardware, software or network error occurs in computer system during transaction execution",
+          options: [
+            "A transaction execution",
+            "Computer Failure",
+            "Local error",
+            "Disk failure",
+          ],
+          correct: "Computer Failure",
+          explanation:
+            "Computer Failure (System Crash) هو خلل في الأجهزة أو البرمجيات أو الشبكة أثناء تنفيذ المعاملة.",
+          topicLink: "../topics/topic_05_01_01.html",
+          topicTitle: "Transaction Concepts",
+        },
+        {
+          id: 82,
+          question:
+            "Indexes used to slow down record retrieval in response to certain search condition",
+          options: ["True", "False"],
+          correct: "False",
+          explanation:
+            "خطأ! الفهارس تُسرّع (وليس تبطّئ) عملية استرجاع السجلات.",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 83,
+          question:
+            "Procedure is compiled and a blueprint for how the query will run is created this blueprint is specified as",
+          options: ["Resolving", "Parsing", "Execution plan", "Function"],
+          correct: "Execution plan",
+          explanation:
+            "Execution Plan هو المخطط الذي يصف كيفية تنفيذ الاستعلام بعد التحليل والترجمة.",
+          topicLink: "../topics/topic_02_05_01.html",
+          topicTitle: "Stored Procedures",
+        },
+        {
+          id: 84,
+          question: "Returns the line number at which the error occurred",
+          options: [
+            "Error state",
+            "Error number",
+            "Error message",
+            "Error line",
+          ],
+          correct: "Error line",
+          explanation: "Error Line تُرجع رقم السطر الذي حدث فيه الخطأ.",
+          topicLink: "../topics/topic_02_05_01.html",
+          topicTitle: "Stored Procedures",
+        },
+        {
+          id: 85,
+          question:
+            "The index file for a primary index occupies a much smaller space than there are records in the data file",
+          options: ["True", "False"],
+          correct: "True",
+          explanation:
+            "صحيح! Primary Index هو Sparse — مدخلة واحدة لكل كتلة وليس لكل سجل، فيكون حجمه أصغر بكثير.",
+          topicLink: "../topics/topic_04_02_01.html",
+          topicTitle: "Primary Index",
+        },
+        {
+          id: 86,
+          question: "Data item named as:",
+          options: [
+            "Record",
+            "Disk block",
+            "Attribute value of a record",
+            "All of the above",
+          ],
+          correct: "All of the above",
+          explanation:
+            "عنصر البيانات يمكن أن يكون Record أو Disk Block أو Attribute Value حسب الـ Granularity.",
+          topicLink: "../topics/topic_05_01_01.html",
+          topicTitle: "Transaction Concepts",
+        },
+        {
+          id: 87,
+          question: "Read operations on the same item are not conflicting.",
+          options: ["True", "False"],
+          correct: "True",
+          explanation:
+            "صحيح! عمليات القراءة على نفس العنصر لا تتعارض — read-read ليس conflict.",
+          topicLink: "../topics/topic_05_02_01.html",
+          topicTitle: "Concurrency Problems",
+        },
+        {
+          id: 88,
+          question:
+            "Is used to add additional SQL statement or commands that are then processed",
+          options: [
+            "SQL manipulation",
+            "Function call injection",
+            "Code injection",
+            "Denial of service",
+          ],
+          correct: "Code injection",
+          explanation:
+            "Code Injection هو إضافة أوامر SQL إضافية يتم معالجتها — نوع من تهديدات الأمان.",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 89,
+          question:
+            "Ensure schedules are both strict and conflict serializable",
+          options: [
+            "Basic TO algorithm",
+            "Strict TO algorithm",
+            "Two phase locking algorithm",
+            "Cautious waiting algorithm",
+          ],
+          correct: "Strict TO algorithm",
+          explanation:
+            "Strict TO Algorithm يضمن أن الجداول تكون strict و conflict serializable.",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Transaction Schedules",
+        },
+        {
+          id: 90,
+          question:
+            "Can return any data type except text, ntext, image, cursor and timestamp",
+          options: [
+            "Procedures",
+            "Scalar Function",
+            "Trigger",
+            "Table valued function",
+          ],
+          correct: "Scalar Function",
+          explanation:
+            "Scalar Function تُرجع قيمة واحدة من أي نوع بيانات ما عدا text, ntext, image, cursor, timestamp.",
+          topicLink: "../topics/topic_02_05_03.html",
+          topicTitle: "Stored Functions",
+        },
+        {
+          id: 91,
+          question:
+            "Many users can access the system (database) concurrently is called single-user DBMS.",
+          options: ["True", "False"],
+          correct: "False",
+          explanation:
+            "خطأ! عندما يصل عدة مستخدمين بالتزامن يُسمى Multi-user DBMS وليس Single-user.",
+          topicLink: "../topics/topic_05_01_01.html",
+          topicTitle: "Transaction Concepts",
+        },
+        {
+          id: 92,
+          question:
+            "Denial of service is the most common threat to database system",
+          options: ["True", "False"],
+          correct: "False",
+          explanation:
+            "خطأ! SQL Injection هو التهديد الأكثر شيوعاً وليس Denial of Service.",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 93,
+          question: "locking operations are read lock (x) and unlock(x) only.",
+          options: ["True", "False"],
+          correct: "False",
+          explanation:
+            "خطأ! عمليات القفل تشمل: read_lock(X), write_lock(X), و unlock(X) — ثلاث عمليات.",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 94,
+          question: "Batches are temporary in nature",
+          options: ["True", "False"],
+          correct: "True",
+          explanation:
+            "صحيح! الـ Batches مؤقتة بطبيعتها — تُنفّذ مرة واحدة ولا تُحفظ.",
+          topicLink: "../topics/topic_02_05_01.html",
+          topicTitle: "Stored Procedures",
+        },
+        {
+          id: 95,
+          question: "does not contain a function body?",
+          options: [
+            "Trigger",
+            "Inline table valued function",
+            "Multi statement table valued function",
+            "Scalar function",
+          ],
+          correct: "Inline table valued function",
+          explanation:
+            "Inline Table-Valued Function لا تحتوي على function body — تُرجع نتيجة SELECT مباشرة.",
+          topicLink: "../topics/topic_02_05_03.html",
+          topicTitle: "Stored Functions",
+        },
+        {
+          id: 96,
+          question: "Size of a data item called granularity.",
+          options: ["True", "False"],
+          correct: "True",
+          explanation:
+            "صحيح! Granularity = حجم عنصر البيانات (Record, Block, أو Attribute).",
+          topicLink: "../topics/topic_05_01_01.html",
+          topicTitle: "Transaction Concepts",
+        },
+        {
+          id: 97,
+          question: "Downgrading is:",
+          options: [
+            "Issue a read_lock operation after a write_lock operation",
+            "Transaction that already holds a lock allowed to convert the lock from one state to another",
+            "Issue a read_lock operation then a write_lock operation",
+            "Variable associated with a data item describing status for operation that can be applied",
+          ],
+          correct: "Issue a read_lock operation after a write_lock operation",
+          explanation:
+            "Downgrading = تحويل القفل من write_lock إلى read_lock (تخفيض مستوى القفل).",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 98,
+          question: "The following are types of sensitivity data except:",
+          options: [
+            "Inherently Sensitive",
+            "Declared Sensitive",
+            "From a Sensitive Sources",
+            "Account Creation",
+          ],
+          correct: "Account Creation",
+          explanation:
+            "أنواع البيانات الحساسة: Inherently Sensitive, Declared Sensitive, From Sensitive Sources. Account Creation ليس نوعاً.",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 99,
+          question:
+            "is used to ensure data integrity before or after performing data manipulation",
+          options: [
+            "Scalar Function",
+            "Table valued Function",
+            "Procedures",
+            "Trigger",
+          ],
+          correct: "Trigger",
+          explanation:
+            "Trigger يُستخدم لضمان سلامة البيانات قبل أو بعد عمليات DML.",
+          topicLink: "../topics/topic_03_01_01.html",
+          topicTitle: "Creating Triggers",
+        },
+        {
+          id: 100,
+          question:
+            "Sparse index has an index entry for every search key value in the data file",
+          options: ["True", "False"],
+          correct: "False",
+          explanation:
+            "خطأ! Sparse Index يحتوي على مدخلة لكل كتلة فقط. Dense Index هو الذي يحتوي على مدخلة لكل قيمة.",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 101,
+          question:
+            "All of the following are types of transaction failures except:",
+          options: [
+            "Computer failure (system crash)",
+            "Transaction or system error",
+            "Disk failure",
+            "Aborted transaction",
+          ],
+          correct: "Aborted transaction",
+          explanation:
+            "Aborted Transaction ليس نوعاً من الأعطال بل هو نتيجة عطل. الأنواع: Computer Failure, Error, Disk Failure.",
+          topicLink: "../topics/topic_05_01_01.html",
+          topicTitle: "Transaction Concepts",
+        },
+        {
+          id: 102,
+          question:
+            "When the create procedure statement is executed the server compiles the procedure and save it as a database object",
+          options: ["True", "False"],
+          correct: "True",
+          explanation:
+            "صحيح! عند تنفيذ CREATE PROCEDURE، الخادم يُترجم الإجراء ويحفظه ككائن في قاعدة البيانات.",
+          topicLink: "../topics/topic_02_05_01.html",
+          topicTitle: "Stored Procedures",
+        },
+        {
+          id: 103,
+          question: "Timestamp is:",
+          options: [
+            "Unique identifier for each transaction",
+            "Lock data items to prevent concurrent access",
+            "Variable associated with a data item describing status for operation that can be applied",
+            "Set of rules to guarantee serializability",
+          ],
+          correct: "Unique identifier for each transaction",
+          explanation:
+            "Timestamp = معرّف فريد لكل معاملة يُستخدم في Timestamp Ordering Protocol.",
+          topicLink: "../topics/topic_05_04_03.html",
+          topicTitle: "Transaction Schedules",
+        },
+        {
+          id: 104,
+          question:
+            "If the output keyword is omitted the procedure will be executed but will not return any value",
+          options: ["True", "False"],
+          correct: "True",
+          explanation:
+            "صحيح! بدون OUTPUT keyword، الإجراء يُنفّذ لكن لا يُرجع قيمة للمتصل.",
+          topicLink: "../topics/topic_02_05_02.html",
+          topicTitle: "Parameter Modes",
+        },
+        {
+          id: 105,
+          question: "Locking generally considered to have low overhead.",
+          options: ["True", "False"],
+          correct: "False",
+          explanation:
+            "خطأ! Locking عادةً يُعتبر ذو overhead عالي بسبب إدارة الأقفال والانتظار والكشف عن deadlocks.",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 106,
+          question:
+            "DBMS must keep track of how privileges were granted if DBMS allows propagation",
+          options: ["True", "False"],
+          correct: "True",
+          explanation:
+            "صحيح! إذا سمح DBMS بنشر الصلاحيات، يجب تتبع كيفية منحها لإمكانية سحبها لاحقاً.",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 107,
+          question: "is used to access memory location which contain the data",
+          options: ["Function", "Procedure", "Cursor", "Trigger"],
+          correct: "Cursor",
+          explanation:
+            "Cursor يُستخدم للوصول إلى موقع الذاكرة الذي يحتوي على البيانات (Active Set).",
+          topicLink: "../topics/topic_02_04_01.html",
+          topicTitle: "Explicit Cursors",
+        },
+        {
+          id: 108,
+          question: "A computer failure also called:",
+          options: [
+            "System crash",
+            "Transaction failure",
+            "Disk failure",
+            "None of the above",
+          ],
+          correct: "System crash",
+          explanation:
+            "Computer Failure يُسمى أيضاً System Crash — خلل في الأجهزة أو البرمجيات.",
+          topicLink: "../topics/topic_05_01_01.html",
+          topicTitle: "Transaction Concepts",
+        },
+        {
+          id: 109,
+          question:
+            "The name of the tables that are created when a trigger is fired in response to the insert, delete or update statement are magic tables inserted and deleted?",
+          options: ["True", "False"],
+          correct: "True",
+          explanation:
+            "صحيح! Magic Tables (inserted و deleted) تُنشأ تلقائياً عند تنفيذ trigger استجابةً لـ INSERT/DELETE/UPDATE.",
+          topicLink: "../topics/topic_03_01_03.html",
+          topicTitle: "OLD/NEW Qualifiers",
+        },
+        {
+          id: 110,
+          question: "DAC polices have a low degree of flexibility",
+          options: ["True", "False"],
+          correct: "False",
+          explanation:
+            "خطأ! DAC (Discretionary Access Control) لديها درجة عالية من المرونة — يمكن للمالك منح/سحب الصلاحيات.",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 111,
+          question: "DML trigger can be explicitly invoked or executed.",
+          options: ["True", "False"],
+          correct: "False",
+          explanation:
+            "خطأ! DML Trigger يُنفّذ تلقائياً استجابةً لحدث DML — لا يمكن استدعاؤه صراحةً.",
+          topicLink: "../topics/topic_03_01_01.html",
+          topicTitle: "Creating Triggers",
+        },
+        {
+          id: 112,
+          question: "Pointer specifies physical record address",
+          options: [
+            "Logical index",
+            "Physical index",
+            "Primary index",
+            "Clustering index",
+          ],
+          correct: "Physical index",
+          explanation:
+            "Physical Index: المؤشر يحدد العنوان الفعلي للسجل على القرص.",
+          topicLink: "../topics/topic_04_01_01.html",
+          topicTitle: "Indexes as Access Paths",
+        },
+        {
+          id: 113,
+          question: "Used to protect sensitive transmitted data",
+          options: [
+            "Flow Control",
+            "Inference Control",
+            "Encryption",
+            "Access Control",
+          ],
+          correct: "Encryption",
+          explanation:
+            "Encryption (التشفير) يُستخدم لحماية البيانات الحساسة أثناء النقل.",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 114,
+          question: "Transaction processing systems is:",
+          options: [
+            "Describes local unit of database processing",
+            "Require high availability and fast response time",
+            "At most one user at a time can use the system",
+            "None of the above",
+          ],
+          correct: "Require high availability and fast response time",
+          explanation:
+            "Transaction Processing Systems تتطلب توفراً عالياً ووقت استجابة سريع.",
+          topicLink: "../topics/topic_05_01_01.html",
+          topicTitle: "Transaction Concepts",
+        },
+        {
+          id: 115,
+          question: "Tree is formed of leaves",
+          options: ["True", "False"],
+          correct: "False",
+          explanation:
+            "خطأ! الشجرة تتكون من Root (جذر) و Internal Nodes (عقد داخلية) و Leaves (أوراق) — ليس أوراق فقط.",
+          topicLink: "../topics/topic_04_04_03.html",
+          topicTitle: "B-Trees",
+        },
+        {
+          id: 116,
+          question: "Are types of database threats",
+          options: [
+            "Loss of integrity",
+            "Loss of availability",
+            "Loss of confidentiality",
+            "All the above",
+          ],
+          correct: "All the above",
+          explanation:
+            "جميعها أنواع تهديدات: فقدان السلامة، فقدان التوفر، فقدان السرية.",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 117,
+          question:
+            "Concurrency control subsystem responsible for generating read_lock and write_lock requests.",
+          options: ["True", "False"],
+          correct: "True",
+          explanation:
+            "صحيح! نظام التحكم في التزامن مسؤول عن توليد طلبات read_lock و write_lock.",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 118,
+          question: "specified on ordering key field of ordered file records",
+          options: [
+            "Secondary index",
+            "Clustering index",
+            "Primary index",
+            "Multilevel index",
+          ],
+          correct: "Primary index",
+          explanation:
+            "Primary Index يُنشأ على حقل المفتاح المرتب (ordering key field) لملف مرتب.",
+          topicLink: "../topics/topic_04_02_01.html",
+          topicTitle: "Primary Index",
+        },
+        {
+          id: 119,
+          question:
+            "Mandatory security mechanism used to grant privilege to users",
+          options: ["True", "False"],
+          correct: "False",
+          explanation:
+            "خطأ! DAC (Discretionary) هو الذي يُستخدم لمنح الصلاحيات. MAC (Mandatory) يعتمد على مستويات أمان.",
+          topicLink: "../topics/topic_05_04_04.html",
+          topicTitle: "Isolation Levels",
+        },
+        {
+          id: 120,
+          question:
+            "Trigger is used to prevent incorrect, unauthorized and inconsistent changes in data",
+          options: ["True", "False"],
+          correct: "True",
+          explanation:
+            "صحيح! Trigger يُستخدم لمنع التغييرات غير الصحيحة وغير المصرح بها وغير المتسقة.",
+          topicLink: "../topics/topic_03_01_01.html",
+          topicTitle: "Creating Triggers",
+        },
+      ];
+    </script>
+    <script>
+      /**
+       * Embedded Shared interactive exam logic
+       */
+      let selectedCount = 0;
+      let correctCount = 0;
+      let showAll = false;
+
+      function updateScore() {
+        document.getElementById(
+          "score-text"
+        ).textContent = `${correctCount} / ${selectedCount}`;
+        // Update the floating score counter as well
+        const counter = document.getElementById("score-counter");
+        if (counter) {
+          document.getElementById(
+            "score-text"
+          ).textContent = `${correctCount} / ${selectedCount}`;
+        }
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        examData.forEach((q) => {
+          const card = document.createElement("article");
+          card.className = "question-card";
+          card.dataset.answered = "false";
+
+          let optionsHtml = q.options
+            .map(
+              (opt) =>
+                `<li class="option" data-correct="${
+                  opt === q.correct
+                }" data-qid="${q.id}">${opt}</li>`
+            )
+            .join("");
+
+          card.innerHTML = `
+            <div class="question-header">
+              <span class="question-number">${q.id}</span>
+              <p class="question-text">${q.question}</p>
+            </div>
+            <ul class="options-list">${optionsHtml}</ul>
+            <div class="question-actions" id="actions-${q.id}" style="display:none">
+              <button class="undo-btn" data-qid="${q.id}">↩️ تراجع</button>
+            </div>
+            <div class="explanation-box" id="explanation-${q.id}">
+              <div class="explanation-title">💡 الشرح</div>
+              <p class="explanation-text">${q.explanation}</p>
+            </div>
+            <a href="${q.topicLink}" class="topic-link" style="display:none" id="topic-link-${q.id}">📖 راجع: ${q.topicTitle}</a>
+          `;
+          container.appendChild(card);
+        });
+
+        document
+          .querySelectorAll(".option")
+          .forEach((opt) => opt.addEventListener("click", handleOptionClick));
+        document
+          .querySelectorAll(".undo-btn")
+          .forEach((btn) => btn.addEventListener("click", handleUndo));
+      }
+
+      function handleOptionClick(e) {
+        const option = e.currentTarget;
+        const qid = option.dataset.qid;
+        const card = option.closest(".question-card");
+
+        if (card.dataset.answered === "true") return;
+        card.dataset.answered = "true";
+
+        const isCorrect = option.dataset.correct === "true";
+        option.classList.add("selected");
+
+        if (isCorrect) {
+          option.classList.add("correct-answer");
+          correctCount++;
+        } else {
+          option.classList.add("wrong-answer");
+          card.querySelectorAll(".option").forEach((o) => {
+            if (o.dataset.correct === "true") o.classList.add("reveal-correct");
+          });
+        }
+
+        card.querySelectorAll(".option").forEach((o) => {
+          if (
+            !o.classList.contains("selected") &&
+            !o.classList.contains("reveal-correct")
+          ) {
+            o.classList.add("dimmed");
+          }
+        });
+
+        document.getElementById(`explanation-${qid}`).classList.add("visible");
+        document.getElementById(`topic-link-${qid}`).style.display =
+          "inline-flex";
+        document.getElementById(`actions-${qid}`).style.display = "flex";
+
+        selectedCount++;
+        updateScore();
+      }
+
+      function handleUndo(e) {
+        const qid = e.currentTarget.dataset.qid;
+        const card = e.currentTarget.closest(".question-card");
+        resetQuestion(card, qid);
+      }
+
+      function resetQuestion(card, qid) {
+        const selectedOpt = card.querySelector(".option.selected");
+        if (selectedOpt && selectedOpt.dataset.correct === "true") {
+          correctCount--;
+        }
+        if (card.dataset.answered === "true") {
+          selectedCount--;
+        }
+
+        card.dataset.answered = "false";
+        card.querySelectorAll(".option").forEach((o) => {
+          o.classList.remove(
+            "selected",
+            "correct-answer",
+            "wrong-answer",
+            "reveal-correct",
+            "dimmed",
+            "correct"
+          );
+        });
+
+        document
+          .getElementById(`explanation-${qid}`)
+          .classList.remove("visible");
+        document.getElementById(`topic-link-${qid}`).style.display = "none";
+        document.getElementById(`actions-${qid}`).style.display = "none";
+
+        updateScore();
+      }
+
+      function resetAll() {
+        if (!confirm("هل تريد إعادة تعيين الاختبار بالكمل؟")) return;
+        examData.forEach((q) => {
+          const card = document.querySelector(
+            `.question-card:nth-child(${q.id})`
+          );
+          if (card) resetQuestion(card, q.id);
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function initToggleBtn() {
+        const toggleBtn = document.getElementById("toggle-answers");
+        if (!toggleBtn) return;
+        toggleBtn.addEventListener("click", () => {
+          showAll = !showAll;
+          if (showAll) {
+            document.querySelectorAll(".option").forEach((opt) => {
+              if (opt.dataset.correct === "true") opt.classList.add("correct");
+            });
+            document
+              .querySelectorAll(".explanation-box")
+              .forEach((e) => e.classList.add("visible"));
+            document
+              .querySelectorAll(".topic-link")
+              .forEach((l) => (l.style.display = "inline-flex"));
+            toggleBtn.innerHTML = "👁️ إخفاء الكل";
+            toggleBtn.classList.add("hidden-mode");
+          } else {
+            document
+              .querySelectorAll(".option.correct")
+              .forEach((opt) => opt.classList.remove("correct"));
+            document.querySelectorAll(".explanation-box").forEach((e) => {
+              const card = e.closest(".question-card");
+              if (card.dataset.answered !== "true")
+                e.classList.remove("visible");
+            });
+            document.querySelectorAll(".topic-link").forEach((l) => {
+              const card = l.closest(".question-card");
+              if (card.dataset.answered !== "true") l.style.display = "none";
+            });
+            toggleBtn.innerHTML = "👁️ إظهار الكل";
+            toggleBtn.classList.remove("hidden-mode");
+          }
+        });
+      }
+
+      function initResetBtn() {
+        const resetBtn = document.getElementById("reset-all");
+        if (resetBtn) {
+          resetBtn.addEventListener("click", resetAll);
+        }
+      }
+
+      // Initialize
+      window.onload = () => {
+        renderQuestions();
+        initToggleBtn();
+        initResetBtn();
+        updateScore();
+      };
+    </script>
+
+    <div id="search-modal" class="modal hidden">
+      <div class="modal-content">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="ابحث عن المواضيع..."
+        />
+        <div id="search-results"></div>
+      </div>
+    </div>
+
+    <script>
+      const SITE_ROOT = "../";
+    </script>
+    <script src="../assets/js/search_data.js"></script>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CASE Expressions and Statements | Data Structures Study Guide</title>
+    <title>CASE Expressions &amp; Statements | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,67 +30,132 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_02/index.html">الوحدة 2</a> ›
-        <span>CASE Expressions and Statements</span>
+        <span>CASE Expressions</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>CASE Expressions and Statements</h1>
+          <h1>CASE Expressions &amp; Statements</h1>
           <p class="topic-title-ar">تعبيرات وجمل CASE</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 43: CASE Expression Syntax -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              تستخدم <strong>CASE</strong> لاختبار شروط متعددة واختيار نتيجة
-              واحدة بناءً عليها. وهي بديل أكثر تنظيماً لجمل
-              <code>IF-ELSIF</code> المتعددة.
-            </p>
-          </section>
-
-          <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>تعبيرات CASE Expressions</h3>
-            <p>
-              تقوم بإرجاع قيمة واحدة بناءً على شرط معين. يمكن استخدامها، على
-              سبيل المثال، في عمليات الإسناد.
-            </p>
+            <h2>📖 CASE Expression (Slide 43)</h2>
+            <p>تعبير CASE يختار نتيجة ويُرجعها:</p>
             <pre><code class="language-sql">CASE selector
   WHEN expression1 THEN result1
   WHEN expression2 THEN result2
   ...
-  [ELSE result_default]
+  WHEN expressionN THEN resultN
+  [ELSE resultN+1]
 END;</code></pre>
+          </section>
 
-            <h3>مثال (Simple CASE)</h3>
-            <pre><code class="language-sql">appraisal := 
-  CASE grade
-    WHEN 'A' THEN 'Excellent'
-    WHEN 'B' THEN 'Very Good'
-    WHEN 'C' THEN 'Good'
-    ELSE 'No such grade'
-  END;</code></pre>
+          <!-- Slide 44: CASE Expression Example -->
+          <section class="content-section">
+            <h2>💻 مثال: CASE Expression (Slide 44)</h2>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+SET VERIFY OFF
+DECLARE
+  grade     CHAR(1) := UPPER('&grade');
+  appraisal VARCHAR2(20);
+BEGIN
+  appraisal :=
+    CASE grade
+      WHEN 'A' THEN 'Excellent'
+      WHEN 'B' THEN 'Very Good'
+      WHEN 'C' THEN 'Good'
+      ELSE 'No such grade'
+    END;
 
-            <h3>مثال (Searched CASE)</h3>
-            <p>يتم فيها اختبار شروط مختلفة (ليست مساوات فقط).</p>
-            <pre><code class="language-sql">appraisal := 
-  CASE 
-    WHEN grade = 'A' THEN 'Excellent'
-    WHEN grade IN ('B','C') THEN 'Good' 
-    ELSE 'No such grade' 
-  END;</code></pre>
+  DBMS_OUTPUT.PUT_LINE('Grade: ' || grade ||
+                       ' Appraisal ' || appraisal);
+END;
+/</code></pre>
+          </section>
 
-            <h3>جمل CASE Statements</h3>
-            <p>تستخدم لتنفيذ كتل برمجية كاملة بدلاً من مجرد إرجاع قيمة.</p>
-            <pre><code class="language-sql">CASE mngid
-  WHEN 108 THEN 
-     SELECT department_id INTO deptid ...;
-  WHEN 200 THEN 
-     ...;
-END CASE;</code></pre>
+          <!-- Slide 45: Searched CASE -->
+          <section class="content-section">
+            <h2>🔍 Searched CASE Expression (Slide 45)</h2>
+            <p>بدون selector — كل WHEN يحتوي على شرط مستقل:</p>
+            <pre><code class="language-sql">DECLARE
+  grade     CHAR(1) := UPPER('&grade');
+  appraisal VARCHAR2(20);
+BEGIN
+  appraisal :=
+    CASE
+      WHEN grade = 'A' THEN 'Excellent'
+      WHEN grade IN ('B','C') THEN 'Good'
+      ELSE 'No such grade'
+    END;
+
+  DBMS_OUTPUT.PUT_LINE('Grade: ' || grade ||
+                       ' Appraisal ' || appraisal);
+END;
+/</code></pre>
+          </section>
+
+          <!-- Slide 46: CASE Statement -->
+          <section class="content-section">
+            <h2>📋 CASE Statement (Slide 46)</h2>
+            <p>CASE كجملة (Statement) — تنفذ أوامر وليس مجرد إرجاع قيمة:</p>
+            <pre><code class="language-sql">DECLARE
+  deptid   NUMBER;
+  deptname VARCHAR2(20);
+  emps     NUMBER;
+  mngid    NUMBER := 108;
+BEGIN
+  CASE mngid
+    WHEN 108 THEN
+      SELECT department_id, department_name
+      INTO deptid, deptname FROM departments
+      WHERE manager_id = 108;
+
+      SELECT COUNT(*) INTO emps FROM employees
+      WHERE department_id = deptid;
+    WHEN 200 THEN
+      ...
+  END CASE;
+
+  DBMS_OUTPUT.PUT_LINE('You are working in the ' || deptname ||
+    ' department. There are ' || emps || ' employees');
+END;
+/</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>⚠️ فرق مهم:</strong><br />
+                • <strong>CASE Expression</strong> تنتهي بـ
+                <code>END;</code> (تُرجع قيمة)<br />
+                • <strong>CASE Statement</strong> تنتهي بـ
+                <code>END CASE;</code> (تُنفذ أوامر)
+              </p>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  <strong>CASE Expression</strong>: تُرجع قيمة → تنتهي بـ
+                  <code>END;</code>
+                </li>
+                <li>
+                  <strong>CASE Statement</strong>: تُنفذ أوامر → تنتهي بـ
+                  <code>END CASE;</code>
+                </li>
+                <li>
+                  <strong>Searched CASE</strong>: بدون selector، شروط مستقلة في
+                  كل WHEN
+                </li>
+                <li>
+                  بدون ELSE في CASE Statement → خطأ <code>CASE_NOT_FOUND</code>
+                </li>
+              </ul>
+            </div>
           </section>
         </div>
 

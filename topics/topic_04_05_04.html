@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RAID Technology | Data Structures Study Guide</title>
+    <title>RAID Technology | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -35,77 +35,122 @@
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
+          <span class="difficulty-badge intermediate">متوسط</span>
           <h1>RAID Technology</h1>
           <p class="topic-title-ar">تقنية RAID</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 129 -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              RAID (Redundant Array of Independent Disks) هي تقنية تستخدم
-              أقراصاً متعددة لزيادة الموثوقية (Reliability) عبر التكرار، أو
-              زيادة الأداء (Performance) عبر التوازي (Parallelism).
-            </p>
-          </section>
-
-          <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>مستويات RAID | RAID Levels</h3>
+            <h2>📖 ما هو RAID؟ (Slide 129)</h2>
+            <p><strong>Redundant Arrays of Independent Disks</strong></p>
             <ul class="styled-list">
+              <li><strong>الهدف:</strong> تحسين سرعة القرص ووقت الوصول</li>
+              <li>مجموعة من معماريات RAID (المستويات 0-6)</li>
               <li>
-                <strong>RAID 0 (Data Striping):</strong>
+                <strong>Data Striping</strong>: توزيع البيانات عبر عدة أقراص
                 <ul>
-                  <li>توزيع البيانات عبر عدة أقراص لتحسين الأداء (السرعة).</li>
-                  <li>
-                    <strong>لا يوفر تكراراً (Redundancy):</strong> فشل قرص واحد
-                    يؤدي لضياع البيانات كاملة.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <strong>RAID 1 (Mirroring):</strong>
-                <ul>
-                  <li>نسخ البيانات بالكامل على قرصين أو أكثر.</li>
-                  <li>
-                    <strong>يوفر موثوقية عالية (Reliability):</strong> إذا تعطل
-                    قرص، يعمل الآخر.
-                  </li>
-                  <li>الأغلى تكلفة (يتطلب ضعف المساحة التخزينية).</li>
-                </ul>
-              </li>
-              <li>
-                <strong
-                  >RAID 5 (Block-Level Striping with Distributed
-                  Parity):</strong
-                >
-                <ul>
-                  <li>
-                    يوزع البيانات ومعلومات التصحيح (Parity) عبر جميع الأقراص.
-                  </li>
-                  <li>يوفر توازناً جيداً بين الأداء والموثوقية والتكلفة.</li>
-                  <li>يمكنه تحمل تعطل قرص واحد فقط.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>RAID 10 (1+0):</strong>
-                <ul>
-                  <li>
-                    مزيج من RAID 1 و RAID 0. يجمع بين السرعة والموثوقية ولكنه
-                    مكلف جداً.
-                  </li>
+                  <li>Bit-level striping</li>
+                  <li>Block-level striping</li>
                 </ul>
               </li>
             </ul>
           </section>
+
+          <!-- Slides 130-132: RAID Levels -->
+          <section class="content-section">
+            <h2>📊 مستويات RAID (Slides 130-132)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>المستوى</th>
+                  <th>الوصف</th>
+                  <th>الميزة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Level 0</strong></td>
+                  <td>
+                    Data Striping فقط، <strong>بدون</strong> بيانات احتياطية
+                  </td>
+                  <td>أعلى سرعة، بدون حماية</td>
+                </tr>
+                <tr>
+                  <td><strong>Level 1</strong></td>
+                  <td><strong>Mirroring</strong> — نسخ مطابقة للأقراص</td>
+                  <td>أسهل في إعادة البناء</td>
+                </tr>
+                <tr>
+                  <td><strong>Level 2</strong></td>
+                  <td>Hamming Codes لاكتشاف وتصحيح الأخطاء</td>
+                  <td>Memory-style redundancy</td>
+                </tr>
+                <tr>
+                  <td><strong>Level 3</strong></td>
+                  <td>قرص واحد للـ <strong>Parity</strong></td>
+                  <td>يعتمد على Disk Controller</td>
+                </tr>
+                <tr>
+                  <td><strong>Level 4</strong></td>
+                  <td>Block-level striping + قرص Parity</td>
+                  <td>Block-level data striping</td>
+                </tr>
+                <tr>
+                  <td><strong>Level 5</strong></td>
+                  <td>
+                    Block-level striping + <strong>Parity موزع</strong> على كل
+                    الأقراص
+                  </td>
+                  <td>⭐ مُفضّل للتخزين الكبير</td>
+                </tr>
+                <tr>
+                  <td><strong>Level 6</strong></td>
+                  <td>P+Q redundancy — قرصان احتياطيان</td>
+                  <td>يحمي من فشل <strong>قرصين</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="content-section">
+            <h2>💡 ملاحظات مهمة</h2>
+            <ul class="styled-list">
+              <li>
+                إعادة البناء (Rebuilding) أسهل في <strong>Level 1</strong>
+              </li>
+              <li>المستويات الأخرى تتطلب قراءة أقراص متعددة لإعادة البناء</li>
+              <li>
+                <strong>Level 3 و Level 5</strong> مُفضّلان للتخزين الكبير
+              </li>
+            </ul>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>RAID = Redundant Arrays of Independent Disks</li>
+                <li>
+                  Data Striping يُحسّن السرعة | Redundancy يُحسّن الموثوقية
+                </li>
+                <li>
+                  Level 0: سرعة فقط | Level 1: mirroring | Level 5: الأكثر
+                  شيوعاً
+                </li>
+                <li>Level 6: حماية من فشل قرصين</li>
+              </ul>
+            </div>
+          </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_04_05_02.html" class="nav-prev">← Sorted Files</a>
+          <a href="topic_04_05_02.html" class="nav-prev"
+            >← File Organizations</a
+          >
           <a href="../modules/module_05/index.html" class="nav-next"
-            >الوحدة 5: Transaction Processing →</a
+            >الوحدة 5: المعاملات →</a
           >
         </nav>
       </article>

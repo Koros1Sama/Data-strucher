@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Triggers | Data Structures Study Guide</title>
+    <title>Creating Triggers | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,122 +30,190 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_03/index.html">الوحدة 3</a> ›
-        <span>المشغلات (Triggers)</span>
+        <span>Creating Triggers</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Triggers</h1>
-          <p class="topic-title-ar">المشغلات (Triggers)</p>
+          <h1>Creating DML Triggers</h1>
+          <p class="topic-title-ar">إنشاء المشغّلات</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 2: Types of Triggers -->
           <section class="content-section">
-            <h2>🔫 ما هو المشغل (Trigger)؟</h2>
+            <h2>📖 ما هو Trigger؟ (Slide 2)</h2>
             <p>
-              هو كتلة PL/SQL تُنفذ
-              <span class="term" data-ar="تلقائياً عند حدوث حدث معين"
-                >Automatically</span
-              >
-              في قاعدة البيانات. لا يمكن استدعاؤه يدوياً مثل Procedure، بل
-              "ينطلق" (Fires) عند حدوث شيء مثل INSERT أو UPDATE أو DELETE.
+              المشغّل (Trigger) هو <strong>كتلة PL/SQL</strong> أو إجراء مرتبط
+              بجدول أو View أو Schema أو Database، ويُنفَّذ
+              <strong>تلقائياً</strong> عند حدث معين.
             </p>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>الشرح</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Application Trigger</strong></td>
+                  <td>يعمل عند حدث في تطبيق معين</td>
+                </tr>
+                <tr>
+                  <td><strong>Database Trigger</strong></td>
+                  <td>
+                    يعمل عند حدث بيانات (DML) أو حدث نظام (Logon/Shutdown)
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Slide 3: Guidelines -->
+          <section class="content-section">
+            <h2>📋 إرشادات التصميم | Guidelines (Slide 3)</h2>
             <div class="highlight-box">
               <p>
-                <strong>استخدامات شائعة:</strong> التدقيق الأمني، إنشاء سجلات
-                مراقبة (Auditing)، التحقق من صحة البيانات المعقدة، النسخ
-                الاحتياطي التلقائي.
+                <strong>✅ استخدم Triggers لـ:</strong><br />
+                • تنفيذ إجراءات مرتبطة (Related Actions)<br />
+                • تركيز العمليات العامة (Centralize Global Operations)<br /><br />
+                <strong>❌ لا تستخدم Triggers عندما:</strong><br />
+                • الوظيفة موجودة مسبقاً في Oracle Server<br />
+                • تتكرر مع triggers أخرى<br />
+                • الإفراط في الاستخدام يؤدي لتعقيدات صعبة الصيانة
+              </p>
+            </div>
+          </section>
+
+          <!-- Slide 4: Syntax -->
+          <section class="content-section">
+            <h2>⚙️ صيغة إنشاء DML Trigger (Slide 4)</h2>
+            <pre><code class="language-sql">CREATE [OR REPLACE] TRIGGER trigger_name
+  timing
+  event1 [OR event2 OR event3]
+ON object_name
+[[REFERENCING OLD AS old | NEW AS new]
+  FOR EACH ROW
+  [WHEN (condition)]]
+trigger_body</code></pre>
+
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>العنصر</th>
+                  <th>الشرح</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>timing</strong></td>
+                  <td>BEFORE | AFTER | INSTEAD OF</td>
+                </tr>
+                <tr>
+                  <td><strong>event</strong></td>
+                  <td>INSERT | UPDATE [OF column] | DELETE</td>
+                </tr>
+                <tr>
+                  <td><strong>FOR EACH ROW</strong></td>
+                  <td>يجعلها Row Trigger (بدونها = Statement Trigger)</td>
+                </tr>
+                <tr>
+                  <td><strong>WHEN</strong></td>
+                  <td>شرط إضافي (اختياري)</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Slide 5: Statement vs Row -->
+          <section class="content-section">
+            <h2>🔄 أنواع DML Triggers (Slide 5)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>التنفيذ</th>
+                  <th>ملاحظات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Statement Trigger</strong></td>
+                  <td><strong>مرة واحدة</strong> لكل جملة DML</td>
+                  <td>النوع الافتراضي — يعمل حتى لو لم تتأثر أي صفوف</td>
+                </tr>
+                <tr>
+                  <td><strong>Row Trigger</strong></td>
+                  <td><strong>مرة لكل صف</strong> متأثر</td>
+                  <td>
+                    يُحدد بـ <code>FOR EACH ROW</code> — لا يعمل إذا لم تتأثر
+                    صفوف
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Slide 6: Timing -->
+          <section class="content-section">
+            <h2>⏰ توقيت التنفيذ | Trigger Timing (Slide 6)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>التوقيت</th>
+                  <th>الشرح</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>BEFORE</strong></td>
+                  <td>ينفذ <strong>قبل</strong> جملة DML على الجدول</td>
+                </tr>
+                <tr>
+                  <td><strong>AFTER</strong></td>
+                  <td>ينفذ <strong>بعد</strong> جملة DML على الجدول</td>
+                </tr>
+                <tr>
+                  <td><strong>INSTEAD OF</strong></td>
+                  <td>
+                    ينفذ <strong>بدلاً من</strong> الجملة — للـ Views غير
+                    القابلة للتعديل
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="highlight-box">
+              <p>
+                <strong>⚠️ Note:</strong> إذا عُرّفت عدة triggers لنفس الكائن،
+                ترتيب التنفيذ عشوائي (arbitrary).
               </p>
             </div>
           </section>
 
           <section class="content-section">
-            <h2>⚙️ أنواع المشغلات</h2>
-
-            <h3>1. حسب مستوى التنفيذ (Timing Level)</h3>
-            <ul>
-              <li>
-                <strong>Statement Trigger:</strong> ينطلق مرة واحدة للجملة ككل
-                (حتى لو أثرت على 1000 صف). هذا هو الافتراضي.
-              </li>
-              <li>
-                <strong>Row Trigger:</strong> ينطلق مرة واحدة لكل صف يتأثر
-                (نستخدم <code>FOR EACH ROW</code>).
-              </li>
-            </ul>
-
-            <h3>2. حسب وقت التنفيذ (Timing Point)</h3>
-            <ul>
-              <li>
-                <strong>BEFORE:</strong> قبل تنفيذ العملية (ممتاز للتحقق من
-                البيانات).
-              </li>
-              <li>
-                <strong>AFTER:</strong> بعد تنفيذ العملية (ممتاز للتسجيل والـ
-                Auditing).
-              </li>
-              <li>
-                <strong>INSTEAD OF:</strong> بدلاً من العملية (يستخدم مع الـ
-                Views فقط).
-              </li>
-            </ul>
-          </section>
-
-          <section class="content-section">
-            <h2>💻 مثال: Row Trigger (تدقيق الرواتب)</h2>
-            <p>هذا المثال يمنع تقليل راتب الموظف.</p>
-
-            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER check_salary
-BEFORE UPDATE OF salary ON employees
-FOR EACH ROW
-BEGIN
-    -- :OLD تشير للقيمة القديمة، :NEW تشير للقيمة الجديدة
-    IF :NEW.salary < :OLD.salary THEN
-        RAISE_APPLICATION_ERROR(-20001, 'لا يُسمح بتخفيض الراتب!');
-    END IF;
-END;
-/</code></pre>
-          </section>
-
-          <section class="content-section">
-            <h2>🔑 المتغيرات الخاصة :OLD و :NEW</h2>
-            <p>تتوفر فقط في Row Triggers وتستخدم للوصول لقيم الأعمدة:</p>
-            <table class="comparison-table">
-              <thead>
-                <tr>
-                  <th>العملية</th>
-                  <th>:OLD</th>
-                  <th>:NEW</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>INSERT</strong></td>
-                  <td>NULL</td>
-                  <td>القيمة المدخلة</td>
-                </tr>
-                <tr>
-                  <td><strong>UPDATE</strong></td>
-                  <td>القيمة قبل التعديل</td>
-                  <td>القيمة بعد التعديل</td>
-                </tr>
-                <tr>
-                  <td><strong>DELETE</strong></td>
-                  <td>القيمة قبل الحذف</td>
-                  <td>NULL</td>
-                </tr>
-              </tbody>
-            </table>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  Trigger = كتلة PL/SQL تعمل <strong>تلقائياً</strong> عند حدث
+                </li>
+                <li>الأنواع: Statement (مرة واحدة) vs Row (لكل صف)</li>
+                <li>التوقيت: BEFORE | AFTER | INSTEAD OF</li>
+                <li>الأحداث: INSERT | UPDATE [OF col] | DELETE</li>
+                <li><code>FOR EACH ROW</code> = Row Trigger</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="../modules/module_02/index.html" class="nav-prev"
-            >← الوحدة 2</a
+          <a href="../modules/module_03/index.html" class="nav-prev"
+            >← الوحدة 3</a
           >
-          <a href="../modules/module_04/index.html" class="nav-next"
-            >الوحدة 4: الفهرسة (Indexing) →</a
+          <a href="topic_03_01_02.html" class="nav-next"
+            >Trigger Firing Sequence →</a
           >
         </nav>
       </article>

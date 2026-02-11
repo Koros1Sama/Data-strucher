@@ -1,23 +1,18 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nested Loops and Labels | Data Structures Study Guide</title>
+    <title>Nested Loops &amp; Labels | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="stylesheet" href="../assets/css/syntax.css" />
   </head>
   <body>
     <nav class="navbar">
-      <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
-      </div>
+      <div class="nav-brand"><a href="../index.html">📚 PL/SQL & Database Systems</a></div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
         <a href="../exam/index.html">📝 نموذج الاختبار</a>
@@ -30,7 +25,7 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_02/index.html">الوحدة 2</a> ›
-        <span>Nested Loops and Labels</span>
+        <span>Nested Loops &amp; Labels</span>
       </nav>
 
       <article class="topic-page">
@@ -41,56 +36,84 @@
         </header>
 
         <div class="topic-body">
+          <!-- Slide 59 -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              يمكن وضع الحلقات داخل بعضها البعض (Nested Loops) لتنفيذ مهام
-              معقدة. وللتحكم في الخروج من حلقة معينة أو الانتقال إليها، نستخدم
-              التسميات (Labels).
-            </p>
+            <h2>📖 المفهوم | Concept (Slide 59)</h2>
+            <ul class="styled-list">
+              <li>يمكن <strong>تداخل</strong> الحلقات إلى عدة مستويات</li>
+              <li>استخدم <strong>التسميات (Labels)</strong> للتفريق بين الكتل والحلقات</li>
+              <li>يمكن الخروج من الحلقة الخارجية بـ <code>EXIT</code> مع ذكر <strong>اسمها</strong></li>
+            </ul>
           </section>
 
+          <!-- Slide 60 -->
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>الحلقات المتداخلة (Nested Loops)</h3>
-            <p>
-              هي حلقة داخل حلقة أخرى. الحلقة الداخلية تكمل دورتها كاملة لكل
-              تكرار واحد من الحلقة الخارجية.
-            </p>
-
-            <h3>التسميات (Labels)</h3>
-            <p>
-              تستخدم لتمييز الكتل البرمجية أو الحلقات. تكتب التسمية بين قوسين
-              مزدوجين <code>&lt;&lt;label_name&gt;&gt;</code>. فائدتها الرئيسية
-              هي السماح بالخروج من حلقات متعددة باستخدام
-              <code>EXIT label_name</code>.
-            </p>
-
-            <h3>مثال شامل | Comprehensive Example</h3>
+            <h2>💻 مثال من المنهج (Slide 60)</h2>
             <pre><code class="language-sql">BEGIN
-  &lt;&lt;Outer_Loop&gt;&gt;
+  <<Outer_loop>>
   LOOP
     counter := counter + 1;
     EXIT WHEN counter > 10;
-    
-    &lt;&lt;Inner_Loop&gt;&gt;
+
+    <<Inner_loop>>
     LOOP
       ...
-      EXIT Outer_Loop WHEN total_done = 'YES'; -- Exit both loops
-      EXIT WHEN inner_done = 'YES';           -- Exit inner loop only
-    END LOOP Inner_Loop;
-    
-  END LOOP Outer_Loop;
-END;</code></pre>
+      EXIT Outer_loop WHEN total_done = 'YES';
+      -- يخرج من كلتا الحلقتين!
+
+      EXIT WHEN inner_done = 'YES';
+      -- يخرج من الحلقة الداخلية فقط
+      ...
+    END LOOP Inner_loop;
+    ...
+  END LOOP Outer_loop;
+END;
+/</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>🔑 الفرق الأساسي</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr><th>الأمر</th><th>التأثير</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>EXIT;</code></td>
+                  <td>يخرج من الحلقة <strong>الحالية</strong> فقط (الأقرب)</td>
+                </tr>
+                <tr>
+                  <td><code>EXIT Outer_loop;</code></td>
+                  <td>يخرج من الحلقة <strong>المسمّاة</strong> (وكل ما بداخلها)</td>
+                </tr>
+                <tr>
+                  <td><code>EXIT WHEN condition;</code></td>
+                  <td>يخرج بشرط من الحلقة الحالية</td>
+                </tr>
+                <tr>
+                  <td><code>EXIT label WHEN condition;</code></td>
+                  <td>يخرج بشرط من الحلقة المسمّاة</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>التسمية (Label) بين <code>&lt;&lt;name&gt;&gt;</code></li>
+                <li>يمكن تسمية الـ <code>END LOOP</code> أيضاً: <code>END LOOP label;</code></li>
+                <li><code>EXIT label</code> يخرج من الحلقة المسمّاة وكل ما بداخلها</li>
+                <li><code>EXIT</code> بدون label يخرج من الأقرب فقط</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
           <a href="topic_02_03_03.html" class="nav-prev">← Loop Types</a>
-          <a href="../ch_02_04/topic_02_04_01.html" class="nav-next"
-            >Cursor Fundamentals →</a
-          >
+          <a href="topic_02_04_01.html" class="nav-next">Explicit Cursors →</a>
         </nav>
       </article>
     </main>

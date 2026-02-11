@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cursors | Data Structures Study Guide</title>
+    <title>IF Statements in PL/SQL | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,114 +30,190 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_02/index.html">الوحدة 2</a> ›
-        <span>المؤشرات (Cursors)</span>
+        <span>IF Statements</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Cursors</h1>
-          <p class="topic-title-ar">المؤشرات (Cursors)</p>
+          <h1>IF Statements</h1>
+          <p class="topic-title-ar">جمل IF الشرطية</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 40: IF Syntax -->
           <section class="content-section">
-            <h2>📍 ما هو المؤشر (Cursor)؟</h2>
-            <p>
-              المؤشر هو
-              <span class="term" data-ar="مؤشر لمنطقة في الذاكرة">Pointer</span>
-              يشير إلى منطقة خاصة في الذاكرة (Context Area) حيث يتم معالجة جملة
-              SQL. يسمح لنا المؤشر بالتعامل مع نتيجة الاستعلام (SELECT) صفاً بصف
-              (Row-by-Row).
-            </p>
+            <h2>📖 الصيغة العامة | Syntax (Slide 40)</h2>
+            <pre><code class="language-sql">IF condition THEN
+  statements;
+[ELSIF condition THEN
+  statements;]
+[ELSE
+  statements;]
+END IF;</code></pre>
           </section>
 
+          <!-- Slide 41: IF ELSIF ELSE Example -->
           <section class="content-section">
-            <h2>🔄 أنواع المؤشرات</h2>
+            <h2>💻 مثال: IF ELSIF ELSE (Slide 41)</h2>
+            <pre><code class="language-sql">DECLARE
+  myage NUMBER := 21;
+BEGIN
+  IF myage < 11 THEN
+    DBMS_OUTPUT.PUT_LINE('I am a child');
+  ELSIF myage < 20 THEN
+    DBMS_OUTPUT.PUT_LINE('I am young');
+  ELSIF myage < 30 THEN
+    DBMS_OUTPUT.PUT_LINE('I am in my twenties');
+  ELSIF myage < 40 THEN
+    DBMS_OUTPUT.PUT_LINE('I am in my thirties');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('I am always young');
+  END IF;
+END;
+/</code></pre>
+          </section>
 
-            <div class="types-grid">
-              <div class="type-card">
-                <h3>1. مؤشر ضمني (Implicit Cursor)</h3>
-                <p>
-                  يتم إنشاؤه <strong>تلقائياً</strong> بواسطة Oracle عند تنفيذ
-                  أي جملة DML (INSERT, UPDATE, DELETE) أو جملة SELECT INTO (التي
-                  ترجع صفاً واحداً).
-                </p>
-              </div>
-              <div class="type-card">
-                <h3>2. مؤشر صريح (Explicit Cursor)</h3>
-                <p>
-                  يتم تعريفه <strong>يدوياً</strong> بواسطة المبرمج للتحكم في
-                  استعلام يرجع أكثر من صف (Multiple Rows).
-                </p>
-              </div>
+          <!-- Slide 42: NULL in IF -->
+          <section class="content-section">
+            <h2>⚠️ قيم NULL في IF (Slide 42)</h2>
+            <pre><code class="language-sql">DECLARE
+  myage NUMBER;   -- قيمته NULL (لم نعطه قيمة)
+BEGIN
+  IF myage < 11 THEN
+    DBMS_OUTPUT.PUT_LINE('I am a child');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('I am not a child');
+  END IF;
+END;
+/
+-- النتيجة: 'I am not a child'
+-- لأن NULL < 11 تُقيَّم كـ NULL (ليس TRUE)، فيذهب لـ ELSE</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>⚠️ مهم جداً:</strong> أي مقارنة مع NULL تُرجع NULL وليس
+                TRUE أو FALSE. لذلك الشرط لا يتحقق وينتقل البرنامج إلى ELSE.
+              </p>
             </div>
           </section>
 
+          <!-- Slides 47-49: Handling Nulls & Logic Tables -->
           <section class="content-section">
-            <h2>📝 خطوات التعامل مع المؤشر الصريح (Explicit)</h2>
-            <p>يجب اتباع 4 خطوات بالترتيب:</p>
-            <ol class="styled-list">
-              <li>
-                <strong>DECLARE:</strong> تعريف المؤشر وتحديد جملة SELECT
-                المرتبطة به.
-              </li>
-              <li>
-                <strong>OPEN:</strong> فتح المؤشر (تنفيذ الاستعلام وحجز
-                الذاكرة).
-              </li>
-              <li><strong>FETCH:</strong> جلب البيانات صفاً تلو الآخر.</li>
-              <li><strong>CLOSE:</strong> إغلاق المؤشر وتحرير الذاكرة.</li>
-            </ol>
-          </section>
-
-          <section class="content-section">
-            <h2>💻 مثال عملي</h2>
-            <pre><code class="language-sql">DECLARE
-    -- 1. تعريف المؤشر
-    CURSOR c_emps IS 
-        SELECT last_name, salary FROM employees WHERE department_id = 90;
-        
-    v_name   employees.last_name%TYPE;
-    v_sal    employees.salary%TYPE;
-BEGIN
-    -- 2. فتح المؤشر
-    OPEN c_emps;
-    
-    LOOP
-        -- 3. جلب صف واحد
-        FETCH c_emps INTO v_name, v_sal;
-        
-        -- شرط الخروج: إذا لم نجد بيانات
-        EXIT WHEN c_emps%NOTFOUND;
-        
-        DBMS_OUTPUT.PUT_LINE(v_name || ' earns ' || v_sal);
-    END LOOP;
-    
-    -- 4. إغلاق المؤشر
-    CLOSE c_emps;
-END;</code></pre>
-          </section>
-
-          <section class="content-section">
-            <h2>⚡ خصائص المؤشر (Cursor Attributes)</h2>
-            <p>تستخدم لمعرفة حالة المؤشر (تسبق بـ <code>%</code>):</p>
+            <h2>📋 جداول المنطق مع NULL | Logic Tables (Slides 47-48)</h2>
+            <p>قواعد التعامل مع القيم الـ NULL في المقارنات:</p>
             <ul class="styled-list">
-              <li><code>%FOUND</code>: ترجع TRUE إذا تم جلب صف بنجاح.</li>
-              <li><code>%NOTFOUND</code>: ترجع TRUE إذا لم يعد هناك صفوف.</li>
-              <li>
-                <code>%ROWCOUNT</code>: عدد الصفوف التي تمت معالجتها حتى الآن.
-              </li>
-              <li><code>%ISOPEN</code>: هل المؤشر مفتوح أم لا؟</li>
+              <li>أي مقارنة بسيطة مع NULL تُرجع NULL</li>
+              <li><code>NOT NULL</code> يُرجع NULL</li>
+              <li>إذا كان الشرط NULL، لا تُنفَّذ الجمل المرتبطة</li>
             </ul>
+
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>AND</th>
+                  <th>TRUE</th>
+                  <th>FALSE</th>
+                  <th>NULL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>TRUE</strong></td>
+                  <td>TRUE</td>
+                  <td>FALSE</td>
+                  <td>NULL</td>
+                </tr>
+                <tr>
+                  <td><strong>FALSE</strong></td>
+                  <td>FALSE</td>
+                  <td>FALSE</td>
+                  <td>FALSE</td>
+                </tr>
+                <tr>
+                  <td><strong>NULL</strong></td>
+                  <td>NULL</td>
+                  <td>FALSE</td>
+                  <td>NULL</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="comparison-table" style="margin-top: 10px">
+              <thead>
+                <tr>
+                  <th>OR</th>
+                  <th>TRUE</th>
+                  <th>FALSE</th>
+                  <th>NULL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>TRUE</strong></td>
+                  <td>TRUE</td>
+                  <td>TRUE</td>
+                  <td>TRUE</td>
+                </tr>
+                <tr>
+                  <td><strong>FALSE</strong></td>
+                  <td>TRUE</td>
+                  <td>FALSE</td>
+                  <td>NULL</td>
+                </tr>
+                <tr>
+                  <td><strong>NULL</strong></td>
+                  <td>TRUE</td>
+                  <td>NULL</td>
+                  <td>NULL</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="comparison-table" style="margin-top: 10px">
+              <thead>
+                <tr>
+                  <th>NOT</th>
+                  <th>النتيجة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>TRUE</strong></td>
+                  <td>FALSE</td>
+                </tr>
+                <tr>
+                  <td><strong>FALSE</strong></td>
+                  <td>TRUE</td>
+                </tr>
+                <tr>
+                  <td><strong>NULL</strong></td>
+                  <td>NULL</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>IF → ELSIF → ELSE → END IF (لا تنسَ END IF)</li>
+                <li>يمكن تداخل أكثر من ELSIF</li>
+                <li>
+                  <strong>NULL في الشرط</strong> = الشرط لا يتحقق (يذهب لـ ELSE)
+                </li>
+                <li>FALSE AND NULL = FALSE (لأن FALSE يسيطر على AND)</li>
+                <li>TRUE OR NULL = TRUE (لأن TRUE يسيطر على OR)</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_02_02_03.html" class="nav-prev">← الحلقات (Loops)</a>
-          <a href="../modules/module_03/index.html" class="nav-next"
-            >الوحدة 3: المشغلات (Triggers) →</a
+          <a href="topic_02_02_01.html" class="nav-prev"
+            >← SQL Cursor Attributes</a
           >
+          <a href="topic_02_03_02.html" class="nav-next">CASE Expressions →</a>
         </nav>
       </article>
     </main>

@@ -1,23 +1,18 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Collections | Data Structures Study Guide</title>
+    <title>Writing Executable Statements | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="stylesheet" href="../assets/css/syntax.css" />
   </head>
   <body>
     <nav class="navbar">
-      <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
-      </div>
+      <div class="nav-brand"><a href="../index.html">📚 PL/SQL & Database Systems</a></div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
         <a href="../exam/index.html">📝 نموذج الاختبار</a>
@@ -30,107 +25,132 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_02/index.html">الوحدة 2</a> ›
-        <span>المجموعات (Collections)</span>
+        <span>Nested Blocks &amp; Scope</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
-          <h1>Collections</h1>
-          <p class="topic-title-ar">المجموعات (المصفوفات والقوائم)</p>
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Nested Blocks, Scope &amp; Operators</h1>
+          <p class="topic-title-ar">الكتل المتداخلة، نطاق المتغيرات، والمعاملات</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 14: Commenting -->
           <section class="content-section">
-            <h2>📚 ما هي المجموعات؟</h2>
-            <p>
-              هي متغيرات مركبة يمكنها تخزين
-              <span class="term" data-ar="قيم متعددة من نفس النوع"
-                >Multiple Values of Same Type</span
-              >. وهي تشبه المصفوفات (Arrays) في لغات البرمجة الأخرى (Java, C++).
-            </p>
-            <div class="highlight-box">
-              <p><strong>تذكر:</strong></p>
+            <h2>📝 التعليقات | Commenting Code</h2>
+            <pre><code class="language-sql">DECLARE
+  annual_sal NUMBER(9,2);
+BEGIN    -- تعليق سطر واحد بـ --
+
+  /* تعليق متعدد الأسطر
+     يبدأ بـ /* وينتهي بـ */  */
+  annual_sal := monthly_sal * 12;
+
+END;    -- نهاية الكتلة
+/</code></pre>
+          </section>
+
+          <!-- Slides 15-19: Nested Blocks & Scope -->
+          <section class="content-section">
+            <h2>🔲 الكتل المتداخلة | Nested Blocks</h2>
+            <p>كتل PL/SQL يمكن تداخلها — قسم <code>BEGIN...END</code> أو <code>EXCEPTION</code> يمكن أن يحتوي على كتل داخلية.</p>
+
+            <h3>مثال: Nested Blocks (Slide 16)</h3>
+            <pre><code class="language-sql">DECLARE
+  outer_variable VARCHAR2(20) := 'GLOBAL VARIABLE';
+BEGIN
+  DECLARE
+    inner_variable VARCHAR2(20) := 'LOCAL VARIABLE';
+  BEGIN
+    DBMS_OUTPUT.PUT_LINE(inner_variable);   -- ✅ يعمل
+    DBMS_OUTPUT.PUT_LINE(outer_variable);   -- ✅ يعمل
+  END;
+
+  DBMS_OUTPUT.PUT_LINE(outer_variable);     -- ✅ يعمل
+  -- DBMS_OUTPUT.PUT_LINE(inner_variable);  -- ❌ خطأ! غير مرئي هنا
+END;
+/</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>🔭 نطاق المتغيرات | Variable Scope &amp; Visibility</h2>
+
+            <h3>مثال: نفس الاسم في كتلتين (Slide 17)</h3>
+            <pre><code class="language-sql">DECLARE
+  father_name   VARCHAR2(20) := 'Patrick';
+  date_of_birth DATE := '20-Apr-1972';
+BEGIN
+  DECLARE
+    child_name    VARCHAR2(20) := 'Mike';
+    date_of_birth DATE := '12-Dec-2002';   -- يحجب المتغير الخارجي!
+  BEGIN
+    DBMS_OUTPUT.PUT_LINE('Father: ' || father_name);
+    DBMS_OUTPUT.PUT_LINE('DOB: ' || date_of_birth);    -- 12-Dec-2002 (الداخلي)
+    DBMS_OUTPUT.PUT_LINE('Child: ' || child_name);
+  END;
+
+  DBMS_OUTPUT.PUT_LINE('DOB: ' || date_of_birth);      -- 20-Apr-1972 (الخارجي)
+END;
+/</code></pre>
+
+            <h3>حل المشكلة: Labels (Slide 18)</h3>
+            <p>استخدم <strong>تسمية (Label)</strong> للوصول إلى المتغير الخارجي:</p>
+            <pre><code class="language-sql"><<outer>>
+DECLARE
+  father_name   VARCHAR2(20) := 'Patrick';
+  date_of_birth DATE := '20-Apr-1972';
+BEGIN
+  DECLARE
+    child_name    VARCHAR2(20) := 'Mike';
+    date_of_birth DATE := '12-Dec-2002';
+  BEGIN
+    -- الوصول لمتغير الكتلة الخارجية بالتسمية:
+    DBMS_OUTPUT.PUT_LINE('Father DOB: ' || outer.date_of_birth);  -- 20-Apr-1972
+    DBMS_OUTPUT.PUT_LINE('Child DOB: ' || date_of_birth);          -- 12-Dec-2002
+  END;
+END;
+/</code></pre>
+          </section>
+
+          <!-- Slides 20-21: Operators -->
+          <section class="content-section">
+            <h2>➕ المعاملات | Operators in PL/SQL</h2>
+            <p>نفس معاملات SQL بالإضافة إلى:</p>
+            <table class="comparison-table">
+              <thead>
+                <tr><th>النوع</th><th>أمثلة</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Arithmetic</td><td><code>+ - * / **</code> (** = الأس)</td></tr>
+                <tr><td>Concatenation</td><td><code>||</code></td></tr>
+                <tr><td>Logical</td><td><code>AND  OR  NOT</code></td></tr>
+                <tr><td>Comparison</td><td><code>=  !=  <  >  <=  >=  BETWEEN  IN  IS NULL</code></td></tr>
+              </tbody>
+            </table>
+            <pre><code class="language-sql">-- أمثلة (Slide 21):
+loop_count := loop_count + 1;                  -- Increment
+good_sal   := sal BETWEEN 50000 AND 150000;    -- Boolean
+valid      := (empno IS NOT NULL);             -- Boolean</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
               <ul>
-                <li>
-                  <strong>Record:</strong> يخزن صفاً واحداً بأنواع بيانات
-                  مختلفة.
-                </li>
-                <li>
-                  <strong>Collection:</strong> تخزن صفوفاً متعددة (أو قيماً
-                  متعددة) من نفس النوع.
-                </li>
+                <li>الكتل المتداخلة: الداخلية ترى متغيرات الخارجية، لكن ليس العكس</li>
+                <li>متغير داخلي بنفس اسم خارجي <strong>يحجبه</strong> (Shadowing)</li>
+                <li>استخدم <code>&lt;&lt;label&gt;&gt;</code> + <code>label.variable</code> للوصول للمتغير المحجوب</li>
+                <li>معامل الأس: <code>**</code> (مثال: <code>2**3 = 8</code>)</li>
+                <li>التعليقات: <code>--</code> لسطر واحد، <code>/* */</code> لعدة أسطر</li>
               </ul>
             </div>
-          </section>
-
-          <section class="content-section">
-            <h2>🗂️ الأنواع الثلاثة للمجموعات</h2>
-
-            <div class="types-grid">
-              <div class="type-card">
-                <h3>1. Associative Arrays</h3>
-                <p>(INDEX BY Tables)</p>
-                <ul>
-                  <li>تشبه Hash Map أو Dictionary.</li>
-                  <li>المفتاح (Key) يمكن أن يكون رقماً أو نصاً.</li>
-                  <li>لا حجم محدد لها.</li>
-                  <li>تستخدم في PL/SQL فقط (لا تُخزّن في DB).</li>
-                </ul>
-              </div>
-              <div class="type-card">
-                <h3>2. Nested Tables</h3>
-                <p>الجداول المتداخلة</p>
-                <ul>
-                  <li>تشبه المصفوفات الديناميكية (Dynamic Arrays).</li>
-                  <li>يمكن تخزينها كعمود في جدول قاعدة البيانات.</li>
-                  <li>حجمها غير محدود.</li>
-                </ul>
-              </div>
-              <div class="type-card">
-                <h3>3. VARRAYs</h3>
-                <p>المصفوفات متغيرة الحجم</p>
-                <ul>
-                  <li>مصفوفة ذات حجم أقصى ثابت (Fixed Max Size).</li>
-                  <li>تحافظ على ترتيب العناصر.</li>
-                  <li>
-                    تستخدم عندما تعرف الحد الأقصى للعناصر (مثلاً: أيام الأسبوع).
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <h2>💻 مثال: Associative Array (INDEX BY Table)</h2>
-            <p>هذا النوع هو الأكثر استخداماً لأنه بسيط ومرن.</p>
-
-            <pre><code class="language-sql">DECLARE
-    -- تعريف نوع المصفوفة (مصفوفة أرقام وفهرسها رقم)
-    TYPE t_numbers IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
-    
-    -- إنشاء متغير من هذا النوع
-    v_list t_numbers;
-BEGIN
-    -- تعبئة المصفوفة
-    v_list(1) := 100;
-    v_list(2) := 200;
-    v_list(10) := 1000; -- الفهرس لا يشترط أن يكون متسلسلاً
-    
-    -- القراءة
-    DBMS_OUTPUT.PUT_LINE('Value at 10: ' || v_list(10));
-    
-    -- دوال مفيدة
-    DBMS_OUTPUT.PUT_LINE('Count: ' || v_list.COUNT); -- عدد العناصر
-    DBMS_OUTPUT.PUT_LINE('First Index: ' || v_list.FIRST);
-    DBMS_OUTPUT.PUT_LINE('Last Index: ' || v_list.LAST);
-END;</code></pre>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_02_01_01.html" class="nav-prev">← السجلات (Records)</a>
-          <a href="topic_02_02_01.html" class="nav-next">جمل IF الشرطية →</a>
+          <a href="topic_02_01_01.html" class="nav-prev">← Records &amp; Composites</a>
+          <a href="topic_02_01b_01.html" class="nav-next">SELECT INTO →</a>
         </nav>
       </article>
     </main>

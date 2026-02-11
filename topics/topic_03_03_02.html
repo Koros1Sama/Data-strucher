@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Triggers vs. Stored Procedures | Data Structures Study Guide</title>
+    <title>Trigger Execution Model | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,89 +30,106 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_03/index.html">الوحدة 3</a> ›
-        <span>Triggers vs. Procedures</span>
+        <span>Trigger Execution Model</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Triggers vs. Stored Procedures</h1>
-          <p class="topic-title-ar">مقارنة: المشغلات مقابل الإجراءات المخزنة</p>
+          <h1>Trigger Execution Model — Summary</h1>
+          <p class="topic-title-ar">نموذج تنفيذ المشغّلات — ملخص شامل</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              كلاهما كتل PL/SQL مخزنة في قاعدة البيانات، ولكن يختلفان بشكل جذري
-              في طريقة الاستدعاء والغرض من الاستخدام.
-            </p>
+            <h2>📋 ملخص كل ما تعلمناه (Slide 22)</h2>
+            <p>في هذا الدرس تعلمنا:</p>
+            <ul class="styled-list">
+              <li>
+                إنشاء مشغّلات قاعدة البيانات (Database Triggers) التي تعمل مع
+                DML
+              </li>
+              <li>إنشاء أنواع Statement و Row triggers</li>
+              <li>استخدام قواعد تنفيذ المشغّلات (Firing Rules)</li>
+              <li>تفعيل وتعطيل وإدارة المشغّلات</li>
+              <li>حذف المشغّلات من قاعدة البيانات</li>
+            </ul>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>📊 جدول مرجعي شامل</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>العنصر</th>
+                  <th>الخيارات</th>
+                  <th>مثال</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>التوقيت</strong></td>
+                  <td>BEFORE | AFTER | INSTEAD OF</td>
+                  <td><code>BEFORE INSERT</code></td>
+                </tr>
+                <tr>
+                  <td><strong>الأحداث</strong></td>
+                  <td>INSERT | UPDATE [OF col] | DELETE</td>
+                  <td><code>INSERT OR UPDATE</code></td>
+                </tr>
+                <tr>
+                  <td><strong>المستوى</strong></td>
+                  <td>Statement (افتراضي) | Row (FOR EACH ROW)</td>
+                  <td><code>FOR EACH ROW</code></td>
+                </tr>
+                <tr>
+                  <td><strong>القيم</strong></td>
+                  <td>:OLD.col | :NEW.col</td>
+                  <td><code>:NEW.salary</code></td>
+                </tr>
+                <tr>
+                  <td><strong>المؤشرات</strong></td>
+                  <td>INSERTING | UPDATING | DELETING</td>
+                  <td><code>IF DELETING THEN</code></td>
+                </tr>
+                <tr>
+                  <td><strong>الشرط</strong></td>
+                  <td>WHEN (condition) — بدون <code>:</code></td>
+                  <td><code>WHEN (NEW.job_id = 'SA_REP')</code></td>
+                </tr>
+                <tr>
+                  <td><strong>الإدارة</strong></td>
+                  <td>ENABLE | DISABLE | DROP | COMPILE</td>
+                  <td><code>ALTER TRIGGER name DISABLE</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
 
-            <h3>جدول المقارنة | Comparison Table</h3>
-            <div class="table-container">
-              <table class="comparison-table">
-                <thead>
-                  <tr>
-                    <th>الخاصية</th>
-                    <th>المشغلات (Triggers)</th>
-                    <th>الإجراءات المخزنة (Procedures)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>طريقة الاستدعاء</td>
-                    <td>
-                      تلقائياً (Implicitly) عند حدوث حدث (INSERT, UPDATE...)
-                    </td>
-                    <td>يدوياً (Explicitly) بواسطة المستخدم أو برنامج آخر</td>
-                  </tr>
-                  <tr>
-                    <td>المعاملات (Parameters)</td>
-                    <td>لا تقبل معاملات</td>
-                    <td>تقبل معاملات (IN, OUT, IN OUT)</td>
-                  </tr>
-                  <tr>
-                    <td>التحكم بالمعاملات (Commit/Rollback)</td>
-                    <td>
-                      لا يسمح بـ COMMIT أو ROLLBACK داخلها (إلا إذا كانت
-                      Autonomous)
-                    </td>
-                    <td>يسمح بذلك</td>
-                  </tr>
-                  <tr>
-                    <td>الغرض</td>
-                    <td>ضمان سلامة البيانات، التدقيق، الأتمتة</td>
-                    <td>
-                      تنفيذ منطق الأعمال المعقد، معالجة البيانات حسب الطلب
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h3>متى تستخدم ماذا؟</h3>
-            <ul class="styled-list">
-              <li>
-                استخدم <strong>Trigger</strong> عندما تريد ضمان أن كوداً معيناً
-                سيعمل <em>دائماً</em> عند حدوث تغيير، بغض النظر عن التطبيق الذي
-                قام بالتغيير.
-              </li>
-              <li>
-                استخدم <strong>Procedure</strong> عندما تريد تغليف منطق عمل يمكن
-                استدعاؤه في أوقات مختلفة وبمعطيات مختلفة.
-              </li>
-            </ul>
+          <section class="content-section">
+            <h2>🔄 مخطط التنفيذ الكامل</h2>
+            <pre><code class="language-text">DML Statement يحدث
+    │
+    ▼
+① BEFORE STATEMENT Trigger (مرة واحدة)
+    │
+    ▼ لكل صف متأثر ───────────┐
+② BEFORE ROW Trigger           │
+    │                          │
+③ تنفيذ DML + Integrity Check  │
+    │                          │
+④ AFTER ROW Trigger            │
+    └──────────────────────────┘
+    │
+    ▼
+⑤ AFTER STATEMENT Trigger (مرة واحدة)</code></pre>
           </section>
         </div>
 
         <nav class="topic-nav">
           <a href="topic_03_03_01.html" class="nav-prev">← Managing Triggers</a>
           <a href="../modules/module_04/index.html" class="nav-next"
-            >Next Module: Indexes →</a
+            >الوحدة 4: الفهارس →</a
           >
         </nav>
       </article>

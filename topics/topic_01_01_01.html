@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>What is PL/SQL | Data Structures Study Guide</title>
+    <title>Introduction to PL/SQL | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,79 +30,203 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_01/index.html">الوحدة 1</a> ›
-        <span>ما هو PL/SQL؟</span>
+        <span>مقدمة في PL/SQL</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge beginner">مبتدئ</span>
-          <h1>What is PL/SQL?</h1>
-          <p class="topic-title-ar">ما هي لغة PL/SQL؟</p>
+          <h1>Introduction to PL/SQL</h1>
+          <p class="topic-title-ar">مقدمة في لغة PL/SQL</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 3: What Is PL/SQL? -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
+            <h2>📖 ما هي PL/SQL؟ | What Is PL/SQL?</h2>
             <p>
-              لغة
               <span class="term" data-ar="لغة إجرائية ممتدة لـ SQL"
                 >PL/SQL</span
               >
               هي اختصار لـ
-              <strong>Procedural Language extension to SQL</strong>. وهي لغة
-              أنشأتها Oracle لتضيف قدرات البرمجة الإجرائية (مثل الشروط والحلقات)
-              إلى لغة SQL القياسية.
+              <strong>Procedural Language extension to SQL</strong>.
             </p>
-            <div class="highlight-box">
-              <p>
-                <strong>لماذا نحتاجها؟</strong> لغة SQL وحدها لغة غير إجرائية
-                (تطلب البيانات ولا تحدد كيف نحصل عليها). PL/SQL تسمح لك بكتابة
-                منطق برمجي كامل للتعامل مع البيانات.
-              </p>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <h2>⚡ المميزات الرئيسية | Key Features</h2>
             <ul class="styled-list">
               <li>
-                <strong>تكامل قوي مع SQL:</strong> يمكنك كتابة جمل SQL مباشرة
-                داخل كود PL/SQL.
+                هي لغة Oracle القياسية للوصول إلى البيانات في قواعد البيانات
+                العلائقية.
               </li>
               <li>
-                <strong>أداء عالي:</strong> ترسل كتلة الكود كاملة إلى الخادم
-                لتنفيذها مرة واحدة، مما يقلل حركة الشبكة (Network Traffic).
-              </li>
-              <li>
-                <strong>الإنتاجية:</strong> توفر أدوات قوية للتعامل مع الأخطاء
-                (Exceptions).
-              </li>
-              <li>
-                <strong>قابلية النقل:</strong> تعمل على أي نظام تشغيل يدعم
-                Oracle Database.
+                تدمج بسلاسة بين البنى الإجرائية (Procedural Constructs) ولغة
+                SQL.
               </li>
             </ul>
           </section>
 
+          <!-- Slide 4: About PL/SQL -->
           <section class="content-section">
-            <h2>🏗️ البنية | Architecture</h2>
+            <h2>📋 خصائص PL/SQL | About PL/SQL</h2>
+            <p>PL/SQL توفر:</p>
+            <ul class="styled-list">
+              <li>
+                <strong>بنية كتلية (Block Structure):</strong> للكود القابل
+                للتنفيذ، مما يسهّل صيانة الكود.
+              </li>
+              <li>
+                <strong>بنى إجرائية</strong> مثل:
+                <ul>
+                  <li>
+                    المتغيرات والثوابت والأنواع (Variables, Constants, Types)
+                  </li>
+                  <li>
+                    هياكل التحكم مثل الشروط والحلقات (Conditional Statements &
+                    Loops)
+                  </li>
+                  <li>
+                    وحدات برمجية قابلة لإعادة الاستخدام (Reusable Program Units)
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+
+          <!-- Slide 5: PL/SQL Environment -->
+          <section class="content-section">
+            <h2>🏗️ بيئة PL/SQL | PL/SQL Environment</h2>
             <p>
-              يعمل محرك PL/SQL داخل خادم قاعدة البيانات (Database Server) أو
-              أحياناً في أداة التطوير.
+              عند إرسال كتلة PL/SQL إلى خادم Oracle، يتم تقسيمها بواسطة
+              <strong>محرك PL/SQL</strong> (PL/SQL Engine):
             </p>
-            <pre><code class="language-sql">-- مثال بسيط جدًا
-BEGIN
-   DBMS_OUTPUT.PUT_LINE('Hello, PL/SQL!');
-END;</code></pre>
+            <pre><code class="language-sql">┌──────────────────────────────────┐
+│        PL/SQL Block              │
+│  ┌──────────┐ ┌───────────────┐  │
+│  │ procedural│ │     SQL       │  │
+│  │ statements│ │  statements   │  │
+│  └─────┬─────┘ └──────┬────────┘  │
+│        │              │           │
+│        ▼              ▼           │
+│  Procedural       SQL Statement  │
+│  Statement        Executor       │
+│  Executor    (Oracle DB Server)  │
+└──────────────────────────────────┘</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>💡 كيف يعمل:</strong> الجمل الإجرائية (IF, LOOP ...)
+                يعالجها محرك PL/SQL، أما جمل SQL (SELECT, INSERT ...) فتُرسل إلى
+                منفّذ SQL في خادم Oracle.
+              </p>
+            </div>
+          </section>
+
+          <!-- Slides 6-7: Benefits of PL/SQL -->
+          <section class="content-section">
+            <h2>⚡ مميزات PL/SQL | Benefits</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>الميزة</th>
+                  <th>الشرح</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Integration with SQL</strong></td>
+                  <td>
+                    تكامل البنى الإجرائية مع SQL — يمكنك كتابة IF...THEN مع جمل
+                    SQL في نفس الكتلة
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Improved Performance</strong></td>
+                  <td>
+                    إرسال كتلة كاملة من الأوامر للخادم دفعة واحدة بدلاً من إرسال
+                    كل جملة SQL على حدة، مما يقلل حركة الشبكة (Network Traffic)
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Modularized Development</strong></td>
+                  <td>
+                    تطوير معياري — تقسيم البرنامج إلى وحدات قابلة لإعادة
+                    الاستخدام
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Integration with Oracle Tools</strong></td>
+                  <td>تكامل مع أدوات Oracle المختلفة</td>
+                </tr>
+                <tr>
+                  <td><strong>Portability</strong></td>
+                  <td>قابلية النقل — تعمل على أي نظام يدعم Oracle</td>
+                </tr>
+                <tr>
+                  <td><strong>Exception Handling</strong></td>
+                  <td>معالجة الأخطاء والاستثناءات بشكل مدمج</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="highlight-box">
+              <p>
+                <strong>📊 مقارنة الأداء (من المنهج):</strong><br />
+                بدون PL/SQL: كل جملة SQL تُرسل منفردة → رحلات شبكة متعددة<br />
+                مع PL/SQL: كتلة كاملة تُرسل مرة واحدة → رحلة شبكة واحدة
+              </p>
+              <pre><code class="language-sql">-- بدون PL/SQL (عدة رحلات شبكة):
+SQL 1  →  Server
+SQL 2  →  Server
+SQL 3  →  Server
+
+-- مع PL/SQL (رحلة واحدة):
+IF...THEN
+  SQL 1
+ELSE
+  SQL 2
+END IF;
+SQL 3
+→  Server (مرة واحدة)</code></pre>
+            </div>
+          </section>
+
+          <!-- Slide 10-12: Test Output -->
+          <section class="content-section">
+            <h2>🖥️ بيئة التطوير و إخراج النتائج | Output</h2>
+            <p>
+              يمكن استخدام <strong>iSQL*Plus</strong> أو SQL*Plus أو SQL
+              Developer كبيئة تطوير.
+            </p>
+            <p>لطباعة النتائج، نستخدم:</p>
+            <pre><code class="language-sql">-- أولاً: تفعيل الإخراج
+SET SERVEROUTPUT ON
+
+-- ثانياً: استخدام الحزمة المدمجة
+DBMS_OUTPUT.PUT_LINE('The First Name of the Employee is ' || f_name);</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>⚠️ مهم:</strong> إذا لم تكتب
+                <code>SET SERVEROUTPUT ON</code> أولاً، فلن ترى أي نتائج مطبوعة
+                حتى لو استخدمت <code>DBMS_OUTPUT.PUT_LINE</code>.
+              </p>
+            </div>
           </section>
 
           <section class="content-section">
             <h2>📝 نقاط هامة | Key Takeaways</h2>
             <div class="takeaways-box">
               <ul>
-                <li>PL/SQL = SQL + Procedural Features (IF, LOOP, etc.)</li>
-                <li>تزيد من كفاءة التطبيقات بتقليل الاتصال بالخادم.</li>
-                <li>هي اللغة القياسية لتطوير تطبيقات قواعد بيانات Oracle.</li>
+                <li>
+                  PL/SQL = <strong>Procedural Language extension to SQL</strong>
+                </li>
+                <li>
+                  تُعالج الجمل الإجرائية في محرك PL/SQL وجمل SQL في خادم Oracle
+                </li>
+                <li>تقلل حركة الشبكة بإرسال كتلة كاملة بدلاً من جمل منفردة</li>
+                <li>
+                  توفر: تطوير معياري، قابلية نقل، معالجة أخطاء، تكامل مع Oracle
+                </li>
+                <li>
+                  <code>SET SERVEROUTPUT ON</code> +
+                  <code>DBMS_OUTPUT.PUT_LINE</code> لطباعة النتائج
+                </li>
               </ul>
             </div>
           </section>

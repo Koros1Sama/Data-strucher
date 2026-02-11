@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Heap Files | Data Structures Study Guide</title>
+    <title>Disk Storage & File Structures | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,65 +30,133 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>Heap Files</span>
+        <span>Disk Storage</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Unordered Files (Heap Files)</h1>
-          <p class="topic-title-ar">الملفات غير المرتبة (ملفات الكومة)</p>
+          <h1>Disk Storage & File Structures</h1>
+          <p class="topic-title-ar">التخزين على القرص وبنى الملفات</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 111: Storage Hierarchy -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              ملفات الكومة (Heap Files) هي أبسط وأكثر أنواع تنظيم الملفات
-              شيوعاً. يتم وضع السجلات في الملف بترتيب وصولها (Insertion Order).
-              السجلات الجديدة تضاف دائماً إلى نهاية الملف.
-            </p>
+            <h2>📖 هرمية التخزين (Slide 111)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>المستوى</th>
+                  <th>الأمثلة</th>
+                  <th>السرعة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Primary Storage</strong></td>
+                  <td>CPU Cache, Main Memory (RAM)</td>
+                  <td>الأسرع</td>
+                </tr>
+                <tr>
+                  <td><strong>Secondary Storage</strong></td>
+                  <td>Magnetic Disks, Flash/SSD</td>
+                  <td>متوسط</td>
+                </tr>
+                <tr>
+                  <td><strong>Tertiary Storage</strong></td>
+                  <td>Removable Media (Tapes)</td>
+                  <td>الأبطأ</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Slide 112-113: Disk Structure -->
+          <section class="content-section">
+            <h2>💿 تركيب القرص (Slides 112-113)</h2>
+            <ul class="styled-list">
+              <li>
+                <strong>Persistent Data</strong>: بيانات تبقى بعد إنهاء البرنامج
+                (معظم قواعد البيانات)
+              </li>
+              <li>
+                <strong>Transient Data</strong>: بيانات موجودة فقط أثناء التنفيذ
+              </li>
+              <li>
+                <strong>Tracks</strong> (مسارات): دوائر متحدة المركز على القرص
+              </li>
+              <li>
+                <strong>Blocks/Sectors</strong>: أقسام المسار — وحدة نقل
+                البيانات
+              </li>
+              <li><strong>Cylinder</strong>: نفس المسار على جميع أسطح القرص</li>
+            </ul>
+          </section>
+
+          <!-- Slides 116-118: Access -->
+          <section class="content-section">
+            <h2>⚙️ الوصول للبيانات (Slides 116-118)</h2>
+            <ul class="styled-list">
+              <li>
+                <strong>Formatting</strong>: تقسيم المسارات إلى كتل متساوية مع
+                فجوات بينها (Interblock Gaps)
+              </li>
+              <li>
+                <strong>Buffer</strong>: منطقة في الذاكرة لعمليات القراءة
+                والكتابة
+              </li>
+              <li>
+                <strong>Disk Controller</strong>: واجهة بين القرص والحاسب (SCSI,
+                SATA, SAS)
+              </li>
+            </ul>
+            <div class="highlight-box">
+              <p>
+                <strong>💡 تقنيات الوصول الفعّال:</strong><br />
+                • Data Buffering<br />
+                • ترتيب البيانات على القرص<br />
+                • قراءة البيانات مسبقاً (Read Ahead)<br />
+                • جدولة طلبات I/O<br />
+                • استخدام Log Disks للكتابة المؤقتة<br />
+                • استخدام SSD/Flash للاسترداد
+              </p>
+            </div>
+          </section>
+
+          <!-- Slide 119: SSD -->
+          <section class="content-section">
+            <h2>💾 SSD (Slide 119)</h2>
+            <ul class="styled-list">
+              <li>يُسمى أيضاً <strong>Flash Storage</strong></li>
+              <li><strong>لا توجد أجزاء متحركة</strong></li>
+              <li>البيانات أقل عرضة للتجزئة (Fragmentation)</li>
+              <li>أسرع في الوصول لكن <strong>أغلى ثمناً</strong> من HDD</li>
+              <li>DRAM-based SSDs: وصول أسرع من Flash</li>
+            </ul>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>الخصائص | Characteristics</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>الترتيب:</strong> يتم وضع السجلات في الملف بترتيب وصولها
-                (Insertion Order).
-              </li>
-              <li>
-                <strong>الإدراج (Insertion):</strong> فعال جداً وسريع، حيث تضاف
-                السجلات الجديدة دائماً في نهاية الملف (أو في آخر كتلة).
-              </li>
-              <li>
-                <strong>البحث (Searching):</strong> بطيء، يتطلب بحثاً خطياً
-                (Linear Search) لقراءة كل الكتل حتى يتم العثور على السجل
-                المطلوب.
-              </li>
-            </ul>
-
-            <h3>الحذف | Deletion Techniques</h3>
-            <p>
-              عند حذف سجل، لا يتم إزاحة السجلات الأخرى (لأن ذلك مكلف). بدلاً من
-              ذلك:
-            </p>
-            <ul class="styled-list">
-              <li>يتم وضع علامة حذف (Deletion Marker) على السجل.</li>
-              <li>يتم إعادة كتابة الكتلة مع العلامة.</li>
-              <li>
-                يتم تجاهل السجلات المحذوفة أثناء القراءة، وتتم إعادة استخدام
-                مساحتها لاحقاً.
-              </li>
-            </ul>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>3 مستويات: Primary → Secondary → Tertiary</li>
+                <li>
+                  القرص: Tracks → Blocks/Sectors | Cylinder = نفس المسار عبر
+                  الأسطح
+                </li>
+                <li>نقل البيانات بوحدات Disk Blocks</li>
+                <li>SSD: بدون أجزاء متحركة، أسرع، أغلى</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_04_04_04.html" class="nav-prev">← Record Placement</a>
-          <a href="topic_04_05_02.html" class="nav-next">Sorted Files →</a>
+          <a href="topic_04_04_04.html" class="nav-prev">← B+-Trees</a>
+          <a href="topic_04_05_02.html" class="nav-next"
+            >File Organizations →</a
+          >
         </nav>
       </article>
     </main>

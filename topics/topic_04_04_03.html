@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Block Buffering | Data Structures Study Guide</title>
+    <title>B-Trees | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,80 +30,86 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>Block Buffering</span>
+        <span>B-Trees</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge advanced">متقدم</span>
-          <h1>Block Buffering</h1>
-          <p class="topic-title-ar">التخزين المؤقت للكتل</p>
+          <h1>B-Trees</h1>
+          <p class="topic-title-ar">أشجار B</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
+            <h2>📖 المفهوم (Slide 13-14)</h2>
             <p>
-              يتم نقل البيانات بين القرص والذاكرة في وحدات تسمى "كتل" (Blocks).
-              الـ Buffering هو عملية الاحتفاظ بهذه الكتل في الذاكرة الرئيسية
-              لتقليل عدد مرات الوصول للقرص البطيء.
+              B-Tree هي بنية بيانات شجرية متوازنة تُستخدم كفهرس متعدد المستويات:
             </p>
+            <ul class="styled-list">
+              <li>كل عقدة = كتلة قرص واحدة (Disk Block)</li>
+              <li>
+                كل عقدة تبقى بين <strong>نصف ممتلئة</strong> و<strong
+                  >ممتلئة بالكامل</strong
+                >
+              </li>
+              <li>
+                مؤشرات (Pointers) لسجلات البيانات موجودة في
+                <strong>جميع المستويات</strong>
+              </li>
+            </ul>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>⚙️ العمليات</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>العملية</th>
+                  <th>الوصف</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>البحث</strong></td>
+                  <td>يبدأ من الجذر ويتبع المؤشرات حسب قيمة المفتاح</td>
+                </tr>
+                <tr>
+                  <td><strong>إدراج</strong></td>
+                  <td>
+                    إذا العقدة غير ممتلئة: إدراج مباشر<br />إذا ممتلئة:
+                    <strong>Split</strong> → قد ينتشر للأعلى
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>حذف</strong></td>
+                  <td>
+                    إذا العقدة فوق النصف: حذف مباشر<br />إذا أقل من النصف:
+                    <strong>Merge</strong> مع جارة
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
 
-            <h3>Buffer Manager</h3>
-            <p>
-              هو جزء من نظام إدارة قواعد البيانات (DBMS) مسؤول عن تخصيص مساحة في
-              الذاكرة الرئيسية (Buffer Pool) لتخزين الكتل المقروءة من القرص.
-            </p>
-            <ul class="styled-list">
-              <li>
-                <strong>Pin Count:</strong> عدد العمليات الحالية التي تستخدم هذه
-                الكتلة. لا يمكن كتابة الكتلة إلى القرص إذا كان العداد > 0.
-              </li>
-              <li>
-                <strong>Dirty Bit:</strong> بت يشير إلى ما إذا تم تعديل الكتلة
-                في الذاكرة. إذا كان 1، يجب كتابة التعديلات إلى القرص قبل إخراج
-                الكتلة من الذاكرة.
-              </li>
-            </ul>
-
-            <h3>استراتيجيات الاستبدال | Replacement Strategies</h3>
-            <p>
-              عند امتلاء الذاكرة، يجب اختيار كتلة لاستبدالها. الاستراتيجيات
-              الشائعة:
-            </p>
-            <ul class="styled-list">
-              <li>
-                <strong>Least Recently Used (LRU):</strong> استبدال الكتلة التي
-                لم يتم استخدامها لفترة أطول.
-              </li>
-              <li>
-                <strong>First-In-First-Out (FIFO):</strong> استبدال أقدم كتلة
-                دخلت الذاكرة.
-              </li>
-              <li>
-                <strong>Clock Policy:</strong> تقريب لـ LRU يستخدم مؤشراً
-                دائرياً.
-              </li>
-            </ul>
-
-            <h3>Double Buffering</h3>
-            <p>
-              استخدام ذاكرتين مؤقتتين (Buffer A, Buffer B) للسماح بقراءة
-              البيانات من القرص ومعالجتها في الذاكرة في نفس الوقت (Parallelism)،
-              مما يحسن الأداء.
-            </p>
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  B-Tree: مؤشرات البيانات في <strong>جميع المستويات</strong>
+                </li>
+                <li>شجرة متوازنة: كل المسارات بنفس الطول</li>
+                <li>عقدة = disk block | نصف ممتلئة كحد أدنى</li>
+                <li>Split عند الإدراج في عقدة ممتلئة</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_04_04_02.html" class="nav-prev"
-            >← Secondary Storage Devices</a
-          >
-          <a href="topic_04_04_04.html" class="nav-next">Record Placement →</a>
+          <a href="topic_04_04_02.html" class="nav-prev">← Index Properties</a>
+          <a href="topic_04_04_04.html" class="nav-next">B+-Trees →</a>
         </nav>
       </article>
     </main>

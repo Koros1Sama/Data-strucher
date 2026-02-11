@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recovery Concepts | Data Structures Study Guide</title>
+    <title>ACID Properties | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,67 +30,103 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_05/index.html">الوحدة 5</a> ›
-        <span>Recovery Concepts</span>
+        <span>ACID Properties</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Recovery Concepts: WAL & Checkpoints</h1>
-          <p class="topic-title-ar">
-            مفاهيم الاسترجاع: تسجيل الكتابة المسبق ونقاط الفحص
-          </p>
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>ACID Properties</h1>
+          <p class="topic-title-ar">خصائص ACID للمعاملات</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              نظام الاسترجاع مسؤول عن استعادة قاعدة البيانات إلى حالة متسقة بعد
-              حدوث فشل (System Crash, Disk Failure). يعتمد هذا بشكل أساسي على
-              "سجل النظام" (System Log).
-            </p>
+            <h2>📖 الخصائص الأربع (Slide 12)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>الخاصية</th>
+                  <th>المعنى</th>
+                  <th>الشرح</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong style="color: #e74c3c; font-size: 1.2em">A</strong>
+                  </td>
+                  <td><strong>Atomicity</strong></td>
+                  <td>
+                    المعاملة تُنفّذ <strong>بالكامل أو لا تُنفّذ أبداً</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: #3498db; font-size: 1.2em">C</strong>
+                  </td>
+                  <td><strong>Consistency</strong></td>
+                  <td>
+                    تنقل قاعدة البيانات من
+                    <strong>حالة متسقة إلى حالة متسقة أخرى</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: #2ecc71; font-size: 1.2em">I</strong>
+                  </td>
+                  <td><strong>Isolation</strong></td>
+                  <td>لا تتأثر بمعاملات أخرى تعمل <strong>بالتزامن</strong></td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: #f39c12; font-size: 1.2em">D</strong>
+                  </td>
+                  <td><strong>Durability</strong></td>
+                  <td>
+                    التغييرات تبقى <strong>دائمة</strong> في قاعدة البيانات بعد
+                    الـ Commit
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>💡 شرح مبسط</h2>
+            <div class="highlight-box">
+              <p>
+                • <strong>Atomicity</strong>: نحوّل 1000 من حساب أ لـ ب — إما
+                ينجح التحويل الكامل أو لا يحدث شيء<br />
+                • <strong>Consistency</strong>: مجموع الأرصدة قبل وبعد التحويل
+                يبقى نفسه<br />
+                • <strong>Isolation</strong>: لو شخص ثالث يتفقد الحسابين أثناء
+                التحويل، لا يرى حالة وسيطة<br />
+                • <strong>Durability</strong>: بعد تأكيد التحويل، حتى لو انقطعت
+                الكهرباء، التحويل محفوظ
+              </p>
+            </div>
+          </section>
 
-            <h3>1. تسجيل الكتابة المسبق (Write-Ahead Logging - WAL)</h3>
-            <p>
-              قاعدة ذهبية في قواعد البيانات: "لا يجوز كتابة أي تعديل على
-              البيانات في القرص الصلب إلا بعد كتابة سجل (Log Record) يصف هذا
-              التعديل في ملف السجل (Log File) وتثبيته".
-            </p>
-            <ul class="styled-list">
-              <li>
-                يضمن WAL إمكانية التراجع (Undo) عن العمليات غير المكتملة وإعادة
-                تنفيذ (Redo) العمليات الناجحة بعد الانهيار.
-              </li>
-            </ul>
-
-            <h3>2. نقاط الفحص (Checkpoints)</h3>
-            <p>عملية دورية يقوم بها النظام لتقليل وقت الاسترجاع.</p>
-            <ul class="styled-list">
-              <li>
-                يتم كتابة جميع البيانات المعدلة الموجودة في الذاكرة (Dirty
-                Pages) إلى القرص.
-              </li>
-              <li>يتم كتابة سجل <code>[CHECKPOINT]</code> في ملف السجل.</li>
-              <li>
-                عند الاسترجاع، لا داعي للعودة إلى بداية السجل، بل نبدأ من آخر
-                Checkpoint.
-              </li>
-            </ul>
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>ACID = Atomicity + Consistency + Isolation + Durability</li>
+                <li>Atomicity: الكل أو لا شيء</li>
+                <li>Consistency: حالة متسقة → حالة متسقة</li>
+                <li>Isolation: عدم التداخل مع معاملات أخرى</li>
+                <li>Durability: الاستمرارية بعد Commit</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="../ch_05_03/topic_05_03_03.html" class="nav-prev"
-            >← Deadlocks</a
+          <a href="topic_05_02_01.html" class="nav-prev"
+            >← Concurrency Problems</a
           >
-          <a href="topic_05_04_02.html" class="nav-next"
-            >Deferred vs. Immediate Update →</a
-          >
+          <a href="topic_05_04_02.html" class="nav-next">System Log →</a>
         </nav>
       </article>
     </main>

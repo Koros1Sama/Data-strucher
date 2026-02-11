@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Scalar Data Types | Data Structures Study Guide</title>
+    <title>The %TYPE Attribute | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,112 +30,83 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_01/index.html">الوحدة 1</a> ›
-        <span>أنواع البيانات العددية</span>
+        <span>خاصية %TYPE</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge beginner">مبتدئ</span>
-          <h1>Scalar Data Types</h1>
-          <p class="topic-title-ar">أنواع البيانات العددية (المفردة)</p>
+          <h1>The %TYPE Attribute</h1>
+          <p class="topic-title-ar">خاصية %TYPE</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 24: The %TYPE Attribute -->
           <section class="content-section">
-            <h2>🔢 ما هي Scalar Data Types؟</h2>
-            <p>
-              هي أنواع البيانات التي تحمل
-              <span class="term" data-ar="قيمة واحدة فقط">Single Value</span>
-              (وليست قائمة أو سجل). تنقسم إلى 4 فئات رئيسية:
-            </p>
-
-            <div class="types-grid">
-              <div class="type-card">
-                <h3>1. الرقمية (Numeric)</h3>
-                <p>للأرقام الصحيحة والعشرية.</p>
-                <ul>
-                  <li><code>NUMBER(p,s)</code>: النوع الأشهر.</li>
-                  <li><code>PLS_INTEGER</code>: أسرع للحسابات (صحيح فقط).</li>
-                  <li><code>BINARY_INTEGER</code>: مشابه لـ PLS_INTEGER.</li>
-                </ul>
-              </div>
-              <div class="type-card">
-                <h3>2. النصية (Character)</h3>
-                <p>للنصوص والرموز.</p>
-                <ul>
-                  <li>
-                    <code>VARCHAR2(n)</code>: نص متغير الطول (الأكثر استخداماً).
-                  </li>
-                  <li><code>CHAR(n)</code>: نص ثابت الطول.</li>
-                  <li><code>LONG</code>: نصوص طويلة جداً (قديم).</li>
-                </ul>
-              </div>
-              <div class="type-card">
-                <h3>3. التواريخ (Date/Time)</h3>
-                <p>للتاريخ والوقت.</p>
-                <ul>
-                  <li><code>DATE</code>: يخزن التاريخ والوقت بالثانية.</li>
-                  <li><code>TIMESTAMP</code>: أدق (يخزن أجزاء الثانية).</li>
-                </ul>
-              </div>
-              <div class="type-card">
-                <h3>4. المنطقية (Boolean)</h3>
-                <p>للقيم المنطقية.</p>
-                <ul>
-                  <li><code>BOOLEAN</code>: يقبل (TRUE, FALSE, NULL).</li>
-                  <li>
-                    <strong>ملاحظة:</strong> لا يمكن طباعة القيمة Boolean
-                    مباشرة.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <h2>💡 تفاصيل NUMBER Data Type</h2>
-            <p>النوع <code>NUMBER(p,s)</code> هو الأكثر مرونة:</p>
+            <h2>📖 ما هي %TYPE؟</h2>
+            <p>خاصية <code>%TYPE</code> تُستخدم لتعريف متغير بناءً على:</p>
             <ul class="styled-list">
               <li>
-                <strong>p (Precision):</strong> إجمالي عدد الخانات (Max 38).
+                <strong>عمود في جدول:</strong> يأخذ نفس نوع بيانات العمود
+                تلقائياً
               </li>
-              <li><strong>s (Scale):</strong> عدد الخانات بعد الفاصلة.</li>
+              <li><strong>متغير آخر معرّف سابقاً:</strong> يأخذ نفس نوعه</li>
             </ul>
             <div class="highlight-box">
-              <p><strong>أمثلة:</strong></p>
-              <ul>
-                <li>
-                  <code>NUMBER(5,2)</code>: يخزن 123.45 (إجمالي 5 خانات، 2 منها
-                  عشري).
-                </li>
-                <li><code>NUMBER(3)</code>: يخزن 123 (عدد صحيح).</li>
-              </ul>
+              <p>
+                <strong>💡 الفائدة:</strong> إذا تغيّر نوع العمود في الجدول
+                مستقبلاً، لا تحتاج لتغيير كود PL/SQL — المتغير سيتكيّف تلقائياً!
+              </p>
             </div>
           </section>
 
+          <!-- Slide 25: Declaring Variables with %TYPE -->
           <section class="content-section">
-            <h2>💻 مثال شامل | Comprehensive Example</h2>
+            <h2>⚙️ الصيغة والأمثلة | Syntax & Examples</h2>
+
+            <h3>الصيغة</h3>
+            <pre><code class="language-sql">-- بناءً على عمود في جدول:
+identifier  table.column_name%TYPE;
+
+-- بناءً على متغير آخر:
+identifier  other_variable%TYPE;</code></pre>
+
+            <h3>أمثلة من المنهج (Slide 25)</h3>
             <pre><code class="language-sql">DECLARE
-    v_emp_id    NUMBER(6) := 1001;
-    v_name      VARCHAR2(50) := 'Sarah Ahmed';
-    v_salary    NUMBER(8,2) := 5000.50;
-    v_active    BOOLEAN := TRUE;
-    v_hire_date DATE := '01-JAN-2023';
-BEGIN
-    DBMS_OUTPUT.PUT_LINE('Employee: ' || v_name);
-    DBMS_OUTPUT.PUT_LINE('Salary: ' || v_salary);
-    
-    -- التعامل مع Boolean
-    IF v_active THEN
-        DBMS_OUTPUT.PUT_LINE('Status: Active');
-    END IF;
-END;</code></pre>
+  -- بناءً على عمود في جدول employees:
+  emp_lname    employees.last_name%TYPE;
+
+  -- بناءً على متغير آخر:
+  balance      NUMBER(7,2);
+  min_balance  balance%TYPE := 1000;
+...</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  <code>%TYPE</code> يربط المتغير بنوع بيانات عمود أو متغير آخر
+                </li>
+                <li>
+                  يُسبق بـ
+                  <strong>اسم الجدول والعمود</strong>
+                  (<code>table.column%TYPE</code>) أو <strong>اسم متغير</strong>
+                </li>
+                <li>
+                  يمكن إضافة قيمة أولية مع <code>%TYPE</code> (مثل
+                  <code>:= 1000</code>)
+                </li>
+                <li>يتكيّف تلقائياً عند تغيير نوع البيانات في الجدول</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
           <a href="topic_01_02_01.html" class="nav-prev">← تعريف المتغيرات</a>
-          <a href="topic_01_02_03.html" class="nav-next">الخاصية %TYPE →</a>
+          <a href="topic_01_02_03.html" class="nav-next">Bind Variables →</a>
         </nav>
       </article>
     </main>

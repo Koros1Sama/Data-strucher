@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Transaction Processing | Data Structures Study Guide</title>
+    <title>Transaction Concepts | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,106 +30,103 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_05/index.html">الوحدة 5</a> ›
-        <span>معالجة المعاملات (Transactions)</span>
+        <span>Transaction Concepts</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Transaction Processing</h1>
-          <p class="topic-title-ar">معالجة المعاملات (Transactions)</p>
+          <h1>Introduction to Transactions</h1>
+          <p class="topic-title-ar">مقدمة في المعاملات</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slides 2-3 -->
           <section class="content-section">
-            <h2>💳 ما هي المعاملة (Transaction)؟</h2>
-            <p>
-              المعاملة هي
-              <span class="term" data-ar="وحدة عمل منطقية"
-                >Logical Unit of Work</span
-              >
-              تتكون من عملية أو أكثر في قاعدة البيانات. يجب أن تُنفذ هذه
-              العمليات جميعها بنجاح أو تفشل جميعها.
-            </p>
-            <div class="highlight-box">
-              <p>
-                <strong>المثال الكلاسيكي:</strong> تحويل بنكي. خصم المبلغ من
-                حسابك (Update 1) وإضافته لحساب صديقك (Update 2). يجب أن تنجح
-                العمليتان معاً، لو نجحت الأولى وفشلت الثانية ستضيع الأموال!
-              </p>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <h2>🛡️ خصائص ACID</h2>
-            <p>لضمان سلامة البيانات، يجب أن تتوفر في المعاملات 4 خصائص:</p>
-
+            <h2>📖 تعريف المعاملة | Transaction (Slides 2-3)</h2>
             <ul class="styled-list">
               <li>
-                <strong>A - Atomicity (الذرية):</strong> المعاملة وحدة واحدة لا
-                تتجزأ. كل شيء أو لا شيء (All or Nothing).
+                <strong>Transaction</strong> = برنامج قيد التنفيذ يُشكّل
+                <strong>وحدة منطقية</strong> لمعالجة قاعدة البيانات
               </li>
               <li>
-                <strong>C - Consistency (الاتساق):</strong> المعاملة تنقل قاعدة
-                البيانات من حالة صحيحة إلى حالة صحيحة أخرى (تحترم القيود
-                Constraints).
+                عبارات <code>BEGIN</code> و <code>END TRANSACTION</code> تحدد
+                حدود المعاملة
               </li>
               <li>
-                <strong>I - Isolation (العزل):</strong> المعاملات التي تعمل في
-                نفس الوقت لا تؤثر على بعضها البعض (كأن كل واحدة تعمل وحدها).
+                أنواع المعاملات:
+                <ul>
+                  <li><strong>Read-Only Transaction</strong>: قراءة فقط</li>
+                  <li><strong>Read-Write Transaction</strong>: قراءة وكتابة</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+
+          <!-- Slide 2: Systems -->
+          <section class="content-section">
+            <h2>📊 أنظمة معالجة المعاملات</h2>
+            <p>أنظمة بقواعد بيانات كبيرة ومئات المستخدمين المتزامنين تتطلب:</p>
+            <ul class="styled-list">
+              <li><strong>High Availability</strong> — توفر عالي</li>
+              <li><strong>Fast Response Time</strong> — وقت استجابة سريع</li>
+            </ul>
+          </section>
+
+          <!-- Slide 4: Database Items -->
+          <section class="content-section">
+            <h2>🗃️ عناصر قاعدة البيانات | Database Items (Slide 4)</h2>
+            <ul class="styled-list">
+              <li>
+                قاعدة البيانات = مجموعة من <strong>عناصر بيانات مُسمّاة</strong>
               </li>
               <li>
-                <strong>D - Durability (الديمومة):</strong> بمجرد تثبيت المعاملة
-                (Commit)، التغييرات تصبح دائمة ولن تضيع حتى لو انقطعت الكهرباء.
+                <strong>Granularity</strong> = حجم عنصر البيانات:
+                <ul>
+                  <li>Record (سجل)</li>
+                  <li>Disk Block (كتلة قرص)</li>
+                  <li>Attribute Value (قيمة صفة)</li>
+                </ul>
+              </li>
+              <li>مفاهيم المعاملات <strong>مستقلة</strong> عن حجم العنصر</li>
+            </ul>
+          </section>
+
+          <!-- Slide 5: Buffers -->
+          <section class="content-section">
+            <h2>📦 DBMS Buffers (Slide 5)</h2>
+            <ul class="styled-list">
+              <li>
+                DBMS يحتفظ بعدة
+                <strong>buffers في الذاكرة الرئيسية</strong> (Database Cache)
+              </li>
+              <li>
+                عند امتلاء الـ buffers → سياسة استبدال (مثل
+                <strong>LRU</strong>)
               </li>
             </ul>
           </section>
 
           <section class="content-section">
-            <h2>🕹️ أوامر التحكم (TCL)</h2>
-            <ul>
-              <li>
-                <code>COMMIT</code>: تثبيت التغييرات وحفظها نهائياً. (تنتهي
-                المعاملة بنجاح).
-              </li>
-              <li>
-                <code>ROLLBACK</code>: التراجع عن جميع التغييرات وإلغاء
-                المعاملة. (فشل المعاملة).
-              </li>
-              <li>
-                <code>SAVEPOINT</code>: وضع علامة مرجعية داخل المعاملة يمكن
-                التراجع إليها جزئياً.
-              </li>
-            </ul>
-          </section>
-
-          <section class="content-section">
-            <h2>🚫 مشاكل التزامن (Concurrency Problems)</h2>
-            <p>
-              عندما تعمل عدة معاملات في نفس الوقت بدون عزل صحيح، تحدث مشاكل:
-            </p>
-            <ol>
-              <li>
-                <strong>Lost Update:</strong> معاملتان تعدلان نفس السجل،
-                والتعديل الثاني يمسح الأول.
-              </li>
-              <li>
-                <strong>Dirty Read:</strong> قراءة بيانات غير مثبتة
-                (Uncommitted) قد يتم التراجع عنها لاحقاً.
-              </li>
-              <li>
-                <strong>Non-Repeatable Read:</strong> قراءة نفس الصف مرتين
-                والحصول على قيم مختلفة (لأن شخصاً آخر عدّلها).
-              </li>
-            </ol>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>Transaction = وحدة منطقية لمعالجة قاعدة البيانات</li>
+                <li>Read-Only vs Read-Write transactions</li>
+                <li>Granularity: Record, Block, أو Attribute</li>
+                <li>DBMS يستخدم buffers + سياسة استبدال (LRU)</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="../modules/module_04/index.html" class="nav-prev"
-            >← الوحدة 4</a
+          <a href="../modules/module_05/index.html" class="nav-prev"
+            >← الوحدة 5</a
           >
-          <a href="../index.html" class="nav-next">العودة للرئيسية →</a>
+          <a href="topic_05_02_01.html" class="nav-next"
+            >Concurrency Problems →</a
+          >
         </nav>
       </article>
     </main>

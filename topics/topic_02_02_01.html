@@ -1,9 +1,11 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IF Statements | Data Structures Study Guide</title>
+    <title>
+      SQL Cursor &amp; Implicit Cursor Attributes | PL/SQL & Database Systems
+    </title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +18,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,95 +32,108 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_02/index.html">الوحدة 2</a> ›
-        <span>جمل IF الشرطية</span>
+        <span>SQL Cursor Attributes</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge beginner">مبتدئ</span>
-          <h1>IF Statements</h1>
-          <p class="topic-title-ar">الجمل الشرطية (IF)</p>
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>SQL Cursor &amp; Implicit Cursor Attributes</h1>
+          <p class="topic-title-ar">خصائص المؤشر الضمني</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 35: SQL Cursor -->
           <section class="content-section">
-            <h2>🔀 التحكم في التدفق (Flow Control)</h2>
+            <h2>📖 ما هو SQL Cursor؟ (Slide 35)</h2>
             <p>
-              تسمح لك جمل <code>IF</code> بتنفيذ كود معين فقط إذا تحقق شرط محدد.
+              المؤشر (Cursor) هو
+              <strong>مؤشر إلى منطقة ذاكرة خاصة</strong> يخصصها خادم Oracle.
+              نوعان:
             </p>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>الشرح</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Implicit Cursors</strong></td>
+                  <td>يُنشئها ويديرها Oracle تلقائياً لمعالجة جمل SQL</td>
+                </tr>
+                <tr>
+                  <td><strong>Explicit Cursors</strong></td>
+                  <td>يُعرّفها ويديرها المبرمج صراحة</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Slides 36-37: Implicit Cursor Attributes -->
+          <section class="content-section">
+            <h2>⚙️ خصائص المؤشر الضمني | Implicit Cursor Attributes</h2>
+            <p>تُستخدم لاختبار نتيجة جمل SQL:</p>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>الخاصية</th>
+                  <th>الشرح</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>SQL%FOUND</code></td>
+                  <td>TRUE إذا أثرت/أرجعت آخر جملة على صف واحد على الأقل</td>
+                </tr>
+                <tr>
+                  <td><code>SQL%NOTFOUND</code></td>
+                  <td>TRUE إذا لم تؤثر/ترجع آخر جملة على أي صف</td>
+                </tr>
+                <tr>
+                  <td><code>SQL%ROWCOUNT</code></td>
+                  <td>عدد الصفوف المتأثرة/المُرجعة</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>مثال من المنهج (Slide 37)</h3>
+            <pre><code class="language-sql">VARIABLE rows_deleted VARCHAR2(30)
+DECLARE
+  empno employees.employee_id%TYPE := 176;
+BEGIN
+  DELETE FROM employees
+  WHERE employee_id = empno;
+
+  :rows_deleted := (SQL%ROWCOUNT || ' row deleted.');
+END;
+/
+PRINT rows_deleted</code></pre>
           </section>
 
           <section class="content-section">
-            <h2>📝 الأشكال الثلاثة لـ IF</h2>
-
-            <h3>1. IF-THEN (البسيطة)</h3>
-            <pre><code class="language-sql">IF condition THEN
-   -- statements to execute if TRUE
-END IF;</code></pre>
-
-            <h3>2. IF-THEN-ELSE (إذا وإلا)</h3>
-            <pre><code class="language-sql">IF condition THEN
-   -- execute if TRUE
-ELSE
-   -- execute if FALSE or NULL
-END IF;</code></pre>
-
-            <h3>3. IF-THEN-ELSIF (شروط متعددة)</h3>
-            <p>لاحظ كتابة <code>ELSIF</code> (بدون E في المنتصف)!</p>
-            <pre><code class="language-sql">IF condition1 THEN
-   statements1;
-ELSIF condition2 THEN
-   statements2;
-ELSE
-   statements3;
-END IF;</code></pre>
-          </section>
-
-          <section class="content-section">
-            <h2>⚠️ قاعدة هامة: التعامل مع NULL</h2>
-            <div class="highlight-box">
-              <p>
-                في PL/SQL، الشرط يمكن أن يكون نتيجته: <strong>TRUE</strong> أو
-                <strong>FALSE</strong> أو <strong>NULL</strong>.
-              </p>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
               <ul>
+                <li>Implicit Cursor يُنشأ تلقائياً لكل جملة SQL</li>
                 <li>
-                  جملة <code>IF</code> تنفذ الكود <strong>فقط</strong> إذا كانت
-                  النتيجة <strong>TRUE</strong>.
+                  <code>SQL%ROWCOUNT</code> — عدد الصفوف المتأثرة (أكثر
+                  استخداماً)
                 </li>
                 <li>
-                  إذا كانت النتيجة <strong>FALSE</strong> أو
-                  <strong>NULL</strong>، ينتقل التنفيذ إلى <code>ELSE</code> (إن
-                  وجدت) أو يخرج من الـ IF.
+                  <code>SQL%FOUND</code> / <code>SQL%NOTFOUND</code> — هل تأثر
+                  صف أم لا
                 </li>
+                <li>تُستخدم مباشرة بعد جملة DML للتحقق من نتيجتها</li>
               </ul>
             </div>
-          </section>
-
-          <section class="content-section">
-            <h2>💻 مثال عملي</h2>
-            <pre><code class="language-sql">DECLARE
-    v_salary NUMBER := 15000;
-    v_bonus  NUMBER;
-BEGIN
-    IF v_salary > 20000 THEN
-        v_bonus := 1000;
-    ELSIF v_salary > 10000 THEN
-        v_bonus := 500;
-    ELSE
-        v_bonus := 100;
-    END IF;
-    
-    DBMS_OUTPUT.PUT_LINE('Bonus: ' || v_bonus);
-END;</code></pre>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_02_01_02.html" class="nav-prev"
-            >← المجموعات (Collections)</a
-          >
-          <a href="topic_02_02_02.html" class="nav-next">جمل CASE الشرطية →</a>
+          <a href="topic_02_01b_02.html" class="nav-prev">← DML في PL/SQL</a>
+          <a href="topic_02_03_01.html" class="nav-next">IF Statements →</a>
         </nav>
       </article>
     </main>

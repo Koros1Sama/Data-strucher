@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gemini 3 Pro Exam | Data Structures Study Guide</title>
+    <title>Gemini 3 Pro Exam | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -199,11 +199,109 @@
         .question-header {
           flex-direction: column;
         }
-
         .exam-meta {
           flex-direction: column;
           align-items: center;
         }
+      }
+
+      /* Interactive answer states */
+      .option.selected.correct-answer {
+        background: rgba(63, 185, 80, 0.15) !important;
+        border-color: var(--accent-success) !important;
+        color: #3fb950 !important;
+        font-weight: 600;
+      }
+      .option.selected.correct-answer::before {
+        content: "✅ ";
+      }
+      .option.selected.wrong-answer {
+        background: rgba(248, 81, 73, 0.15) !important;
+        border-color: var(--accent-danger) !important;
+        color: #f85149 !important;
+      }
+      .option.selected.wrong-answer::before {
+        content: "❌ ";
+      }
+      .option.reveal-correct {
+        background: rgba(63, 185, 80, 0.1) !important;
+        border-color: rgba(63, 185, 80, 0.4) !important;
+        color: #3fb950 !important;
+      }
+      .option.reveal-correct::before {
+        content: "✅ ";
+      }
+      .option.dimmed {
+        opacity: 0.4;
+        pointer-events: none;
+      }
+
+      /* Undo & Reset buttons */
+      .question-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+      }
+      .undo-btn {
+        padding: 0.5rem 1rem;
+        background: rgba(248, 166, 0, 0.12);
+        color: #f8a600;
+        border: 1px solid rgba(248, 166, 0, 0.3);
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: var(--font-arabic);
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .undo-btn:hover {
+        background: rgba(248, 166, 0, 0.25);
+        transform: translateY(-1px);
+      }
+      .reset-all-btn {
+        position: fixed;
+        bottom: 5.5rem;
+        left: 2rem;
+        padding: 0.75rem 1.25rem;
+        background: linear-gradient(135deg, #f85149, #da3633);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(248, 81, 73, 0.3);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-arabic);
+      }
+      .reset-all-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(248, 81, 73, 0.4);
+      }
+      .score-counter {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        padding: 0.75rem 1.25rem;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-default);
+        border-radius: 50px;
+        font-family: var(--font-arabic);
+        font-weight: 600;
+        color: var(--text-primary);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
       }
 
       /* Floating Toggle Button */
@@ -265,12 +363,11 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
-        <a href="Whatsapp_exam.html">📝 نموذج الاختبار (1)</a>
-        <a href="gemini_exam.html">🤖 Gemini 3 Pro Exam</a>
+        <a href="index.html">📝 نماذج الاختبار</a>
         <a href="../glossary/index.html">المصطلحات</a>
         <a href="../graph/index.html">خريطة المفاهيم</a>
         <button id="search-btn" class="nav-btn">🔍 بحث</button>
@@ -280,6 +377,7 @@
     <main class="container">
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
+        <a href="index.html">نماذج الاختبار</a> ›
         <span>Gemini 3 Pro Exam</span>
       </nav>
 
@@ -847,7 +945,7 @@
               الحزمة. الـ Body اختياري إذا كانت الحزمة تحتوي فقط على تعريفات
               (أنواع، متغيرات) ولا تحتوي على إجراءات أو دوال تتطلب تنفيذاً.
             </p>
-            <a href="../modules/module_03/index.html" class="topic-link">
+            <a href="../topics/topic_02_05_04.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -874,7 +972,7 @@
               المكونات الخاصة (Private) تُعرَّف داخل
               <strong>Package Body</strong> ولا تظهر في الـ Specification.
             </p>
-            <a href="../modules/module_03/index.html" class="topic-link">
+            <a href="../topics/topic_02_05_04.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1091,7 +1189,7 @@
               المؤشرات إليها) تكون في <strong>Leaf Nodes</strong> فقط. العقد
               الداخلية تستخدم للتوجيه فقط.
             </p>
-            <a href="../modules/module_04/index.html" class="topic-link">
+            <a href="../topics/topic_04_04_04.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1118,7 +1216,7 @@
               <strong>تقسيم (Split)</strong> العقدة إلى عقدتين، ورفع العنصر
               الأوسط إلى العقدة الأب.
             </p>
-            <a href="../modules/module_04/index.html" class="topic-link">
+            <a href="../topics/topic_04_04_03.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1358,26 +1456,11 @@
     </main>
 
     <div id="tooltip-ar" class="tooltip-ar"></div>
-
-    <!-- Floating Toggle Button -->
     <button id="toggle-answers" class="toggle-answers-btn">
-      👁️ إخفاء الإجابات
+      👁️ إظهار الكل
     </button>
 
     <script src="../assets/js/main.js"></script>
-    <script>
-      // Toggle answers visibility
-      const toggleBtn = document.getElementById("toggle-answers");
-      let answersHidden = false;
-
-      toggleBtn.addEventListener("click", () => {
-        answersHidden = !answersHidden;
-        document.body.classList.toggle("hide-answers", answersHidden);
-        toggleBtn.classList.toggle("hidden-mode", answersHidden);
-        toggleBtn.innerHTML = answersHidden
-          ? "👁️ إظهار الإجابات"
-          : "👁️ إخفاء الإجابات";
-      });
-    </script>
+    <script src="../assets/js/exam-static-interactive.js"></script>
   </body>
 </html>

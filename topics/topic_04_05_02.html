@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sorted Files | Data Structures Study Guide</title>
+    <title>File Organizations | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,58 +30,136 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>Sorted Files</span>
+        <span>File Organizations</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Ordered Files (Sorted Files)</h1>
-          <p class="topic-title-ar">الملفات المرتبة</p>
+          <h1>File Organizations & Buffering</h1>
+          <p class="topic-title-ar">تنظيم الملفات والتخزين المؤقت</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slides 121-123: Buffering -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
+            <h2>📦 التخزين المؤقت | Buffering (Slides 121-123)</h2>
+            <ul class="styled-list">
+              <li>
+                التخزين المؤقت مفيد عندما يمكن تشغيل العمليات
+                <strong>بالتوازي</strong>
+              </li>
+              <li>
+                <strong>Double Buffering</strong>: يُستخدم لقراءة تدفق مستمر من
+                الكتل
+              </li>
+            </ul>
+            <h3>معلومات إدارة Buffer (Slide 123)</h3>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>المعلومة</th>
+                  <th>الوصف</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Pin Count</strong></td>
+                  <td>عدد العمليات التي تستخدم الـ Buffer حالياً</td>
+                </tr>
+                <tr>
+                  <td><strong>Dirty Bit</strong></td>
+                  <td>هل تم تعديل البيانات في الـ Buffer؟</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3>استراتيجيات الاستبدال</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>LRU</strong> (Least Recently Used) — الأقل استخداماً
+                مؤخراً
+              </li>
+              <li><strong>Clock Policy</strong></li>
+              <li><strong>FIFO</strong> (First-In-First-Out)</li>
+            </ul>
+          </section>
+
+          <!-- Slides 124-125: Spanned vs Unspanned -->
+          <section class="content-section">
+            <h2>📋 Spanned vs Unspanned Records (Slides 124-125)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>الوصف</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Spanned</strong></td>
+                  <td>
+                    السجل يمكن أن يمتد عبر <strong>أكثر من كتلة</strong> — مؤشر
+                    في نهاية الكتلة يشير للجزء المتبقي
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Unspanned</strong></td>
+                  <td>السجل <strong>لا يتجاوز</strong> حدود الكتلة الواحدة</td>
+                </tr>
+              </tbody>
+            </table>
             <p>
-              في الملفات المرتبة (Sorted Files)، يتم تخزين السجلات بترتيب
-              فيزيائي بناءً على قيمة حقل معين يسمى "مفتاح الترتيب" (Ordering
-              Key).
+              <strong>Blocking Factor</strong> = متوسط عدد السجلات في كل كتلة
             </p>
           </section>
 
+          <!-- Slides 126-127: File Types -->
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>📁 أنواع تنظيم الملفات (Slides 126-127)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>الإدراج</th>
+                  <th>البحث</th>
+                  <th>الحذف</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Heap (Pile) File</strong></td>
+                  <td><strong>فعّال جداً</strong> (يُضاف في النهاية)</td>
+                  <td>بحث خطي (بطيء)</td>
+                  <td>إعادة كتابة أو علامة حذف</td>
+                </tr>
+                <tr>
+                  <td><strong>Ordered (Sequential) File</strong></td>
+                  <td>معقد (يجب الحفاظ على الترتيب)</td>
+                  <td><strong>Binary Search</strong> (سريع)</td>
+                  <td>فعّال نسبياً</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
 
-            <h3>الخصائص | Characteristics</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>الترتيب:</strong> يتم تخزين السجلات مرتبة فيزيائياً
-                بناءً على قيمة حقل معين يسمى "مفتاح الترتيب" (Ordering Key).
-              </li>
-              <li>
-                <strong>البحث (Searching):</strong> سريع جداً باستخدام البحث
-                الثنائي (Binary Search). التكلفة هي <code>log2(b)</code> حيث b
-                هو عدد الكتل.
-              </li>
-              <li>
-                <strong>القراءة المتتابعة (Reading Next):</strong> فعالة جداً،
-                حيث أن السجلات مرتبة بالفعل.
-              </li>
-            </ul>
-
-            <h3>العيوب | Disadvantages</h3>
-            <p>
-              الإدراج والحذف مكلفان جداً، لأنهما يتطلبان إزاحة السجلات للحفاظ
-              على الترتيب. لذلك تُستخدم عادةً ملفات مؤقتة (Overflow Files)
-              للإضافات الجديدة ويتم دمجها لاحقاً.
-            </p>
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>Double Buffering يُحسّن أداء القراءة المتتابعة</li>
+                <li>Pin Count + Dirty Bit = معلومات إدارة الـ Buffer</li>
+                <li>LRU: أشهر استراتيجية استبدال</li>
+                <li>
+                  Heap: إدراج سريع، بحث بطيء | Ordered: بحث سريع، إدراج بطيء
+                </li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_04_05_01.html" class="nav-prev">← Heap Files</a>
-          <a href="topic_04_05_04.html" class="nav-next"> RAID Technology →</a>
+          <a href="topic_04_05_01.html" class="nav-prev">← Disk Storage</a>
+          <a href="topic_04_05_04.html" class="nav-next">RAID Technology →</a>
         </nav>
       </article>
     </main>

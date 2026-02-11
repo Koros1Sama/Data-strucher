@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cursors with Parameters | Data Structures Study Guide</title>
+    <title>Cursors with Parameters | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -37,65 +37,158 @@
         <header class="topic-header">
           <span class="difficulty-badge advanced">متقدم</span>
           <h1>Cursors with Parameters</h1>
-          <p class="topic-title-ar">المؤشرات مع المعاملات</p>
+          <p class="topic-title-ar">المؤشرات ذات المعاملات</p>
         </header>
+
+        <div
+          style="
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+          "
+        >
+          <strong>⚠️ تنبيه:</strong> هذا الموضوع
+          <strong>قد لا يكون ضمن المنهج المقرر</strong>. لم يرد ذكره في سلايدات
+          المحاضرات. يُنصح بمراجعته كمعلومات إضافية فقط وليس كمادة اختبارية.
+        </div>
 
         <div class="topic-body">
           <section class="content-section">
             <h2>📖 مقدمة | Introduction</h2>
             <p>
-              يمكننا جعل المؤشر أكثر مرونة وقابلية لإعادة الاستخدام عن طريق
-              تمرير معاملات (Parameters) إليه. يسمح هذا بفتخ نفس المؤشر عدة مرات
-              بقيم مختلفة لجلب نتائج مختلفة.
+              يمكن تعريف المؤشر مع <strong>معاملات</strong> (Parameters) لجعله
+              أكثر مرونة وإعادة استخداماً. بدلاً من ربط المؤشر بقيم ثابتة، نُمرر
+              القيم عند فتحه.
             </p>
+            <div class="highlight-box">
+              <p>
+                <strong>💡 الفائدة:</strong> نفس المؤشر يُفتح بقيم مختلفة في كل
+                مرة — مثل الإجراء المخزن لكن للاستعلامات.
+              </p>
+            </div>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>⚙️ الصيغة العامة | Syntax</h2>
+            <pre><code class="language-sql">CURSOR cursor_name
+  (parameter_name datatype, ...)
+IS
+  select_statement;</code></pre>
 
-            <h3>التعريف (Syntax)</h3>
-            <pre><code class="language-sql">CURSOR cursor_name (parameter_name datatype, ...) IS
-  SELECT columns 
-  FROM table_name
-  WHERE column = parameter_name;</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>⚠️ ملاحظات:</strong><br />
+                • المعاملات <strong>لا تحدد حجمها</strong> (مثلاً
+                <code>NUMBER</code> وليس <code>NUMBER(10)</code>)<br />
+                • المعاملات تكون دائماً <strong>IN</strong> (للقراءة فقط)<br />
+                • يمكن وضع قيمة افتراضية بـ <code>DEFAULT</code>
+              </p>
+            </div>
+          </section>
 
-            <h3>الفتح (OPEN with Parameters)</h3>
-            <p>نقوم بتمرير القيم للمعاملات عند فتح المؤشر.</p>
-            <pre><code class="language-sql">OPEN cursor_name(value1, ...);</code></pre>
+          <section class="content-section">
+            <h2>💻 مثال عملي | Example</h2>
 
-            <h3>مثال عملي | Practical Example</h3>
+            <h3>تعريف المؤشر بمعامل</h3>
             <pre><code class="language-sql">DECLARE
-  CURSOR emp_cursor (dept_no NUMBER) IS
-    SELECT employee_id, last_name FROM employees
-    WHERE department_id = dept_no;
-  
-  v_emp_rec emp_cursor%ROWTYPE;
+  CURSOR emp_cursor(deptno NUMBER) IS
+    SELECT employee_id, last_name
+    FROM employees
+    WHERE department_id = deptno;
 BEGIN
-  -- Open cursor for Department 10
+  -- فتح المؤشر لقسم 10
   OPEN emp_cursor(10);
-  LOOP
-    FETCH emp_cursor INTO v_emp_rec;
-    EXIT WHEN emp_cursor%NOTFOUND;
-    DBMS_OUTPUT.PUT_LINE('Dept 10: ' || v_emp_rec.last_name);
-  END LOOP;
+  -- ...
   CLOSE emp_cursor;
 
-  -- Reuse same cursor for Department 20
+  -- إعادة فتحه لقسم 20
   OPEN emp_cursor(20);
-  LOOP
-    FETCH emp_cursor INTO v_emp_rec;
-    EXIT WHEN emp_cursor%NOTFOUND;
-    DBMS_OUTPUT.PUT_LINE('Dept 20: ' || v_emp_rec.last_name);
-  END LOOP;
+  -- ...
   CLOSE emp_cursor;
-END;</code></pre>
+END;
+/</code></pre>
+
+            <h3>مع Cursor FOR Loop</h3>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+DECLARE
+  CURSOR emp_cursor(deptno NUMBER) IS
+    SELECT employee_id, last_name, salary
+    FROM employees
+    WHERE department_id = deptno;
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('--- Department 10 ---');
+  FOR emp_rec IN emp_cursor(10) LOOP
+    DBMS_OUTPUT.PUT_LINE(
+      emp_rec.employee_id || ' ' ||
+      emp_rec.last_name || ' $' ||
+      emp_rec.salary);
+  END LOOP;
+
+  DBMS_OUTPUT.PUT_LINE('--- Department 20 ---');
+  FOR emp_rec IN emp_cursor(20) LOOP
+    DBMS_OUTPUT.PUT_LINE(
+      emp_rec.employee_id || ' ' ||
+      emp_rec.last_name || ' $' ||
+      emp_rec.salary);
+  END LOOP;
+END;
+/</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>🔣 معاملات متعددة وقيم افتراضية | Multiple & Default</h2>
+            <pre><code class="language-sql">DECLARE
+  CURSOR emp_cursor(
+    p_deptno NUMBER,
+    p_job    VARCHAR2 DEFAULT 'ST_CLERK')
+  IS
+    SELECT employee_id, last_name, salary
+    FROM employees
+    WHERE department_id = p_deptno
+      AND job_id = p_job;
+BEGIN
+  -- استخدام كلا المعاملين:
+  FOR rec IN emp_cursor(50, 'ST_MAN') LOOP
+    DBMS_OUTPUT.PUT_LINE(rec.last_name);
+  END LOOP;
+
+  -- استخدام القيمة الافتراضية لـ p_job:
+  FOR rec IN emp_cursor(50) LOOP
+    DBMS_OUTPUT.PUT_LINE(rec.last_name || ' (default job)');
+  END LOOP;
+END;
+/</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  المعاملات تجعل المؤشر <strong>قابلاً لإعادة الاستخدام</strong>
+                </li>
+                <li>لا تحدد حجم النوع (VARCHAR2 وليس VARCHAR2(50))</li>
+                <li>المعاملات دائماً <strong>IN</strong> (للإدخال فقط)</li>
+                <li>
+                  تُمرر القيم عند <strong>OPEN</strong> أو في
+                  <strong>FOR cursor_name(value)</strong>
+                </li>
+                <li>يمكن فتح نفس المؤشر عدة مرات بقيم مختلفة</li>
+                <li>يمكن استخدام <strong>DEFAULT</strong> لقيم افتراضية</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_02_04_03.html" class="nav-prev">← Cursor FOR Loops</a>
-          <a href="../ch_02_05/topic_02_05_01.html" class="nav-next"
-            >Creating Procedures →</a
+          <a href="topic_02_04_03.html" class="nav-prev"
+            >← Cursor FOR Loops & Attributes</a
+          >
+          <a href="topic_02_05_01.html" class="nav-next"
+            >Creating Stored Procedures →</a
           >
         </nav>
       </article>

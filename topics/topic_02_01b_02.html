@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nested Tables | Data Structures Study Guide</title>
+    <title>DML in PL/SQL | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,73 +30,90 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_02/index.html">الوحدة 2</a> ›
-        <span>Nested Tables</span>
+        <span>DML في PL/SQL</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
-          <h1>Nested Tables</h1>
-          <p class="topic-title-ar">الجداول المتداخلة</p>
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>DML Statements in PL/SQL</h1>
+          <p class="topic-title-ar">جمل معالجة البيانات في PL/SQL</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 31 -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              الجداول المتداخلة (Nested Tables) هي نوع من المجموعات يمكن تخزينها
-              في قاعدة البيانات كعمود داخل جدول، أو كمتغير في PL/SQL. تتميز بأن
-              حجمها غير محدود (Unbounded).
-            </p>
+            <h2>📖 جمل DML | Data Manipulation</h2>
+            <p>يمكنك تعديل بيانات الجداول داخل PL/SQL باستخدام (Slide 31):</p>
+            <ul class="styled-list">
+              <li><strong>INSERT</strong> — إدراج صفوف جديدة</li>
+              <li><strong>UPDATE</strong> — تحديث صفوف موجودة</li>
+              <li><strong>DELETE</strong> — حذف صفوف</li>
+              <li><strong>MERGE</strong> — دمج (إدراج أو تحديث)</li>
+            </ul>
+          </section>
+
+          <!-- Slide 32: INSERT -->
+          <section class="content-section">
+            <h2>➕ INSERT — إدراج بيانات (Slide 32)</h2>
+            <pre><code class="language-sql">BEGIN
+  INSERT INTO employees
+    (employee_id, first_name, last_name, email,
+     hire_date, job_id, salary)
+  VALUES
+    (employees_seq.NEXTVAL, 'Ruth', 'Cores',
+     'RCORES', SYSDATE, 'AD_ASST', 4000);
+END;
+/</code></pre>
+          </section>
+
+          <!-- Slide 33: UPDATE -->
+          <section class="content-section">
+            <h2>✏️ UPDATE — تحديث بيانات (Slide 33)</h2>
+            <pre><code class="language-sql">DECLARE
+  sal_increase  employees.salary%TYPE := 800;
+BEGIN
+  UPDATE employees
+  SET    salary = salary + sal_increase
+  WHERE  job_id = 'ST_CLERK';
+END;
+/</code></pre>
+          </section>
+
+          <!-- Slide 34: DELETE -->
+          <section class="content-section">
+            <h2>🗑️ DELETE — حذف بيانات (Slide 34)</h2>
+            <pre><code class="language-sql">DECLARE
+  deptno  employees.department_id%TYPE := 10;
+BEGIN
+  DELETE FROM employees
+  WHERE department_id = deptno;
+END;
+/</code></pre>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>المفهوم | Concept</h3>
-            <p>
-              الجداول المتداخلة هي مجموعات غير محددة الحجم (Unbounded). يمكن
-              استخدامها كمتغيرات في PL/SQL أو كنوع عمود في جداول قاعدة البيانات
-              (لتخزين جدول داخل عمود).
-            </p>
-
-            <h3>الخصائص | Characteristics</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>التهيئة (Initialization):</strong> يجب تهيئتها باستخدام
-                دالة بناء (Constructor) قبل الاستخدام، وإلا ستكون قيمتها NULL.
-              </li>
-              <li><strong>المؤشر (Index):</strong> يبدأ من 1 بشكل متسلسل.</li>
-              <li>
-                <strong>Sparse vs Dense:</strong> تبدأ ممتلئة (Dense) ولكن يمكن
-                حذف عناصر من الوسط لتصبح متفرقة (Sparse).
-              </li>
-            </ul>
-
-            <h3>Syntax</h3>
-            <pre><code class="language-sql">TYPE type_name IS TABLE OF element_type;
-
--- Declaration & Initialization
-my_list type_name := type_name(); </code></pre>
-
-            <h3>مثال | Example</h3>
-            <pre><code class="language-sql">DECLARE
-    TYPE NameList IS TABLE OF VARCHAR2(20);
-    names NameList := NameList('Ali', 'Omar', 'Zaid'); -- Initialization
-BEGIN
-    names.EXTEND; -- Add space for new element
-    names(4) := 'Khalid';
-    
-    FOR i IN 1..names.COUNT LOOP
-        DBMS_OUTPUT.PUT_LINE(names(i));
-    END LOOP;
-END;</code></pre>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  INSERT, UPDATE, DELETE, MERGE تعمل داخل PL/SQL كما في SQL
+                </li>
+                <li>يمكن استخدام متغيرات PL/SQL في جمل DML</li>
+                <li>
+                  يمكن استخدام Sequences مثل <code>employees_seq.NEXTVAL</code>
+                </li>
+                <li>لا تنسَ <code>COMMIT</code> بعد DML لتثبيت التغييرات</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_02_01b_01.html" class="nav-prev">← INDEX BY Tables</a>
-          <a href="topic_02_01b_03.html" class="nav-next">VARRAY →</a>
+          <a href="topic_02_01b_01.html" class="nav-prev">← SELECT INTO</a>
+          <a href="topic_02_02_01.html" class="nav-next"
+            >SQL Cursor Attributes →</a
+          >
         </nav>
       </article>
     </main>

@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Managing Triggers | Data Structures Study Guide</title>
+    <title>Managing Triggers | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -36,54 +36,98 @@
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge beginner">مبتدئ</span>
-          <h1>Managing Triggers: ENABLE, DISABLE, DROP</h1>
-          <p class="topic-title-ar">إدارة المشغلات: تفعيل، تعطيل، حذف</p>
+          <h1>Managing Triggers</h1>
+          <p class="topic-title-ar">إدارة المشغّلات</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 20: Managing -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              بصفتك مديراً لقاعدة البيانات، قد تحتاج أحياناً إلى إيقاف عمل
-              المشغل مؤقتاً (لتحميل بيانات ضخمة مثلاً) دون حذفه، أو حذفه
-              نهائياً. توفر SQL أوامر محددة لهذه المهام.
-            </p>
+            <h2>⚙️ تعطيل وتفعيل (Slide 20)</h2>
+            <h3>تعطيل/تفعيل trigger واحد:</h3>
+            <pre><code class="language-sql">ALTER TRIGGER trigger_name DISABLE;
+ALTER TRIGGER trigger_name ENABLE;</code></pre>
+
+            <h3>تعطيل/تفعيل <strong>جميع</strong> triggers على جدول:</h3>
+            <pre><code class="language-sql">ALTER TABLE table_name DISABLE ALL TRIGGERS;
+ALTER TABLE table_name ENABLE ALL TRIGGERS;</code></pre>
+
+            <h3>إعادة ترجمة trigger:</h3>
+            <pre><code class="language-sql">ALTER TRIGGER trigger_name COMPILE;</code></pre>
+          </section>
+
+          <!-- Slide 21: Removing -->
+          <section class="content-section">
+            <h2>🗑️ حذف Trigger (Slide 21)</h2>
+            <pre><code class="language-sql">-- الصيغة:
+DROP TRIGGER trigger_name;
+
+-- مثال:
+DROP TRIGGER secure_emp;</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>📌 ملاحظة:</strong> جميع triggers على جدول تُحذف
+                تلقائياً عند حذف الجدول نفسه.
+              </p>
+            </div>
+          </section>
+
+          <!-- Slide 19: Comparison -->
+          <section class="content-section">
+            <h2>⚖️ Triggers مقابل Stored Procedures (Slide 19)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>الميزة</th>
+                  <th>Trigger</th>
+                  <th>Stored Procedure</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>التنفيذ</strong></td>
+                  <td><strong>تلقائي</strong> (implicit)</td>
+                  <td><strong>يدوي</strong> (explicit) بـ EXECUTE</td>
+                </tr>
+                <tr>
+                  <td><strong>COMMIT</strong></td>
+                  <td>لا يمكن استخدام COMMIT/ROLLBACK مباشرة</td>
+                  <td>يمكن استخدام COMMIT/ROLLBACK</td>
+                </tr>
+                <tr>
+                  <td><strong>الاستخدام</strong></td>
+                  <td>فرض قواعد تلقائية</td>
+                  <td>تنفيذ إجراءات محددة</td>
+                </tr>
+              </tbody>
+            </table>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>1. التعطيل والتفعيل (Disabling and Enabling)</h3>
-            <p>عند تعطيل المشغل، يبقى تعريفه في قاعدة البيانات لكنه لا ينفذ.</p>
-            <pre><code class="language-sql">-- لتعطيل مشغل معين
-ALTER TRIGGER trigger_name DISABLE;
-
--- لتفعيل مشغل معين
-ALTER TRIGGER trigger_name ENABLE;
-
--- لتعطيل جميع المشغلات المرتبطة بجدول
-ALTER TABLE table_name DISABLE ALL TRIGGERS;</code></pre>
-
-            <h3>2. إعادة التجميع (Recompiling)</h3>
-            <p>
-              إذا حدثت تغييرات في الجدول أو الكائنات التي يعتمد عليها المشغل، قد
-              يصبح بوضع "INVALID". نستخدم الأمر التالي لإعادة تجميعه والتحقق من
-              الأخطاء:
-            </p>
-            <pre><code class="language-sql">ALTER TRIGGER trigger_name COMPILE;</code></pre>
-
-            <h3>3. الحذف (Dropping)</h3>
-            <p>لإزالة المشغل نهائياً من قاعدة البيانات.</p>
-            <pre><code class="language-sql">DROP TRIGGER trigger_name;</code></pre>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  <code>ALTER TRIGGER ... DISABLE/ENABLE</code> لتعطيل/تفعيل
+                </li>
+                <li>
+                  <code>ALTER TABLE ... DISABLE ALL TRIGGERS</code> لجميع
+                  triggers
+                </li>
+                <li><code>DROP TRIGGER</code> لحذف trigger</li>
+                <li>حذف الجدول يحذف جميع triggers عليه تلقائياً</li>
+                <li>Triggers تعمل تلقائياً ≠ Procedures تعمل يدوياً</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="../ch_03_02/topic_03_02_04.html" class="nav-prev"
-            >← Trigger Execution Order</a
+          <a href="topic_03_02_04.html" class="nav-prev"
+            >← Conditional Predicates</a
           >
           <a href="topic_03_03_02.html" class="nav-next"
-            >Triggers vs. Stored Procedures →</a
+            >Trigger Execution Model →</a
           >
         </nav>
       </article>

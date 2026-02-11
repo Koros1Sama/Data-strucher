@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARIES Recovery Algorithm | Data Structures Study Guide</title>
+    <title>Transaction Schedules | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,71 +30,81 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_05/index.html">الوحدة 5</a> ›
-        <span>ARIES Algorithm</span>
+        <span>Schedules</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
-          <h1>ARIES Recovery Algorithm</h1>
-          <p class="topic-title-ar">خوارزمية ARIES للاسترجاع</p>
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Transaction Schedules</h1>
+          <p class="topic-title-ar">جداول تنفيذ المعاملات</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
+            <h2>📖 المفهوم</h2>
             <p>
-              خوارزمية ARIES (Algorithm for Recovery and Isolation Exploiting
-              Semantics) هي المعيار الذهبي المستخدم في معظم أنظمة قواعد البيانات
-              الحديثة (مثل IBM DB2, SQL Server).
+              <strong>Schedule</strong> (أو History) = ترتيب تنفيذ العمليات من
+              عدة معاملات متداخلة.
             </p>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>الوصف</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Serial Schedule</strong></td>
+                  <td>
+                    المعاملات تُنفّذ <strong>واحدة تلو الأخرى</strong> — بدون
+                    تداخل
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Non-Serial Schedule</strong></td>
+                  <td>العمليات من معاملات مختلفة <strong>متداخلة</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Serializable Schedule</strong></td>
+                  <td>
+                    جدول غير تسلسلي لكن نتيجته <strong>مكافئة</strong> لجدول
+                    تسلسلي
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>📊 مثال توضيحي</h2>
+            <pre><code class="language-text">Serial Schedule:        Non-Serial (Interleaved):
+T1: Read(X)             T1: Read(X)
+T1: Write(X)            T2: Read(X)    ← تداخل!
+T1: Read(Y)             T1: Write(X)
+T1: Write(Y)            T2: Write(X)
+T2: Read(X)             T1: Read(Y)
+T2: Write(X)            T2: Read(Y)
+                         T1: Write(Y)
+                         T2: Write(Y)</code></pre>
+          </section>
 
-            <h3>المبادئ الأساسية</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>Write-Ahead Logging (WAL):</strong> لا كتابة بدون سجل
-                مسبق.
-              </li>
-              <li>
-                <strong>Repeating History during Redo:</strong> عند الاسترجاع،
-                يقوم النظام بإعادة تطبيق كل العمليات المسجلة في السجل (حتى تلك
-                التي تخص معاملات فاشلة) لإعادة النظام إلى الحالة الدقيقة التي
-                كان عليها لحظة الانهيار.
-              </li>
-              <li>
-                <strong>Logging Changes during Undo:</strong> حتى عمليات التراجع
-                (Undo) يتم تسجيلها في السجل (CLR - Compensation Log Record)
-                لضمان عدم تكرار التراجع بشكل لا نهائي في حال تكرار الفشل.
-              </li>
-            </ul>
-
-            <h3>مراحل الاسترجاع (Recovery Phases)</h3>
-            <ol class="styled-list number-list">
-              <li>
-                <strong>مرحلة التحليل (Analysis Phase):</strong> تحديد المعاملات
-                التي كانت نشطة والصفحات المتسخة (Dirty Pages) لحظة الانهيار.
-              </li>
-              <li>
-                <strong>مرحلة الإعادة (Redo Phase):</strong> إعادة تطبيق جميع
-                العمليات من نقطة معينة في السجل لتحديث قاعدة البيانات.
-              </li>
-              <li>
-                <strong>مرحلة التراجع (Undo Phase):</strong> التراجع عن عمليات
-                المعاملات التي لم تكتمل (Loser Transactions) بعكس اتجاه السجل.
-              </li>
-            </ol>
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>Serial: آمن لكن بطيء (بدون تزامن)</li>
+                <li>Non-Serial: سريع لكن قد يسبب مشاكل</li>
+                <li>Serializable: الهدف — سريع وآمن</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_05_04_02.html" class="nav-prev"
-            >← Deferred vs. Immediate</a
-          >
-          <a href="topic_05_04_04.html" class="nav-next">Shadow Paging →</a>
+          <a href="topic_05_04_02.html" class="nav-prev">← System Log</a>
+          <a href="topic_05_04_04.html" class="nav-next">Isolation Levels →</a>
         </nav>
       </article>
     </main>

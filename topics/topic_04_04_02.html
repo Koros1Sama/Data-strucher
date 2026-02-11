@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Secondary Storage Devices | Data Structures Study Guide</title>
+    <title>Index Properties | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,11 +16,11 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
-            <a href="../index.html">الرئيسية</a>
-            <a href="../exam/index.html">📝 نموذج الاختبار</a>
+        <a href="../index.html">الرئيسية</a>
+        <a href="../exam/index.html">📝 نموذج الاختبار</a>
         <a href="../glossary/index.html">المصطلحات</a>
         <a href="../graph/index.html">خريطة المفاهيم</a>
       </div>
@@ -30,55 +30,80 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>Secondary Storage Devices</span>
+        <span>Index Properties</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Secondary Storage Devices (HDD vs SSD)</h1>
-          <p class="topic-title-ar">أجهزة التخزين الثانوي (HDD مقابل SSD)</p>
+          <h1>Properties of Index Types</h1>
+          <p class="topic-title-ar">خصائص أنواع الفهارس</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              التخزين الثانوي هو المكان الذي يتم فيه حفظ البيانات بشكل دائم.
-              التقنيات الأكثر شيوعاً هي الأقراص الصلبة (HDD) والأقراص ذات الحالة
-              الصلبة (SSD).
-            </p>
+            <h2>📊 جدول خصائص الأنواع الثلاثة (Slide 12)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>الخاصية</th>
+                  <th>Primary</th>
+                  <th>Clustering</th>
+                  <th>Secondary</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>ترتيب ملف البيانات</strong></td>
+                  <td>مُرتّب</td>
+                  <td>مُرتّب</td>
+                  <td>غير مُرتّب</td>
+                </tr>
+                <tr>
+                  <td><strong>حقل الفهرسة</strong></td>
+                  <td>Key (فريد)</td>
+                  <td>Non-Key (مكرر)</td>
+                  <td>أي حقل</td>
+                </tr>
+                <tr>
+                  <td><strong>الكثافة</strong></td>
+                  <td>Sparse</td>
+                  <td>Sparse</td>
+                  <td>Dense</td>
+                </tr>
+                <tr>
+                  <td><strong>عدد المدخلات</strong></td>
+                  <td>مدخل/كتلة</td>
+                  <td>مدخل/قيمة مميزة</td>
+                  <td>مدخل/سجل</td>
+                </tr>
+                <tr>
+                  <td><strong>العدد المسموح</strong></td>
+                  <td>فهرس واحد</td>
+                  <td>فهرس واحد</td>
+                  <td>عدة فهارس</td>
+                </tr>
+              </tbody>
+            </table>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-            
-            <h3>الأقراص الصلبة | Magnetic Disks (HDD)</h3>
-            <p>
-              تعتمد على أقراص ممغنطة (Platters) تدور بسرعة عالية ولها رأس قراءة/كتابة (Read/Write Head).
-            </p>
-            <ul class="styled-list">
-              <li><strong>Platters:</strong> أقراص دائرية مغطاة بمادة مغناطيسية.</li>
-              <li><strong>Tracks:</strong> مسارات دائرية متحدة المركز على كل وجه من وجوه القرص.</li>
-              <li><strong>Sectors:</b> أصغر وحدة تخزين في الـ Track.</li>
-              <li><strong>Cylinders:</strong> مجموعة المسارات التي لها نفس القطر في جميع الأقراص.</li>
-            </ul>
-
-            <h3>التخزين ذو الحالة الصلبة | Solid State Drives (SSD)</h3>
-            <p>
-              تستخدم ذاكرة فلاش (Flash Memory) لتخزين البيانات، ولا تحتوي على أجزاء ميكانيكية متحركة، مما يجعلها أسرع بكثير وأكثر متانة من HDD ولكن بتكلفة أعلى.
-            </p>
-            
-            <h3>الأشرطة المغناطيسية | Magnetic Tapes</h3>
-            <p>
-              تستخدم للوصول التتابعي (Sequential Access) فقط. يجب قراءة الشريط من البداية للوصول لبيانات في المنتصف. تستخدم بشكل رئيسي للنسخ الاحتياطي (Backup) والأرشفة.
-            </p>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>Primary + Clustering يتطلبان ملف بيانات مُرتّب</li>
+                <li>Secondary هو الوحيد الذي يعمل مع ملفات غير مُرتّبة</li>
+                <li>Dense = حجم أكبر لكن بحث أدق | Sparse = حجم أصغر</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_04_04_01.html" class="nav-prev">← Storage Hierarchy</a>
-          <a href="topic_04_04_03.html" class="nav-next">Block Buffering →</a>
+          <a href="topic_04_04_01.html" class="nav-prev"
+            >← Multilevel Indexes</a
+          >
+          <a href="topic_04_04_03.html" class="nav-next">B-Trees →</a>
         </nav>
       </article>
     </main>

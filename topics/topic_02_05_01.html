@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Creating Stored Procedures | Data Structures Study Guide</title>
+    <title>Creating Stored Procedures | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -41,32 +41,316 @@
         </header>
 
         <div class="topic-body">
+          <!-- ═══ Section 1: Introduction ═══ -->
           <section class="content-section">
             <h2>📖 مقدمة | Introduction</h2>
             <p>
-              الإجراء المخزن (Stored Procedure) هو كتلة PL/SQL مسماة يتم تخزينها
-              في قاعدة البيانات ويمكن استدعاؤها متى دعت الحاجة. تستخدم لتنفيذ
-              مهمة محددة ويمكن أن تقبل مدخلات وتعيد مخرجات.
+              الإجراء المخزن (<span class="term" data-ar="إجراء مخزن"
+                >Stored Procedure</span
+              >) هو نوع من البرامج الفرعية (Subprogram) يُنفذ عملية محددة. يمكن
+              تخزينه في قاعدة البيانات ككائن مخطط (Schema Object) لإعادة
+              استخدامه وصيانته بسهولة.
             </p>
+            <div class="highlight-box">
+              <p>
+                <strong>💡 لماذا الإجراءات المخزنة؟</strong><br />
+                • تعزز <strong>إعادة الاستخدام</strong> (Reusability) — اكتب
+                مرة، استدعِ مرات<br />
+                • تسهّل <strong>الصيانة</strong> (Maintainability) — تعديل
+                مركزي<br />
+                • تُحسّن <strong>الأداء</strong> — تُترجم وتُخزن مسبقاً في قاعدة
+                البيانات
+              </p>
+            </div>
           </section>
 
+          <!-- ═══ Section 2: Syntax ═══ -->
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>المفهوم | Concept</h3>
+            <h2>⚙️ الصيغة العامة | Syntax</h2>
             <p>
-              الإجراء المخزن (Stored Procedure) هو كتلة PL/SQL مسماة يتم تخزينها
-              في قاعدة البيانات ويمكن استدعاؤها متى دعت الحاجة. يساعد في تعزيز
-              إعادة استخدام الكود (Reusability) وسهولة الصيانة.
+              لإنشاء إجراء مخزن، نستخدم الأمر <code>CREATE PROCEDURE</code>.
+              يمكن إضافة <code>OR REPLACE</code> لتحديث إجراء موجود بدون حذفه
+              أولاً.
+            </p>
+            <pre><code class="language-sql">CREATE [OR REPLACE] PROCEDURE procedure_name
+  [(parameter1 [mode] datatype1,
+    parameter2 [mode] datatype2, ...)]
+IS|AS
+  [local_variable_declarations; …]
+BEGIN
+  -- actions;
+END [procedure_name];</code></pre>
+
+            <div class="highlight-box">
+              <p>
+                <strong>⚠️ ملاحظات مهمة:</strong><br />
+                • كلمة <code>IS</code> أو <code>AS</code> تحل محل
+                <code>DECLARE</code> في البلوك المجهول<br />
+                • المعاملات (Parameters) اختيارية<br />
+                • <code>OR REPLACE</code> لا تُغيّر الصلاحيات الممنوحة على
+                الإجراء
+              </p>
+            </div>
+          </section>
+
+          <!-- ═══ Section 3: Parameters ═══ -->
+          <section class="content-section">
+            <h2>🔗 المعاملات | Parameters</h2>
+            <p>
+              المعاملات تُستخدم لتمرير البيانات بين البيئة المُستدعية والبرنامج
+              الفرعي. تُعرّف بعد اسم الإجراء في رأس الكتلة (Header).
             </p>
 
-            <h3>الصيغة العامة | Syntax</h3>
-            <pre><code class="language-sql">CREATE [OR REPLACE] PROCEDURE procedure_name
-    [(parameter_name [IN | OUT | IN OUT] type, ...)]
-IS | AS
-[EXCEPTION
-    exception_handlers]
-END [procedure_name];</code></pre>
+            <h3>المعاملات الرسمية والفعلية | Formal vs Actual Parameters</h3>
+            <ul class="styled-list">
+              <li>
+                <strong>المعاملات الرسمية (Formal Parameters):</strong>
+                المتغيرات المحلية المُعرّفة في قائمة المعاملات عند إنشاء
+                الإجراء.
+              </li>
+              <li>
+                <strong>المعاملات الفعلية (Actual Parameters):</strong>
+                القيم الحرفية أو المتغيرات أو التعبيرات التي تُمرر عند
+                الاستدعاء.
+              </li>
+            </ul>
+            <pre><code class="language-sql">-- المعاملات الرسمية: id و sal
+CREATE PROCEDURE raise_sal(id NUMBER, sal NUMBER) IS
+BEGIN ...
+END raise_sal;
+
+-- المعاملات الفعلية: emp_id و 2000
+emp_id := 100;
+raise_sal(emp_id, 2000);</code></pre>
+
+            <h3>أنماط المعاملات | Parameter Modes</h3>
+            <div class="table-container">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>النمط (Mode)</th>
+                    <th>الاتجاه</th>
+                    <th>الوصف</th>
+                    <th>القيمة الافتراضية</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>IN</strong> (الافتراضي)</td>
+                    <td>← دخول</td>
+                    <td>يمرر قيمة للإجراء — <strong>للقراءة فقط</strong></td>
+                    <td>يمكن أن يكون ثابت، متغير، أو تعبير</td>
+                  </tr>
+                  <tr>
+                    <td><strong>OUT</strong></td>
+                    <td>→ خروج</td>
+                    <td>
+                      يُرجع قيمة من الإجراء — <strong>يجب تعيين قيمة له</strong>
+                    </td>
+                    <td>يجب أن يكون متغيراً (ليس ثابت)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>IN OUT</strong></td>
+                    <td>↔ ثنائي</td>
+                    <td>يمرر قيمة ويعيدها بعد التعديل</td>
+                    <td>يجب أن يكون متغيراً</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- ═══ Section 4: IN Parameters Example ═══ -->
+          <section class="content-section">
+            <h2>📥 مثال: معامل IN | IN Parameter Example</h2>
+            <pre><code class="language-sql">CREATE OR REPLACE PROCEDURE raise_salary
+  (id      IN employees.employee_id%TYPE,
+   percent IN NUMBER)
+IS
+BEGIN
+  UPDATE employees
+  SET    salary = salary * (1 + percent/100)
+  WHERE  employee_id = id;
+END raise_salary;
+/
+
+-- الاستدعاء:
+EXECUTE raise_salary(176, 10);</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>📌 ملاحظة:</strong> معامل IN هو الوضع الافتراضي. إذا لم
+                تحدد نمطاً، يُعتبر المعامل IN تلقائياً.
+              </p>
+            </div>
+          </section>
+
+          <!-- ═══ Section 5: OUT Parameters Example ═══ -->
+          <section class="content-section">
+            <h2>📤 مثال: معامل OUT | OUT Parameter Example</h2>
+            <pre><code class="language-sql">CREATE OR REPLACE PROCEDURE query_emp
+  (id     IN  employees.employee_id%TYPE,
+   name   OUT employees.last_name%TYPE,
+   salary OUT employees.salary%TYPE) IS
+BEGIN
+  SELECT last_name, salary INTO name, salary
+  FROM   employees
+  WHERE  employee_id = id;
+END query_emp;
+/
+
+-- الاستدعاء باستخدام PL/SQL block:
+DECLARE
+  emp_name employees.last_name%TYPE;
+  emp_sal  employees.salary%TYPE;
+BEGIN
+  query_emp(171, emp_name, emp_sal);
+  DBMS_OUTPUT.PUT_LINE('Name: ' || emp_name);
+  DBMS_OUTPUT.PUT_LINE('Salary: ' || emp_sal);
+END;
+/
+
+-- أو باستخدام Host Variables:
+VARIABLE name VARCHAR2(25)
+VARIABLE sal  NUMBER
+EXECUTE query_emp(171, :name, :sal)
+PRINT name sal</code></pre>
+          </section>
+
+          <!-- ═══ Section 6: Parameter Passing ═══ -->
+          <section class="content-section">
+            <h2>📨 طرق تمرير المعاملات | Parameter Passing Syntax</h2>
+
+            <h3>1. التمرير بالموضع (Positional Notation)</h3>
+            <p>
+              المعاملات الفعلية تُذكر بنفس <strong>ترتيب</strong> المعاملات
+              الرسمية:
+            </p>
+            <pre><code class="language-sql">EXECUTE add_dept('TRAINING', 2500);</code></pre>
+
+            <h3>2. التمرير بالاسم (Named Notation)</h3>
+            <p>
+              نستخدم عامل الربط <code>=></code> لربط المعامل الرسمي بالفعلي بأي
+              ترتيب:
+            </p>
+            <pre><code class="language-sql">EXECUTE add_dept(loc => 2400, name => 'EDUCATION');</code></pre>
+
+            <h3>3. التمرير المختلط (Combination)</h3>
+            <p>بعض المعاملات بالموضع وبعضها بالاسم:</p>
+            <pre><code class="language-sql">EXECUTE add_dept('ADVERTISING', loc => 1200);</code></pre>
+
+            <div class="highlight-box">
+              <p>
+                <strong>💡 القيم الافتراضية:</strong> يمكن تحديد قيم افتراضية
+                للمعاملات باستخدام <code>DEFAULT</code> أو <code>:=</code>:
+              </p>
+            </div>
+            <pre><code class="language-sql">CREATE OR REPLACE PROCEDURE add_dept(
+  name departments.department_name%TYPE := 'Unknown',
+  loc  departments.location_id%TYPE DEFAULT 1700)
+IS
+BEGIN
+  INSERT INTO departments(department_id, department_name, location_id)
+  VALUES (departments_seq.NEXTVAL, name, loc);
+END add_dept;
+/
+
+-- جميع الاستدعاءات التالية صحيحة:
+EXECUTE add_dept;                              -- ستستخدم القيم الافتراضية
+EXECUTE add_dept('ADVERTISING', loc => 1200);  -- مختلط
+EXECUTE add_dept(loc => 1200);                 -- بالاسم فقط</code></pre>
+          </section>
+
+          <!-- ═══ Section 7: Invoking Procedures ═══ -->
+          <section class="content-section">
+            <h2>▶️ استدعاء الإجراء | Invoking Procedures</h2>
+            <p>يمكن استدعاء الإجراء بعدة طرق:</p>
+            <ul class="styled-list">
+              <li>
+                <strong>من بلوك PL/SQL مجهول:</strong>
+                <code>BEGIN raise_salary(176, 10); END;</code>
+              </li>
+              <li><strong>من إجراء آخر:</strong> (إجراء يستدعي إجراء)</li>
+              <li>
+                <strong>بأمر EXECUTE:</strong>
+                <code>EXECUTE raise_salary(176, 10);</code>
+              </li>
+            </ul>
+
+            <h3>مثال: إجراء يستدعي إجراء آخر</h3>
+            <pre><code class="language-sql">CREATE OR REPLACE PROCEDURE process_employees
+IS
+  CURSOR emp_cursor IS
+    SELECT employee_id FROM employees;
+BEGIN
+  FOR emp_rec IN emp_cursor
+  LOOP
+    raise_salary(emp_rec.employee_id, 10);
+  END LOOP;
+  COMMIT;
+END process_employees;
+/</code></pre>
+          </section>
+
+          <!-- ═══ Section 8: Managing Procedures ═══ -->
+          <section class="content-section">
+            <h2>🔧 إدارة الإجراءات | Managing Procedures</h2>
+
+            <h3>حذف إجراء | Removing a Procedure</h3>
+            <pre><code class="language-sql">DROP PROCEDURE raise_salary;</code></pre>
+            <p>عند حذف إجراء، تُلغى جميع الصلاحيات الممنوحة عليه.</p>
+
+            <h3>عرض الإجراءات | Viewing Procedures</h3>
+            <pre><code class="language-sql">-- عرض الكود المصدري لإجراء محدد:
+SELECT text
+FROM   user_source
+WHERE  name = 'ADD_DEPARTMENT' AND type = 'PROCEDURE'
+ORDER BY line;
+
+-- عرض أسماء جميع الإجراءات:
+SELECT object_name
+FROM   user_objects
+WHERE  object_type = 'PROCEDURE';</code></pre>
+
+            <div class="highlight-box">
+              <p>
+                <strong>📊 قواميس البيانات المهمة:</strong><br />
+                • <code>USER_SOURCE</code> — الكود المصدري للإجراءات الخاصة
+                بك<br />
+                • <code>ALL_SOURCE</code> — الإجراءات التي لديك صلاحية عليها<br />
+                • <code>USER_OBJECTS</code> — أسماء جميع الكائنات الخاصة بك
+              </p>
+            </div>
+          </section>
+
+          <!-- ═══ Section 9: Key Takeaways ═══ -->
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  الإجراء هو برنامج فرعي مُسمى يُنفذ عملية ويُخزن في قاعدة
+                  البيانات.
+                </li>
+                <li>يُنشأ بأمر <code>CREATE [OR REPLACE] PROCEDURE</code>.</li>
+                <li>
+                  ثلاثة أنماط معاملات: <strong>IN</strong> (افتراضي)،
+                  <strong>OUT</strong>، <strong>IN OUT</strong>.
+                </li>
+                <li>
+                  ثلاثة أساليب تمرير: <strong>Positional</strong>،
+                  <strong>Named</strong> (=>)، <strong>Combination</strong>.
+                </li>
+                <li>
+                  يمكن تحديد قيم افتراضية للمعاملات بـ <code>DEFAULT</code> أو
+                  <code>:=</code>.
+                </li>
+                <li>
+                  يُحذف بـ <code>DROP PROCEDURE</code> ويُعرض من
+                  <code>USER_SOURCE</code>.
+                </li>
+                <li>لا يمكن استدعاء الإجراء من جملة SQL (على عكس الدالة).</li>
+              </ul>
+            </div>
           </section>
         </div>
 

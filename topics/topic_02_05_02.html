@@ -1,11 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Parameter Modes: IN, OUT, IN OUT | Data Structures Study Guide
-    </title>
+    <title>Parameter Modes: IN, OUT, IN OUT | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -43,70 +41,229 @@
         </header>
 
         <div class="topic-body">
+          <!-- ═══ Section 1: Introduction ═══ -->
           <section class="content-section">
             <h2>📖 مقدمة | Introduction</h2>
             <p>
-              تحدد أنماط المعاملات (Parameter Modes) كيفية انتقال البيانات من
-              وإلى البرامج الفرعية (Subprograms).
+              أنماط المعاملات (<span class="term" data-ar="أنماط المعاملات"
+                >Parameter Modes</span
+              >) تحدد <strong>اتجاه</strong> انتقال البيانات بين البيئة
+              المُستدعية والبرنامج الفرعي. يوجد 3 أنماط وكل نمط له خصائص وقواعد
+              محددة.
             </p>
-            <ul class="styled-list">
-              <li>
-                <strong>IN</strong>: (الافتراضي) يمرر قيمة إلى البرنامج الفرعي.
-                للقراءة فقط داخله.
-              </li>
-              <li>
-                <strong>OUT</strong>: يعيد قيمة إلى البيئة المستدعية. يجب
-                التعيين له داخل البرنامج.
-              </li>
-              <li>
-                <strong>IN OUT</strong>: يمرر قيمة أولية ويمكن تحديثها وإعادتها.
-              </li>
-            </ul>
           </section>
 
+          <!-- ═══ Section 2: Comparison Table ═══ -->
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>📊 جدول المقارنة الشامل | Comprehensive Comparison</h2>
+            <div class="table-container">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>الخاصية</th>
+                    <th>IN</th>
+                    <th>OUT</th>
+                    <th>IN OUT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>الوضع الافتراضي؟</strong></td>
+                    <td>✅ نعم (افتراضي)</td>
+                    <td>❌ يجب تحديده</td>
+                    <td>❌ يجب تحديده</td>
+                  </tr>
+                  <tr>
+                    <td><strong>الاتجاه</strong></td>
+                    <td>→ يمرر <strong>إلى</strong> البرنامج</td>
+                    <td>← يُرجع <strong>من</strong> البرنامج</td>
+                    <td>↔ يمرر ويُرجع</td>
+                  </tr>
+                  <tr>
+                    <td><strong>القراءة/الكتابة داخل البرنامج</strong></td>
+                    <td>📖 <strong>للقراءة فقط</strong> (Read-only)</td>
+                    <td>✏️ <strong>للكتابة فقط</strong> (يجب التعيين)</td>
+                    <td>📖✏️ <strong>قراءة وكتابة</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>القيمة الأولية</strong></td>
+                    <td>تُمرر القيمة الفعلية</td>
+                    <td>تكون <strong>NULL</strong> عند الدخول</td>
+                    <td>تُمرر القيمة الفعلية</td>
+                  </tr>
+                  <tr>
+                    <td><strong>ما يمكن تمريره</strong></td>
+                    <td>ثابت (Literal)، متغير، تعبير</td>
+                    <td>متغير فقط (Variable)</td>
+                    <td>متغير فقط (Variable)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>القيمة الافتراضية</strong></td>
+                    <td>✅ يمكن استخدام DEFAULT أو :=</td>
+                    <td>❌ لا يمكن</td>
+                    <td>❌ لا يمكن</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
 
-            <h3>أنماط الباراميترات | Parameter Modes</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>IN (الافتراضي):</strong>
-                <ul>
-                  <li>تمرير قيمة للإجراء (Pass-by-value).</li>
-                  <li>لا يمكن تغيير قيمته داخل الإجراء (Read-only).</li>
-                  <li>يمكن أن يكون ثابتاً (Literal) أو متغيراً.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>OUT:</strong>
-                <ul>
-                  <li>إرجاع قيمة من الإجراء (Return value).</li>
-                  <li>يتم تجاهل قيمته عند الاستدعاء.</li>
-                  <li>يجب إسناد قيمة له داخل الإجراء قبل الانتهاء.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>IN OUT:</strong>
-                <ul>
-                  <li>
-                    تمرير قيمة أولية للإجراء، ويقوم الإجراء بتعديلها وإعادتها.
-                  </li>
-                  <li>يجمع بين خصائص IN و OUT.</li>
-                </ul>
-              </li>
-            </ul>
-
-            <h3>مثال | Example</h3>
-            <pre><code class="language-sql">CREATE PROCEDURE query_emp
-    (p_id IN employees.employee_id%TYPE,
-     p_name OUT employees.last_name%TYPE,
-     p_sal OUT employees.salary%TYPE)
+          <!-- ═══ Section 3: IN Parameter ═══ -->
+          <section class="content-section">
+            <h2>📥 معامل IN | IN Parameter</h2>
+            <div class="highlight-box">
+              <p>
+                <strong>🔑 القاعدة:</strong> IN هو الوضع الافتراضي. يمرر قيمة
+                للبرنامج الفرعي ولا يمكن تعديل قيمته داخله. يشبه الثابت
+                (CONSTANT).
+              </p>
+            </div>
+            <pre><code class="language-sql">CREATE OR REPLACE PROCEDURE raise_salary
+  (id      IN employees.employee_id%TYPE,   -- IN (صريح)
+   percent    NUMBER)                        -- IN (ضمني - افتراضي)
 IS
 BEGIN
-    SELECT last_name, salary INTO p_name, p_sal
-    FROM employees
-    WHERE employee_id = p_id;
+  UPDATE employees
+  SET salary = salary * (1 + percent/100)
+  WHERE employee_id = id;
+END raise_salary;
+/
+
+-- الاستدعاء:
+EXECUTE raise_salary(176, 10);
+
+-- يمكن تمرير ثابت أو متغير أو تعبير:
+EXECUTE raise_salary(v_id, 5 + 5);</code></pre>
+
+            <div class="highlight-box">
+              <p>
+                <strong>⚠️ خطأ شائع:</strong> لا يمكنك تغيير قيمة معامل IN داخل
+                الإجراء:
+              </p>
+            </div>
+            <pre><code class="language-sql">CREATE PROCEDURE test(x IN NUMBER) IS
+BEGIN
+  x := 10; -- ❌ خطأ! PLS-00363: expression 'X' cannot be used as an assignment target
 END;</code></pre>
+          </section>
+
+          <!-- ═══ Section 4: OUT Parameter ═══ -->
+          <section class="content-section">
+            <h2>📤 معامل OUT | OUT Parameter</h2>
+            <div class="highlight-box">
+              <p>
+                <strong>🔑 القاعدة:</strong> OUT يُرجع قيمة من البرنامج الفرعي
+                إلى البيئة المُستدعية. القيمة الأولية NULL ويجب تعيين قيمة له
+                قبل انتهاء البرنامج.
+              </p>
+            </div>
+            <pre><code class="language-sql">CREATE OR REPLACE PROCEDURE query_emp
+  (id     IN  employees.employee_id%TYPE,
+   name   OUT employees.last_name%TYPE,
+   salary OUT employees.salary%TYPE,
+   comm   OUT employees.commission_pct%TYPE)
+IS
+BEGIN
+  SELECT last_name, salary, commission_pct
+  INTO   name, salary, comm
+  FROM   employees
+  WHERE  employee_id = id;
+END query_emp;
+/</code></pre>
+
+            <h3>استدعاء إجراء يحتوي OUT من بلوك PL/SQL</h3>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+DECLARE
+  emp_name  employees.last_name%TYPE;
+  emp_sal   employees.salary%TYPE;
+  emp_comm  employees.commission_pct%TYPE;
+BEGIN
+  query_emp(171, emp_name, emp_sal, emp_comm);
+  DBMS_OUTPUT.PUT_LINE('Name: '    || emp_name);
+  DBMS_OUTPUT.PUT_LINE('Salary: '  || emp_sal);
+  DBMS_OUTPUT.PUT_LINE('Comm: '    || NVL(TO_CHAR(emp_comm), 'NULL'));
+END;
+/</code></pre>
+
+            <h3>استدعاء باستخدام Host Variables</h3>
+            <pre><code class="language-sql">VARIABLE name  VARCHAR2(25)
+VARIABLE sal   NUMBER
+VARIABLE comm  NUMBER
+
+EXECUTE query_emp(171, :name, :sal, :comm)
+PRINT name sal comm</code></pre>
+          </section>
+
+          <!-- ═══ Section 5: IN OUT Parameter ═══ -->
+          <section class="content-section">
+            <h2>🔄 معامل IN OUT | IN OUT Parameter</h2>
+            <div class="highlight-box">
+              <p>
+                <strong>🔑 القاعدة:</strong> IN OUT يمرر قيمة أولية للبرنامج
+                الفرعي ويتم تعديلها وإعادتها. يجمع بين خصائص IN و OUT.
+              </p>
+            </div>
+            <pre><code class="language-sql">CREATE OR REPLACE PROCEDURE format_phone
+  (phone_no IN OUT VARCHAR2)
+IS
+BEGIN
+  phone_no := '(' || SUBSTR(phone_no, 1, 3) || ') '
+              || SUBSTR(phone_no, 4, 3) || '-'
+              || SUBSTR(phone_no, 7);
+END format_phone;
+/
+
+-- الاستدعاء:
+DECLARE
+  phone_no VARCHAR2(13) := '8006330575';
+BEGIN
+  format_phone(phone_no);
+  DBMS_OUTPUT.PUT_LINE('Formatted: ' || phone_no);
+  -- Output: Formatted: (800) 633-0575
+END;
+/</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>💡 لاحظ:</strong> المتغير <code>phone_no</code> دخل
+                بقيمة <code>'8006330575'</code> وخرج بقيمة
+                <code>'(800) 633-0575'</code>. هذا جوهر IN OUT — يستقبل ويُعيد.
+              </p>
+            </div>
+          </section>
+
+          <!-- ═══ Section 6: Visual Summary ═══ -->
+          <section class="content-section">
+            <h2>🎯 ملخص بصري | Visual Summary</h2>
+            <pre><code class="language-text">البيئة المُستدعية           البرنامج الفرعي
+──────────────────        ──────────────────
+                 ──IN──→
+     الباراميترات ←──OUT──   الباراميترات
+                 ↔IN OUT↔
+</code></pre>
+          </section>
+
+          <!-- ═══ Section 7: Key Takeaways ═══ -->
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  <strong>IN</strong> = افتراضي، للقراءة فقط، يقبل ثوابت
+                  ومتغيرات وتعابير
+                </li>
+                <li>
+                  <strong>OUT</strong> = يُرجع قيمة، يبدأ NULL، يقبل متغيرات فقط
+                </li>
+                <li>
+                  <strong>IN OUT</strong> = يستقبل ويُرجع، يقبل متغيرات فقط
+                </li>
+                <li>IN فقط يدعم القيم الافتراضية (DEFAULT / :=)</li>
+                <li>
+                  OUT و IN OUT <strong>لا يمكنهما</strong> استخدام DEFAULT
+                </li>
+                <li>لا يمكن تعيين قيمة لمعامل IN (يعامل كثابت)</li>
+              </ul>
+            </div>
           </section>
         </div>
 

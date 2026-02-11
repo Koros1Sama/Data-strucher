@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Block Types | Data Structures Study Guide</title>
+    <title>Block Types | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -41,6 +41,7 @@
         </header>
 
         <div class="topic-body">
+          <!-- Slide 9: Block Types -->
           <section class="content-section">
             <h2>🧩 الأنواع الثلاثة | The Three Types</h2>
             <p>يمكن تقسيم كتل PL/SQL إلى ثلاثة أنواع رئيسية:</p>
@@ -49,28 +50,66 @@
               <div class="type-card">
                 <h3>1. كتلة مجهولة (Anonymous Block)</h3>
                 <p>
-                  ليس لها اسم، لا تُحفظ في قاعدة البيانات، تُنفذ مرة واحدة فقط
-                  ثم تختفي.
+                  ليس لها اسم، <strong>لا تُحفظ</strong> في قاعدة البيانات.
+                  تُنفذ مرة واحدة فقط ثم تختفي.
                 </p>
-                <span class="badge">للتجربة السريعة</span>
+                <span class="badge">للتجربة السريعة والاختبار</span>
               </div>
               <div class="type-card">
                 <h3>2. إجراء (Procedure)</h3>
                 <p>
-                  لها اسم، تُحفظ في قاعدة البيانات، يمكن استدعاؤها مرارًا
-                  وتكرارًا. تستخدم لتنفيذ "فعل" (Action).
+                  لها اسم، <strong>تُحفظ</strong> في قاعدة البيانات كـ schema
+                  object. يمكن استدعاؤها مرارًا. تستخدم لتنفيذ
+                  <strong>فعل</strong> (Action).
                 </p>
-                <span class="badge">برنامج محفوظ</span>
+                <span class="badge">برنامج فرعي محفوظ</span>
               </div>
               <div class="type-card">
                 <h3>3. دالة (Function)</h3>
                 <p>
-                  مثل الإجراء، لكنها <strong>يجب</strong> أن تُرجع قيمة (Return
-                  Value). تستخدم عادة للحسابات.
+                  مثل الإجراء لكنها <strong>يجب</strong> أن تُرجع قيمة باستخدام
+                  <code>RETURN</code>. تُستخدم عادة للحسابات.
                 </p>
-                <span class="badge">ترجع قيمة</span>
+                <span class="badge">ترجع قيمة إجبارياً</span>
               </div>
             </div>
+          </section>
+
+          <!-- Slide 9: Syntax comparison -->
+          <section class="content-section">
+            <h2>💻 الصيغ من المنهج | Syntax (Slide 9)</h2>
+
+            <h3>Anonymous Block</h3>
+            <pre><code class="language-sql">[DECLARE]
+
+BEGIN
+  --statements
+
+[EXCEPTION]
+
+END;</code></pre>
+
+            <h3>Procedure</h3>
+            <pre><code class="language-sql">PROCEDURE name
+IS
+
+BEGIN
+  --statements
+
+[EXCEPTION]
+
+END;</code></pre>
+
+            <h3>Function</h3>
+            <pre><code class="language-sql">FUNCTION name
+RETURN datatype
+IS
+BEGIN
+  --statements
+  RETURN value;
+[EXCEPTION]
+
+END;</code></pre>
           </section>
 
           <section class="content-section">
@@ -78,59 +117,66 @@
             <table class="comparison-table">
               <thead>
                 <tr>
-                  <th>النوع</th>
-                  <th>الاسم</th>
-                  <th>الحفظ في DB</th>
-                  <th>إرجاع قيمة</th>
+                  <th>الخاصية</th>
+                  <th>Anonymous</th>
+                  <th>Procedure</th>
+                  <th>Function</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Anonymous</strong></td>
-                  <td>لا يوجد</td>
-                  <td>❌ لا</td>
-                  <td>❌ لا</td>
+                  <td>الاسم</td>
+                  <td>❌ لا يوجد</td>
+                  <td>✅ موجود</td>
+                  <td>✅ موجود</td>
                 </tr>
                 <tr>
-                  <td><strong>Procedure</strong></td>
-                  <td>موجود</td>
+                  <td>الحفظ في DB</td>
+                  <td>❌ لا</td>
                   <td>✅ نعم</td>
-                  <td>اختياري</td>
+                  <td>✅ نعم</td>
                 </tr>
                 <tr>
-                  <td><strong>Function</strong></td>
-                  <td>موجود</td>
-                  <td>✅ نعم</td>
-                  <td>✅ نعم (إجباري)</td>
+                  <td>RETURN قيمة</td>
+                  <td>❌ لا</td>
+                  <td>اختياري (عبر OUT)</td>
+                  <td>✅ إجباري</td>
+                </tr>
+                <tr>
+                  <td>يبدأ بـ</td>
+                  <td><code>DECLARE</code> أو <code>BEGIN</code></td>
+                  <td><code>PROCEDURE name IS</code></td>
+                  <td><code>FUNCTION name RETURN type IS</code></td>
+                </tr>
+                <tr>
+                  <td>إعادة الاستخدام</td>
+                  <td>❌ مرة واحدة</td>
+                  <td>✅ عدة مرات</td>
+                  <td>✅ عدة مرات</td>
                 </tr>
               </tbody>
             </table>
           </section>
 
           <section class="content-section">
-            <h2>💻 أمثلة للكتابة Syntax</h2>
-
-            <h3>Anonymous Block</h3>
-            <pre><code class="language-sql">[DECLARE]
-BEGIN
-   -- statements
-[EXCEPTION]
-END;</code></pre>
-
-            <h3>Procedure</h3>
-            <pre><code class="language-sql">PROCEDURE name IS
-BEGIN
-   -- statements
-[EXCEPTION]
-END;</code></pre>
-
-            <h3>Function</h3>
-            <pre><code class="language-sql">FUNCTION name RETURN datatype IS
-BEGIN
-   -- statements
-   RETURN value;
-[EXCEPTION]
-END;</code></pre>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>Anonymous Block: بدون اسم، لا تُحفظ، للتنفيذ المباشر</li>
+                <li>
+                  Procedure: لها اسم، تُحفظ، تنفذ <strong>فعل</strong> (لا ترجع
+                  قيمة رسمياً)
+                </li>
+                <li>
+                  Function: لها اسم، تُحفظ، <strong>يجب</strong> أن ترجع قيمة بـ
+                  <code>RETURN</code>
+                </li>
+                <li>
+                  Procedure و Function = <strong>Subprograms</strong> (برامج
+                  فرعية)
+                </li>
+              </ul>
+            </div>
           </section>
         </div>
 

@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>%TYPE Attribute | Data Structures Study Guide</title>
+    <title>Bind Variables | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,96 +30,104 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_01/index.html">الوحدة 1</a> ›
-        <span>الخاصية %TYPE</span>
+        <span>Bind Variables</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>The %TYPE Attribute</h1>
-          <p class="topic-title-ar">خاصية الوراثة %TYPE</p>
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>Bind Variables</h1>
+          <p class="topic-title-ar">متغيرات الربط (Host Variables)</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 26: Bind Variables -->
           <section class="content-section">
-            <h2>🎯 ما هي خاصية %TYPE؟</h2>
-            <p>
-              تُستخدم لتعريف متغير
-              <span class="term" data-ar="يرث نوع البيانات"
-                >inherits data type</span
-              >
-              من:
-            </p>
-            <ol>
-              <li>عمود في جدول قاعدة البيانات (Database Column).</li>
-              <li>متغير آخر تم تعريفه مسبقاً.</li>
-            </ol>
+            <h2>📖 ما هي Bind Variables؟</h2>
+            <p>Bind Variables هي متغيرات:</p>
+            <ul class="styled-list">
+              <li>
+                تُنشأ في <strong>البيئة الخارجية</strong> (Environment) وليس
+                داخل كتلة PL/SQL
+              </li>
+              <li>
+                تُسمى أيضاً <strong>Host Variables</strong> (متغيرات مضيفة)
+              </li>
+              <li>تُنشأ بكلمة <code>VARIABLE</code></li>
+              <li>تُستخدم في جمل SQL وكتل PL/SQL</li>
+              <li>
+                يمكن الوصول إليها <strong>حتى بعد</strong> انتهاء تنفيذ الكتلة
+              </li>
+              <li>
+                تُشار إليها بعلامة <strong>نقطتين</strong> قبلها
+                (<code>:</code>)
+              </li>
+            </ul>
+          </section>
+
+          <!-- Slides 27-28: Examples -->
+          <section class="content-section">
+            <h2>💻 أمثلة من المنهج | Examples</h2>
+
+            <h3>مثال 1: إنشاء واستخدام وطباعة (Slide 27)</h3>
+            <pre><code class="language-sql">-- 1. إنشاء Bind Variable في البيئة:
+VARIABLE emp_salary NUMBER
+
+-- 2. استخدامها داخل كتلة PL/SQL:
+BEGIN
+  SELECT salary INTO :emp_salary
+  FROM   employees
+  WHERE  employee_id = 178;
+END;
+/
+
+-- 3. طباعة قيمتها بعد انتهاء الكتلة:
+PRINT emp_salary
+
+-- 4. استخدامها في جملة SQL مباشرة:
+SELECT first_name, last_name
+FROM   employees
+WHERE  salary = :emp_salary;</code></pre>
 
             <div class="highlight-box">
               <p>
-                <strong>الفائدة العظمى:</strong> إذا تغير نوع العمود في قاعدة
-                البيانات (مثلاً زاد حجم VARCHAR2 من 50 إلى 100)، سيتأقلم كودك
-                تلقائياً دون الحاجة لتعديله! وهذا يقلل من أخطاء الصيانة.
+                <strong>⚠️ ملاحظة:</strong> لاحظ علامة <code>:</code> قبل اسم
+                المتغير عند استخدامه — <code>:emp_salary</code> وليس
+                <code>emp_salary</code>
               </p>
             </div>
-          </section>
 
-          <section class="content-section">
-            <h2>📝 الصيغة | Syntax</h2>
-            <pre><code class="language-sql">-- الوراثة من عمود في جدول
-variable_name table_name.column_name%TYPE;
+            <h3>مثال 2: الطباعة التلقائية بـ SET AUTOPRINT ON (Slide 28)</h3>
+            <pre><code class="language-sql">VARIABLE emp_salary NUMBER
+SET AUTOPRINT ON
 
--- الوراثة من متغير آخر
-variable_name variable_name_2%TYPE;</code></pre>
-          </section>
-
-          <section class="content-section">
-            <h2>💻 مثال عملي | Code Example</h2>
-            <p>
-              افتراضاً لدينا جدول <code>EMPLOYEES</code> فيه عمود
-              <code>LAST_NAME</code>.
-            </p>
-
-            <pre><code class="language-sql">DECLARE
-    -- تعريف تقليدي (Hardcoded) - غير منصوح به للصيانة
-    v_name_fixed  VARCHAR2(25); 
-
-    -- تعريف باستخدام %TYPE (Best Practice)
-    -- سيأخذ نفس نوع وطول عمود last_name في جدول employees
-    v_name_dynamic employees.last_name%TYPE; 
-    
-    -- الوراثة من متغير آخر
-    v_name_copy    v_name_dynamic%TYPE;
 BEGIN
-    SELECT last_name INTO v_name_dynamic
-    FROM employees
-    WHERE employee_id = 100;
-    
-    DBMS_OUTPUT.PUT_LINE(v_name_dynamic);
-END;</code></pre>
+  SELECT salary INTO :emp_salary
+  FROM   employees
+  WHERE  employee_id = 178;
+END;
+/
+-- القيمة تُطبع تلقائياً بدون الحاجة لـ PRINT</code></pre>
           </section>
 
           <section class="content-section">
-            <h2>✅ المميزات | Advantages</h2>
-            <ul class="styled-list">
-              <li>
-                <strong>تتكيف مع تغييرات قاعدة البيانات:</strong> لا حاجة لتعديل
-                الكود عند تغيير خصائص الأعمدة.
-              </li>
-              <li>
-                <strong>تضمن توافق البيانات:</strong> لن يحدث خطأ "Value too
-                large" لأن المتغير دائماً بحجم العمود المناسب.
-              </li>
-            </ul>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>تُنشأ بـ <code>VARIABLE</code> خارج الكتلة (في البيئة)</li>
+                <li>تُشار إليها بـ <code>:</code> (colon) داخل PL/SQL و SQL</li>
+                <li>تبقى متاحة <strong>بعد</strong> انتهاء الكتلة</li>
+                <li><code>PRINT</code> لطباعتها يدوياً</li>
+                <li><code>SET AUTOPRINT ON</code> لطباعتها تلقائياً</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_01_02_02.html" class="nav-prev"
-            >← أنواع البيانات العددية</a
-          >
+          <a href="topic_01_02_02.html" class="nav-prev">← خاصية %TYPE</a>
           <a href="topic_01_02_04.html" class="nav-next"
-            >متغيرات الربط والاستبدال →</a
+            >Substitution Variables →</a
           >
         </nav>
       </article>

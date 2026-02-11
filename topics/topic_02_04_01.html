@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cursor Fundamentals | Data Structures Study Guide</title>
+    <title>Explicit Cursors | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,63 +30,209 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_02/index.html">الوحدة 2</a> ›
-        <span>Cursor Fundamentals</span>
+        <span>Explicit Cursors</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Cursor Fundamentals</h1>
-          <p class="topic-title-ar">أساسيات المؤشرات</p>
+          <h1>Using Explicit Cursors</h1>
+          <p class="topic-title-ar">المؤشرات الصريحة</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 62 -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              المؤشر (Cursor) هو مؤشر لمنطقة ذاكرة خاصة يتم من خلالها معالجة جمل
-              SQL. عند تنفيذ جملة SQL، يقوم خادم Oracle بفتح منطقة ذاكرة لمعالجة
-              هذه الجملة.
-            </p>
+            <h2>📖 عن المؤشرات | About Cursors (Slide 62)</h2>
+            <p>كل جملة SQL يُنشأ لها مؤشر (Cursor) خاص:</p>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>الشرح</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Implicit Cursors</strong></td>
+                  <td>يُنشئها PL/SQL تلقائياً لكل جملة DML و SELECT</td>
+                </tr>
+                <tr>
+                  <td><strong>Explicit Cursors</strong></td>
+                  <td>يُعرّفها ويديرها المبرمج صراحة</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Slides 64-65: Controlling -->
+          <section class="content-section">
+            <h2>⚙️ التحكم بالمؤشر الصريح | Steps (Slides 64-65)</h2>
+            <p>4 خطوات بالترتيب:</p>
+            <ol class="styled-list">
+              <li>
+                <strong>DECLARE</strong> — إنشاء منطقة SQL مسمّاة (Named SQL
+                Area)
+              </li>
+              <li>
+                <strong>OPEN</strong> — تحديد المجموعة النشطة (Active Set)
+                وتنفيذ الاستعلام
+              </li>
+              <li><strong>FETCH</strong> — تحميل الصف الحالي في متغيرات</li>
+              <li><strong>CLOSE</strong> — تحرير المجموعة النشطة</li>
+            </ol>
+          </section>
+
+          <!-- Slides 66-70: Full Example -->
+          <section class="content-section">
+            <h2>💻 المثال الكامل من المنهج (Slides 66-70)</h2>
+            <h3>1. DECLARE (Slide 66)</h3>
+            <pre><code class="language-sql">CURSOR cursor_name IS
+  select_statement;
+
+-- أمثلة:
+DECLARE
+  CURSOR emp_cursor IS
+    SELECT employee_id, last_name FROM employees
+    WHERE department_id = 30;
+
+  -- يمكن استخدام متغير في WHERE:
+  locid NUMBER := 1700;
+  CURSOR dept_cursor IS
+    SELECT * FROM departments
+    WHERE location_id = locid;</code></pre>
+
+            <h3>2. OPEN (Slide 67)</h3>
+            <pre><code class="language-sql">BEGIN
+  OPEN emp_cursor;</code></pre>
+
+            <h3>3. FETCH في حلقة (Slides 68-69)</h3>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+DECLARE
+  CURSOR emp_cursor IS
+    SELECT employee_id, last_name FROM employees
+    WHERE department_id = 30;
+  empno employees.employee_id%TYPE;
+  lname employees.last_name%TYPE;
+BEGIN
+  OPEN emp_cursor;
+  LOOP
+    FETCH emp_cursor INTO empno, lname;
+    EXIT WHEN emp_cursor%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE(empno || ' ' || lname);
+  END LOOP;
+  CLOSE emp_cursor;
+END;
+/</code></pre>
+
+            <h3>4. CLOSE (Slide 70)</h3>
+            <pre><code class="language-sql">CLOSE emp_cursor;</code></pre>
+          </section>
+
+          <!-- Slide 71: Cursors and Records -->
+          <section class="content-section">
+            <h2>📋 استخدام Records مع Cursors (Slide 71)</h2>
+            <pre><code class="language-sql">DECLARE
+  CURSOR emp_cursor IS
+    SELECT employee_id, last_name FROM employees
+    WHERE department_id = 30;
+  emp_record  emp_cursor%ROWTYPE;  -- Record من نوع المؤشر!
+BEGIN
+  OPEN emp_cursor;
+  LOOP
+    FETCH emp_cursor INTO emp_record;
+    EXIT WHEN emp_cursor%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE(emp_record.employee_id
+      || ' ' || emp_record.last_name);
+  END LOOP;
+  CLOSE emp_cursor;
+END;
+/</code></pre>
+          </section>
+
+          <!-- Slides 74-76: Attributes -->
+          <section class="content-section">
+            <h2>⚡ خصائص المؤشر | Cursor Attributes (Slide 74)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>الخاصية</th>
+                  <th>النوع</th>
+                  <th>الشرح</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>%ISOPEN</code></td>
+                  <td>Boolean</td>
+                  <td>TRUE إذا كان المؤشر مفتوحاً</td>
+                </tr>
+                <tr>
+                  <td><code>%NOTFOUND</code></td>
+                  <td>Boolean</td>
+                  <td>TRUE إذا لم يُرجع آخر FETCH صفاً</td>
+                </tr>
+                <tr>
+                  <td><code>%FOUND</code></td>
+                  <td>Boolean</td>
+                  <td>TRUE إذا أرجع آخر FETCH صفاً</td>
+                </tr>
+                <tr>
+                  <td><code>%ROWCOUNT</code></td>
+                  <td>Number</td>
+                  <td>عدد الصفوف المُرجعة حتى الآن</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>مثال: %ISOPEN (Slide 75)</h3>
+            <pre><code class="language-sql">IF NOT emp_cursor%ISOPEN THEN
+  OPEN emp_cursor;
+END IF;
+LOOP
+  FETCH emp_cursor...</code></pre>
+
+            <h3>مثال: %ROWCOUNT و %NOTFOUND (Slide 76)</h3>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+DECLARE
+  empno employees.employee_id%TYPE;
+  ename employees.last_name%TYPE;
+  CURSOR emp_cursor IS
+    SELECT employee_id, last_name FROM employees;
+BEGIN
+  OPEN emp_cursor;
+  LOOP
+    FETCH emp_cursor INTO empno, ename;
+    EXIT WHEN emp_cursor%ROWCOUNT > 10 OR
+              emp_cursor%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE(TO_CHAR(empno) || ' ' || ename);
+  END LOOP;
+  CLOSE emp_cursor;
+END;
+/</code></pre>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>أنواع المؤشرات (Types of Cursors)</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>المؤشر الضمني (Implicit Cursor):</strong>
-                <p>
-                  يتم إنشاؤه وإدارته تلقائياً بواسطة خادم Oracle لجميع جمل DML
-                  (INSERT, UPDATE, DELETE) وجمل SELECT التي تعيد صفاً واحداً.
-                </p>
-              </li>
-              <li>
-                <strong>المؤشر الصريح (Explicit Cursor):</strong>
-                <p>
-                  يتم تعريفه والتحكم فيه بواسطة المبرمج لمعالجة الاستعلامات التي
-                  تعيد أكثر من صف (Multiple Rows).
-                </p>
-              </li>
-            </ul>
-
-            <h3>خصائص المؤشر الصريح (Active Set)</h3>
-            <p>
-              هي مجموعة الصفوف التي يحصل عليها الاستعلام (SELECT statement)
-              المرتبط بالمؤشر. المؤشر يشير دائماً إلى "الصف الحالي" (Current
-              Row) ضمن هذه المجموعة.
-            </p>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  4 خطوات: <strong>DECLARE → OPEN → FETCH → CLOSE</strong>
+                </li>
+                <li>استخدم <code>%NOTFOUND</code> كشرط EXIT في الحلقة</li>
+                <li>
+                  يمكن استخدام <code>cursor%ROWTYPE</code> بدلاً من متغيرات
+                  منفصلة
+                </li>
+                <li><code>%ROWCOUNT</code> لتحديد عدد الصفوف المُعالجة</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="../ch_02_03/topic_02_03_04.html" class="nav-prev"
-            >← Nested Loops</a
-          >
-          <a href="topic_02_04_02.html" class="nav-next"
-            >Controlling Cursors →</a
-          >
+          <a href="topic_02_03_04.html" class="nav-prev">← Nested Loops</a>
+          <a href="topic_02_04_02.html" class="nav-next">Cursor FOR Loops →</a>
         </nav>
       </article>
     </main>

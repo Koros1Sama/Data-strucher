@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Storage Hierarchy | Data Structures Study Guide</title>
+    <title>Multilevel Indexes & B-Trees | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,89 +30,86 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>Storage Hierarchy</span>
+        <span>Multilevel Indexes</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Storage Hierarchy (Primary, Secondary, Tertiary)</h1>
-          <p class="topic-title-ar">هرمية التخزين (الأولي، الثانوي، الثالثي)</p>
+          <span class="difficulty-badge advanced">متقدم</span>
+          <h1>Dynamic Multilevel Indexes</h1>
+          <p class="topic-title-ar">الفهارس متعددة المستويات الديناميكية</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
+            <h2>📖 لماذا الفهارس المتعددة؟ (Slide 13)</h2>
             <p>
-              يتم تنظيم وسائط التخزين في هرمية بناءً على السرعة، التكلفة،
-              والسعة. في القمة توجد الذاكرة الرئيسية (الأسرع والأغلى)، وفي
-              القاعدة توجد وسائط التخزين الضخمة (الأبطأ والأرخص).
+              معظم الفهارس متعددة المستويات تستخدم <strong>B-Tree</strong> أو
+              <strong>B+-Tree</strong> بسبب مشكلة الإدراج والحذف في الفهارس
+              البسيطة.
             </p>
+            <ul class="styled-list">
+              <li>تترك مساحة في كل عقدة (Disk Block) لمدخلات جديدة</li>
+              <li>تسمح بإدراج وحذف فعّال</li>
+              <li>كل <strong>عقدة = كتلة قرص</strong> واحدة (Disk Block)</li>
+              <li>
+                كل عقدة تبقى بين <strong>نصف ممتلئة</strong> و<strong
+                  >ممتلئة بالكامل</strong
+                >
+              </li>
+            </ul>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>⚙️ عمليات الإدراج والحذف (Slide 14)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>العملية</th>
+                  <th>الحالة العادية</th>
+                  <th>الحالة الخاصة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>إدراج</strong></td>
+                  <td>فعّال إذا العقدة <strong>غير ممتلئة</strong></td>
+                  <td>إذا ممتلئة → <strong>Split</strong> (انقسام لعقدتين)</td>
+                </tr>
+                <tr>
+                  <td><strong>حذف</strong></td>
+                  <td>فعّال إذا العقدة <strong>فوق النصف</strong></td>
+                  <td>
+                    إذا أقل من النصف → <strong>Merge</strong> (دمج مع جارة)
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="highlight-box">
+              <p>
+                <strong>📌 ملاحظة:</strong> الانقسام (Split) قد ينتشر لمستويات
+                أعلى في الشجرة.
+              </p>
+            </div>
+          </section>
 
-            <h3>هرمية التخزين | Storage Hierarchy</h3>
-            <p>
-              يتم تنظيم أجهزة التخزين في هرمية (Hierarchy) بناءً على السرعة،
-              التكلفة، والسعة التخزينية.
-            </p>
-            <ul class="styled-list">
-              <li>
-                <strong>Primary Storage (التخزين الأولي):</strong>
-                <ul>
-                  <li>
-                    <strong>Cache Memory:</strong> ذاكرة مخبئية سريعة جداً
-                    ومكلفة، تستخدمها وحدة المعالجة المركزية (CPU) لتسريع الوصول
-                    للبيانات.
-                  </li>
-                  <li>
-                    <strong>Main Memory (RAM):</strong> ذاكرة الوصول العشوائي،
-                    وهي الذاكرة الرئيسية التي تعالج البيانات الحالية. تعتبر
-                    متطايرة (Volatile) أي تفقد البيانات عند انقطاع الطاقة.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <strong>Secondary Storage (التخزين الثانوي):</strong>
-                <ul>
-                  <li>
-                    تشمل الأقراص المغناطيسية (Magnetic Disks) والأقراص الصلبة
-                    (HDD) والـ SSD.
-                  </li>
-                  <li>
-                    تتميز بسعة تخزينية ضخمة وتكلفة أقل من الذاكرة الرئيسية.
-                  </li>
-                  <li>
-                    غير متطايرة (Non-volatile)، أي تحتفظ بالبيانات بشكل دائم.
-                  </li>
-                  <li>تستخدم لتخزين قاعدة البيانات بالكامل.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Tertiary Storage (التخزين الثالثي):</strong>
-                <ul>
-                  <li>
-                    تشمل الأشرطة المغناطيسية (Magnetic Tapes) والأقراص الضوئية.
-                  </li>
-                  <li>تستخدم للأرشفة (Archiving) والنسخ الاحتياطي (Backup).</li>
-                  <li>
-                    أبطأ وسائط التخزين ولكنها الأرخص وتوفر سعات ضخمة جداً.
-                  </li>
-                </ul>
-              </li>
-            </ul>
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>B-Tree / B+-Tree = الحل لمشكلة الإدراج والحذف</li>
+                <li>كل عقدة = Disk Block</li>
+                <li>النصف ≤ امتلاء العقدة ≤ الكامل</li>
+                <li>Split عند الإدراج في عقدة ممتلئة</li>
+                <li>Merge عند الحذف من عقدة أقل من النصف</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="../modules/module_04/index.html" class="nav-prev"
-            >← فهرس الوحدة 4</a
-          >
-          <a href="topic_04_04_02.html" class="nav-next"
-            >Secondary Storage Devices →</a
-          >
+          <a href="topic_04_02_03.html" class="nav-prev">← Secondary Index</a>
+          <a href="topic_04_04_03.html" class="nav-next">B-Trees →</a>
         </nav>
       </article>
     </main>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trigger Execution Order | Data Structures Study Guide</title>
+    <title>Conditional Predicates | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,73 +30,106 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_03/index.html">الوحدة 3</a> ›
-        <span>Trigger Execution Order</span>
+        <span>Conditional Predicates</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
-          <h1>Trigger Execution Order</h1>
-          <p class="topic-title-ar">تسلسل تنفيذ المشغلات</p>
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Using Conditional Predicates</h1>
+          <p class="topic-title-ar">المؤشرات الشرطية في المشغّلات</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
+            <h2>📖 المفهوم | Concept</h2>
             <p>
-              عندما يتم تعريف عدة أنواع من المشغلات على نفس الجدول، من المهم
-              جداً فهم الترتيب الذي يقوم Oracle بتنفيذها به عند حدوث عملية DML،
-              لضمان سلامة المنطق البرمجي.
+              عندما يكون Trigger واحد يتعامل مع أكثر من حدث (INSERT OR UPDATE OR
+              DELETE)، يمكنك تحديد الحدث الفعلي باستخدام:
             </p>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>الدالة</th>
+                  <th>ترجع TRUE عندما</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>INSERTING</code></td>
+                  <td>الحدث الحالي هو INSERT</td>
+                </tr>
+                <tr>
+                  <td><code>UPDATING</code></td>
+                  <td>الحدث الحالي هو UPDATE</td>
+                </tr>
+                <tr>
+                  <td><code>UPDATING('column')</code></td>
+                  <td>يتم تحديث عمود محدد</td>
+                </tr>
+                <tr>
+                  <td><code>DELETING</code></td>
+                  <td>الحدث الحالي هو DELETE</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Slide 12: Full Example -->
+          <section class="content-section">
+            <h2>💻 مثال كامل من المنهج (Slide 12)</h2>
+            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER secure_emp
+BEFORE INSERT OR UPDATE OR DELETE ON employees
+BEGIN
+  IF (TO_CHAR(SYSDATE,'DY') IN ('SAT','SUN')) OR
+     (TO_CHAR(SYSDATE,'HH24')
+       NOT BETWEEN '08' AND '18') THEN
+
+    IF DELETING THEN
+      RAISE_APPLICATION_ERROR(-20502,
+        'You may delete from EMPLOYEES table'
+        || ' only during business hours.');
+
+    ELSIF INSERTING THEN
+      RAISE_APPLICATION_ERROR(-20500,
+        'You may insert into EMPLOYEES table'
+        || ' only during business hours.');
+
+    ELSIF UPDATING('SALARY') THEN
+      RAISE_APPLICATION_ERROR(-20503,
+        'You may update SALARY only during'
+        || ' business hours.');
+
+    ELSE
+      RAISE_APPLICATION_ERROR(-20504,
+        'You may update EMPLOYEES table only'
+        || ' during normal hours.');
+    END IF;
+
+  END IF;
+END;</code></pre>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>تسلسل التنفيذ الصحيح (Execution Sequence)</h3>
-            <ol class="styled-list number-list">
-              <li>
-                <strong>BEFORE Statement Trigger:</strong> ينفذ أولاً، مرة واحدة
-                فقط قبل بدء العملية بالكامل.
-              </li>
-              <li>
-                <strong>Loop for each row (تكرار لكل صف):</strong>
-                <ul>
-                  <li>
-                    <strong>BEFORE Row Trigger:</strong> ينفذ قبل تعديل الصف
-                    الحالي.
-                  </li>
-                  <li>
-                    <strong>DML Operation:</strong> تنفيذ العملية الفعلية
-                    (إضافة/تعديل/حذف) والتحقق من القيود (Constraints).
-                  </li>
-                  <li>
-                    <strong>AFTER Row Trigger:</strong> ينفذ بعد اكتمال تعديل
-                    الصف الحالي.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <strong>AFTER Statement Trigger:</strong> ينفذ أخيراً، مرة واحدة
-                فقط بعد الانتهاء من جميع الصفوف.
-              </li>
-            </ol>
-
-            <h3>مثال للتوضيح</h3>
-            <p>لو قمنا بتحديث 5 موظفين بجملة UPDATE واحدة:</p>
-            <ul class="styled-list">
-              <li>BEFORE Statement يعمل مرة واحدة.</li>
-              <li>BEFORE Row يعمل 5 مرات.</li>
-              <li>AFTER Row يعمل 5 مرات.</li>
-              <li>AFTER Statement يعمل مرة واحدة.</li>
-            </ul>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  <code>INSERTING</code>, <code>UPDATING</code>,
+                  <code>DELETING</code> — مؤشرات شرطية
+                </li>
+                <li>
+                  <code>UPDATING('column_name')</code> — للتحقق من عمود محدد
+                </li>
+                <li>تُستخدم داخل trigger واحد يتعامل مع أكثر من حدث DML</li>
+                <li>تسمح بتخصيص الرسائل والسلوك لكل نوع عملية</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_03_02_02.html" class="nav-prev"
-            >← Conditional Predicates</a
-          >
+          <a href="topic_03_02_02.html" class="nav-prev">← Row Triggers</a>
           <a href="topic_03_03_01.html" class="nav-next">Managing Triggers →</a>
         </nav>
       </article>

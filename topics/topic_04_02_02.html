@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>B+ Tree Structure | Data Structures Study Guide</title>
+    <title>Clustering Index | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,100 +30,84 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>B+ Tree Structure</span>
+        <span>Clustering Index</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
-          <h1>B+ Tree Structure & Differences</h1>
-          <p class="topic-title-ar">هيكلية وأوجه الاختلاف في أشجار B+ Trees</p>
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Clustering Index</h1>
+          <p class="topic-title-ar">فهرس التجميع</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              تعد B+ Tree تحسيناً على B-Tree، وهي الهيكل الأكثر استخداماً في
-              قواعد البيانات الحديثة للفهارس.
-            </p>
+            <h2>📖 التعريف (Slide 7)</h2>
+            <ul class="styled-list">
+              <li>يُعرّف على <strong>ملف بيانات مُرتّب</strong></li>
+              <li>
+                ملف البيانات مُرتّب على
+                <strong>حقل غير مفتاحي</strong> (Non-Key) — يمكن أن تتكرر القيم
+              </li>
+              <li>
+                يتضمن <strong>مدخل واحد لكل قيمة مميزة</strong> (Distinct Value)
+              </li>
+              <li>
+                المدخل يشير إلى <strong>أول كتلة بيانات</strong> تحتوي سجلات
+                بهذه القيمة
+              </li>
+              <li>يُعتبر <strong>Nondense Index</strong> (فهرس غير كثيف)</li>
+            </ul>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>⚖️ الفرق عن Primary Index</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>الميزة</th>
+                  <th>Primary Index</th>
+                  <th>Clustering Index</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>حقل الترتيب</strong></td>
+                  <td>Key Field (قيم <strong>فريدة</strong>)</td>
+                  <td>Non-Key Field (قيم <strong>مكررة</strong>)</td>
+                </tr>
+                <tr>
+                  <td><strong>المدخل</strong></td>
+                  <td>مدخل لكل <strong>كتلة</strong></td>
+                  <td>مدخل لكل <strong>قيمة مميزة</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>الإدراج/الحذف</strong></td>
+                  <td>معقد نسبياً</td>
+                  <td><strong>سهل نسبياً</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
 
-            <h3>الفرق الجوهري عن B-Tree</h3>
-            <div class="table-container">
-              <table class="comparison-table">
-                <thead>
-                  <tr>
-                    <th>الخاصية</th>
-                    <th>B-Tree</th>
-                    <th>B+ Tree</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>تخزين البيانات</td>
-                    <td>
-                      مؤشرات البيانات موجودة في
-                      <strong>كل العقد</strong> (الداخلية والأوراق).
-                    </td>
-                    <td>
-                      مؤشرات البيانات موجودة
-                      <strong>فقط في الأوراق (Leaf Nodes)</strong>.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>تكرار المفاتيح</td>
-                    <td>المفتاح يظهر مرة واحدة فقط.</td>
-                    <td>
-                      المفاتيح قد تتكرر (نسخة في العقد الداخلية للتوجيه، ونسخة
-                      في الورقة للوصول).
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>البحث المتسلسل (Range Scan)</td>
-                    <td>صعب، يتطلب صعود وهبوط في الشجرة.</td>
-                    <td>
-                      سهل جداً، لأن الأوراق مرتبطة ببعضها البعض (Linked List).
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>ارتفاع الشجرة</td>
-                    <td>
-                      قد يكون أكبر لأن العقد الداخلية تمتلئ بمؤشرات البيانات.
-                    </td>
-                    <td>
-                      أقل غالباً، لأن العقد الداخلية تخزن مفاتيح فقط، مما يسمح
-                      بتفرع أكبر (Higher Fan-out).
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  حقل الترتيب = <strong>Non-Key</strong> (قيم مكررة مسموحة)
+                </li>
+                <li>مدخل واحد لكل <strong>قيمة مميزة</strong> → Nondense</li>
+                <li>الإدراج والحذف أسهل من Primary Index</li>
+                <li>مثال: فهرس على department_id (عدة موظفين بنفس القسم)</li>
+              </ul>
             </div>
-
-            <h3>هيكلية العقد في B+ Tree</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>Internal Nodes (العقد الداخلية):</strong> تحتوي فقط على
-                مفاتيح البحث ومؤشرات لعقد الأبناء (Tree Pointers). وظيفتها
-                التوجيه فقط.
-              </li>
-              <li>
-                <strong>Leaf Nodes (العقد الورقية):</strong> تحتوي على مفاتيح
-                البحث ومؤشرات البيانات الفعلية (Data Pointers). كما أنها مرتبطة
-                ببعضها بمؤشر "التالي" لتسهيل القراءة المتسلسلة.
-              </li>
-            </ul>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_04_02_01.html" class="nav-prev">← B-Tree Structure</a>
-          <a href="topic_04_02_03.html" class="nav-next"
-            >Insertion/Deletion in B+ Trees →</a
-          >
+          <a href="topic_04_02_01.html" class="nav-prev">← Primary Index</a>
+          <a href="topic_04_02_03.html" class="nav-next">Secondary Index →</a>
         </nav>
       </article>
     </main>

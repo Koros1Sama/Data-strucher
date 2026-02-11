@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OLD and NEW Qualifiers | Data Structures Study Guide</title>
+    <title>OLD/NEW Qualifiers | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,96 +30,144 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_03/index.html">الوحدة 3</a> ›
-        <span>OLD and NEW Qualifiers</span>
+        <span>OLD/NEW Qualifiers</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
-          <h1>OLD and NEW Qualifiers</h1>
-          <p class="topic-title-ar">المحددات OLD و NEW</p>
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Using OLD and NEW Qualifiers</h1>
+          <p class="topic-title-ar">استخدام OLD و NEW في المشغّلات</p>
         </header>
 
         <div class="topic-body">
+          <!-- OLD/NEW concept -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
+            <h2>📖 المفهوم | Concept</h2>
             <p>
-              في مشغلات مستوى الصف (Row Triggers)، يمكنك الوصول إلى قيم الأعمدة
-              للصف الحالي قبل التعديل وبعده باستخدام المحددات
-              <code>:OLD</code> و <code>:NEW</code>.
+              في Row Triggers يمكنك الوصول إلى القيم
+              <strong>القديمة</strong> و<strong>الجديدة</strong> للصف:
             </p>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>المرجع</th>
+                  <th>الاستخدام</th>
+                  <th>متاح في</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>:OLD.column</code></td>
+                  <td>القيمة <strong>قبل</strong> التعديل</td>
+                  <td>UPDATE, DELETE</td>
+                </tr>
+                <tr>
+                  <td><code>:NEW.column</code></td>
+                  <td>القيمة <strong>بعد</strong> التعديل (أو المُدرجة)</td>
+                  <td>INSERT, UPDATE</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="highlight-box">
+              <p>
+                <strong>⚠️ ملاحظة:</strong>
+                <code>:OLD</code> تساوي NULL في INSERT، و<code>:NEW</code> تساوي
+                NULL في DELETE. في WHEN clause تُستخدم بدون <code>:</code> (بدون
+                نقطتين).
+              </p>
+            </div>
           </section>
 
+          <!-- Slide 14: Audit Example -->
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>المفاهيم الأساسية | Key Concepts</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>:OLD</strong> - تشير إلى القيمة القديمة للعمود (قبل
-                تنفيذ الأمر). تكون NULL في حالة الإضافة (INSERT).
-              </li>
-              <li>
-                <strong>:NEW</strong> - تشير إلى القيمة الجديدة للعمود (التي
-                سيتم حفظها). تكون NULL في حالة الحذف (DELETE).
-              </li>
-            </ul>
-
-            <h3>توفر القيم حسب العملية | Availability Table</h3>
-            <div class="table-container">
-              <table class="comparison-table">
-                <thead>
-                  <tr>
-                    <th>العملية (Operation)</th>
-                    <th>:OLD</th>
-                    <th>:NEW</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>INSERT</td>
-                    <td>NULL</td>
-                    <td>القيمة المضافة</td>
-                  </tr>
-                  <tr>
-                    <td>UPDATE</td>
-                    <td>القيمة قبل التعديل</td>
-                    <td>القيمة بعد التعديل</td>
-                  </tr>
-                  <tr>
-                    <td>DELETE</td>
-                    <td>القيمة قبل الحذف</td>
-                    <td>NULL</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h3>مثال عملي (تدقيق التغييرات)</h3>
+            <h2>💻 مثال: Audit Trail (Slide 14)</h2>
             <pre><code class="language-sql">CREATE OR REPLACE TRIGGER audit_emp_values
 AFTER DELETE OR INSERT OR UPDATE ON employees
 FOR EACH ROW
 BEGIN
-  INSERT INTO audit_emp (user_name, old_last_name, new_last_name)
-  VALUES (USER, :OLD.last_name, :NEW.last_name);
-END;</code></pre>
+  INSERT INTO audit_emp(user_name, time_stamp, id,
+    old_last_name, new_last_name, old_title,
+    new_title, old_salary, new_salary)
+  VALUES (USER, SYSDATE, :OLD.employee_id,
+    :OLD.last_name, :NEW.last_name, :OLD.job_id,
+    :NEW.job_id, :OLD.salary, :NEW.salary);
+END;
+/</code></pre>
+          </section>
 
-            <h3>مثال عملي (التحقق من البيانات)</h3>
-            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER restrict_salary
+          <!-- Slide 15: Testing -->
+          <section class="content-section">
+            <h2>🧪 اختبار audit_emp (Slide 15)</h2>
+            <pre><code class="language-sql">-- إدراج:
+INSERT INTO employees
+  (employee_id, last_name, job_id, salary, ...)
+VALUES (999, 'Temp emp', 'SA_REP', 6000, ...);
+
+-- تحديث:
+UPDATE employees
+  SET salary = 7000, last_name = 'Smith'
+  WHERE employee_id = 999;
+
+-- التحقق من جدول Audit:
+SELECT user_name, timestamp, ...
+FROM audit_emp;</code></pre>
+          </section>
+
+          <!-- Slide 16: WHEN clause -->
+          <section class="content-section">
+            <h2>🎯 تقييد Row Trigger بشرط WHEN (Slide 16)</h2>
+            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER derive_commission_pct
 BEFORE INSERT OR UPDATE OF salary ON employees
 FOR EACH ROW
+WHEN (NEW.job_id = 'SA_REP')   -- بدون : هنا!
 BEGIN
-  IF :NEW.salary > 15000 THEN
-    RAISE_APPLICATION_ERROR(-20202, 'Salary too high');
+  IF INSERTING THEN
+    :NEW.commission_pct := 0;
+  ELSIF :OLD.commission_pct IS NULL THEN
+    :NEW.commission_pct := 0;
+  ELSE
+    :NEW.commission_pct := :OLD.commission_pct + 0.05;
   END IF;
-END;</code></pre>
+END;
+/</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>📌 فرق مهم:</strong><br />
+                • في <code>WHEN</code> clause: <code>NEW.column</code> (بدون
+                <code>:</code>)<br />
+                • في <code>trigger_body</code>: <code>:NEW.column</code> (مع
+                <code>:</code>)
+              </p>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  <code>:OLD</code> = القيمة قبل التغيير | <code>:NEW</code> =
+                  القيمة الجديدة
+                </li>
+                <li>
+                  INSERT: <code>:OLD</code> = NULL | DELETE: <code>:NEW</code> =
+                  NULL
+                </li>
+                <li>
+                  WHEN clause: بدون <code>:</code> | trigger body: مع
+                  <code>:</code>
+                </li>
+                <li>يمكن تعديل <code>:NEW</code> في BEFORE triggers</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_03_01_02.html" class="nav-prev">← Trigger Types</a>
-          <a href="../ch_03_02/topic_03_02_01.html" class="nav-next"
-            >Creating DML Triggers →</a
+          <a href="topic_03_01_02.html" class="nav-prev">← Firing Sequence</a>
+          <a href="topic_03_02_01.html" class="nav-next"
+            >Statement Triggers →</a
           >
         </nav>
       </article>

@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Record Placement | Data Structures Study Guide</title>
+    <title>B+-Trees | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,77 +30,98 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>Record Placement</span>
+        <span>B+-Trees</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge advanced">متقدم</span>
-          <h1>Placing File Records on Disk</h1>
-          <p class="topic-title-ar">وضع سجلات الملفات على القرص</p>
+          <h1>B+-Trees</h1>
+          <p class="topic-title-ar">أشجار +B</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              كيفية ترتيب السجلات داخل الكتل تؤثر بشكل كبير على أداء قاعدة
-              البيانات. هناك سجلات ثابتة الطول وسجلات متغيرة الطول (Spanned vs
-              Unspanned).
-            </p>
+            <h2>📖 الفرق عن B-Tree (Slide 15)</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>الميزة</th>
+                  <th>B-Tree</th>
+                  <th>B+-Tree</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>مؤشرات البيانات</strong></td>
+                  <td>في <strong>جميع المستويات</strong></td>
+                  <td>في <strong>مستوى الأوراق فقط</strong> (Leaf Level)</td>
+                </tr>
+                <tr>
+                  <td><strong>عدد المستويات</strong></td>
+                  <td>أكثر</td>
+                  <td><strong>أقل</strong> (أو سعة أكبر)</td>
+                </tr>
+                <tr>
+                  <td><strong>العقد الداخلية</strong></td>
+                  <td>تحتوي مفاتيح + مؤشرات بيانات</td>
+                  <td>تحتوي مفاتيح فقط (للتوجيه)</td>
+                </tr>
+                <tr>
+                  <td><strong>الأوراق</strong></td>
+                  <td>غير مربوطة</td>
+                  <td><strong>مربوطة</strong> ببعضها (Linked)</td>
+                </tr>
+              </tbody>
+            </table>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>📊 التمثيل البصري</h2>
+            <pre><code class="language-text">                B+-Tree
+           ┌────[30|70]────┐
+           │               │
+      ┌──[10|20]──┐   ┌──[50|60]──┐   ┌──[80|90]──┐
+      ↓    ↓    ↓       ↓    ↓    ↓       ↓    ↓    ↓
+   [data][data][data] [data][data][data] [data][data][data]
+     ↔     ↔     ↔     ↔     ↔     ↔     ↔     ↔
+          Leaf nodes مربوطة ببعضها
 
-            <h3>Spanned vs Unspanned Records</h3>
+• العقد الداخلية: مفاتيح للتوجيه فقط
+• الأوراق: كل البيانات + روابط أفقية</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>💡 لماذا B+-Tree أفضل؟</h2>
             <ul class="styled-list">
+              <li><strong>مستويات أقل</strong> = بحث أسرع</li>
               <li>
-                <strong>Unspanned (غير الممتدة):</strong> لا يسمح للسجل أن يتجزأ
-                عبر أكثر من كتلة. إذا لم يكن هناك مساحة كافية، يتم تخزين السجل
-                كاملاً في الكتلة التالية، وتضيع المساحة المتبقية.
+                <strong>الأوراق المربوطة</strong> = فحص نطاقات (Range Queries)
+                فعّال
               </li>
-              <li>
-                <strong>Spanned (الممتدة):</strong> يسمح بتجزئة السجل عبر أكثر
-                من كتلة. يتم وضع مؤشر (Pointer) في نهاية الكتلة الأولى ليشير إلى
-                مكان بقية السجل. مفيد للسجلات الكبيرة جداً.
-              </li>
+              <li>العقد الداخلية أصغر → يمكن تخزين مفاتيح أكثر في كل كتلة</li>
+              <li>الأكثر شيوعاً في أنظمة قواعد البيانات الحديثة</li>
             </ul>
+          </section>
 
-            <h3>Blocking Factor (bfr)</h3>
-            <p>
-              هو متوسط عدد السجلات التي يمكن تخزينها في كتلة واحدة. يتم حسابه
-              كـ: <code>Floor(Block Size / Record Size)</code> للسجلات غير
-              الممتدة.
-            </p>
-
-            <h3>تخصيص الكتل على القرص | File Allocation</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>Contiguous Allocation:</strong> تخزين الكتل بشكل متجاور.
-                سريع جداً للقراءة المتتابعة ولكن صعب التوسع.
-              </li>
-              <li>
-                <strong>Linked Allocation:</strong> كل كتلة تحتوي مؤشراً للكتلة
-                التالية. سهل التوسع ولكن بطيء في الوصول العشوائي.
-              </li>
-              <li>
-                <strong>Indexed Allocation:</strong> استخدام جدول (Index) يحتوي
-                على عناوين الكتل.
-              </li>
-            </ul>
-
-            <h3>File Header (Descriptor)</h3>
-            <p>
-              جزء في بداية الملف يحتوي على معلومات وصفية (Metadata) مثل عناوين
-              القرص، وتوصيف شكل السجلات، والبرامج اللازمة للوصول للملف.
-            </p>
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  B+-Tree: مؤشرات البيانات في <strong>الأوراق فقط</strong>
+                </li>
+                <li>مستويات أقل من B-Tree (أداء أفضل)</li>
+                <li>الأوراق مربوطة → Range Queries سريعة</li>
+                <li>الأكثر استخداماً في DBMSs الحديثة</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_04_04_03.html" class="nav-prev">← Block Buffering</a>
-          <a href="topic_04_05_01.html" class="nav-next">Heap Files →</a>
+          <a href="topic_04_04_03.html" class="nav-prev">← B-Trees</a>
+          <a href="topic_04_05_01.html" class="nav-next">Storage & Disk →</a>
         </nav>
       </article>
     </main>

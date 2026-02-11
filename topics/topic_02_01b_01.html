@@ -1,11 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      INDEX BY Tables (Associative Arrays) | Data Structures Study Guide
-    </title>
+    <title>SELECT INTO Statement | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -32,77 +30,131 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_02/index.html">الوحدة 2</a> ›
-        <span>INDEX BY Tables</span>
+        <span>SELECT INTO</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>INDEX BY Tables (Associative Arrays)</h1>
-          <p class="topic-title-ar">جداول INDEX BY (المصفوفات الترابطية)</p>
+          <h1>SELECT Statements in PL/SQL</h1>
+          <p class="topic-title-ar">جملة SELECT INTO في PL/SQL</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slides 25-26 -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              جداول INDEX BY (أو المصفوفات الترابطية) هي نوع من أنواع المجموعات
-              (Collections) في PL/SQL. تعمل مثل Hash Tables في لغات البرمجة
-              الأخرى، حيث يتم الوصول للعناصر عبر مفتاح (Key) وليس عبر ترتيب رقمي
-              متسلسل فقط.
-            </p>
+            <h2>📖 SQL في PL/SQL | SQL Statements in PL/SQL</h2>
+            <p>يمكنك استخدام أنواع SQL التالية داخل PL/SQL (Slide 25):</p>
+            <ul class="styled-list">
+              <li><strong>SELECT</strong> — جلب البيانات من الجداول</li>
+              <li><strong>DML</strong> — INSERT, UPDATE, DELETE, MERGE</li>
+              <li>
+                <strong>Transaction Control</strong> — COMMIT, ROLLBACK,
+                SAVEPOINT
+              </li>
+            </ul>
+          </section>
+
+          <!-- Slides 26-29 -->
+          <section class="content-section">
+            <h2>⚙️ SELECT INTO</h2>
+            <h3>الصيغة (Slide 26)</h3>
+            <pre><code class="language-sql">SELECT  select_list
+INTO    {variable_name[, variable_name]...
+        | record_name}
+FROM    table
+[WHERE  condition];</code></pre>
+
+            <div class="highlight-box">
+              <p>
+                <strong>⚠️ قواعد مهمة:</strong><br />
+                • جملة <code>INTO</code> إجبارية في PL/SQL<br />
+                • يجب أن يُرجع الاستعلام <strong>صفاً واحداً فقط</strong>
+              </p>
+            </div>
+
+            <h3>مثال 1: جلب قيمة واحدة (Slide 27)</h3>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+DECLARE
+  fname VARCHAR2(25);
+BEGIN
+  SELECT first_name INTO fname
+  FROM   employees
+  WHERE  employee_id = 200;
+
+  DBMS_OUTPUT.PUT_LINE('First Name is: ' || fname);
+END;
+/</code></pre>
+
+            <h3>مثال 2: جلب عدة قيم مع %TYPE (Slide 28)</h3>
+            <pre><code class="language-sql">DECLARE
+  emp_hiredate  employees.hire_date%TYPE;
+  emp_salary    employees.salary%TYPE;
+BEGIN
+  SELECT  hire_date, salary
+  INTO    emp_hiredate, emp_salary
+  FROM    employees
+  WHERE   employee_id = 100;
+END;
+/</code></pre>
+
+            <h3>مثال 3: GROUP FUNCTION مع SELECT INTO (Slide 29)</h3>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+DECLARE
+  sum_sal  NUMBER(10,2);
+  deptno   NUMBER NOT NULL := 60;
+BEGIN
+  SELECT SUM(salary) INTO sum_sal
+  FROM   employees
+  WHERE  department_id = deptno;
+
+  DBMS_OUTPUT.PUT_LINE('The sum of salary is ' || sum_sal);
+END;
+/</code></pre>
+          </section>
+
+          <!-- Slide 30: Naming Conventions -->
+          <section class="content-section">
+            <h2>⚠️ مشكلة تشابه الأسماء | Naming Conventions (Slide 30)</h2>
+            <pre><code class="language-sql">-- ❌ مشكلة: أسماء المتغيرات = أسماء الأعمدة
+DECLARE
+  hire_date    employees.hire_date%TYPE;
+  employee_id  employees.employee_id%TYPE := 176;
+BEGIN
+  SELECT hire_date
+  INTO   hire_date        -- غموض!
+  FROM   employees
+  WHERE  employee_id = employee_id;  -- من أين يعرف Oracle أيهما؟
+END;
+/</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>💡 الحل:</strong> استخدم بادئة للمتغيرات مثل
+                <code>v_hire_date</code> أو <code>emp_hire_date</code>
+              </p>
+            </div>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>المفهوم | Concept</h3>
-            <p>
-              تعرف أيضاً بـ <strong>Associative Arrays</strong>. وهي عبارة عن
-              مجموعات من أزواج (Key-Value). لا يتم تخزينها في قاعدة البيانات، بل
-              تستخدم فقط داخل كود PL/SQL.
-            </p>
-
-            <h3>الخصائص | Characteristics</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>المفتاح (Index):</strong> يمكن أن يكون رقماً (INTEGER)
-                أو نصاً (STRING).
-              </li>
-              <li>
-                <strong>الحجم:</strong> ديناميكي، لا يوجد حد أقصى محدد مسبقاً.
-              </li>
-              <li>
-                <strong>الترتيب:</strong> العناصر رتبة بناءً على قيمة المفتاح،
-                وليس ترتيب الإدخال.
-              </li>
-            </ul>
-
-            <h3>Syntax</h3>
-            <pre><code class="language-sql">TYPE type_name IS TABLE OF element_type
-    INDEX BY [PLS_INTEGER | BINARY_INTEGER | VARCHAR2(size)];
-
--- Declaration
-collection_name type_name;</code></pre>
-
-            <h3>مثال | Example</h3>
-            <pre><code class="language-sql">DECLARE
-    TYPE SalaryList IS TABLE OF NUMBER INDEX BY VARCHAR2(20);
-    emp_salaries SalaryList;
-BEGIN
-    emp_salaries('John') := 5000;
-    emp_salaries('Sara') := 6500;
-    
-    DBMS_OUTPUT.PUT_LINE('Sara Salary: ' || emp_salaries('Sara'));
-END;</code></pre>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li><code>INTO</code> إجبارية في SELECT داخل PL/SQL</li>
+                <li>
+                  يجب إرجاع <strong>صف واحد فقط</strong> (وإلا: TOO_MANY_ROWS أو
+                  NO_DATA_FOUND)
+                </li>
+                <li>يمكن استخدام <code>%TYPE</code> لضمان توافق الأنواع</li>
+                <li>يمكن استخدام Group Functions (SUM, COUNT, etc.)</li>
+                <li>تجنب تسمية المتغيرات بنفس أسماء الأعمدة</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_02_01_02.html" class="nav-prev"
-            >← The %ROWTYPE Attribute</a
-          >
-          <a href="topic_02_01b_02.html" class="nav-next">Nested Tables →</a>
+          <a href="topic_02_01_02.html" class="nav-prev">← Nested Blocks</a>
+          <a href="topic_02_01b_02.html" class="nav-next">DML في PL/SQL →</a>
         </nav>
       </article>
     </main>

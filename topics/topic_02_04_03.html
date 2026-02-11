@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cursor FOR Loops | Data Structures Study Guide</title>
+    <title>Cursor FOR Loops & Attributes | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,69 +30,198 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_02/index.html">الوحدة 2</a> ›
-        <span>Cursor FOR Loops</span>
+        <span>Cursor FOR Loops & Attributes</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Cursor FOR Loops</h1>
-          <p class="topic-title-ar">حلقات FOR للمؤشرات</p>
+          <h1>Cursor FOR Loops & Cursor Attributes</h1>
+          <p class="topic-title-ar">حلقات FOR للمؤشرات وخصائص المؤشر</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
             <h2>📖 مقدمة | Introduction</h2>
             <p>
-              تعتبر <strong>Cursor FOR Loop</strong> طريقة مختصرة وفعالة للتعامل
-              مع المؤشرات الصريحة. تقوم هذه الحلقة بفتح المؤشر، وجلب الصفوف
-              واحداً تلو الآخر، ثم إغلاق المؤشر تلقائياً عند انتهاء البيانات،
-              دون الحاجة لكتابة أوامر OPEN، FETCH، و CLOSE يدوياً.
+              حلقة <strong>Cursor FOR Loop</strong> هي أقصر طريقة للتعامل مع
+              المؤشرات. تقوم تلقائياً بـ OPEN و FETCH و CLOSE بدون كتابتها
+              يدوياً. كما أن خصائص المؤشر (Cursor Attributes) مهمة جداً لمعرفة
+              حالته أثناء المعالجة.
             </p>
           </section>
 
+          <!-- Cursor FOR Loop -->
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>🔄 حلقة Cursor FOR Loop</h2>
 
-            <h3>المميزات | Features</h3>
-            <ul class="styled-list">
-              <li>
-                تقوم بتعريف سجل (Record) ضمنياً %ROWTYPE ليحمل بيانات الصف.
-              </li>
-              <li>
-                تتعامل مع فتح وإغلاق المؤشر تلقائياً (حتى في حالة حدوث خطأ).
-              </li>
-              <li>تجعل الكود أنظف وأسهل للقراءة.</li>
-            </ul>
-
-            <h3>الصيغة العامة | Syntax</h3>
+            <h3>الصيغة العامة</h3>
             <pre><code class="language-sql">FOR record_name IN cursor_name LOOP
-  -- Access data using record_name.column_name
   statement1;
   statement2;
+  ...
 END LOOP;</code></pre>
 
-            <h3>مثال عملي | Practical Example</h3>
-            <pre><code class="language-sql">DECLARE
-  CURSOR emp_cursor IS 
-    SELECT employee_id, last_name FROM employees WHERE department_id = 30;
-BEGIN
-  -- لا حاجة لتعريف متغير للسجل، يتم تعريفه تلقائياً
-  FOR emp_record IN emp_cursor LOOP
-    DBMS_OUTPUT.PUT_LINE( emp_record.employee_id || ' ' || emp_record.last_name );
-  END LOOP;
-  -- يتم إغلاق المؤشر تلقائياً هنا
-END;</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>✨ الميزات:</strong><br />
+                • الـ Record يُعرَّف <strong>تلقائياً</strong> (لا تحتاج DECLARE
+                لـ record)<br />
+                • OPEN يتم <strong>تلقائياً</strong><br />
+                • FETCH يتم <strong>تلقائياً</strong> في كل دورة<br />
+                • EXIT يتم <strong>تلقائياً</strong> عند انتهاء الصفوف<br />
+                • CLOSE يتم <strong>تلقائياً</strong>
+              </p>
+            </div>
 
-            <h3>استخدام الاستعلام الفرعي مباشرة (Using Subqueries)</h3>
-            <p>
-              يمكننا تعريف المؤشر كجزء من الحلقة مباشرة دون الحاجة لقسم DECLARE:
-            </p>
-            <pre><code class="language-sql">BEGIN
-  FOR emp_record IN (SELECT employee_id, last_name FROM employees) LOOP
-    DBMS_OUTPUT.PUT_LINE(emp_record.last_name);
+            <h3>مثال | Example</h3>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+DECLARE
+  CURSOR emp_cursor IS
+    SELECT employee_id, last_name
+    FROM employees
+    WHERE department_id = 30;
+BEGIN
+  FOR emp_record IN emp_cursor LOOP
+    DBMS_OUTPUT.PUT_LINE(
+      emp_record.employee_id || ' ' || emp_record.last_name);
   END LOOP;
-END;</code></pre>
+  -- لا حاجة لـ CLOSE!
+END;
+/</code></pre>
+          </section>
+
+          <!-- Subquery FOR Loop -->
+          <section class="content-section">
+            <h2>🚀 Cursor FOR Loop باستخدام Subquery</h2>
+            <p>
+              يمكن استخدام FOR Loop بدون تعريف المؤشر نهائياً — فقط ضع جملة
+              SELECT مباشرة:
+            </p>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+BEGIN
+  FOR emp_record IN (
+    SELECT employee_id, last_name
+    FROM employees
+    WHERE department_id = 30)
+  LOOP
+    DBMS_OUTPUT.PUT_LINE(
+      emp_record.employee_id || ' ' || emp_record.last_name);
+  END LOOP;
+END;
+/</code></pre>
+
+            <div class="highlight-box">
+              <p>
+                <strong>💡 لاحظ:</strong> لا يوجد DECLARE ولا CURSOR — الاستعلام
+                الفرعي (Subquery) يحل محلهما تماماً!
+              </p>
+            </div>
+          </section>
+
+          <!-- Cursor Attributes -->
+          <section class="content-section">
+            <h2>📊 خصائص المؤشر الصريح | Explicit Cursor Attributes</h2>
+            <div class="table-container">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>الخاصية</th>
+                    <th>النوع</th>
+                    <th>الوصف</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>%ISOPEN</strong></td>
+                    <td>Boolean</td>
+                    <td>TRUE إذا كان المؤشر مفتوحاً حالياً</td>
+                  </tr>
+                  <tr>
+                    <td><strong>%FOUND</strong></td>
+                    <td>Boolean</td>
+                    <td>TRUE إذا كان آخر FETCH أرجع صفاً</td>
+                  </tr>
+                  <tr>
+                    <td><strong>%NOTFOUND</strong></td>
+                    <td>Boolean</td>
+                    <td>
+                      TRUE إذا كان آخر FETCH <strong>لم</strong> يُرجع صفاً (عكس
+                      %FOUND)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>%ROWCOUNT</strong></td>
+                    <td>Number</td>
+                    <td>إجمالي عدد الصفوف المسحوبة حتى الآن</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- %ISOPEN -->
+          <section class="content-section">
+            <h2>🔓 استخدام %ISOPEN</h2>
+            <p>تحقق أن المؤشر مفتوح قبل محاولة FETCH:</p>
+            <pre><code class="language-sql">IF NOT emp_cursor%ISOPEN THEN
+  OPEN emp_cursor;
+END IF;
+LOOP
+  FETCH emp_cursor INTO empno, lname;
+  EXIT WHEN emp_cursor%NOTFOUND;
+  -- ...
+END LOOP;</code></pre>
+          </section>
+
+          <!-- %ROWCOUNT & %NOTFOUND -->
+          <section class="content-section">
+            <h2>🔢 مثال %ROWCOUNT و %NOTFOUND</h2>
+            <p>جلب أول 10 موظفين فقط:</p>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+DECLARE
+  empno employees.employee_id%TYPE;
+  ename employees.last_name%TYPE;
+  CURSOR emp_cursor IS
+    SELECT employee_id, last_name FROM employees;
+BEGIN
+  OPEN emp_cursor;
+  LOOP
+    FETCH emp_cursor INTO empno, ename;
+    EXIT WHEN emp_cursor%ROWCOUNT > 10
+           OR emp_cursor%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE(TO_CHAR(empno) || ' ' || ename);
+  END LOOP;
+  CLOSE emp_cursor;
+END;
+/</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>📌 لاحظ:</strong> <code>%ROWCOUNT</code> يعدّ الصفوف من
+                بداية الـ FETCH وليس من بداية الحلقة. وconditon
+                <code>%ROWCOUNT > 10 OR %NOTFOUND</code>
+                يضمن الخروج إما بعد 10 صفوف أو عند انتهاء البيانات.
+              </p>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  Cursor FOR Loop = أقصر طريقة — OPEN, FETCH, CLOSE
+                  <strong>تلقائية</strong>
+                </li>
+                <li>يمكن استخدام Subquery مباشرة بدون DECLARE CURSOR</li>
+                <li>%ISOPEN: هل المؤشر مفتوح؟</li>
+                <li>%FOUND / %NOTFOUND: هل آخر FETCH نجح؟</li>
+                <li>%ROWCOUNT: عدد الصفوف المسحوبة حتى الآن</li>
+                <li>
+                  الشرط الأشهر للخروج: <code>EXIT WHEN cursor%NOTFOUND;</code>
+                </li>
+              </ul>
+            </div>
           </section>
         </div>
 

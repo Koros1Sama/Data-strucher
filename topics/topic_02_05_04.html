@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Procedures vs Functions | Data Structures Study Guide</title>
+    <title>Procedures vs Functions | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -41,54 +41,170 @@
         </header>
 
         <div class="topic-body">
+          <!-- ═══ Section 1: Overview ═══ -->
           <section class="content-section">
-            <h2>📖 مقارنة سريعة | Quick Comparison</h2>
-            <div class="highlight-box">
-              <p>
-                <strong>الإجراء (Procedure):</strong> ينفذ عملية، قد لا يعيد
-                قيمة، لا يمكن استخدامه في جمل SQL.<br />
-                <strong>الدالة (Function):</strong> تحسب وتعيد قيمة واحدة، يمكن
-                استخدامها في جمل SQL (غالباً).
-              </p>
-            </div>
+            <h2>📖 نظرة عامة | Overview</h2>
+            <p>
+              كلاً من الإجراءات (Procedures) والدوال (Functions) هي
+              <strong>برامج فرعية مُسمّاة</strong> (Named Subprograms) في
+              PL/SQL. يتم تخزينها في قاعدة البيانات وتُعزز إعادة الاستخدام
+              والصيانة. لكنهما يختلفان في عدة نقاط جوهرية.
+            </p>
           </section>
 
+          <!-- ═══ Section 2: Full Comparison ═══ -->
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>جدول المقارنة | Comparison Table</h3>
+            <h2>📊 جدول المقارنة الشامل | Full Comparison</h2>
             <div class="table-container">
               <table class="custom-table">
                 <thead>
                   <tr>
-                    <th>وجه المقارنة (Aspect)</th>
+                    <th>وجه المقارنة</th>
                     <th>الإجراء (Procedure)</th>
                     <th>الدالة (Function)</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>القيمة المرجعة (Return Value)</strong></td>
-                    <td>اختياري (يمكن استخدام باراميترات OUT)</td>
-                    <td>إجباري (Must return a value)</td>
+                    <td><strong>طريقة التنفيذ</strong></td>
+                    <td>يُنفذ كجملة PL/SQL مستقلة</td>
+                    <td>يُستدعى كجزء من تعبير (Expression)</td>
                   </tr>
                   <tr>
-                    <td><strong>الاستدعاء (Invocation)</strong></td>
-                    <td>كجملة مستقلة في كود PL/SQL</td>
-                    <td>كجزء من تعبير (Expression) أو جملة SQL</td>
+                    <td><strong>RETURN في الرأس</strong></td>
+                    <td>❌ لا يحتوي على جملة RETURN في الرأس</td>
+                    <td>
+                      ✅ <strong>يجب</strong> أن يحتوي على RETURN datatype
+                    </td>
                   </tr>
                   <tr>
-                    <td><strong>الهدف (Purpose)</strong></td>
-                    <td>تنفيذ إجراء معين (Action) مثل تحديث بيانات</td>
-                    <td>حساب قيمة وإرجاعها (Computation)</td>
+                    <td><strong>القيمة المرجعة</strong></td>
+                    <td>يمكن إرجاع قيم عبر معاملات OUT (اختياري)</td>
+                    <td><strong>يجب</strong> أن يُرجع قيمة واحدة</td>
                   </tr>
                   <tr>
-                    <td><strong>استخدام SQL</strong></td>
-                    <td>لا يمكن استدعاؤه داخل جملة SELECT</td>
-                    <td>يمكن استدعاؤها داخل جملة SELECT (بشروط)</td>
+                    <td><strong>جملة RETURN في الجسم</strong></td>
+                    <td>يمكن أن يحتوي RETURN بدون قيمة (للخروج المبكر)</td>
+                    <td>
+                      <strong>يجب</strong> أن يحتوي جملة RETURN واحدة على الأقل
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>الاستخدام في SQL</strong></td>
+                    <td>❌ لا يمكن استدعاؤه في جمل SQL</td>
+                    <td>✅ يمكن استخدامه في SELECT, WHERE, INSERT, UPDATE</td>
+                  </tr>
+                  <tr>
+                    <td><strong>أنماط المعاملات</strong></td>
+                    <td>يدعم IN, OUT, IN OUT</td>
+                    <td>يقبل IN فقط عند استدعائه من SQL</td>
+                  </tr>
+                  <tr>
+                    <td><strong>الغرض الرئيسي</strong></td>
+                    <td>تنفيذ عملية (Action) مثل تعديل بيانات</td>
+                    <td>حساب قيمة (Computation) وإرجاعها</td>
+                  </tr>
+                  <tr>
+                    <td><strong>الاستدعاء</strong></td>
+                    <td><code>EXECUTE proc_name(...);</code></td>
+                    <td><code>var := func_name(...);</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>الحذف</strong></td>
+                    <td><code>DROP PROCEDURE name;</code></td>
+                    <td><code>DROP FUNCTION name;</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>عرض الكود</strong></td>
+                    <td><code>type = 'PROCEDURE'</code> في USER_SOURCE</td>
+                    <td><code>type = 'FUNCTION'</code> في USER_SOURCE</td>
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </section>
+
+          <!-- ═══ Section 3: Side by Side ═══ -->
+          <section class="content-section">
+            <h2>💻 مقارنة بالكود | Code Comparison</h2>
+
+            <h3>إجراء: رفع الراتب (Procedure)</h3>
+            <pre><code class="language-sql">CREATE OR REPLACE PROCEDURE raise_salary
+  (id IN employees.employee_id%TYPE,
+   percent IN NUMBER)
+IS
+BEGIN
+  UPDATE employees
+  SET salary = salary * (1 + percent/100)
+  WHERE employee_id = id;
+END raise_salary;
+/
+
+-- الاستدعاء:
+EXECUTE raise_salary(176, 10);</code></pre>
+
+            <h3>دالة: الحصول على الراتب (Function)</h3>
+            <pre><code class="language-sql">CREATE OR REPLACE FUNCTION get_sal
+  (id employees.employee_id%TYPE)
+RETURN NUMBER IS
+  sal employees.salary%TYPE := 0;
+BEGIN
+  SELECT salary INTO sal
+  FROM employees
+  WHERE employee_id = id;
+  RETURN sal;
+END get_sal;
+/
+
+-- الاستدعاء:
+SELECT get_sal(100) FROM dual;
+-- أو:
+VARIABLE salary NUMBER
+EXECUTE :salary := get_sal(100)</code></pre>
+          </section>
+
+          <!-- ═══ Section 4: When to Use ═══ -->
+          <section class="content-section">
+            <h2>🤔 متى نستخدم أيهما؟ | When to Use Which?</h2>
+            <div class="highlight-box">
+              <p>
+                <strong>استخدم الإجراء (Procedure) عندما:</strong><br />
+                • تريد تنفيذ عملية DML (INSERT, UPDATE, DELETE)<br />
+                • تحتاج إرجاع أكثر من قيمة (عبر OUT parameters)<br />
+                • لا تحتاج استدعاءه من جملة SQL
+              </p>
+            </div>
+            <div class="highlight-box">
+              <p>
+                <strong>استخدم الدالة (Function) عندما:</strong><br />
+                • تحتاج حساب قيمة واحدة وإرجاعها<br />
+                • تريد استخدامها داخل جمل SQL (SELECT, WHERE, etc.)<br />
+                • تحتاج تعبيراً يمكن دمجه في حسابات أخرى
+              </p>
+            </div>
+          </section>
+
+          <!-- ═══ Section 5: Key Takeaways ═══ -->
+          <section class="content-section">
+            <h2>📝 نقاط هامة للاختبار | Key Exam Points</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  الإجراء = <strong>ينفذ عملية</strong> | الدالة =
+                  <strong>تحسب قيمة</strong>
+                </li>
+                <li>
+                  الدالة <strong>يجب أن تحتوي RETURN</strong> في الرأس والجسم
+                </li>
+                <li>
+                  الإجراء <strong>لا يحتوي RETURN datatype</strong> في الرأس
+                </li>
+                <li>
+                  الدالة يمكن استدعاؤها في <strong>SELECT</strong>، الإجراء لا
+                </li>
+                <li>الدوال من SQL لا تحتوي DML ولا COMMIT/ROLLBACK</li>
+                <li>كلاهما يُخزن في <code>USER_SOURCE</code> ويُحذف بـ DROP</li>
+              </ul>
             </div>
           </section>
         </div>

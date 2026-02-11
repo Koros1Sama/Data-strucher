@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conditional Predicates | Data Structures Study Guide</title>
+    <title>Row Triggers | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,75 +30,87 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_03/index.html">الوحدة 3</a> ›
-        <span>Conditional Predicates</span>
+        <span>Row Triggers</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Conditional Predicates: INSERTING, UPDATING, DELETING</h1>
-          <p class="topic-title-ar">
-            المحمولات الشرطية: الإضافة، التحديث، الحذف
-          </p>
+          <h1>DML Row Triggers</h1>
+          <p class="topic-title-ar">مشغّلات مستوى الصف</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 13: Row Trigger Example -->
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              عند إنشاء مشغل واحد يتعامل مع عدة أحداث (مثلاً
-              <code>INSERT OR UPDATE OR DELETE</code>)، نحتاج لطريقة لمعرفة أي
-              حدث تسبب في تشغيل هذا المشغل. هنا يأتي دور المحمولات الشرطية
-              (Conditional Predicates).
-            </p>
+            <h2>💻 مثال: restrict_salary (Slide 13)</h2>
+            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER restrict_salary
+BEFORE INSERT OR UPDATE OF salary ON employees
+FOR EACH ROW
+BEGIN
+  IF NOT (:NEW.job_id IN ('AD_PRES', 'AD_VP'))
+     AND :NEW.salary > 15000 THEN
+    RAISE_APPLICATION_ERROR(-20202,
+      'Employee cannot earn more than $15,000.');
+  END IF;
+END;
+/</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>📌 لاحظ:</strong><br />
+                • <code>FOR EACH ROW</code> = Row Trigger<br />
+                • <code>:NEW.salary</code> = القيمة الجديدة المراد
+                إدراجها/تحديثها<br />
+                • يعمل لكل صف على حدة
+              </p>
+            </div>
+          </section>
+
+          <!-- Slide 18: Integrity Constraint Trigger -->
+          <section class="content-section">
+            <h2>💻 مثال: Integrity Constraint Trigger (Slide 18)</h2>
+            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER employee_dept_fk_trg
+AFTER UPDATE OF department_id
+ON employees FOR EACH ROW
+BEGIN
+  INSERT INTO departments VALUES(
+    :NEW.department_id,
+    'Dept ' || :NEW.department_id, NULL, NULL);
+EXCEPTION
+  WHEN DUP_VAL_ON_INDEX THEN
+    NULL; -- تجاهل الخطأ إذا القسم موجود مسبقاً
+END;
+/
+
+-- اختبار:
+UPDATE employees SET department_id = 999
+  WHERE employee_id = 170;
+-- ينجح بعد إنشاء القسم تلقائياً!</code></pre>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>المحمولات الثلاثة</h3>
-            <ul class="styled-list">
-              <li>
-                <strong>INSERTING:</strong> تعود بـ TRUE إذا كانت العملية هي
-                إضافة (INSERT).
-              </li>
-              <li>
-                <strong>UPDATING:</strong> تعود بـ TRUE إذا كانت العملية هي
-                تحديث (UPDATE).
-              </li>
-              <li>
-                <strong>DELETING:</strong> تعود بـ TRUE إذا كانت العملية هي حذف
-                (DELETE).
-              </li>
-            </ul>
-
-            <h3>استخدام UPDATING مع عمود محدد</h3>
-            <p>يمكن التحقق مما إذا كان تحديث عمود معين هو السبب:</p>
-            <pre><code class="language-sql">IF UPDATING('SALARY') THEN ...</code></pre>
-
-            <h3>مثال شامل</h3>
-            <pre><code class="language-sql">CREATE OR REPLACE TRIGGER audit_trigger
-AFTER INSERT OR UPDATE OR DELETE ON employees
-BEGIN
-  IF INSERTING THEN
-    INSERT INTO log_table VALUES ('New Employee Added');
-  ELSIF DELETING THEN
-    INSERT INTO log_table VALUES ('Employee Deleted');
-  ELSIF UPDATING('SALARY') THEN
-    INSERT INTO log_table VALUES ('Salary Updated');
-  ELSE
-    INSERT INTO log_table VALUES ('Other Update');
-  END IF;
-END;</code></pre>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>Row Trigger = <code>FOR EACH ROW</code></li>
+                <li>يُنفّذ <strong>لكل صف</strong> متأثر بالعملية</li>
+                <li>
+                  يمكن استخدام <code>:NEW</code> و <code>:OLD</code> للوصول
+                  للقيم
+                </li>
+                <li>يمكن تعديل <code>:NEW</code> في BEFORE Row Triggers</li>
+                <li>يمكن استخدام EXCEPTION للتعامل مع الأخطاء</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
           <a href="topic_03_02_01.html" class="nav-prev"
-            >← Creating DML Triggers</a
+            >← Statement Triggers</a
           >
           <a href="topic_03_02_04.html" class="nav-next"
-            >Trigger Execution Order →</a
+            >Conditional Predicates →</a
           >
         </nav>
       </article>

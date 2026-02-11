@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Declaring Variables | Data Structures Study Guide</title>
+    <title>Declaring PL/SQL Variables | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -36,77 +36,230 @@
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge beginner">مبتدئ</span>
-          <h1>Declaring Variables</h1>
+          <h1>Declaring PL/SQL Variables</h1>
           <p class="topic-title-ar">تعريف المتغيرات في PL/SQL</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slides 14-15: Use of Variables & Identifiers -->
           <section class="content-section">
-            <h2>📦 مقدمة عن المتغيرات</h2>
-            <p>
-              المتغير
-              <span class="term" data-ar="موقع في الذاكرة لتخزين قيمة"
-                >Variable</span
-              >
-              هو اسم يُعطى لموقع في الذاكرة لتخزين قيمة يمكن تغييرها أثناء تنفيذ
-              البرنامج. يتم تعريف المتغيرات في قسم <code>DECLARE</code>.
-            </p>
-          </section>
-
-          <section class="content-section">
-            <h2>📝 صيغة التعريف | Syntax</h2>
-            <pre><code class="language-sql">identifier [CONSTANT] datatype [NOT NULL] [:= | DEFAULT initial_value];</code></pre>
-
+            <h2>📖 استخدامات المتغيرات | Use of Variables</h2>
+            <p>المتغيرات تُستخدم لـ:</p>
             <ul class="styled-list">
               <li>
-                <strong>identifier:</strong> اسم المتغير (مثل
-                <code>v_salary</code>).
+                <strong>التخزين المؤقت</strong> للبيانات (Temporary Storage)
               </li>
               <li>
-                <strong>CONSTANT:</strong> (اختياري) يمنع تغيير قيمة المتغير بعد
-                تعريفه.
+                <strong>معالجة القيم المخزنة</strong> (Manipulation of Stored
+                Values)
               </li>
+              <li><strong>إعادة الاستخدام</strong> (Reusability)</li>
+            </ul>
+            <pre><code class="language-sql">-- مثال: تخزين بيانات من جدول في متغيرات
+SELECT first_name, department_id
+INTO   emp_fname, emp_deptno
+FROM   employees
+WHERE  employee_id = 100;
+
+-- emp_fname = 'Jennifer'
+-- emp_deptno = 10</code></pre>
+          </section>
+
+          <!-- Slide 15: Identifiers -->
+          <section class="content-section">
+            <h2>🏷️ قواعد تسمية المعرّفات | Identifiers</h2>
+            <p>عند تسمية المتغيرات، يجب مراعاة:</p>
+            <ul class="styled-list">
+              <li>يجب أن يبدأ بـ <strong>حرف</strong> (letter)</li>
+              <li>يمكن أن يحتوي على حروف أو أرقام</li>
               <li>
-                <strong>datatype:</strong> نوع البيانات (مثل
-                <code>NUMBER</code>, <code>VARCHAR2</code>, <code>DATE</code>).
+                يمكن أن يحتوي على رموز خاصة: <code>$</code> <code>_</code>
+                <code>#</code>
               </li>
+              <li>الحد الأقصى للطول: <strong>30 حرفاً</strong></li>
               <li>
-                <strong>NOT NULL:</strong> (اختياري) يمنع المتغير من أن يكون
-                فارغاً (يجب إعطاؤه قيمة ابتدائية).
-              </li>
-              <li>
-                <strong>:=</strong> أو <strong>DEFAULT</strong>: لإعطاء قيمة
-                ابتدائية.
+                <strong>لا يمكن</strong> أن يكون كلمة محجوزة (Reserved Word)
               </li>
             </ul>
           </section>
 
+          <!-- Slides 16-17: Handling & Declaring Variables -->
           <section class="content-section">
-            <h2>💡 أمثلة | Examples</h2>
-            <pre><code class="language-sql">DECLARE
-    v_name      VARCHAR2(50) := 'Ahmed';     -- متغير نصي مع قيمة ابتدائية
-    v_age       NUMBER(3);                   -- متغير رقمي بدون قيمة (NULL)
-    c_pi        CONSTANT NUMBER := 3.14;     -- ثابت (لا يمكن تغييره)
-    v_hire_date DATE DEFAULT SYSDATE;        -- تاريخ اليوم كقيمة افتراضية
-    v_is_valid  BOOLEAN NOT NULL := TRUE;    -- منطقي لا يقبل NULL
+            <h2>⚙️ الصيغة العامة | Syntax</h2>
+            <p>المتغيرات:</p>
+            <ul class="styled-list">
+              <li>تُعرّف وتُعطى قيمة أولية في قسم <code>DECLARE</code></li>
+              <li>تُستخدم وتُسند لها قيم جديدة في قسم <code>BEGIN</code></li>
+              <li>تُمرر كمعاملات (Parameters) للبرامج الفرعية</li>
+            </ul>
+
+            <pre><code class="language-sql">-- الصيغة العامة:
+identifier [CONSTANT] datatype [NOT NULL]
+           [:= | DEFAULT expr];
+
+-- أمثلة:
+DECLARE
+  emp_hiredate    DATE;
+  emp_deptno      NUMBER(2) NOT NULL := 10;
+  location        VARCHAR2(13) := 'Atlanta';
+  c_comm          CONSTANT NUMBER := 1400;</code></pre>
+
+            <div class="highlight-box">
+              <p>
+                <strong>💡 ملاحظة:</strong> يمكن إعطاء قيمة أولية بـ
+                <code>:=</code> أو بـ <code>DEFAULT</code>:
+              </p>
+              <pre><code class="language-sql">Myname VARCHAR2(20) := 'John';
+-- أو
+Myname VARCHAR2(20) DEFAULT 'John';</code></pre>
+            </div>
+          </section>
+
+          <!-- Slide 18: Declaring and Initializing Examples -->
+          <section class="content-section">
+            <h2>💻 أمثلة من المنهج | Examples</h2>
+
+            <h3>مثال 1: قيمة NULL أولاً ثم إسناد</h3>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+DECLARE
+  Myname VARCHAR2(20);
 BEGIN
-    v_age := 25;  -- إسناد قيمة في قسم التنفيذ
-    -- c_pi := 3; -- هذا السطر يسبب خطأ لأن c_pi ثابت
-END;</code></pre>
+  DBMS_OUTPUT.PUT_LINE('My name is: ' || Myname);  -- NULL
+  Myname := 'John';
+  DBMS_OUTPUT.PUT_LINE('My name is: ' || Myname);  -- John
+END;
+/</code></pre>
+
+            <h3>مثال 2: قيمة أولية ثم تغيير</h3>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+DECLARE
+  Myname VARCHAR2(20) := 'John';
+BEGIN
+  Myname := 'Steven';
+  DBMS_OUTPUT.PUT_LINE('My name is: ' || Myname);  -- Steven
+END;
+/</code></pre>
+          </section>
+
+          <!-- Slide 19: Delimiters in String Literals -->
+          <section class="content-section">
+            <h2>🔤 الفواصل في النصوص | Delimiters in String Literals</h2>
+            <p>
+              للتعامل مع نصوص تحتوي على علامة اقتباس مفردة (')، نستخدم
+              <strong>q-quoting</strong>:
+            </p>
+            <pre><code class="language-sql">SET SERVEROUTPUT ON
+DECLARE
+  event VARCHAR2(15);
+BEGIN
+  event := q'!Father's day!';
+  DBMS_OUTPUT.PUT_LINE('3rd Sunday in June is: ' || event);
+
+  event := q'[Mother's day]';
+  DBMS_OUTPUT.PUT_LINE('2nd Sunday in May is: ' || event);
+END;
+/</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>💡 الصيغة:</strong> <code>q'!text!'</code> أو
+                <code>q'[text]'</code> — أي فاصل (delimiter) يمكن استخدامه بين
+                <code>q'</code> و <code>'</code>
+              </p>
+            </div>
+          </section>
+
+          <!-- Slides 20-23: Types & Guidelines -->
+          <section class="content-section">
+            <h2>📋 أنواع المتغيرات | Types of Variables</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>الشرح</th>
+                  <th>مثال</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Scalar</strong></td>
+                  <td>قيمة واحدة (عدد، نص، تاريخ، بولياني)</td>
+                  <td><code>NUMBER, VARCHAR2, DATE, BOOLEAN</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Composite</strong></td>
+                  <td>مجموعة قيم (سجلات، مصفوفات)</td>
+                  <td><code>RECORD, TABLE, VARRAY</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Reference</strong></td>
+                  <td>مؤشرات (Pointers)</td>
+                  <td><code>REF CURSOR</code></td>
+                </tr>
+                <tr>
+                  <td><strong>LOB</strong></td>
+                  <td>كائنات كبيرة (Large Objects)</td>
+                  <td><code>CLOB, BLOB</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Bind Variables</strong></td>
+                  <td>متغيرات خارجية (Non-PL/SQL)</td>
+                  <td><code>VARIABLE x NUMBER</code></td>
+                </tr>
+              </tbody>
+            </table>
           </section>
 
           <section class="content-section">
-            <h2>⚠️ قواعد التسمية | Naming Rules</h2>
-            <div class="highlight-box">
+            <h2>⚠️ إرشادات التعريف | Guidelines</h2>
+            <ul class="styled-list">
+              <li>استخدم أسماء ذات معنى (Meaningful Names)</li>
+              <li>
+                أعطِ قيمة أولية للمتغيرات المُعرّفة بـ <code>NOT NULL</code> أو
+                <code>CONSTANT</code>
+              </li>
+              <li>عرّف متغير واحد في كل سطر لتسهيل القراءة</li>
+              <li>
+                <strong>تجنّب</strong> استخدام أسماء أعمدة الجداول كأسماء
+                متغيرات
+              </li>
+            </ul>
+            <pre><code class="language-sql">-- ❌ خطأ: اسم المتغير مثل اسم العمود
+DECLARE
+  employee_id NUMBER(6);
+BEGIN
+  SELECT employee_id INTO employee_id  -- غموض!
+  FROM   employees
+  WHERE  last_name = 'Kochhar';
+END;
+/</code></pre>
+
+            <h3>أمثلة Scalar Variables (Slide 23)</h3>
+            <pre><code class="language-sql">DECLARE
+  emp_job         VARCHAR2(9);
+  count_loop      BINARY_INTEGER := 0;
+  dept_total_sal  NUMBER(9,2) := 0;
+  orderdate       DATE := SYSDATE + 7;
+  c_tax_rate      CONSTANT NUMBER(3,2) := 8.25;
+  valid           BOOLEAN NOT NULL := TRUE;</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
               <ul>
-                <li>يجب أن يبدأ بحرف.</li>
-                <li>يمكن أن يحتوي على أرقام ورموز خاصة ($ _ #).</li>
-                <li>أقصى طول 30 حرفاً.</li>
-                <li>غير حساس لحالة الأحرف (Not Case Sensitive).</li>
                 <li>
-                  يُفضل استخدام بادئة (Prefix) مثل <code>v_</code> للمتغيرات و
-                  <code>c_</code> للثوابت.
+                  الصيغة:
+                  <code
+                    >identifier [CONSTANT] datatype [NOT NULL] [:= expr]</code
+                  >
                 </li>
+                <li>يمكن الإسناد بـ <code>:=</code> أو <code>DEFAULT</code></li>
+                <li>المعرّفات: تبدأ بحرف، حد أقصى 30 حرف، لا كلمات محجوزة</li>
+                <li>
+                  5 أنواع: Scalar, Composite, Reference, LOB, Bind Variable
+                </li>
+                <li>لا تسمِّ متغيراتك بنفس أسماء الأعمدة!</li>
+                <li>q-quoting لكتابة نصوص تحتوي على <code>'</code></li>
               </ul>
             </div>
           </section>
@@ -114,9 +267,7 @@ END;</code></pre>
 
         <nav class="topic-nav">
           <a href="topic_01_01_03.html" class="nav-prev">← أنواع الكتل</a>
-          <a href="topic_01_02_02.html" class="nav-next"
-            >أنواع البيانات العددية (Scalar Types) →</a
-          >
+          <a href="topic_01_02_02.html" class="nav-next">خاصية %TYPE →</a>
         </nav>
       </article>
     </main>

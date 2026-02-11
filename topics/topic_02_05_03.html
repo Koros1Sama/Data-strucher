@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Creating Stored Functions | Data Structures Study Guide</title>
+    <title>Creating Stored Functions | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -41,35 +41,255 @@
         </header>
 
         <div class="topic-body">
+          <!-- ═══ Section 1: Introduction ═══ -->
           <section class="content-section">
             <h2>📖 مقدمة | Introduction</h2>
             <p>
-              الدالة المخزنة (Stored Function) تشبه الإجراء المخزن، لكن الفرق
-              الرئيسي أنها <strong>يجب أن تعيد قيمة</strong> (RETURN value).
-              تستخدم غالباً لحساب القيم ويمكن استخدامها داخل جمل SQL.
+              الدالة المخزنة (<span class="term" data-ar="دالة مخزنة"
+                >Stored Function</span
+              >) هي كتلة PL/SQL مُسمّاة <strong>تُرجع قيمة</strong>. تُخزّن في
+              قاعدة البيانات ككائن مخطط (Schema Object) ويمكن استدعاؤها كجزء من
+              تعبير (Expression) أو حتى داخل جمل SQL.
             </p>
+            <div class="highlight-box">
+              <p>
+                <strong>🔑 الفرق الجوهري عن الإجراء:</strong><br />
+                الدالة <strong>يجب</strong> أن تحتوي على <code>RETURN</code> في
+                الرأس (Header) وجملة <code>RETURN expression</code> واحدة على
+                الأقل في الجسم (Body).
+              </p>
+            </div>
           </section>
 
+          <!-- ═══ Section 2: Syntax ═══ -->
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>⚙️ الصيغة العامة | Syntax</h2>
+            <pre><code class="language-sql">CREATE [OR REPLACE] FUNCTION function_name
+  [(parameter1 [mode1] datatype1, ...)]
+RETURN datatype
+IS|AS
+  [local_variable_declarations; …]
+BEGIN
+  -- actions;
+  RETURN expression;
+END [function_name];</code></pre>
 
-            <h3>المفهوم | Concept</h3>
+            <div class="highlight-box">
+              <p>
+                <strong>⚠️ ملاحظات مهمة:</strong><br />
+                • كتلة PL/SQL <strong>يجب</strong> أن تحتوي على
+                <code>RETURN</code> واحدة على الأقل<br />
+                • <code>RETURN datatype</code> في الرأس يحدد نوع القيمة
+                المُرجعة<br />
+                • المعاملات اختيارية، وتقبل فقط <code>IN</code> عند استخدامها في
+                SQL
+              </p>
+            </div>
+          </section>
+
+          <!-- ═══ Section 3: Example ═══ -->
+          <section class="content-section">
+            <h2>💻 مثال عملي | Practical Example</h2>
+
+            <h3>إنشاء الدالة | Creating the Function</h3>
+            <pre><code class="language-sql">CREATE OR REPLACE FUNCTION get_sal
+  (id employees.employee_id%TYPE)
+RETURN NUMBER IS
+  sal employees.salary%TYPE := 0;
+BEGIN
+  SELECT salary
+  INTO   sal
+  FROM   employees
+  WHERE  employee_id = id;
+  RETURN sal;
+END get_sal;
+/</code></pre>
+
+            <h3>مثال آخر: حساب الضريبة</h3>
+            <pre><code class="language-sql">CREATE OR REPLACE FUNCTION tax(value IN NUMBER)
+  RETURN NUMBER IS
+BEGIN
+  RETURN (value * 0.08);
+END tax;
+/</code></pre>
+          </section>
+
+          <!-- ═══ Section 4: Ways to Execute ═══ -->
+          <section class="content-section">
+            <h2>▶️ طرق استدعاء الدالة | Ways to Execute Functions</h2>
+            <p>يمكن استدعاء الدالة بعدة طرق مختلفة:</p>
+
+            <h3>1. كجزء من تعبير PL/SQL</h3>
+            <pre><code class="language-sql">EXECUTE DBMS_OUTPUT.PUT_LINE(get_sal(100));</code></pre>
+
+            <h3>2. باستخدام Host Variable</h3>
+            <pre><code class="language-sql">VARIABLE salary NUMBER
+EXECUTE :salary := get_sal(100)</code></pre>
+
+            <h3>3. باستخدام متغير محلي</h3>
+            <pre><code class="language-sql">DECLARE
+  sal employees.salary%TYPE;
+BEGIN
+  sal := get_sal(100);
+  DBMS_OUTPUT.PUT_LINE('Salary: ' || sal);
+END;</code></pre>
+
+            <h3>4. كمعامل لبرنامج فرعي آخر</h3>
+            <pre><code class="language-sql">EXECUTE DBMS_OUTPUT.PUT_LINE(get_sal(100));</code></pre>
+
+            <h3>5. داخل جملة SQL ✨</h3>
+            <pre><code class="language-sql">SELECT job_id, get_sal(employee_id) FROM employees;
+
+-- مثال مع دالة الضريبة:
+SELECT employee_id, last_name, salary, tax(salary)
+FROM   employees
+WHERE  department_id = 100;</code></pre>
+
+            <div class="highlight-box">
+              <p>
+                <strong>💡 هذه أهم ميزة للدالة!</strong> يمكن استخدامها داخل جمل
+                SQL مباشرة — وهذا غير ممكن مع الإجراءات (Procedures).
+              </p>
+            </div>
+          </section>
+
+          <!-- ═══ Section 5: Functions in SQL ═══ -->
+          <section class="content-section">
+            <h2>📊 استخدام الدوال في جمل SQL | Functions in SQL Expressions</h2>
+
+            <h3>أماكن الاستخدام | Where to Call</h3>
+            <p>يمكن استخدام الدوال المُعرّفة في:</p>
+            <ul class="styled-list">
+              <li>قائمة SELECT أو عبارة SELECT</li>
+              <li>
+                تعبيرات الشروط في <code>WHERE</code> و <code>HAVING</code>
+              </li>
+              <li>
+                عبارات <code>CONNECT BY</code>، <code>START WITH</code>،
+                <code>ORDER BY</code>، <code>GROUP BY</code>
+              </li>
+              <li>عبارة <code>VALUES</code> في جملة INSERT</li>
+              <li>عبارة <code>SET</code> في جملة UPDATE</li>
+            </ul>
+
+            <h3>مثال متقدم</h3>
+            <pre><code class="language-sql">SELECT empno, tax(salary)
+FROM   emp
+WHERE  tax(salary) > (SELECT MAX(tax(salary))
+                       FROM emp
+                       WHERE deptno = 30)
+ORDER BY tax(salary) DESC;</code></pre>
+          </section>
+
+          <!-- ═══ Section 6: Restrictions ═══ -->
+          <section class="content-section">
+            <h2>🚫 القيود | Restrictions on Functions in SQL</h2>
+
+            <h3>شروط الاستدعاء من SQL</h3>
+            <ul class="styled-list">
+              <li>
+                يجب أن تكون الدالة <strong>مخزنة في قاعدة البيانات</strong>
+              </li>
+              <li>
+                تقبل فقط معاملات <strong>IN</strong> بأنواع بيانات SQL صالحة
+              </li>
+              <li>
+                ترجع أنواع بيانات <strong>SQL صالحة</strong> (وليس أنواع PL/SQL
+                فقط)
+              </li>
+              <li>
+                التمرير يجب أن يكون <strong>بالموضع (Positional)</strong> فقط
+              </li>
+              <li>
+                يجب أن <strong>تملك الدالة</strong> أو تملك صلاحية
+                <strong>EXECUTE</strong>
+              </li>
+            </ul>
+
+            <h3>قيود الآثار الجانبية (Side Effects)</h3>
+            <div class="highlight-box">
+              <p>
+                <strong>⚠️ الدوال المُستدعاة من SQL لا يمكنها:</strong><br />
+                • من جملة SELECT: <strong>لا تحتوي على DML</strong> (INSERT,
+                UPDATE, DELETE)<br />
+                • من UPDATE/DELETE على جدول T:
+                <strong>لا تقرأ أو تعدل نفس الجدول T</strong><br />
+                • <strong>لا تُنهي المعاملات</strong> (لا COMMIT ولا ROLLBACK)
+              </p>
+            </div>
+
+            <h3>مثال على خطأ Mutating Table</h3>
+            <pre><code class="language-sql">CREATE OR REPLACE FUNCTION dml_call_sql(sal NUMBER)
+  RETURN NUMBER IS
+BEGIN
+  INSERT INTO employees(employee_id, last_name,
+                         email, hire_date, job_id, salary)
+  VALUES(1, 'Frost', 'jfrost@company.com',
+         SYSDATE, 'SA_MAN', sal);
+  RETURN (sal + 100);
+END;
+
+-- هذا سيسبب خطأ!
+UPDATE employees
+SET salary = dml_call_sql(2000)
+WHERE employee_id = 170;
+
+-- ORA-04091: table PLSQL.EMPLOYEES is mutating</code></pre>
+          </section>
+
+          <!-- ═══ Section 7: Managing Functions ═══ -->
+          <section class="content-section">
+            <h2>🔧 إدارة الدوال | Managing Functions</h2>
+
+            <h3>حذف دالة | Removing a Function</h3>
+            <pre><code class="language-sql">DROP FUNCTION get_sal;</code></pre>
             <p>
-              الدالة المخزنة (Stored Function) تشبه الإجراء المخزن ولكنها
-              <strong>يجب</strong> أن ترجع قيمة (Return Value). تستخدم غالباً
-              لإجراء العمليات الحسابية أو استرجاع قيمة مفردة.
+              عند حذف دالة، تُلغى جميع الصلاحيات. لكن استخدام
+              <code>CREATE OR REPLACE</code> يُبقي الصلاحيات كما هي.
             </p>
 
-            <h3>الصيغة العامة | Syntax</h3>
-            <pre><code class="language-sql">CREATE [OR REPLACE] FUNCTION function_name
-    [(parameter_name [IN] type, ...)]
-RETURN return_type
-IS | AS
-    executable_statements
-    RETURN expression;
-[EXCEPTION
-    exception_handlers]
-END [function_name];</code></pre>
+            <h3>عرض الدوال | Viewing Functions</h3>
+            <pre><code class="language-sql">-- عرض الكود المصدري:
+SELECT text
+FROM   user_source
+WHERE  type = 'FUNCTION'
+ORDER BY line;
+
+-- عرض أسماء الدوال:
+SELECT object_name
+FROM   user_objects
+WHERE  object_type = 'FUNCTION';</code></pre>
+          </section>
+
+          <!-- ═══ Section 8: Key Takeaways ═══ -->
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  الدالة <strong>يجب أن تُرجع قيمة</strong> باستخدام
+                  <code>RETURN</code>.
+                </li>
+                <li>يمكن استدعاؤها من: بلوك PL/SQL، Host Variable، جمل SQL.</li>
+                <li>
+                  تعمل كدالة مدمجة (Built-in) أحادية الصف (Single-Row) في SQL.
+                </li>
+                <li>
+                  الدوال المُستدعاة من SELECT <strong>لا تحتوي على DML</strong>.
+                </li>
+                <li>
+                  الدوال من UPDATE/DELETE على جدول T
+                  <strong>لا تقرأ/تعدل نفس الجدول</strong>.
+                </li>
+                <li>
+                  لا يمكن تنفيذ COMMIT أو ROLLBACK داخل دالة مُستدعاة من SQL.
+                </li>
+                <li>
+                  تُحذف بـ <code>DROP FUNCTION</code> وتُعرض من
+                  <code>USER_SOURCE</code>.
+                </li>
+              </ul>
+            </div>
           </section>
         </div>
 

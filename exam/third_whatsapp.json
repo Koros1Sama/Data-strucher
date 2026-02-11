@@ -1,0 +1,411 @@
+{
+  "exam_info": {
+    "university": "جامعة صنعاء",
+    "faculty": "كلية الحاسوب وتكنولوجيا المعلومات",
+    "subject": "نظم قواعد البيانات المستوى الثاني تكنولوجيا المعلومات",
+    "total_marks": 40,
+    "lecturer": "أ. حميدة الشعباني"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "question": "A hardware, software or network error occurs in computer system during transaction execution",
+      "options": [
+        "A transaction execution",
+        "Computer Failure",
+        "Local error",
+        "Disk failure"
+      ],
+      "correct_answer": "Computer Failure"
+    },
+    {
+      "id": 2,
+      "question": "Indexes used to slow down record retrieval in response to certain search condition",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False"
+    },
+    {
+      "id": 3,
+      "question": "Procedure is compiled and a blueprint for how the query will run is created this blueprint is specified as",
+      "options": [
+        "Resolving",
+        "Parsing",
+        "Execution plan",
+        "Function"
+      ],
+      "correct_answer": "Execution plan"
+    },
+    {
+      "id": 4,
+      "question": "Returns the line number at which the error occurred",
+      "options": [
+        "Error state",
+        "Error number",
+        "Error message",
+        "Error line"
+      ],
+      "correct_answer": "Error line"
+    },
+    {
+      "id": 5,
+      "question": "The index file for a primary index occupies a much smaller space than there are records in the data file",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True"
+    },
+    {
+      "id": 6,
+      "question": "Data item named as:",
+      "options": [
+        "Record",
+        "Disk block",
+        "Attribute value of a record",
+        "All of the above"
+      ],
+      "correct_answer": "All of the above"
+    },
+    {
+      "id": 7,
+      "question": "Read operations on the same item are not conflicting.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True"
+    },
+    {
+      "id": 8,
+      "question": "Is used to add additional SQL statement or commands that are then processed",
+      "options": [
+        "SQL manipulation",
+        "Function call injection",
+        "Code injection",
+        "Denial of service"
+      ],
+      "correct_answer": "Code injection"
+    },
+    {
+      "id": 9,
+      "question": "Ensure schedules are both strict and conflict serializable",
+      "options": [
+        "Basic TO algorithm",
+        "Strict TO algorithm",
+        "Two phase locking algorithm",
+        "Cautious waiting algorithm"
+      ],
+      "correct_answer": "Strict TO algorithm"
+    },
+    {
+      "id": 10,
+      "question": "Can return any data type expect text, ntext, image, cursor and timestamp",
+      "options": [
+        "Procedures",
+        "Scalar Function",
+        "Trigger",
+        "Table valued function"
+      ],
+      "correct_answer": "Scalar Function"
+    },
+    {
+      "id": 11,
+      "question": "Many users can access the system (database) concurrently is called single-user DBMS.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False"
+    },
+    {
+      "id": 12,
+      "question": "Denial of service is the most common threat to database system",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False"
+    },
+    {
+      "id": 13,
+      "question": "locking operations are read lock (x) and unlock(x) only.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False"
+    },
+    {
+      "id": 14,
+      "question": "Batches are temporary in nature",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True"
+    },
+    {
+      "id": 15,
+      "question": "does not contain a function body?",
+      "options": [
+        "Trigger",
+        "Inline table valued function",
+        "Multi statement table valued function",
+        "Scalar function"
+      ],
+      "correct_answer": "Inline table valued function"
+    },
+    {
+      "id": 16,
+      "question": "Size of a data item called granularity.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True"
+    },
+    {
+      "id": 17,
+      "question": "Downgrading is:",
+      "options": [
+        "Issue a read_lock operation after a write_lock operation",
+        "Transaction that already holds a lock allowed to convert the lock from one state to another",
+        "Issue a read_lock operation then a write_lock operation",
+        "Variable associated with a data item describing status for operation that can be applied"
+      ],
+      "correct_answer": "Issue a read_lock operation after a write_lock operation"
+    },
+    {
+      "id": 18,
+      "question": "The following are types of sensitivity data except:",
+      "options": [
+        "Inherently Sensitive",
+        "Declared Sensitive",
+        "From a Sensitive Sources",
+        "Account Creation"
+      ],
+      "correct_answer": "Account Creation"
+    },
+    {
+      "id": 19,
+      "question": "is used to ensure data integrity before or after performing data manipulation",
+      "options": [
+        "Scalar Function",
+        "Table valued Function",
+        "Procedures",
+        "Trigger"
+      ],
+      "correct_answer": "Trigger"
+    },
+    {
+      "id": 20,
+      "question": "Sparse index has an index entry for every search key value in the data file",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False"
+    },
+    {
+      "id": 21,
+      "question": "All of the following are types of transaction failures except:",
+      "options": [
+        "Computer failure (system crash)",
+        "Transaction or system error",
+        "Disk failure",
+        "Aborted transaction"
+      ],
+      "correct_answer": "Aborted transaction"
+    },
+    {
+      "id": 22,
+      "question": "When the create procedure statement is executed the server compiles the procedure and save it as a database object",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True"
+    },
+    {
+      "id": 23,
+      "question": "Timestamp is:",
+      "options": [
+        "Unique identifier for each transaction",
+        "Lock data items to prevent concurrent access",
+        "Variable associated with a data item describing status for operation that can be applied",
+        "Set of rules to guarantee serializability"
+      ],
+      "correct_answer": "Unique identifier for each transaction"
+    },
+    {
+      "id": 24,
+      "question": "If the output keyword is omitted the procedure will be executed but will not return any value",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True"
+    },
+    {
+      "id": 25,
+      "question": "Locking generally considered to have low overhead.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False"
+    },
+    {
+      "id": 26,
+      "question": "DBMS must keep track of how privileges were granted if DBMS allows propagation",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True"
+    },
+    {
+      "id": 27,
+      "question": "is used to access memory location which contain the data",
+      "options": [
+        "Function",
+        "Procedure",
+        "Cursor",
+        "Trigger"
+      ],
+      "correct_answer": "Cursor"
+    },
+    {
+      "id": 28,
+      "question": "A computer failure also called:",
+      "options": [
+        "System crash",
+        "Transaction failure",
+        "Disk failure",
+        "None of the above"
+      ],
+      "correct_answer": "System crash"
+    },
+    {
+      "id": 29,
+      "question": "The name of the tables that are created when a trigger is fired in response to the insert, delete or update statement are magic tables inserted and deleted?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True"
+    },
+    {
+      "id": 30,
+      "question": "DAC polices have a low degree of flexibility",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False"
+    },
+    {
+      "id": 31,
+      "question": "DML trigger can be explicitly invoked or executed.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False"
+    },
+    {
+      "id": 32,
+      "question": "Pointer specifies physical record address",
+      "options": [
+        "Logical index",
+        "Physical index",
+        "Primary index",
+        "Clustering index"
+      ],
+      "correct_answer": "Physical index"
+    },
+    {
+      "id": 33,
+      "question": "Used to protect sensitive transmitted data",
+      "options": [
+        "Flow Control",
+        "Inference Control",
+        "Encryption",
+        "Access Control"
+      ],
+      "correct_answer": "Encryption"
+    },
+    {
+      "id": 34,
+      "question": "Transaction processing systems is:",
+      "options": [
+        "Describes local unit of database processing",
+        "Require high availability and fast response time",
+        "At most one user at a time can use the system",
+        "None of the above"
+      ],
+      "correct_answer": "Require high availability and fast response time"
+    },
+    {
+      "id": 35,
+      "question": "Tree is formed of leaves",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False"
+    },
+    {
+      "id": 36,
+      "question": "Are types of database threats",
+      "options": [
+        "Loss of integrity",
+        "Loss of availability",
+        "Loss of confidentiality",
+        "All the above"
+      ],
+      "correct_answer": "All the above"
+    },
+    {
+      "id": 37,
+      "question": "Concurrency control subsystem responsible for generating read_lock and write_lock requests.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True"
+    },
+    {
+      "id": 38,
+      "question": "specified on ordering key field of ordered file records",
+      "options": [
+        "Secondary index",
+        "Clustering index",
+        "Primary index",
+        "Multilevel index"
+      ],
+      "correct_answer": "Primary index"
+    },
+    {
+      "id": 39,
+      "question": "Mandatory security mechanism used to grant privilege to users",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False"
+    },
+    {
+      "id": 40,
+      "question": "Trigger is used to prevent incorrect, unauthorized and inconsistent changes in data",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True"
+    }
+  ]
+}

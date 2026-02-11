@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bind and Substitution Variables | Data Structures Study Guide</title>
+    <title>Substitution Variables | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,116 +30,106 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_01/index.html">الوحدة 1</a> ›
-        <span>متغيرات الربط والاستبدال</span>
+        <span>Substitution Variables</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>Bind & Substitution Variables</h1>
-          <p class="topic-title-ar">متغيرات الربط والاستبدال</p>
+          <span class="difficulty-badge beginner">مبتدئ</span>
+          <h1>Substitution Variables</h1>
+          <p class="topic-title-ar">متغيرات الاستبدال</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slide 29: Substitution Variables -->
           <section class="content-section">
-            <h2>🤔 ما الفرق؟</h2>
-            <p>
-              هذان النوعان ليسا جزءاً من لغة PL/SQL نفسها، بل هما ميزات لأدوات
-              التطوير (مثل SQL Developer, SQL*Plus) للتفاعل مع المستخدم.
-            </p>
+            <h2>📖 ما هي Substitution Variables؟</h2>
+            <p>متغيرات الاستبدال:</p>
+            <ul class="styled-list">
+              <li>تُستخدم للحصول على <strong>مدخلات من المستخدم</strong> أثناء التشغيل (at run time)</li>
+              <li>تُشار إليها بعلامة <strong>&amp;</strong> (ampersand) قبل الاسم</li>
+              <li>تُستخدم لتجنب <strong>ترميز القيم الثابتة</strong> (hard coding) التي يمكن أخذها من المستخدم</li>
+            </ul>
+          </section>
 
+          <section class="content-section">
+            <h2>💻 مثال من المنهج | Example (Slide 29)</h2>
+            <pre><code class="language-sql">VARIABLE emp_salary NUMBER
+SET AUTOPRINT ON
+
+DECLARE
+  empno NUMBER(6) := &empno;  -- يطلب رقم الموظف من المستخدم
+BEGIN
+  SELECT salary INTO :emp_salary
+  FROM   employees
+  WHERE  employee_id = empno;
+END;
+/</code></pre>
+            <div class="highlight-box">
+              <p>
+                <strong>💡 كيف يعمل:</strong> عند التنفيذ، يظهر للمستخدم مربع حوار
+                (أو prompt) يطلب منه إدخال قيمة لـ <code>&amp;empno</code>.
+                يتم استبدال <code>&amp;empno</code> بالقيمة المدخلة قبل التنفيذ.
+              </p>
+            </div>
+          </section>
+
+          <section class="content-section">
+            <h2>⚖️ مقارنة: Bind vs Substitution</h2>
             <table class="comparison-table">
               <thead>
                 <tr>
-                  <th>الميزة</th>
-                  <th>متغيرات الاستبدال (&)</th>
-                  <th>متغيرات الربط (:)</th>
+                  <th>الخاصية</th>
+                  <th>Bind Variable</th>
+                  <th>Substitution Variable</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>الرمز</strong></td>
-                  <td><code>&</code> أو <code>&&</code></td>
-                  <td><code>:</code> (مثل <code>:variable</code>)</td>
+                  <td>الإنشاء</td>
+                  <td><code>VARIABLE name type</code></td>
+                  <td><code>&name</code> داخل الكود</td>
                 </tr>
                 <tr>
-                  <td><strong>الغرض</strong></td>
-                  <td>تطلب قيمة من المستخدم قبل التنفيذ وتستبدلها في النص.</td>
-                  <td>
-                    متغير عام (Global) يُحفظ في البيئة ويمكن استخدامه بين كتل
-                    PL/SQL.
-                  </td>
+                  <td>الإشارة</td>
+                  <td><code>:name</code> (نقطتين)</td>
+                  <td><code>&name</code> (ampersand)</td>
                 </tr>
                 <tr>
-                  <td><strong>الاسم الشائع</strong></td>
-                  <td>Substitution Variables</td>
-                  <td>Bind Variables (Host Variables)</td>
+                  <td>وقت القيمة</td>
+                  <td>أثناء التنفيذ (Runtime)</td>
+                  <td>قبل التنفيذ (Pre-processing)</td>
+                </tr>
+                <tr>
+                  <td>التخزين</td>
+                  <td>تبقى بعد انتهاء الكتلة</td>
+                  <td>تُستبدل وتختفي</td>
+                </tr>
+                <tr>
+                  <td>الاستخدام</td>
+                  <td>تبادل بيانات بين الكتلة والبيئة</td>
+                  <td>إدخال مستخدم</td>
                 </tr>
               </tbody>
             </table>
           </section>
 
           <section class="content-section">
-            <h2>1. متغيرات الاستبدال (Substitution Variables)</h2>
-            <p>تستخدم لطلب مدخلات من المستخدم عند تشغيل الكود.</p>
-            <ul>
-              <li>
-                <code>&variable</code>: تسأل المستخدم في كل مرة تنفذ الكود.
-              </li>
-              <li>
-                <code>&&variable</code>: تسأل المستخدم مرة واحدة وتحفظ القيمة
-                للجلسة الحالية.
-              </li>
-            </ul>
-
-            <pre><code class="language-sql">-- هذا الكود سيُظهر نافذة منبثقة تطلب إدخال رقم الموظف
-DECLARE
-    v_emp_id NUMBER := &emp_id; -- يتم استبدال &emp_id بالقيمة المدخلة
-BEGIN
-    DBMS_OUTPUT.PUT_LINE('Employee ID is: ' || v_emp_id);
-END;</code></pre>
-          </section>
-
-          <section class="content-section">
-            <h2>2. متغيرات الربط (Bind Variables)</h2>
-            <p>
-              يتم إنشاؤها باستخدام الأمر <code>VARIABLE</code> وتستخدم داخل كتل
-              PL/SQL بوضع نقطتين <code>:</code> قبل الاسم.
-            </p>
-
-            <pre><code class="language-sql">-- تعريف متغير ربط في البيئة (خارج PL/SQL)
-VARIABLE g_salary NUMBER;
-
-BEGIN
-    -- استخدام المتغير بوضع : قبله
-    SELECT salary INTO :g_salary 
-    FROM employees 
-    WHERE employee_id = 100;
-END;
-/
-
--- طباعة قيمة متغير الربط
-PRINT g_salary;</code></pre>
-          </section>
-
-          <section class="content-section">
-            <h2>⚠️ ملاحظة هامة</h2>
-            <div class="highlight-box">
-              <p>
-                متغيرات الاستبدال (<code>&</code>) تتم معالجتها
-                <strong>قبل</strong> إرسال الكود لقاعدة البيانات (كأنك قمت ببحث
-                واستبدال في النص). أما متغيرات الربط (<code>:</code>) فهي
-                variables حقيقية تُستخدم لتحسين الأداء والأمن.
-              </p>
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li><code>&amp;variable</code> = يُطلب من المستخدم إدخال قيمة</li>
+                <li>يتم الاستبدال <strong>قبل</strong> تنفيذ الكتلة</li>
+                <li>يختلف عن Bind Variable (<code>:variable</code>)</li>
+                <li>تُستخدم لتجنب hard coding القيم</li>
+              </ul>
             </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_01_02_03.html" class="nav-prev">← الخاصية %TYPE</a>
-          <a href="../modules/module_02/index.html" class="nav-next"
-            >الوحدة 2: الهياكل المركبة →</a
-          >
+          <a href="topic_01_02_03.html" class="nav-prev">← Bind Variables</a>
+          <a href="../modules/module_02/index.html" class="nav-next">الوحدة 2: PL/SQL المتقدم →</a>
         </nav>
       </article>
     </main>

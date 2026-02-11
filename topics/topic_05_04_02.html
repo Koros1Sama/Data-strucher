@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deferred vs Immediate Update | Data Structures Study Guide</title>
+    <title>System Log | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,63 +30,84 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_05/index.html">الوحدة 5</a> ›
-        <span>Updates Strategy</span>
+        <span>System Log</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
-          <h1>Deferred vs. Immediate Update</h1>
-          <p class="topic-title-ar">التحديث المؤجل مقابل التحديث الفوري</p>
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>The System Log</h1>
+          <p class="topic-title-ar">سجل النظام</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              كيف يتعامل النظام مع التعديلات قبل عمل Commit؟ هناك استراتيجيتان
-              رئيسيتان.
-            </p>
+            <h2>📖 ما هو System Log؟ (Slide 11)</h2>
+            <ul class="styled-list">
+              <li>يتتبع <strong>عمليات المعاملات</strong></li>
+              <li>
+                ملف <strong>تسلسلي</strong> (Sequential) — الكتابة في النهاية
+                فقط (Append-Only)
+              </li>
+              <li>
+                <strong>لا يتأثر بالأعطال</strong> (Failure) — إلا أعطال القرص
+                أو الكوارث
+              </li>
+            </ul>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
-
-            <h3>1. التحديث المؤجل (Deferred Update)</h3>
-            <p>يطلق عليها تقنية "No-Undo / Redo".</p>
+            <h2>📦 Log Buffer (Slide 11)</h2>
             <ul class="styled-list">
-              <li>
-                <strong>الفكرة:</strong> لا يتم كتابة أي تعديل على قاعدة
-                البيانات (القرص) إلا <em>بعد</em> أن تصل المعاملة إلى نقطة
-                الالتزام (Commit).
-              </li>
-              <li>
-                <strong>في حالة الفشل:</strong> لا نحتاج لعمل Undo لأي شيء، لأن
-                البيانات الأصلية لم تُمس. نحتاج فقط لعمل Redo للمعاملات التي
-                اكتملت لكن لم تُكتب نتائجها بعد.
-              </li>
+              <li><strong>Log Buffer</strong> = منطقة في الذاكرة الرئيسية</li>
+              <li>عند الامتلاء → يُكتب في نهاية ملف السجل على القرص</li>
+              <li>ملف السجل يُنسخ احتياطياً بشكل دوري</li>
             </ul>
+          </section>
 
-            <h3>2. التحديث الفوري (Immediate Update)</h3>
-            <p>يطلق عليها تقنية "Undo / Redo".</p>
-            <ul class="styled-list">
-              <li>
-                <strong>الفكرة:</strong> يمكن كتابة التعديلات على القرص في أي
-                وقت أثناء عمل المعاملة (حتى قبل الـ Commit)، بشرط كتابة السجل
-                (Log) أولاً (WAL).
-              </li>
-              <li>
-                <strong>في حالة الفشل:</strong> يجب عمل Undo لأي معاملة كانت
-                نشطة ولم تكتمل، لأنها قد تكون لوثت قاعدة البيانات بتعديلات
-                جزئية.
-              </li>
-            </ul>
+          <section class="content-section">
+            <h2>🔄 Undo و Redo</h2>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>العملية</th>
+                  <th>الوصف</th>
+                  <th>متى تُستخدم</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Undo</strong></td>
+                  <td>التراجع عن تغييرات معاملة</td>
+                  <td>إذا فشلت المعاملة (Rollback)</td>
+                </tr>
+                <tr>
+                  <td><strong>Redo</strong></td>
+                  <td>إعادة تطبيق تغييرات معاملة</td>
+                  <td>إذا نجحت لكن لم تُكتب للقرص</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>System Log = ملف append-only لتتبع العمليات</li>
+                <li>محمي من الأعطال العادية</li>
+                <li>
+                  Undo: تراجع عن معاملة فاشلة | Redo: إعادة تطبيق معاملة ناجحة
+                </li>
+                <li>Log Buffer في RAM → يُفرّغ للقرص عند الامتلاء</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="topic_05_04_01.html" class="nav-prev">← Recovery Concepts</a>
-          <a href="topic_05_04_03.html" class="nav-next">ARIES Algorithm →</a>
+          <a href="topic_05_04_01.html" class="nav-prev">← ACID Properties</a>
+          <a href="topic_05_04_03.html" class="nav-next">Schedules →</a>
         </nav>
       </article>
     </main>

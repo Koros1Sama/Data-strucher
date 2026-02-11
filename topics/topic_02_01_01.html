@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PL/SQL Records | Data Structures Study Guide</title>
+    <title>Composite Data Types - Records | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,86 +30,177 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_02/index.html">الوحدة 2</a> ›
-        <span>سجلات PL/SQL</span>
+        <span>PL/SQL Records</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
           <span class="difficulty-badge intermediate">متوسط</span>
-          <h1>PL/SQL Records</h1>
-          <p class="topic-title-ar">السجلات (Records)</p>
+          <h1>Composite Data Types &amp; PL/SQL Records</h1>
+          <p class="topic-title-ar">أنواع البيانات المركبة والسجلات</p>
         </header>
 
         <div class="topic-body">
+          <!-- Slides 2-3 -->
           <section class="content-section">
-            <h2>📦 ما هو السجل (Record)؟</h2>
+            <h2>📖 ما هي Composite Data Types؟</h2>
             <p>
-              السجل هو
-              <span class="term" data-ar="نوع بيانات مركب"
-                >Composite Data Type</span
-              >
-              يسمح لك بتخزين عدة قيم مختلفة الأنواع في متغير واحد. فكر فيه كأنه
-              "صف" (Row) كامل في جدول، يحتوي على اسم، رقم، تاريخ، إلخ.
+              أنواع البيانات المركبة يمكنها حمل
+              <strong>قيم متعددة</strong> بخلاف الأنواع القياسية (Scalar). نوعان
+              رئيسيان:
             </p>
-            <div class="highlight-box">
-              <p>
-                <strong>تشبيه:</strong> المتغير العادي (Scalar) مثل الصندوق الذي
-                يحمل غرضاً واحداً. السجل (Record) مثل الحقيبة التي تحتوي على عدة
-                جيوب، وكل جيب يحمل غرضاً مختلفاً.
-              </p>
-            </div>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>الاستخدام</th>
+                  <th>الأنواع الفرعية</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>PL/SQL Records</strong></td>
+                  <td>
+                    تخزين قيم من أنواع بيانات <strong>مختلفة</strong> (حدوث واحد
+                    في المرة)
+                  </td>
+                  <td>User-defined Records, %ROWTYPE</td>
+                </tr>
+                <tr>
+                  <td><strong>PL/SQL Collections</strong></td>
+                  <td>تخزين قيم من <strong>نفس</strong> نوع البيانات</td>
+                  <td>INDEX BY Tables, Nested Table, VARRAY</td>
+                </tr>
+              </tbody>
+            </table>
           </section>
 
+          <!-- Slides 4-6: PL/SQL Records -->
           <section class="content-section">
-            <h2>🛠️ طرق تعريف السجلات</h2>
-            <p>هناك طريقتان رئيسيتان:</p>
+            <h2>📋 PL/SQL Records (السجلات)</h2>
+            <p>خصائص السجلات:</p>
+            <ul class="styled-list">
+              <li>
+                تحتوي على عنصر واحد أو أكثر (fields) من أنواع Scalar أو RECORD
+                أو INDEX BY
+              </li>
+              <li>مشابهة لـ <strong>Structures في C/C++</strong></li>
+              <li>يعرّفها المستخدم ويمكن أن تمثل مجموعة فرعية من صف في جدول</li>
+              <li>مفيدة لجلب صف كامل من جدول للمعالجة</li>
+            </ul>
 
-            <h3>1. باستخدام %ROWTYPE (الأسهل)</h3>
-            <p>لإنشاء سجل يطابق تماماً هيكل صف في جدول قاعدة البيانات.</p>
-            <pre><code class="language-sql">v_emp_rec employees%ROWTYPE;</code></pre>
+            <h3>الصيغة (Slide 5)</h3>
+            <pre><code class="language-sql">-- الخطوة 1: تعريف النوع
+TYPE type_name IS RECORD
+     (field_declaration[, field_declaration]…);
 
-            <h3>2. تعريف نوع سجل مخصص (User-Defined Record)</h3>
-            <p>عندما تريد سجلاً بحقول محددة فقط (وليس كل أعمدة الجدول).</p>
-            <pre><code class="language-sql">TYPE t_emp_info IS RECORD (
-    first_name  VARCHAR2(20),
-    salary      NUMBER,
-    dept_id     NUMBER
-);
-v_my_rec t_emp_info; -- إنشاء متغير من النوع الذي عرفناه</code></pre>
-          </section>
+-- field_declaration:
+field_name {field_type | variable%TYPE
+           | table.column%TYPE | table%ROWTYPE}
+           [[NOT NULL] {:= | DEFAULT} expr]
 
-          <section class="content-section">
-            <h2>💻 كيفية الاستخدام</h2>
-            <p>
-              للوصول إلى حقل داخل السجل، نستخدم النقطة
-              <code>.</code> (Record.Field).
-            </p>
+-- الخطوة 2: إنشاء متغير من هذا النوع
+identifier  type_name;</code></pre>
 
+            <h3>مثال (Slide 6)</h3>
             <pre><code class="language-sql">DECLARE
-    v_emp employees%ROWTYPE;
+  TYPE emp_record_type IS RECORD
+    (last_name   VARCHAR2(25),
+     job_id      VARCHAR2(10),
+     salary      NUMBER(8,2));
+
+  emp_record  emp_record_type;
 BEGIN
-    -- جلب صف كامل وتخزينه في السجل
-    SELECT * INTO v_emp 
-    FROM employees 
-    WHERE employee_id = 100;
-    
-    -- الوصول للحقول
-    DBMS_OUTPUT.PUT_LINE('Name: ' || v_emp.last_name);
-    DBMS_OUTPUT.PUT_LINE('Salary: ' || v_emp.salary);
-    
-    -- تعديل قيمة في السجل (في الذاكرة فقط)
-    v_emp.salary := v_emp.salary + 1000;
+  -- استخدام السجل
+  emp_record.last_name := 'Ahmed';
+  emp_record.salary := 5000;
 END;</code></pre>
+          </section>
+
+          <!-- Slides 7-12: %ROWTYPE -->
+          <section class="content-section">
+            <h2>🔗 خاصية %ROWTYPE</h2>
+            <p>
+              تُعرّف متغيراً يأخذ <strong>جميع أعمدة</strong> جدول أو عرض (View)
+              تلقائياً.
+            </p>
+            <pre><code class="language-sql">DECLARE
+  identifier  reference%ROWTYPE;</code></pre>
+
+            <h3>مزايا %ROWTYPE (Slide 9)</h3>
+            <ul class="styled-list">
+              <li>لا تحتاج لمعرفة عدد أو أنواع الأعمدة</li>
+              <li>تتكيّف تلقائياً إذا تغيّرت الأعمدة في الجدول</li>
+              <li>مفيدة جداً مع <code>SELECT *</code></li>
+            </ul>
+
+            <h3>مثال: SELECT * مع %ROWTYPE (Slide 10)</h3>
+            <pre><code class="language-sql">DEFINE employee_number = 124
+DECLARE
+  emp_rec  employees%ROWTYPE;
+BEGIN
+  SELECT * INTO emp_rec FROM employees
+  WHERE  employee_id = &employee_number;
+
+  INSERT INTO retired_emps(empno, ename, job, mgr,
+    hiredate, leavedate, sal, comm, deptno)
+  VALUES (emp_rec.employee_id, emp_rec.last_name,
+    emp_rec.job_id, emp_rec.manager_id,
+    emp_rec.hire_date, SYSDATE, emp_rec.salary,
+    emp_rec.commission_pct, emp_rec.department_id);
+END;
+/</code></pre>
+
+            <h3>مثال: INSERT باستخدام Record كاملاً (Slide 11)</h3>
+            <pre><code class="language-sql">DEFINE employee_number = 124
+DECLARE
+  emp_rec  retired_emps%ROWTYPE;
+BEGIN
+  SELECT employee_id, last_name, job_id, manager_id,
+    hire_date, hire_date, salary, commission_pct,
+    department_id INTO emp_rec FROM employees
+  WHERE employee_id = &employee_number;
+
+  INSERT INTO retired_emps VALUES emp_rec;  -- إدراج السجل كاملاً!
+END;
+/</code></pre>
+
+            <h3>مثال: UPDATE باستخدام SET ROW (Slide 12)</h3>
+            <pre><code class="language-sql">DEFINE employee_number = 124
+DECLARE
+  emp_rec retired_emps%ROWTYPE;
+BEGIN
+  SELECT * INTO emp_rec FROM retired_emps;
+  emp_rec.leavedate := SYSDATE;
+
+  UPDATE retired_emps SET ROW = emp_rec  -- تحديث الصف بالسجل كاملاً!
+  WHERE empno = &employee_number;
+END;
+/</code></pre>
+          </section>
+
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>Records = أنواع مختلفة | Collections = نفس النوع</li>
+                <li><code>TYPE name IS RECORD (...)</code> لتعريف سجل</li>
+                <li><code>%ROWTYPE</code> يأخذ جميع أعمدة الجدول تلقائياً</li>
+                <li>
+                  يمكن استخدام <code>INSERT INTO table VALUES record</code>
+                </li>
+                <li>يمكن استخدام <code>UPDATE table SET ROW = record</code></li>
+                <li>الوصول للحقول: <code>record_name.field_name</code></li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="../modules/module_01/index.html" class="nav-prev"
-            >← الوحدة 1</a
+          <a href="../modules/module_02/index.html" class="nav-prev"
+            >← الوحدة 2</a
           >
-          <a href="topic_02_01_02.html" class="nav-next"
-            >المجموعات (Collections) →</a
-          >
+          <a href="topic_02_01_02.html" class="nav-next">INDEX BY Tables →</a>
         </nav>
       </article>
     </main>

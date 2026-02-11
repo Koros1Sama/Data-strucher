@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>B-Tree Structure | Data Structures Study Guide</title>
+    <title>Primary Index | PL/SQL & Database Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand">
-        <a href="../index.html">📚 Data Structures Study Guide</a>
+        <a href="../index.html">📚 PL/SQL & Database Systems</a>
       </div>
       <div class="nav-links">
         <a href="../index.html">الرئيسية</a>
@@ -30,71 +30,72 @@
       <nav class="breadcrumb">
         <a href="../index.html">الرئيسية</a> ›
         <a href="../modules/module_04/index.html">الوحدة 4</a> ›
-        <span>B-Tree Structure</span>
+        <span>Primary Index</span>
       </nav>
 
       <article class="topic-page">
         <header class="topic-header">
-          <span class="difficulty-badge advanced">متقدم</span>
-          <h1>Dynamic Multilevel Indexes: B-Trees</h1>
-          <p class="topic-title-ar">
-            الفهارس متعددة المستويات الديناميكية: أشجار B-Trees
-          </p>
+          <span class="difficulty-badge intermediate">متوسط</span>
+          <h1>Primary Index</h1>
+          <p class="topic-title-ar">الفهرس الأساسي</p>
         </header>
 
         <div class="topic-body">
           <section class="content-section">
-            <h2>📖 مقدمة | Introduction</h2>
-            <p>
-              تعتبر أشجار B-Trees (Balanced Trees) الحل الأمثل لمشاكل الفهارس
-              متعددة المستويات التقليدية، حيث تحل مشكلة تكلفة الإضافة والحذف
-              بالحفاظ على توازن الشجرة دائماً.
-            </p>
+            <h2>📖 التعريف (Slide 5)</h2>
+            <ul class="styled-list">
+              <li>
+                يُعرّف على <strong>ملف بيانات مُرتّب</strong> (Ordered Data
+                File)
+              </li>
+              <li>
+                ملف البيانات مُرتّب على <strong>حقل مفتاحي</strong> (Key Field)
+                — قيم فريدة
+              </li>
+              <li>يتضمن <strong>مدخل واحد لكل كتلة</strong> في ملف البيانات</li>
+              <li>
+                المدخل يحتوي على قيمة المفتاح لأول سجل في الكتلة =
+                <strong>Block Anchor</strong>
+              </li>
+              <li>يُعتبر <strong>Nondense Index</strong> (فهرس غير كثيف)</li>
+            </ul>
           </section>
 
           <section class="content-section">
-            <h2>📝 المحتوى | Content</h2>
+            <h2>📊 التمثيل البصري</h2>
+            <pre><code class="language-text">Index File                Data File (Ordered by Key)
+┌──────────────┐         ┌──────────────────┐
+│ Key=5  → ────┼────────→│ Block 1: 5,8,12  │
+├──────────────┤         ├──────────────────┤
+│ Key=15 → ────┼────────→│ Block 2: 15,18,21│
+├──────────────┤         ├──────────────────┤
+│ Key=25 → ────┼────────→│ Block 3: 25,30,35│
+└──────────────┘         └──────────────────┘
 
-            <h3>المشاكل في الأشجار التقليدية</h3>
-            <p>
-              في الفهارس متعددة المستويات الثابتة (Static)، تتطلب عمليات الإضافة
-              والحذف إعادة تنظيم واسعة للملفات للحفاظ على الترتيب، مما يجعلها
-              غير فعالة للبيانات المتغيرة بكثرة.
-            </p>
+مدخل واحد لكل كتلة = Sparse (Nondense)</code></pre>
+          </section>
 
-            <h3>خصائص B-Tree</h3>
-            <ul class="styled-list">
-              <li>كل عقدة (Node) في الشجرة تقابل كتلة قرص (Disk Block).</li>
-              <li>يتم الاحتفاظ بالعقد ممتلئة بنسبة تتراوح بين 50% و 100%.</li>
-              <li>
-                <strong>البيانات والمؤشرات:</strong> تحتوي كل عقدة (سواء كانت
-                جذر، داخلية، أو ورقة) على مفاتيح البحث ومؤشرات لسجلات البيانات
-                (Record Pointers).
-              </li>
-              <li>
-                جميع الأوراق (Leaf Nodes) تكون في نفس المستوى، مما يضمن توازن
-                الشجرة.
-              </li>
-            </ul>
-
-            <h3>مزايا B-Tree</h3>
-            <ul class="styled-list">
-              <li>
-                تضمن أن البحث دائماً يستغرق وقتاً لوغاريتمياً Logarithmic Time.
-              </li>
-              <li>
-                عمليات الإضافة والحذف لا تتطلب إعادة بناء الشجرة بالكامل، بل
-                تعديلات موضعية (Split/Merge).
-              </li>
-            </ul>
+          <section class="content-section">
+            <h2>📝 نقاط هامة | Key Takeaways</h2>
+            <div class="takeaways-box">
+              <ul>
+                <li>
+                  ملف البيانات <strong>مُرتّب</strong> على حقل
+                  <strong>مفتاحي</strong> (قيم فريدة)
+                </li>
+                <li>
+                  مدخل واحد لكل <strong>كتلة</strong> (ليس لكل سجل) → Sparse
+                </li>
+                <li>Block Anchor = أول سجل في كل كتلة</li>
+                <li>البحث الثنائي على الفهرس ثم قراءة الكتلة المطلوبة</li>
+              </ul>
+            </div>
           </section>
         </div>
 
         <nav class="topic-nav">
-          <a href="../ch_04_01/topic_04_01_03.html" class="nav-prev"
-            >← Secondary Indexes</a
-          >
-          <a href="topic_04_02_02.html" class="nav-next">B+ Tree Structure →</a>
+          <a href="topic_04_01_02.html" class="nav-prev">← Index Types</a>
+          <a href="topic_04_02_02.html" class="nav-next">Clustering Index →</a>
         </nav>
       </article>
     </main>
