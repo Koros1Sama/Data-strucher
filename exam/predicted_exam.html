@@ -393,7 +393,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              PL/SQL لا توفر تنفيذ الاستعلامات بالتوازي تلقائياً. فوائدها تشمل: دمج البنى الإجرائية مع SQL، تحسين الأداء، التعامل مع الاستثناءات، والبنية المقطعية.
+              ✅ <strong>Automatic parallel query execution</strong> ليست من فوائد PL/SQL — التنفيذ بالتوازي يتم عبر Oracle Parallel Execution وليس PL/SQL نفسها.<br><br>
+              لماذا الخيارات الأخرى <strong>صحيحة</strong> (فوائد فعلية):<br>
+              • <strong>Integration of procedural constructs with SQL</strong>: فائدة رئيسية — PL/SQL تدمج البنى الإجرائية (IF, LOOP, Variables) مع جمل SQL في بلوك واحد.<br>
+              • <strong>Improved performance by reducing network traffic</strong>: فائدة — PL/SQL ترسل كتلة كاملة من الأوامر للخادم دفعة واحدة بدل إرسال كل أمر لوحده.<br>
+              • <strong>Exception handling</strong>: فائدة — PL/SQL توفر قسم EXCEPTION للتعامل مع الأخطاء بشكل منظم أثناء التشغيل.
             </p>
             <a href="../topics/topic_01_01_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -416,7 +420,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              المتغيرات غير المهيأة في PL/SQL تكون قيمتها <strong>NULL</strong> افتراضياً. عند طباعتها بـ DBMS_OUTPUT.PUT_LINE، لن يظهر شيء للجزء الخاص بالمتغير.
+              ✅ <strong>NULL</strong>: جميع المتغيرات غير المهيأة في PL/SQL قيمتها الافتراضية NULL. عند طباعتها بـ DBMS_OUTPUT.PUT_LINE، لن يظهر شيء للجزء الخاص بالمتغير.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>An empty string ''</strong>: في Oracle، السلسلة الفارغة '' تُعتبر NULL أيضاً، لكن المتغير لم يُهيأ بسلسلة فارغة — قيمته NULL من البداية.<br>
+              • <strong>0</strong>: الصفر قيمة فعلية وليست الافتراضية. حتى المتغيرات الرقمية (NUMBER) تكون NULL وليس 0 عند عدم التهيئة.<br>
+              • <strong>An error occurs</strong>: لا يحدث خطأ — PL/SQL تسمح باستخدام متغيرات غير مهيأة (قيمتها NULL).
             </p>
             <a href="../topics/topic_01_02_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -439,7 +447,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              يمكن استخدام <strong>DEFAULT</strong> بدلاً من <strong>:=</strong> لتعيين قيمة افتراضية: <code>Myname VARCHAR2(20) DEFAULT 'John';</code>
+              ✅ <strong>DEFAULT</strong>: يمكن استخدامها بدلاً من <code>:=</code> لتعيين قيمة افتراضية. مثال: <code>Myname VARCHAR2(20) DEFAULT 'John';</code><br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>SET</strong>: تُستخدم في أوامر بيئة SQL*Plus (مثل <code>SET SERVEROUTPUT ON</code>) وليست لتعيين قيم المتغيرات في PL/SQL.<br>
+              • <strong>ASSIGN</strong>: ليست كلمة محجوزة في PL/SQL على الإطلاق.<br>
+              • <strong>VALUE</strong>: ليست الكلمة المفتاحية المستخدمة لتعيين القيمة الافتراضية في PL/SQL.
             </p>
             <a href="../topics/topic_01_02_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -460,7 +472,8 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              خطأ. المتغيرات المعرفة بـ <strong>CONSTANT</strong> لا يمكن تغيير قيمتها بعد التهيئة. مثال: <code>c_tax CONSTANT NUMBER := 8.25;</code>
+              ✅ الإجابة: <strong>FALSE</strong> — المتغيرات المعرفة بكلمة <code>CONSTANT</code> لا يمكن تغيير قيمتها بعد التهيئة الأولية. مثال: <code>c_tax CONSTANT NUMBER := 8.25;</code> أي محاولة تغيير قيمتها لاحقاً ستسبب خطأ تجميع (Compilation Error).<br><br>
+              • <strong>TRUE</strong> ستكون صحيحة لو كان المتغير مُعرَّفاً بدون كلمة CONSTANT — في هذه الحالة يمكن تغيير قيمته في أي وقت داخل قسم BEGIN.
             </p>
             <a href="../topics/topic_01_02_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -483,9 +496,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              متغيرات الربط (Bind Variables) يُشار إليها داخل بلوك PL/SQL بعلامة <strong>نقطتين (:)</strong> مثل <code>:emp_salary</code>.
+              ✅ <strong>Colon (:)</strong>: متغيرات الربط (Bind Variables) يُشار إليها داخل بلوك PL/SQL بعلامة النقطتين مثل <code>:emp_salary</code>. يتم تعريفها بأمر VARIABLE في بيئة SQL*Plus.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Ampersand (&amp;)</strong>: تُستخدم مع <strong>Substitution Variables</strong> (متغيرات الاستبدال) وليس Bind Variables. مثال: <code>&amp;empno</code>.<br>
+              • <strong>Dollar sign ($)</strong>: لا تُستخدم كبادئة للمتغيرات في PL/SQL القياسية.<br>
+              • <strong>Hash (#)</strong>: ليست بادئة معترف بها للمتغيرات في PL/SQL.
             </p>
-            <a href="../topics/topic_01_02_04.html" class="topic-link">
+            <a href="../topics/topic_01_02_03.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -506,7 +523,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              لتفعيل عرض المخرجات في بيئة iSQL*Plus، نستخدم الأمر <strong>SET SERVEROUTPUT ON</strong> قبل تنفيذ بلوك PL/SQL.
+              ✅ <strong>SET SERVEROUTPUT ON</strong>: هذا الأمر يُفعّل عرض مخرجات DBMS_OUTPUT في بيئة iSQL*Plus. بدونه لن تظهر أي مخرجات حتى لو استخدمت PUT_LINE.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>SET OUTPUT ON</strong>: صيغة غير صحيحة — الكلمة الصحيحة هي SERVEROUTPUT وليس OUTPUT فقط.<br>
+              • <strong>ENABLE DBMS_OUTPUT</strong>: يوجد إجراء <code>DBMS_OUTPUT.ENABLE</code> يُستدعى داخل الكود، لكن السؤال عن أمر بيئة iSQL*Plus وليس إجراء PL/SQL.<br>
+              • <strong>SET DISPLAY ON</strong>: أمر غير موجود أصلاً في SQL*Plus.
             </p>
             <a href="../topics/topic_01_01_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -529,7 +550,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              متغيرات الاستبدال (Substitution Variables) تُستخدم لأخذ مدخلات المستخدم وتُسبق بعلامة <strong>&</strong> مثل <code>&empno</code>.
+              ✅ <strong>Ampersand (&amp;)</strong>: متغيرات الاستبدال (Substitution Variables) تُسبق بعلامة &amp; لأخذ مدخلات المستخدم وقت التنفيذ. مثال: <code>&amp;empno</code>.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Colon (:)</strong>: تُستخدم مع <strong>Bind Variables</strong> (متغيرات الربط) وليس Substitution Variables. مثال: <code>:emp_salary</code>.<br>
+              • <strong>At sign (@)</strong>: تُستخدم لتشغيل ملفات SQL Scripts (مثل <code>@script.sql</code>).<br>
+              • <strong>Percent (%)</strong>: تُستخدم مع خصائص الأنواع والمؤشرات مثل <code>%TYPE</code> و <code>%ROWTYPE</code> و <code>%FOUND</code>.
             </p>
             <a href="../topics/topic_01_02_04.html" class="topic-link">
               📚 مراجعة الدرس
@@ -550,9 +575,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              صحيح. المتغيرات المعرفة في البلوك الخارجي (outer) تكون مرئية ويمكن الوصول إليها من البلوك الداخلي (inner). لكن العكس غير صحيح - المتغيرات الداخلية لا يمكن الوصول إليها من الخارج.
+              ✅ الإجابة: <strong>TRUE</strong> — المتغيرات المعرفة في البلوك الخارجي (Outer Block) تكون مرئية ويمكن الوصول إليها من البلوك الداخلي (Inner Block). هذا ما يُسمى بـ <strong>Variable Scope</strong>.<br><br>
+              • <strong>FALSE</strong> ستكون صحيحة لو كان السؤال عن العكس — أي الوصول لمتغيرات البلوك الداخلي من البلوك الخارجي. المتغيرات الداخلية <strong>محلية</strong> ولا تُرى من الخارج.<br>
+              • ملاحظة: إذا أعدنا تعريف متغير بنفس الاسم في البلوك الداخلي، فإنه يُخفي المتغير الخارجي (ما لم نستخدم Label للتمييز).
             </p>
-            <a href="../topics/topic_01_02_01.html" class="topic-link">
+            <a href="../topics/topic_02_01_02.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -575,9 +602,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              السجلات (Records) تُستخدم لتخزين قيم من <strong>أنواع بيانات مختلفة</strong>. أما المجموعات (Collections) فتُستخدم لتخزين قيم من نفس نوع البيانات.
+              ✅ <strong>different</strong>: السجلات (Records) تُستخدم لتخزين قيم من <strong>أنواع بيانات مختلفة</strong> (NUMBER, VARCHAR2, DATE في سجل واحد). مثل سجل موظف يحوي الاسم والراتب وتاريخ التعيين.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>same</strong>: هذا ينطبق على <strong>Collections</strong> (المجموعات) مثل INDEX BY TABLE و VARRAY وليس السجلات.<br>
+              • <strong>numeric only</strong>: السجلات ليست مقتصرة على الأرقام — يمكنها تخزين أي نوع بيانات.<br>
+              • <strong>character only</strong>: نفس السبب — السجلات ليست مقتصرة على النصوص.
             </p>
-            <a href="../topics/topic_02_01_02.html" class="topic-link">
+            <a href="../topics/topic_02_01_01.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -598,9 +629,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              ميزة <strong>%ROWTYPE</strong> أن عدد وأنواع الأعمدة قد تتغير في وقت التشغيل، والسجل يتكيف تلقائياً. لا حاجة لمعرفة تفاصيل الأعمدة مسبقاً.
+              ✅ <strong>%ROWTYPE adapts automatically</strong>: ميزة %ROWTYPE أن عدد وأنواع الأعمدة قد تتغير في وقت التشغيل، والسجل يتكيف تلقائياً مع هيكل الجدول الحالي. لا حاجة للتعديل اليدوي إذا تغير الجدول.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>It runs faster</strong>: %ROWTYPE لا تُحسّن الأداء — ميزتها في المرونة وليس السرعة.<br>
+              • <strong>It uses less memory</strong>: لا — في الواقع قد تحجز ذاكرة لجميع أعمدة الجدول حتى لو لم نستخدمها كلها.<br>
+              • <strong>It allows multiple rows</strong>: %ROWTYPE تُعرّف سجلاً واحداً فقط. لتخزين عدة صفوف نحتاج Collections أو Cursors.
             </p>
-            <a href="../topics/topic_02_01_02.html" class="topic-link">
+            <a href="../topics/topic_02_01_01.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -621,9 +656,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              في PL/SQL، جملة SELECT ... INTO يجب أن تُرجع <strong>صفاً واحداً فقط</strong>. إذا أرجعت أكثر من صف يحدث خطأ TOO_MANY_ROWS، وإذا لم ترجع شيئاً يحدث NO_DATA_FOUND.
+              ✅ <strong>One</strong>: في PL/SQL، جملة SELECT ... INTO يجب أن تُرجع <strong>صفاً واحداً فقط</strong>. إذا أرجعت أكثر من صف يحدث خطأ TOO_MANY_ROWS، وإذا لم ترجع شيئاً يحدث NO_DATA_FOUND.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Zero</strong>: إذا أرجعت صفر صفوف، يحدث استثناء NO_DATA_FOUND.<br>
+              • <strong>Multiple</strong>: إذا أرجعت عدة صفوف، يحدث استثناء TOO_MANY_ROWS. لجلب عدة صفوف نستخدم Cursor.<br>
+              • <strong>Any number of</strong>: خطأ — يجب أن تُرجع صفاً واحداً بالضبط.
             </p>
-            <a href="../topics/topic_02_02_01.html" class="topic-link">
+            <a href="../topics/topic_02_01b_01.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -644,9 +683,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              يمكن تنفيذ جميع عمليات DML في PL/SQL: <strong>INSERT, UPDATE, DELETE, MERGE</strong> بالإضافة إلى <strong>SELECT INTO</strong>. كما يمكن التحكم بالمعاملات بأوامر COMMIT و ROLLBACK.
+              ✅ <strong>INSERT, UPDATE, DELETE, MERGE, and SELECT</strong>: يمكن تنفيذ جميع عمليات DML في PL/SQL بالإضافة إلى SELECT INTO. كما يمكن التحكم بالمعاملات بأوامر COMMIT و ROLLBACK.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Only SELECT</strong>: ناقص — PL/SQL تدعم أكثر من SELECT فقط.<br>
+              • <strong>INSERT, UPDATE, DELETE only</strong>: ناقص — لم يذكر MERGE و SELECT INTO.<br>
+              • <strong>Only INSERT and SELECT</strong>: ناقص جداً — لم يذكر UPDATE و DELETE و MERGE.
             </p>
-            <a href="../topics/topic_02_02_01.html" class="topic-link">
+            <a href="../topics/topic_02_01b_02.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -667,7 +710,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>SQL%ROWCOUNT</strong> هو سمة المؤشر الضمني (Implicit Cursor Attribute) التي تُرجع عدد الصفوف المتأثرة بآخر عملية DML (INSERT, UPDATE, DELETE).
+              ✅ <strong>DML statement</strong>: <code>SQL%ROWCOUNT</code> هو سمة المؤشر الضمني (Implicit Cursor Attribute) التي تُرجع عدد الصفوف المتأثرة بآخر عملية DML (INSERT, UPDATE, DELETE).<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>SELECT statement only</strong>: SELECT INTO أيضاً يُحدث SQL%ROWCOUNT، لكن الإجابة الأشمل هي DML statement.<br>
+              • <strong>DDL statement</strong>: عمليات DDL (مثل CREATE, ALTER, DROP) لا تمر عبر المؤشر الضمني في PL/SQL.<br>
+              • <strong>Any SQL statement</strong>: ليس أي جملة — فقط عمليات DML.
             </p>
             <a href="../topics/topic_02_02_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -690,7 +737,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              في PL/SQL، إذا كان الشرط في جملة IF يساوي <strong>NULL</strong>، فإنه يُعامل مثل FALSE ولا يتم تنفيذ الجمل المرتبطة به.
+              ✅ <strong>Treated as FALSE</strong>: في PL/SQL، إذا كان الشرط في جملة IF يساوي NULL، فإنه يُعامل مثل FALSE ولا يتم تنفيذ الجمل المرتبطة به. ينتقل التنفيذ إلى ELSIF أو ELSE إن وُجدت.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>The THEN clause executes</strong>: لا — الشرط يجب أن يكون TRUE لتنفيذ قسم THEN.<br>
+              • <strong>An error is raised</strong>: لا يحدث خطأ — PL/SQL تتعامل مع NULL بهدوء كأنه FALSE.<br>
+              • <strong>The program terminates</strong>: لا ينتهي البرنامج — يتخطى الشرط فقط ويكمل.
             </p>
             <a href="../topics/topic_02_03_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -713,7 +764,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>Basic Loop</strong> (LOOP...EXIT WHEN...END LOOP) يضمن تنفيذ جسم الحلقة <strong>مرة واحدة على الأقل</strong> لأن شرط الخروج يُفحص بعد التنفيذ وليس قبله.
+              ✅ <strong>Basic Loop</strong> (LOOP...EXIT WHEN...END LOOP): يضمن تنفيذ جسم الحلقة <strong>مرة واحدة على الأقل</strong> لأن شرط الخروج يُفحص بعد التنفيذ وليس قبله.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>WHILE Loop</strong>: يفحص الشرط <strong>قبل</strong> التنفيذ، فإذا كان الشرط FALSE من البداية لن يُنفذ أبداً.<br>
+              • <strong>FOR Loop</strong>: إذا كان النطاق فارغاً (مثل FOR i IN 5..1) لن يُنفذ أبداً.<br>
+              • <strong>None of the above</strong>: خطأ — Basic Loop فعلاً يضمن ذلك.
             </p>
             <a href="../topics/topic_02_03_03.html" class="topic-link">
               📚 مراجعة الدرس
@@ -734,7 +789,8 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              خطأ. في <strong>Cursor FOR Loop</strong>، يتم فتح (OPEN) وجلب (FETCH) وخروج (EXIT) وإغلاق (CLOSE) المؤشر <strong>تلقائياً (Implicitly)</strong>. كما يتم تعريف السجل ضمنياً.
+              ✅ الإجابة: <strong>FALSE</strong> — في Cursor FOR Loop، يتم فتح (OPEN) وجلب (FETCH) وخروج (EXIT) وإغلاق (CLOSE) المؤشر <strong>تلقائياً (Implicitly)</strong>. كما يتم تعريف السجل ضمنياً.<br><br>
+              • <strong>TRUE</strong> ستكون صحيحة لو كان السؤال عن <strong>Explicit Cursor</strong> العادي — حيث يجب على المبرمج كتابة OPEN و FETCH و CLOSE يدوياً.
             </p>
             <a href="../topics/topic_02_04_02.html" class="topic-link">
               📚 مراجعة الدرس
@@ -757,7 +813,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>%ROWCOUNT</strong> تُرجع العدد الإجمالي للصفوف التي تم جلبها حتى الآن من المؤشر الصريح.
+              ✅ <strong>%ROWCOUNT</strong>: تُرجع العدد الإجمالي للصفوف التي تم جلبها حتى الآن من المؤشر الصريح.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>%ISOPEN</strong>: تُرجع TRUE إذا كان المؤشر في حالة فتح (Open)، وليس عدد الصفوف.<br>
+              • <strong>%FOUND</strong>: تُرجع TRUE إذا جلب آخر FETCH صفاً بنجاح، وليس العدد الإجمالي.<br>
+              • <strong>%NOTFOUND</strong>: تُرجع TRUE إذا لم يجد آخر FETCH أي صف — تدل على نهاية البيانات وليس العدد.
             </p>
             <a href="../topics/topic_02_04_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -778,7 +838,8 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              صحيح. <strong>%NOTFOUND</strong> تُرجع TRUE عندما لا يجد آخر FETCH أي صف، مما يعني أنه تمت معالجة جميع الصفوف في مجموعة النتائج النشطة.
+              ✅ الإجابة: <strong>TRUE</strong> — <code>%NOTFOUND</code> تُرجع TRUE عندما لا يجد آخر FETCH أي صف، مما يعني أنه تمت معالجة جميع الصفوف. هذه الطريقة الاعتيادية للخروج من حلقة FETCH.<br><br>
+              • <strong>FALSE</strong> ستكون صحيحة لو كان الوصف خاطئاً — لكن الوصف دقيق: EXIT WHEN %NOTFOUND فعلاً يخرج عندما لا يجد الـ FETCH صفوفاً.
             </p>
             <a href="../topics/topic_02_04_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -801,7 +862,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              الوضع الافتراضي للمعاملات هو <strong>IN</strong> إذا لم يُحدد أي وضع. المعامل IN يوفر قيماً للبرنامج الفرعي لمعالجتها.
+              ✅ <strong>IN</strong>: الوضع الافتراضي للمعاملات هو IN إذا لم يُحدد أي وضع. المعامل IN يوفر قيماً للبرنامج الفرعي ولا يمكن تغييره داخله.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>OUT</strong>: يجب تحديده صراحةً. يُستخدم لإرجاع قيم من البرنامج الفرعي إلى المستدعي.<br>
+              • <strong>IN OUT</strong>: يجب تحديده صراحةً. يُستخدم عندما نريد إرسال قيمة وإرجاع قيمة أخرى.<br>
+              • <strong>RETURN</strong>: ليس وضع معامل — RETURN تُستخدم في الدوال لتحديد نوع القيمة المُرجعة.
             </p>
             <a href="../topics/topic_02_05_02.html" class="topic-link">
               📚 مراجعة الدرس
@@ -822,7 +887,8 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              العكس هو الصحيح! <strong>الدالة (Function)</strong> تُستدعى كجزء من تعبير (expression)، بينما <strong>الإجراء (Procedure)</strong> يُنفذ كجملة PL/SQL مستقلة أو بأمر EXECUTE.
+              ✅ الإجابة: <strong>FALSE</strong> — العكس هو الصحيح! <strong>الدالة (Function)</strong> تُستدعى كجزء من تعبير (expression) مثل <code>x := get_salary(100)</code>، بينما <strong>الإجراء (Procedure)</strong> يُنفذ كجملة PL/SQL مستقلة أو بأمر EXECUTE.<br><br>
+              • <strong>TRUE</strong> ستكون صحيحة لو عكسنا الجملة: "الدالة تُستدعى كجزء من تعبير، والإجراء يُنفذ كجملة PL/SQL".
             </p>
             <a href="../topics/topic_02_05_04.html" class="topic-link">
               📚 مراجعة الدرس
@@ -843,7 +909,8 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              صحيح. الدوال المُستدعاة من جملة SELECT <strong>لا يمكن أن تحتوي على عمليات DML</strong> (INSERT, UPDATE, DELETE). كما لا يمكنها إنهاء المعاملات (COMMIT/ROLLBACK).
+              ✅ الإجابة: <strong>TRUE</strong> — الدوال المُستدعاة من جملة SELECT <strong>لا يمكن أن تحتوي على عمليات DML</strong> (INSERT, UPDATE, DELETE). كما لا يمكنها إنهاء المعاملات (COMMIT/ROLLBACK) أو تغيير الجدول المُستعلم عنه.<br><br>
+              • <strong>FALSE</strong> ستكون صحيحة لو كانت الدالة تُستدعى من بلوك PL/SQL عادي وليس من SELECT — في هذه الحالة يمكنها تنفيذ DML.
             </p>
             <a href="../topics/topic_02_05_04.html" class="topic-link">
               📚 مراجعة الدرس
@@ -866,7 +933,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              معامل الربط <strong>=></strong> يُستخدم في <strong>التمرير بالاسم (Named notation)</strong>. مثال: <code>add_dept(loc=>2400, name=>'EDUCATION')</code>
+              ✅ <strong>Named</strong>: معامل الربط <code>=></code> يُستخدم في التمرير بالاسم (Named notation). مثال: <code>add_dept(loc=>2400, name=>'EDUCATION')</code>. يتيح كتابة المعاملات بأي ترتيب.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Positional</strong>: يعتمد على <strong>الترتيب</strong> فقط ولا يستخدم =>.<br>
+              • <strong>Combination</strong>: يجمع Positional و Named لكنه ليس الأسلوب الذي يستخدم => حصرياً.<br>
+              • <strong>Default</strong>: ليس نوع تمرير — DEFAULT يُعيّن قيمة افتراضية للمعامل.
             </p>
             <a href="../topics/topic_02_05_02.html" class="topic-link">
               📚 مراجعة الدرس
@@ -889,9 +960,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              لعرض الكود المصدري للإجراءات التي تملكها، تستعلم من <strong>USER_SOURCE</strong>. أما <strong>ALL_SOURCE</strong> فتشمل أيضاً الإجراءات التي منحك آخرون صلاحية EXECUTE عليها.
+              ✅ <strong>USER_SOURCE</strong>: لعرض الكود المصدري للإجراءات/الدوال التي تملكها، تستعلم من USER_SOURCE. تحتوي على أعمدة: NAME, TYPE, LINE, TEXT.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>USER_PROCEDURES</strong>: تعرض معلومات عن الإجراءات (مثل الاسم والنوع) ولكن <strong>ليس الكود المصدري</strong>.<br>
+              • <strong>ALL_PROCEDURES</strong>: نفس المشكلة — معلومات عن الإجراءات وليس الكود. وتشمل إجراءات الآخرين أيضاً.<br>
+              • <strong>DBA_SOURCE</strong>: تعرض الكود لكنها للمدير (DBA) فقط وليس للمستخدم العادي.
             </p>
-            <a href="../topics/topic_02_05_02.html" class="topic-link">
+            <a href="../topics/topic_02_05_01.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -912,9 +987,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>Searched CASE</strong> لا يحتاج لتعبير محدد (selector). بدلاً من ذلك، يستخدم شروطاً منطقية مباشرة: <code>WHEN grade = 'A' THEN ...</code>
+              ✅ <strong>Searched CASE</strong>: لا يحتاج لتعبير محدد (selector). بدلاً من ذلك، يستخدم شروطاً منطقية مباشرة: <code>WHEN grade = 'A' THEN ...</code><br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Simple CASE</strong>: يحتاج selector مثل <code>CASE grade WHEN 'A' THEN ...</code> — يُقارن قيمة واحدة.<br>
+              • <strong>Both require a selector</strong>: خطأ — Searched CASE لا يحتاج selector.<br>
+              • <strong>Neither requires a selector</strong>: خطأ — Simple CASE يحتاج selector.
             </p>
-            <a href="../topics/topic_02_03_01.html" class="topic-link">
+            <a href="../topics/topic_02_03_02.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -933,9 +1012,10 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              صحيح. التسميات (Labels) تُستخدم لـ: (1) تمييز المتغيرات في البلوكات المتداخلة مثل <code>outer.date_of_birth</code>، (2) الخروج من الحلقات الخارجية بأمر <code>EXIT Outer_loop</code>.
+              ✅ الإجابة: <strong>TRUE</strong> — التسميات (Labels) لها استخدامان رئيسيان: (1) تمييز المتغيرات في البلوكات المتداخلة مثل <code>outer.date_of_birth</code>، (2) الخروج من الحلقات الخارجية بأمر <code>EXIT Outer_loop</code>.<br><br>
+              • <strong>FALSE</strong> ستكون صحيحة لو قيل إن Labels تُغير الـ Scope أو تُنشئ متغيرات جديدة — لكنها فقط للتمييز والتحكم بالتدفق.
             </p>
-            <a href="../topics/topic_02_03_03.html" class="topic-link">
+            <a href="../topics/topic_02_03_04.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -958,9 +1038,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              المشغلات (Triggers) تُنفذ <strong>ضمنياً (تلقائياً)</strong> عند حدوث حدث معين كعمليات DML أو أحداث النظام، بدون استدعاء صريح من المستخدم.
+              ✅ <strong>implicitly (automatically)</strong>: المشغلات (Triggers) تُنفذ ضمنياً (تلقائياً) عند حدوث حدث معين كعمليات DML أو أحداث النظام.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>explicitly by the user</strong>: هذا ينطبق على الإجراءات (Procedures) وليس المشغلات.<br>
+              • <strong>only when called</strong>: المشغلات لا تُستدعى باسمها — تعمل تلقائياً.<br>
+              • <strong>after COMMIT only</strong>: خطأ — المشغلات تعمل قبل أو بعد الحدث، وليس بعد COMMIT.
             </p>
-            <a href="../topics/topic_03_01_02.html" class="topic-link">
+            <a href="../topics/topic_03_01_01.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -981,9 +1065,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>INSTEAD OF</strong> يُنفذ جسم المشغل بدلاً من الجملة المُشغِّلة. يُستخدم عادةً مع العروض (Views) غير القابلة للتعديل.
+              ✅ <strong>INSTEAD OF</strong>: يُنفذ جسم المشغل بدلاً من الجملة المُشغِّلة. يُستخدم عادةً مع العروض (Views) غير القابلة للتعديل مباشرةً.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>BEFORE</strong>: يُنفذ المشغل <strong>قبل</strong> تنفيذ الجملة — لكن الجملة نفسها تُنفذ بعده.<br>
+              • <strong>AFTER</strong>: يُنفذ المشغل <strong>بعد</strong> تنفيذ الجملة — الجملة تُنفذ أولاً.<br>
+              • <strong>DURING</strong>: ليس توقيتاً موجوداً في Oracle Triggers.
             </p>
-            <a href="../topics/topic_03_01_03.html" class="topic-link">
+            <a href="../topics/topic_03_01_01.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1004,9 +1092,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              الترتيب الصحيح لتنفيذ المشغلات عند التعامل مع صف واحد: <strong>BEFORE Statement → BEFORE Row → AFTER Row → AFTER Statement</strong>.
+              ✅ <strong>BEFORE Statement → BEFORE Row → AFTER Row → AFTER Statement</strong>: هذا الترتيب الصحيح. يبدأ بـ Statement للجدول ككل، ثم Row لكل صف متأثر.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • الخيارات الأخرى تعكس الترتيب أو تخلط بين Statement-level و Row-level triggers. القاعدة: Statement triggers تبدأ وتنتهي بالعملية ككل، بينما Row triggers تعمل لكل صف بينهما.
             </p>
-            <a href="../topics/topic_03_01_03.html" class="topic-link">
+            <a href="../topics/topic_03_01_02.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1027,7 +1117,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              عبارة <strong>FOR EACH ROW</strong> تُحدد أن المشغل من نوع <strong>Row Trigger</strong>، حيث يُنفذ مرة لكل صف متأثر بعملية DML.
+              ✅ <strong>Row Trigger</strong>: عبارة FOR EACH ROW تُحدد أن المشغل من نوع Row Trigger، حيث يُنفذ <strong>مرة لكل صف متأثر</strong>. بدونها يكون Statement Trigger.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Statement Trigger</strong>: يُنفذ مرة واحدة للعملية ككل — ولا يستخدم FOR EACH ROW.<br>
+              • <strong>System Trigger</strong>: يعمل على أحداث النظام (STARTUP, LOGON) وليس DML.<br>
+              • <strong>Application Trigger</strong>: ليس نوعاً قياسياً في Oracle Database triggers.
             </p>
             <a href="../topics/topic_03_02_02.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1050,9 +1144,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>UPDATING('SALARY')</strong> يُرجع TRUE فقط عندما يتم تحديث العمود SALARY تحديداً. هذا يسمح بمعالجة مختلفة حسب العمود المُعدّل.
+              ✅ <strong>The SALARY column specifically is being updated</strong>: <code>UPDATING('SALARY')</code> يُرجع TRUE فقط عندما يتم تحديث عمود SALARY تحديداً. هذا يسمح بمعالجة مختلفة حسب العمود المُعدّل.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Any column is being updated</strong>: هذا ينطبق على <code>UPDATING</code> بدون تحديد عمود، وليس <code>UPDATING('SALARY')</code>.<br>
+              • <strong>salary value > zero</strong>: الشرط يتعلق بـ <strong>أي عمود يتم تحديثه</strong> وليس بالقيمة.<br>
+              • <strong>trigger is UPDATE trigger</strong>: هذا ينطبق على <code>UPDATING</code> بدون معامل — ليس نفس <code>UPDATING('SALARY')</code>.
             </p>
-            <a href="../topics/topic_03_02_02.html" class="topic-link">
+            <a href="../topics/topic_03_02_04.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1073,7 +1171,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              خطأ <strong>Mutating Table</strong> يحدث عندما يحاول Row Trigger قراءة أو تعديل <strong>نفس الجدول</strong> الخاضع حالياً لعملية التعديل، مما قد يؤدي لنتائج غير متسقة.
+              ✅ <strong>Read or modify the same table</strong>: خطأ Mutating Table يحدث عندما يحاول Row Trigger قراءة أو تعديل <strong>نفس الجدول</strong> الذي يخضع لعملية التعديل حالياً.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Insert into a different table</strong>: مسموح — لا يسبب Mutating Table لأنه جدول مختلف.<br>
+              • <strong>Call a stored procedure</strong>: مسموح ما لم يُعدّل الإجراء نفس الجدول.<br>
+              • <strong>Use DBMS_OUTPUT</strong>: مسموح تماماً — DBMS_OUTPUT لا يؤثر على الجداول.
             </p>
             <a href="../topics/topic_03_02_02.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1096,9 +1198,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              لتعطيل جميع المشغلات على جدول: <strong>ALTER TABLE table_name DISABLE ALL TRIGGERS</strong>. لتعطيل مشغل واحد: <code>ALTER TRIGGER trigger_name DISABLE</code>.
+              ✅ <strong>ALTER TABLE table_name DISABLE ALL TRIGGERS</strong>: الصيغة الصحيحة لتعطيل جميع المشغلات على جدول. لتعطيل مشغل واحد: <code>ALTER TRIGGER trigger_name DISABLE</code>.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>ALTER TRIGGER ALL DISABLE</strong>: صيغة غير صحيحة.<br>
+              • <strong>DROP ALL TRIGGERS ON table_name</strong>: DROP يحذف المشغلات نهائياً ولا يعطلها فقط. والصيغة غير صحيحة.<br>
+              • <strong>DISABLE TRIGGER * ON table_name</strong>: صيغة غير صحيحة — لا يوجد أمر DISABLE TRIGGER بهذا الشكل.
             </p>
-            <a href="../topics/topic_03_01_02.html" class="topic-link">
+            <a href="../topics/topic_03_03_01.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1117,9 +1223,10 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              صحيح. عند حذف جدول، يتم حذف <strong>جميع المشغلات</strong> المعرفة عليه تلقائياً. لحذف مشغل واحد: <code>DROP TRIGGER trigger_name;</code>
+              ✅ الإجابة: <strong>TRUE</strong> — عند حذف جدول، يتم حذف <strong>جميع المشغلات</strong> المعرفة عليه تلقائياً. لحذف مشغل واحد فقط: <code>DROP TRIGGER trigger_name;</code><br><br>
+              • <strong>FALSE</strong> ستكون صحيحة لو كانت المشغلات مستقلة عن الجدول — لكنها مرتبطة به وتُحذف معه.
             </p>
-            <a href="../topics/topic_03_01_02.html" class="topic-link">
+            <a href="../topics/topic_03_03_01.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1138,9 +1245,10 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              صحيح. داخل عبارة <strong>WHEN</strong>، نستخدم <strong>NEW</strong> و <strong>OLD</strong> بدون النقطتين (:). ولكن داخل جسم المشغل (trigger body)، نستخدمهما مع النقطتين: <code>:NEW.salary</code>.
+              ✅ الإجابة: <strong>TRUE</strong> — داخل عبارة WHEN، نستخدم NEW و OLD <strong>بدون</strong> النقطتين (:). مثال: <code>WHEN (NEW.salary > 1000)</code>. لكن داخل جسم المشغل (trigger body)، نستخدمهما <strong>مع</strong> النقطتين: <code>:NEW.salary</code>.<br><br>
+              • <strong>FALSE</strong> ستكون صحيحة لو كان السؤال عن جسم المشغل (trigger body) — هناك يجب استخدام النقطتين (:NEW و :OLD).
             </p>
-            <a href="../topics/topic_03_02_02.html" class="topic-link">
+            <a href="../topics/topic_03_01_03.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1161,9 +1269,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>BEFORE INSERT</strong> هو الأنسب للتحقق من صحة البيانات أو تعديلها قبل تخزينها فعلياً في الجدول. مثلاً: تعيين قيم افتراضية أو التحقق من القيود.
+              ✅ <strong>BEFORE INSERT</strong>: الأنسب للتحقق من صحة البيانات أو تعديلها قبل تخزينها فعلياً في الجدول. مثلاً: تعيين قيم افتراضية أو منع قيم غير صالحة بـ RAISE_APPLICATION_ERROR.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>AFTER INSERT</strong>: البيانات تكون قد خُزنت فعلاً — فات وقت التحقق أو التعديل.<br>
+              • <strong>INSTEAD OF INSERT</strong>: يُستخدم مع Views لاستبدال العملية بالكامل وليس للتحقق فقط.<br>
+              • <strong>Statement Trigger</strong>: ليس توقيتاً — هو نوع مشغل يعمل مرة للعملية ولا يصل لبيانات الصف الفردي.
             </p>
-            <a href="../topics/topic_03_01_03.html" class="topic-link">
+            <a href="../topics/topic_03_02_01.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1186,9 +1298,12 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              Blocking Factor = ⌊B / R⌋ = ⌊512 / 150⌋ = <strong>3 سجلات/كتلة</strong>. القسمة الصحيحة (floor)، لأنه لا يمكن تخزين جزء من سجل.
+              ✅ <strong>3</strong>: Blocking Factor = ⌊B / R⌋ = ⌊512 / 150⌋ = <strong>3 سجلات/كتلة</strong>. القسمة الصحيحة (floor)، لأنه لا يمكن تخزين جزء من سجل. المساحة المتبقية (512 - 450 = 62 bytes) غير كافية لسجل رابع.<br><br>
+              • <strong>4</strong>: 150×4 = 600 > 512، لا يكفي.<br>
+              • <strong>2</strong>: صحيح رياضياً لكن ليس الحد الأقصى — يمكن تخزين 3.<br>
+              • <strong>5</strong>: 150×5 = 750 > 512، مستحيل.
             </p>
-            <a href="../topics/topic_04_04_03.html" class="topic-link">
+            <a href="../topics/topic_04_05_02.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1207,7 +1322,8 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              صحيح. <strong>Primary Index</strong> يُعرَّف على حقل مفتاح الترتيب (Ordering Key) في ملف مرتب. يحتوي على مدخلة واحدة لكل كتلة (Block Anchor).
+              ✅ الإجابة: <strong>TRUE</strong> — Primary Index يُعرَّف على حقل مفتاح الترتيب (Ordering Key) في ملف مرتب. يحتوي على مدخلة واحدة لكل كتلة (Block Anchor).<br><br>
+              • <strong>FALSE</strong> ستكون صحيحة لو كان الحقل غير مفتاح (non-key) — في هذه الحالة يُسمى Clustering Index.
             </p>
             <a href="../topics/topic_04_02_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1230,7 +1346,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>Primary Index</strong> هو فهرس <strong>متفرق (Sparse/Nondense)</strong> لأنه يحتوي على مدخلة لكل كتلة وليس لكل سجل.
+              ✅ <strong>Nondense (Sparse)</strong>: Primary Index هو فهرس متفرق (Sparse) لأنه يحتوي على مدخلة لكل كتلة وليس لكل سجل.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Dense</strong>: يعني مدخلة لكل سجل — هذا ينطبق على Secondary Index.<br>
+              • <strong>Secondary</strong>: نوع فهرس مختلف وليس صفة لـ Dense/Sparse.<br>
+              • <strong>Hash</strong>: نوع وصول مختلف يستخدم دالة Hash.
             </p>
             <a href="../topics/topic_04_02_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1251,7 +1371,8 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              صحيح. <strong>Clustering Index</strong> يُعرف على حقل ترتيب <strong>غير مفتاح</strong> (يسمح بالتكرار) في ملف مرتب. يحتوي مدخلة لكل قيمة مميزة.
+              ✅ الإجابة: <strong>TRUE</strong> — Clustering Index يُعرف على حقل ترتيب <strong>غير مفتاح</strong> (يسمح بالتكرار) في ملف مرتب. يحتوي مدخلة لكل قيمة مميزة (distinct value).<br><br>
+              • <strong>FALSE</strong> ستكون صحيحة لو كان الحقل مفتاحاً (unique) — في هذه الحالة سيكون Primary Index وليس Clustering.
             </p>
             <a href="../topics/topic_04_02_02.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1274,7 +1395,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>Secondary Index</strong> هو دائماً فهرس <strong>كثيف (Dense)</strong> لأنه يحتوي على مدخلة لكل سجل في ملف البيانات، حيث أن الملف غير مرتب على حقل الفهرس.
+              ✅ <strong>Dense</strong>: Secondary Index دائماً فهرس كثيف (Dense) لأنه يحتوي على مدخلة لكل سجل، حيث أن الملف غير مرتب على حقل الفهرس.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Sparse</strong>: ينطبق على Primary و Clustering Index وليس Secondary.<br>
+              • <strong>Clustered</strong>: Clustered Index نوع مختلف يعمل على حقل ترتيب غير مفتاح.<br>
+              • <strong>Primary</strong>: Primary Index نوع مختلف يعمل على حقل مفتاح الترتيب.
             </p>
             <a href="../topics/topic_04_02_03.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1297,9 +1422,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              البحث في ملف غير مرتب (Heap File) يتطلب <strong>بحثاً خطياً (Linear Search)</strong> وقراءة الملف بالكامل في أسوأ الحالات = O(n) عمليات قراءة.
+              ✅ <strong>Linear search - O(n)</strong>: البحث في ملف غير مرتب (Heap File) يتطلب بحثاً خطياً وقراءة الملف بالكامل في أسوأ الحالات.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Binary search O(log n)</strong>: يتطلب ملفاً <strong>مرتباً</strong> — Heap File غير مرتب.<br>
+              • <strong>Constant time O(1)</strong>: يتطلب فهرس Hash — غير متوفر في Heap File العادي.<br>
+              • <strong>Hash lookup O(1)</strong>: يحتاج تنظيم Hash File وليس Heap File.
             </p>
-            <a href="../topics/topic_04_05_01.html" class="topic-link">
+            <a href="../topics/topic_04_05_02.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1320,7 +1449,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              في <strong>B+-Tree</strong>، جميع المؤشرات إلى سجلات البيانات موجودة في <strong>العقد الورقية (Leaf Nodes)</strong> فقط. العقد الداخلية تُستخدم للتوجيه فقط. هذا يختلف عن B-Tree حيث المؤشرات في كل المستويات.
+              ✅ <strong>Leaf</strong>: في B+-Tree، جميع المؤشرات إلى سجلات البيانات موجودة في العقد الورقية (Leaf Nodes) فقط. العقد الداخلية تُستخدم للتوجيه فقط. والعقد الورقية مرتبطة ببعضها كقائمة مرتبطة (Linked List).<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Root</strong>: تُستخدم للتوجيه فقط ولا تحتوي مؤشرات بيانات.<br>
+              • <strong>Internal</strong>: نفس السبب — للتوجيه فقط.<br>
+              • <strong>All</strong>: هذا ينطبق على <strong>B-Tree</strong> (حيث المؤشرات في كل المستويات) وليس B+-Tree.
             </p>
             <a href="../topics/topic_04_04_04.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1343,7 +1476,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              عند امتلاء عقدة B-Tree ومحاولة إدراج مدخلة جديدة، يتم <strong>تقسيم (Split)</strong> العقدة إلى عقدتين ورفع العنصر الأوسط إلى العقدة الأب. قد يتسلسل التقسيم لأعلى.
+              ✅ <strong>The node is split and middle key promoted</strong>: عند امتلاء عقدة B-Tree، يتم تقسيم (Split) العقدة إلى عقدتين ورفع العنصر الأوسط إلى العقدة الأب. قد يتسلسل التقسيم لأعلى.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>The entry is discarded</strong>: لا يتم تجاهل أي إدخال — B-Tree يضمن استيعاب كل البيانات.<br>
+              • <strong>A new tree is created</strong>: لا يتم إنشاء شجرة جديدة — يتم تعديل الشجرة الحالية.<br>
+              • <strong>The oldest entry is removed</strong>: B-Tree لا يحذف المدخلات القديمة عند الإدخال.
             </p>
             <a href="../topics/topic_04_04_03.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1366,9 +1503,13 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>Spanned Records</strong> هي السجلات التي يتجاوز حجمها حجم كتلة واحدة فتمتد عبر <strong>أكثر من كتلة</strong>. مؤشر خاص يربط الأجزاء.
+              ✅ <strong>Extend across more than one block</strong>: Spanned Records هي السجلات التي يتجاوز حجمها حجم كتلة واحدة فتمتد عبر أكثر من كتلة. مؤشر خاص يربط الأجزاء.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Fit exactly in one block</strong>: هذه سجلات عادية (Unspanned) وليست Spanned.<br>
+              • <strong>Are smaller than a block</strong>: هذه أيضاً سجلات عادية تُخزن في كتلة واحدة.<br>
+              • <strong>Are compressed</strong>: الضغط مفهوم مختلف تماماً عن Spanning.
             </p>
-            <a href="../topics/topic_04_04_04.html" class="topic-link">
+            <a href="../topics/topic_04_05_02.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1387,7 +1528,8 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              صحيح. <strong>RAID 0</strong> يوفر فقط Striping (توزيع البيانات على عدة أقراص) لتحسين الأداء، لكنه <strong>لا يوفر أي حماية أو تكرار</strong>. فشل قرص واحد يعني فقدان البيانات.
+              ✅ الإجابة: <strong>TRUE</strong> — RAID 0 يوفر فقط Striping (توزيع البيانات على عدة أقراص) لتحسين الأداء، لكنه <strong>لا يوفر أي حماية أو تكرار</strong>. فشل قرص واحد يعني فقدان البيانات.<br><br>
+              • <strong>FALSE</strong> ستكون صحيحة لو كان السؤال عن RAID 1 أو RAID 5 — هؤلاء يوفرون تكراراً.
             </p>
             <a href="../topics/topic_04_05_04.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1410,7 +1552,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>RAID 1</strong> يحقق التكرار عن طريق <strong>النسخ المتطابق (Mirroring)</strong> - كل قرص له نسخة مطابقة. أبسط أشكال الحماية لكنه يستهلك ضعف المساحة.
+              ✅ <strong>Mirroring (disk duplication)</strong>: RAID 1 يحقق التكرار عن طريق النسخ المتطابق (Mirroring) — كل قرص له نسخة مطابقة. أبسط أشكال الحماية لكنه يستهلك ضعف المساحة.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Data striping</strong>: هذا RAID 0 — لا يوفر تكراراً.<br>
+              • <strong>Parity bits</strong>: يُستخدم في RAID 5 وليس RAID 1.<br>
+              • <strong>Hamming codes</strong>: يُستخدم في RAID 2 وليس RAID 1.
             </p>
             <a href="../topics/topic_04_05_04.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1431,7 +1577,8 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              صحيح. <strong>RAID 5</strong> يوزع البيانات ومعلومات التصحيح (Parity) عبر <strong>جميع الأقراص</strong>، مما يجعله فعالاً ويسمح بفشل قرص واحد دون فقدان بيانات.
+              ✅ الإجابة: <strong>TRUE</strong> — RAID 5 يوزع البيانات ومعلومات التصحيح (Parity) عبر جميع الأقراص (وليس قرص واحد مخصص)، مما يجعله فعالاً ويسمح بفشل قرص واحد.<br><br>
+              • <strong>FALSE</strong> ستكون صحيحة لو كانت Parity على قرص واحد فقط — هذا ينطبق على RAID 4 وليس RAID 5.
             </p>
             <a href="../topics/topic_04_05_04.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1452,9 +1599,10 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              خطأ. <strong>SSDs</strong> (Flash Memory) <strong>لا تحتوي على أجزاء متحركة</strong>، مما يجعلها أسرع وأكثر تحملاً للصدمات وأقل استهلاكاً للطاقة من HDDs.
+              ✅ الإجابة: <strong>FALSE</strong> — SSDs (Flash Memory) <strong>لا تحتوي على أجزاء متحركة</strong>، بعكس HDDs التي تحتوي على أقراص دوارة ورأس قراءة/كتابة متحرك. SSDs أسرع وأكثر تحملاً للصدمات.<br><br>
+              • <strong>TRUE</strong> ستكون صحيحة لو كان السؤال عن HDDs — التي فعلاً تحتوي على أجزاء متحركة.
             </p>
-            <a href="../topics/topic_04_04_02.html" class="topic-link">
+            <a href="../topics/topic_04_05_01.html" class="topic-link">
               📚 مراجعة الدرس
             </a>
           </div>
@@ -1477,7 +1625,11 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              <strong>Consistency (الاتساق)</strong> يضمن أن المعاملة تنقل قاعدة البيانات من حالة متسقة إلى حالة متسقة أخرى. Atomicity = الكل أو لا شيء، Isolation = العزل، Durability = الديمومة.
+              ✅ <strong>Consistency (الاتساق)</strong>: يضمن أن المعاملة تنقل قاعدة البيانات من حالة متسقة إلى حالة متسقة أخرى.<br><br>
+              لماذا الخيارات الأخرى خاطئة:<br>
+              • <strong>Atomicity</strong>: يضمن أن المعاملة تُنفذ <strong>بالكامل أو لا تُنفذ</strong> (All or Nothing).<br>
+              • <strong>Isolation</strong>: يضمن <strong>عزل</strong> المعاملات عن بعضها أثناء التنفيذ.<br>
+              • <strong>Durability</strong>: يضمن <strong>ديمومة</strong> التغييرات بعد COMMIT حتى لو حدث عطل.
             </p>
             <a href="../topics/topic_05_04_01.html" class="topic-link">
               📚 مراجعة الدرس
@@ -1498,7 +1650,8 @@
           <div class="explanation-box">
             <div class="explanation-title">💡 الشرح</div>
             <p class="explanation-text">
-              صحيح. مشكلة <strong>Temporary Update (Dirty Read)</strong> تحدث عندما تقرأ معاملة قيمة كتبتها معاملة أخرى <strong>لم تُنفذ بعد (not committed)</strong>، فإذا تراجعت المعاملة الكاتبة تكون القراءة خاطئة.
+              ✅ الإجابة: <strong>TRUE</strong> — مشكلة Temporary Update (Dirty Read) تحدث عندما تقرأ معاملة قيمة كتبتها معاملة أخرى <strong>لم تُنفذ بعد (not committed)</strong>. إذا تراجعت المعاملة الكاتبة (ROLLBACK)، تكون القراءة خاطئة.<br><br>
+              • <strong>FALSE</strong> ستكون صحيحة لو كان الوصف خاطئاً — لكن الوصف دقيق تماماً.
             </p>
             <a href="../topics/topic_05_02_01.html" class="topic-link">
               📚 مراجعة الدرس
